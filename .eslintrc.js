@@ -1,7 +1,11 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  parserOptions: { ecmaVersion: 2021, sourceType: 'module', ecmaFeatures: { jsx: true } },
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+  },
   settings: { react: { version: 'detect' } },
   env: { es2021: true, browser: true, jest: true, node: true },
   plugins: ['import', 'simple-import-sort', 'react-hooks', 'prettier'],

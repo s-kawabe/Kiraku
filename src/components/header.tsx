@@ -1,9 +1,9 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 const items = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-];
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+]
 
 export const Header = () => {
   return (
@@ -13,11 +13,11 @@ export const Header = () => {
         {items.map(({ href, label }) => {
           return (
             <Link key={href} href={href}>
-              <a style={{ display: "inline-block", padding: 12 }}>{label}</a>
+              <a style={{ display: 'inline-block', padding: 12 }}>{label}</a>
             </Link>
-          );
+          )
         })}
       </nav>
     </header>
-  );
-};
+  )
+}

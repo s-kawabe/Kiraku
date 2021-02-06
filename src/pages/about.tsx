@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head'
 
-import { Layout } from "@/components/layout";
+import { Layout } from '@/components/layout'
 
 const About = () => {
   return (
@@ -11,8 +11,8 @@ const About = () => {
       </Head>
       <h2>About</h2>
     </Layout>
-  );
-};
+  )
+}
 
 // eslint-disable-next-line import/no-default-export
-export default About;
+export default About

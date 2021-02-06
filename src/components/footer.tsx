@@ -3,5 +3,5 @@ export const Footer = () => {
     <footer>
       <small lang="en">@ 20xx example.com</small>
     </footer>
-  );
-};
+  )
+}

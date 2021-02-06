@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head'
 
-import { Layout } from "@/components/layout";
+import { Layout } from '@/components/layout'
 
 const Home = () => {
   return (
@@ -12,14 +12,14 @@ const Home = () => {
       <h2>Home</h2>
       <button
         onClick={() => {
-          window.alert("Hello, World!");
+          window.alert('Hello, World!')
         }}
       >
         Button
       </button>
     </Layout>
-  );
-};
+  )
+}
 
 // eslint-disable-next-line import/no-default-export
-export default Home;
+export default Home
