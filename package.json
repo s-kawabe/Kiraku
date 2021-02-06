@@ -8,6 +8,7 @@
     "start": "next start",
     "format": "prettier --write \"**/*.{js,ts,tsx}\"",
     "lint": "eslint . --ext ts --ext tsx --ext js",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
     "type-check": "tsc --pretty --noEmit",
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test"
@@ -29,10 +30,11 @@
       "next/babel"
     ]
   },
-  "prettier": {
-    "printWidth": 120
-  },
   "dependencies": {
+    "@chakra-ui/react": "^1.2.1",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
+    "framer-motion": "^3.3.0",
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1"
