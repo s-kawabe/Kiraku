@@ -1,7 +1,9 @@
-# Next.js starter template.
+# アプリ概要
 
-- Next.js
-- TypeScript
-- ESLint
-- Prettier
+# 使用技術
 
+# 使い方
+
+# 苦労した点
+
+# 改善点
