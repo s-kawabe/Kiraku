@@ -1,3 +1,5 @@
+import { Button } from '@chakra-ui/react'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 
 const items = [
@@ -18,6 +20,15 @@ export const Header = () => {
           )
         })}
       </nav>
+      <Button
+        color="teal"
+        m={10}
+        css={css`
+          text-shadow: 1px 1px 2px #707070;
+        `}
+      >
+        hogehoge
+      </Button>
     </header>
   )
 }
