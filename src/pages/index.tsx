@@ -7,7 +7,7 @@ const Home = () => {
     <Layout>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <h2>Home</h2>
       <button

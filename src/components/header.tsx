@@ -10,6 +10,7 @@ const items = [
 export const Header = () => {
   return (
     <header>
+      <img src="/logo.svg" alt="logo" width="260" />
       <h1>Title</h1>
       <nav>
         {items.map(({ href, label }) => {
