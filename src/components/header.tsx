@@ -1,5 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import { css } from '@emotion/react'
+// import styled from '@emotion/styled'
 import Link from 'next/link'
 
 const items = [
@@ -7,8 +8,13 @@ const items = [
   { href: '/about', label: 'About' },
 ]
 
+// const Back = styled.div`
+//   background-color: #1e2b34;
+// `
+
 export const Header = () => {
   return (
+    // <Back>
     <header>
       <img src="/logo.svg" alt="logo" width="260" />
       <h1>Title</h1>
@@ -31,5 +37,6 @@ export const Header = () => {
         hogehoge
       </Button>
     </header>
+    // </Back>
   )
 }

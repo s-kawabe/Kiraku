@@ -7,7 +7,7 @@ const About = () => {
     <Layout>
       <Head>
         <title>About</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <h2>About</h2>
     </Layout>
