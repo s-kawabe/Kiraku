@@ -5,7 +5,7 @@ import 'firebase/functions'
 
 import firebase from 'firebase/app'
 
-import { firebaseConfig } from './config'
+import { firebaseConfig } from '@/firebase/config'
 
 firebase.initializeApp(firebaseConfig)
 
