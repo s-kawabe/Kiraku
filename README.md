@@ -1,4 +1,4 @@
-# アプリ概要
+# [kiraku](https://kiraku.app/)
 
 # 使用技術
 
