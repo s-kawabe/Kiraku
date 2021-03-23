@@ -1,7 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
-
 // import styled from '@emotion/styled'
 
 const items = [
