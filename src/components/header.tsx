@@ -1,6 +1,8 @@
 import { Button } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
+
+import { BaseButton } from '@/components/commonAtoms/BaseButton'
 // import styled from '@emotion/styled'
 
 const items = [
@@ -36,6 +38,9 @@ export const Header = () => {
       >
         hogehoge
       </Button>
+      <BaseButton color="red" text="hoge" />
+      <BaseButton color="green" text="huga" />
+      <BaseButton color="teal" text="piyo" />
     </header>
     // </Back>
   )

@@ -29,8 +29,7 @@
   },
   "babel": {
     "presets": [
-      "next/babel",
-      "@emotion/babel-preset-css-prop"
+      "next/babel"
     ]
   },
   "dependencies": {
@@ -47,7 +46,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
-    "@emotion/babel-preset-css-prop": "^11.0.0",
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",
