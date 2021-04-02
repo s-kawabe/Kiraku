@@ -6712,6 +6712,11 @@ eslint-module-utils@^2.6.0:
     debug "^2.6.9"
     pkg-dir "^2.0.0"
 
+eslint-plugin-emotion@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-emotion/-/eslint-plugin-emotion-11.0.0.tgz#67782d427dd4cb6787d00106a6c64331acb98992"
+  integrity sha512-SKYyFYRFgOQTtBetn1mTKC2V1J6sbTnJh2/giWzg/OaTBSvJFwew8OkoxA3R9IhyaXYyPE+1TWzRhUJvVvBjVA==
+
 eslint-plugin-import@2.22.1:
   version "2.22.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.22.1.tgz#0896c7e6a0cf44109a2d97b95903c2bb689d7702"
