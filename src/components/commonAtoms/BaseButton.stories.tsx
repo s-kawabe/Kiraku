@@ -26,7 +26,7 @@ RedButton.args = {
 
 export const GreenButton = Template.bind({})
 GreenButton.args = {
-  text: 'green button',
+  text: 'green button!!!',
   color: 'green',
 } as BaseButtonProps
 

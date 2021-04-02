@@ -11,6 +11,7 @@
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
     "type-check": "tsc --pretty --noEmit",
     "test": "jest",
+    "storyshots": "jest --config ./jest.storyshots.config.js",
     "test-all": "yarn lint && yarn type-check && yarn test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -49,6 +50,7 @@
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",
+    "@storybook/addon-storyshots": "^6.2.1",
     "@storybook/react": "^6.1.21",
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.1",

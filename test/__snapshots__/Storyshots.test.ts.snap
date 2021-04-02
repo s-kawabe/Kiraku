@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots atoms/Button Green Button 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-17jc4td"
+      type="button"
+    >
+      green button!!!
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots atoms/Button Red Button 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-1ll3ff6"
+      type="button"
+    >
+      red button
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots atoms/Button Teal Button 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-1wgdzdh"
+      type="button"
+    >
+      teal button
+    </button>
+  </div>
+</div>
+`;
