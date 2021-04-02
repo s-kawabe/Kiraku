@@ -6,7 +6,7 @@ const About = () => {
   return (
     <Layout>
       <Head>
-        <title>About</title>
+        <title>Aboutooo</title>
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <h2>About</h2>
