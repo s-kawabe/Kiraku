@@ -3,6 +3,8 @@ module.exports = {
   typescript: { ignoreDevErrors: true },
   poweredByHeader: false,
   env: {
+    HASURA_GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET,
+    HASURA_URL: process.env.HASURA_URL,
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
     FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
