@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots atoms/Button Login 1`] = `
+exports[`Storyshots common/units/NormalButton Login PC 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -14,7 +14,7 @@ exports[`Storyshots atoms/Button Login 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-o6m248"
+      className="chakra-button css-17hhhx2"
       type="button"
     >
       ログイン
@@ -23,7 +23,7 @@ exports[`Storyshots atoms/Button Login 1`] = `
 </div>
 `;
 
-exports[`Storyshots atoms/Button Register 1`] = `
+exports[`Storyshots common/units/NormalButton Login SP 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -37,7 +37,53 @@ exports[`Storyshots atoms/Button Register 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-puj5ec"
+      className="chakra-button css-1h17ski"
+      type="button"
+    >
+      ログイン
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/units/NormalButton Post 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-154oc8v"
+      type="button"
+    >
+      投稿
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/units/NormalButton Register 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-154oc8v"
       type="button"
     >
       登録
@@ -46,7 +92,7 @@ exports[`Storyshots atoms/Button Register 1`] = `
 </div>
 `;
 
-exports[`Storyshots atoms/Button Sign Up 1`] = `
+exports[`Storyshots common/units/NormalButton Signup PC 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -60,10 +106,33 @@ exports[`Storyshots atoms/Button Sign Up 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-puj5ec"
+      className="chakra-button css-154oc8v"
       type="button"
     >
       新規会員登録
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/units/NormalButton Signup SP 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-10vawgf"
+      type="button"
+    >
+      会員登録
     </button>
   </div>
 </div>
@@ -103,21 +172,8 @@ exports[`Storyshots organisms/Header Logouted Header 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-162tvoi"
-    >
-      <button
-        className="chakra-button css-puj5ec"
-        type="button"
-      >
-        新規会員登録
-      </button>
-      <button
-        className="chakra-button css-o6m248"
-        type="button"
-      >
-        ログイン
-      </button>
-    </div>
+      className="css-1icstj2"
+    />
   </div>
 </div>
 `;
