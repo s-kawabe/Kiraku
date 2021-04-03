@@ -1,10 +1,8 @@
 import Head from 'next/head'
 
-import { Layout } from '@/components/layout'
-
 const Home = () => {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.svg" />
@@ -17,7 +15,7 @@ const Home = () => {
       >
         Button
       </button>
-    </Layout>
+    </>
   )
 }
 
