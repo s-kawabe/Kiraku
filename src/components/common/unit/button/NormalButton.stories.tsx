@@ -6,7 +6,7 @@ import { NormalButton } from './NormalButton'
 
 // eslint-disable-next-line import/no-default-export
 export default {
-  title: 'common/units/NormalButton',
+  title: 'common/unit/NormalButton',
   component: NormalButton,
 } as Meta
 

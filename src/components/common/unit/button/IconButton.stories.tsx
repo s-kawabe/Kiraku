@@ -9,7 +9,7 @@ import { IconButton } from './IconButton'
 
 // eslint-disable-next-line import/no-default-export
 export default {
-  title: 'common/units/IconButton',
+  title: 'common/unit/IconButton',
   component: IconButton,
 } as Meta
 

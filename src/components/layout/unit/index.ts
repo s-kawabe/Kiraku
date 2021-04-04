@@ -1,4 +1,4 @@
 export { IconHeading } from './IconHeading'
-export { Logo } from './Image'
+export { NextImage } from './NextImage'
 export { Nortification } from './Nortification'
 export { SearchBar } from './SearchBar'

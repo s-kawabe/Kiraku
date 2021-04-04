@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import Image from 'next/image'
+
+import { NextImage } from '@/components/layout/unit/NextImage'
 
 const Home = () => {
   return (
@@ -16,8 +17,7 @@ const Home = () => {
       >
         Button
       </button>
-      <Image src="/logo1.svg" alt="アプリケーションロゴ" width={340} height={180} />
-      <img src="/logo1.svg" alt="ロゴ" />
+      <NextImage src="/Error_404.svg" alt="hoge" width={500} height={315} />
     </>
   )
 }

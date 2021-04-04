@@ -1,7 +1,7 @@
 import React from 'react'
-import { extendTheme } from '@chakra-ui/react'
 import { StoryContext } from '@storybook/react'
-import { ChakraWrapper } from '@/chakra/ChakraWrapper'
+import { ChakraWrapper } from '../src/chakra/ChakraWrapper'
+import './__mocks/NextImage'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
