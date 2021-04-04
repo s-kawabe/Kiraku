@@ -1,11 +1,13 @@
 import Head from 'next/head'
 
+import { NextImage } from '@/components/common/unit/NextImage'
+
 const Home = () => {
   return (
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
       <h2>Home</h2>
       <button
@@ -15,6 +17,7 @@ const Home = () => {
       >
         Button
       </button>
+      <NextImage src="/Error_404.svg" alt="hoge" width={500} height={315} />
     </>
   )
 }

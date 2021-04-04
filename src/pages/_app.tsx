@@ -1,4 +1,6 @@
 import { ApolloProvider } from '@apollo/client'
+import { css, Global } from '@emotion/react'
+import reset from 'emotion-reset'
 import type { AppProps } from 'next/app'
 
 import { client } from '@/apollo/client'
@@ -6,11 +8,18 @@ import { ChakraWrapper } from '@/chakra/ChakraWrapper'
 
 const App = (props: AppProps) => {
   return (
-    <ApolloProvider client={client}>
-      <ChakraWrapper>
-        <props.Component {...props.pageProps} />
-      </ChakraWrapper>
-    </ApolloProvider>
+    <>
+      <Global
+        styles={css`
+          ${reset}
+        `}
+      />
+      <ApolloProvider client={client}>
+        <ChakraWrapper>
+          <props.Component {...props.pageProps} />
+        </ChakraWrapper>
+      </ApolloProvider>
+    </>
   )
 }
 

@@ -6,7 +6,7 @@ import { Header } from './Header'
 
 // eslint-disable-next-line import/no-default-export
 export default {
-  title: 'organisms/Header',
+  title: 'layout/containers/Header',
   component: Header,
 } as Meta
 
