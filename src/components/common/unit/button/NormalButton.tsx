@@ -15,6 +15,7 @@ export type NormalButtonProps = {
   }
 }
 
+// TODO SP時のサイズは親コンポーネントから変える必要がある
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
   return (
     <Button
