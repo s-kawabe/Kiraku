@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { NextImage } from '@/components/layout/unit/NextImage'
+import { NextImage } from '@/components/common/unit/NextImage'
 
 const Home = () => {
   return (
