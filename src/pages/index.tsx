@@ -1,11 +1,12 @@
 import Head from 'next/head'
+import Image from 'next/image'
 
 const Home = () => {
   return (
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
       <h2>Home</h2>
       <button
@@ -15,6 +16,8 @@ const Home = () => {
       >
         Button
       </button>
+      <Image src="/logo1.svg" alt="アプリケーションロゴ" width={340} height={180} />
+      <img src="/logo1.svg" alt="ロゴ" />
     </>
   )
 }
