@@ -42,6 +42,8 @@ LoginPC.args = {
   bg: 'white',
   color: 'green.300',
   size: 'md',
+  variant: 'outline',
+  borderColor: 'green.300',
   hover: { bg: 'green.300', color: 'white' },
 } as NormalButtonProps
 
@@ -51,6 +53,8 @@ LoginSP.args = {
   bg: 'white',
   color: 'green.300',
   size: 'sm',
+  variant: 'outline',
+  borderColor: 'green.300',
   hover: { bg: 'green.300', color: 'white' },
 } as NormalButtonProps
 
