@@ -1,5 +1,7 @@
 import Head from 'next/head'
 
+import { AboutCard } from '@/components/about/unit'
+
 const Home = () => {
   return (
     <>
@@ -15,6 +17,7 @@ const Home = () => {
       >
         Button
       </button>
+      <AboutCard text="ファッションを投稿" src="/post.svg" alt="ファッションを投稿" />
     </>
   )
 }

@@ -21,17 +21,20 @@ const Template: Story<AboutCardProps> = (args) => {
 export const Post = Template.bind({})
 Post.args = {
   text: 'ファッションを投稿',
-  imagePath: './hoge',
+  src: '/post.svg',
+  alt: 'ファッションを投稿',
 }
 
 export const Blog = Template.bind({})
 Blog.args = {
   text: 'ブログを書く',
-  imagePath: './hoge',
+  src: '/blog.svg',
+  alt: 'ブログを書く',
 }
 
 export const Show = Template.bind({})
 Show.args = {
   text: '投稿を見る',
-  imagePath: './hoge',
+  src: '/show.svg',
+  alt: '投稿を見る',
 }

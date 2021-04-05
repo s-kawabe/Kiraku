@@ -14,13 +14,29 @@ exports[`Storyshots about/unit/AboutCard Blog 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-13l6isc"
+      className="css-1tt8wgx"
     >
-      <p
-        className="chakra-text css-1o8d2my"
+      <div
+        className="chakra-stack css-18lr9dg"
       >
-        ブログを書く
-      </p>
+        <h2
+          className="chakra-heading css-p5offx"
+        >
+          ブログを書く
+        </h2>
+        <div
+          className="css-joj9ft"
+        >
+          <div>
+            <img
+              alt="ブログを書く"
+              height={250}
+              src="/blog.svg"
+              width={275}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -40,13 +56,29 @@ exports[`Storyshots about/unit/AboutCard Post 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-13l6isc"
+      className="css-1tt8wgx"
     >
-      <p
-        className="chakra-text css-1o8d2my"
+      <div
+        className="chakra-stack css-18lr9dg"
       >
-        ファッションを投稿
-      </p>
+        <h2
+          className="chakra-heading css-p5offx"
+        >
+          ファッションを投稿
+        </h2>
+        <div
+          className="css-joj9ft"
+        >
+          <div>
+            <img
+              alt="ファッションを投稿"
+              height={250}
+              src="/post.svg"
+              width={275}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -66,13 +98,29 @@ exports[`Storyshots about/unit/AboutCard Show 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-13l6isc"
+      className="css-1tt8wgx"
     >
-      <p
-        className="chakra-text css-1o8d2my"
+      <div
+        className="chakra-stack css-18lr9dg"
       >
-        投稿を見る
-      </p>
+        <h2
+          className="chakra-heading css-p5offx"
+        >
+          投稿を見る
+        </h2>
+        <div
+          className="css-joj9ft"
+        >
+          <div>
+            <img
+              alt="投稿を見る"
+              height={250}
+              src="/show.svg"
+              width={275}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -312,28 +360,11 @@ exports[`Storyshots common/unit/NextImage Blog 1`] = `
   <div
     className="css-qe3950"
   >
-    <div
-      style={
-        Object {
-          "paddingBottom": "90.9090909090909%",
-          "position": "relative",
-        }
-      }
-    >
+    <div>
       <img
         alt="test"
         height={400}
         src="/blog.svg"
-        style={
-          Object {
-            "maxHeight": "100%",
-            "maxWidth": "100%",
-            "minHeight": "100%",
-            "minWidth": "100%",
-            "objectFit": "cover",
-            "position": "absolute",
-          }
-        }
         width={440}
       />
     </div>
@@ -354,28 +385,11 @@ exports[`Storyshots common/unit/NextImage Footer Logo 1`] = `
   <div
     className="css-qe3950"
   >
-    <div
-      style={
-        Object {
-          "paddingBottom": "50%",
-          "position": "relative",
-        }
-      }
-    >
+    <div>
       <img
         alt="アプリケーションロゴ"
         height={60}
         src="/footerLogo.svg"
-        style={
-          Object {
-            "maxHeight": "100%",
-            "maxWidth": "100%",
-            "minHeight": "100%",
-            "minWidth": "100%",
-            "objectFit": "cover",
-            "position": "absolute",
-          }
-        }
         width={120}
       />
     </div>
@@ -396,28 +410,11 @@ exports[`Storyshots common/unit/NextImage Header Logo 1`] = `
   <div
     className="css-qe3950"
   >
-    <div
-      style={
-        Object {
-          "paddingBottom": "52.32558139534884%",
-          "position": "relative",
-        }
-      }
-    >
+    <div>
       <img
         alt="アプリケーションロゴ"
         height={90}
         src="/logo.svg"
-        style={
-          Object {
-            "maxHeight": "100%",
-            "maxWidth": "100%",
-            "minHeight": "100%",
-            "minWidth": "100%",
-            "objectFit": "cover",
-            "position": "absolute",
-          }
-        }
         width={172}
       />
     </div>
@@ -438,28 +435,11 @@ exports[`Storyshots common/unit/NextImage Not Found 1`] = `
   <div
     className="css-qe3950"
   >
-    <div
-      style={
-        Object {
-          "paddingBottom": "63%",
-          "position": "relative",
-        }
-      }
-    >
+    <div>
       <img
         alt="NotFound Error 404"
         height={315}
         src="/Error_404.svg"
-        style={
-          Object {
-            "maxHeight": "100%",
-            "maxWidth": "100%",
-            "minHeight": "100%",
-            "minWidth": "100%",
-            "objectFit": "cover",
-            "position": "absolute",
-          }
-        }
         width={500}
       />
     </div>
@@ -480,28 +460,11 @@ exports[`Storyshots common/unit/NextImage Post 1`] = `
   <div
     className="css-qe3950"
   >
-    <div
-      style={
-        Object {
-          "paddingBottom": "90.9090909090909%",
-          "position": "relative",
-        }
-      }
-    >
+    <div>
       <img
         alt="test"
         height={400}
         src="/post.svg"
-        style={
-          Object {
-            "maxHeight": "100%",
-            "maxWidth": "100%",
-            "minHeight": "100%",
-            "minWidth": "100%",
-            "objectFit": "cover",
-            "position": "absolute",
-          }
-        }
         width={440}
       />
     </div>
@@ -522,28 +485,11 @@ exports[`Storyshots common/unit/NextImage Show 1`] = `
   <div
     className="css-qe3950"
   >
-    <div
-      style={
-        Object {
-          "paddingBottom": "90.9090909090909%",
-          "position": "relative",
-        }
-      }
-    >
+    <div>
       <img
         alt="test"
         height={400}
         src="/show.svg"
-        style={
-          Object {
-            "maxHeight": "100%",
-            "maxWidth": "100%",
-            "minHeight": "100%",
-            "minWidth": "100%",
-            "objectFit": "cover",
-            "position": "absolute",
-          }
-        }
         width={440}
       />
     </div>
