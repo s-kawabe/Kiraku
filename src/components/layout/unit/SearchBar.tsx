@@ -7,7 +7,7 @@ import type { VFC } from 'react'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 const SearchBar: VFC = () => {
-  const [isDesktop] = useIsDesktop()
+  const isDesktop = useIsDesktop()
   return (
     <InputGroup w={{ base: '200px', sm: '400px' }} size={isDesktop ? 'md' : 'sm'}>
       <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.500" />} />

@@ -8,7 +8,7 @@ import { useIsDesktop } from '@/utils/methods/customeHooks'
 // eslint-disable-next-line react/display-name
 const DarkmodeToggle: VFC = () => {
   const [isDark, setIsDark] = useState(false)
-  const [isDesktop] = useIsDesktop()
+  const isDesktop = useIsDesktop()
 
   const handleChange = (isDark: boolean) => {
     setIsDark(!isDark)
