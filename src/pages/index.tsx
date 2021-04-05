@@ -17,7 +17,7 @@ const Home = () => {
       >
         Button
       </button>
-      <NextImage src="/Error_404.svg" alt="hoge" width={500} height={315} />
+      <NextImage src="/hero.webp" alt="ヒーロー画像" width={2240} height={3360} />
     </>
   )
 }

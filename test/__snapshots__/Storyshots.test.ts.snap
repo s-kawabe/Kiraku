@@ -1,6 +1,148 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots common/units/IconButton Google Login 1`] = `
+exports[`Storyshots about/unit/AboutCard Blog 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      className="css-13l6isc"
+    >
+      <p
+        className="chakra-text css-1o8d2my"
+      >
+        ブログを書く
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots about/unit/AboutCard Post 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      className="css-13l6isc"
+    >
+      <p
+        className="chakra-text css-1o8d2my"
+      >
+        ファッションを投稿
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots about/unit/AboutCard Show 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      className="css-13l6isc"
+    >
+      <p
+        className="chakra-text css-1o8d2my"
+      >
+        投稿を見る
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/DarkmodeToggle Darkmode Toggle Switch 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <span
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseEnter={[Function]}
+    >
+      <label
+        className="chakra-switch css-7tq0uz"
+      >
+        <input
+          checked={false}
+          className="chakra-switch__input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          style={
+            Object {
+              "border": "0px",
+              "clip": "rect(0px, 0px, 0px, 0px)",
+              "height": "1px",
+              "margin": "-1px",
+              "overflow": "hidden",
+              "padding": "0px",
+              "position": "absolute",
+              "whiteSpace": "nowrap",
+              "width": "1px",
+            }
+          }
+          type="checkbox"
+        />
+        <span
+          aria-hidden={true}
+          className="chakra-switch__track css-1vexzru"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+        >
+          <span
+            className="chakra-switch__thumb css-khwc2z"
+          />
+        </span>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/IconButton Google Login 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -67,7 +209,7 @@ exports[`Storyshots common/units/IconButton Google Login 1`] = `
 </div>
 `;
 
-exports[`Storyshots common/units/IconButton No Login Try 1`] = `
+exports[`Storyshots common/unit/IconButton No Login Try 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -112,7 +254,7 @@ exports[`Storyshots common/units/IconButton No Login Try 1`] = `
 </div>
 `;
 
-exports[`Storyshots common/units/IconButton Twitter Login 1`] = `
+exports[`Storyshots common/unit/IconButton Twitter Login 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -157,7 +299,7 @@ exports[`Storyshots common/units/IconButton Twitter Login 1`] = `
 </div>
 `;
 
-exports[`Storyshots common/units/NormalButton Login PC 1`] = `
+exports[`Storyshots common/unit/NextImage Blog 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -170,17 +312,246 @@ exports[`Storyshots common/units/NormalButton Login PC 1`] = `
   <div
     className="css-qe3950"
   >
-    <button
-      className="chakra-button css-8ijn0"
-      type="button"
+    <div
+      style={
+        Object {
+          "paddingBottom": "90.9090909090909%",
+          "position": "relative",
+        }
+      }
     >
-      ログイン
-    </button>
+      <img
+        alt="test"
+        height={400}
+        src="/blog.svg"
+        style={
+          Object {
+            "maxHeight": "100%",
+            "maxWidth": "100%",
+            "minHeight": "100%",
+            "minWidth": "100%",
+            "objectFit": "cover",
+            "position": "absolute",
+          }
+        }
+        width={440}
+      />
+    </div>
   </div>
 </div>
 `;
 
-exports[`Storyshots common/units/NormalButton Login SP 1`] = `
+exports[`Storyshots common/unit/NextImage Footer Logo 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      style={
+        Object {
+          "paddingBottom": "50%",
+          "position": "relative",
+        }
+      }
+    >
+      <img
+        alt="アプリケーションロゴ"
+        height={60}
+        src="/footerLogo.svg"
+        style={
+          Object {
+            "maxHeight": "100%",
+            "maxWidth": "100%",
+            "minHeight": "100%",
+            "minWidth": "100%",
+            "objectFit": "cover",
+            "position": "absolute",
+          }
+        }
+        width={120}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NextImage Header Logo 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      style={
+        Object {
+          "paddingBottom": "52.32558139534884%",
+          "position": "relative",
+        }
+      }
+    >
+      <img
+        alt="アプリケーションロゴ"
+        height={90}
+        src="/logo.svg"
+        style={
+          Object {
+            "maxHeight": "100%",
+            "maxWidth": "100%",
+            "minHeight": "100%",
+            "minWidth": "100%",
+            "objectFit": "cover",
+            "position": "absolute",
+          }
+        }
+        width={172}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NextImage Not Found 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      style={
+        Object {
+          "paddingBottom": "63%",
+          "position": "relative",
+        }
+      }
+    >
+      <img
+        alt="NotFound Error 404"
+        height={315}
+        src="/Error_404.svg"
+        style={
+          Object {
+            "maxHeight": "100%",
+            "maxWidth": "100%",
+            "minHeight": "100%",
+            "minWidth": "100%",
+            "objectFit": "cover",
+            "position": "absolute",
+          }
+        }
+        width={500}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NextImage Post 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      style={
+        Object {
+          "paddingBottom": "90.9090909090909%",
+          "position": "relative",
+        }
+      }
+    >
+      <img
+        alt="test"
+        height={400}
+        src="/post.svg"
+        style={
+          Object {
+            "maxHeight": "100%",
+            "maxWidth": "100%",
+            "minHeight": "100%",
+            "minWidth": "100%",
+            "objectFit": "cover",
+            "position": "absolute",
+          }
+        }
+        width={440}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NextImage Show 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      style={
+        Object {
+          "paddingBottom": "90.9090909090909%",
+          "position": "relative",
+        }
+      }
+    >
+      <img
+        alt="test"
+        height={400}
+        src="/show.svg"
+        style={
+          Object {
+            "maxHeight": "100%",
+            "maxWidth": "100%",
+            "minHeight": "100%",
+            "minWidth": "100%",
+            "objectFit": "cover",
+            "position": "absolute",
+          }
+        }
+        width={440}
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NormalButton Login 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -203,76 +574,7 @@ exports[`Storyshots common/units/NormalButton Login SP 1`] = `
 </div>
 `;
 
-exports[`Storyshots common/units/NormalButton Post 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-qe3950"
-  >
-    <button
-      className="chakra-button css-154oc8v"
-      type="button"
-    >
-      投稿
-    </button>
-  </div>
-</div>
-`;
-
-exports[`Storyshots common/units/NormalButton Register 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-qe3950"
-  >
-    <button
-      className="chakra-button css-154oc8v"
-      type="button"
-    >
-      登録
-    </button>
-  </div>
-</div>
-`;
-
-exports[`Storyshots common/units/NormalButton Signup PC 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-qe3950"
-  >
-    <button
-      className="chakra-button css-154oc8v"
-      type="button"
-    >
-      新規会員登録
-    </button>
-  </div>
-</div>
-`;
-
-exports[`Storyshots common/units/NormalButton Signup SP 1`] = `
+exports[`Storyshots common/unit/NormalButton Post 1`] = `
 <div
   dir="ltr"
   id="story-wrapper"
@@ -289,7 +591,53 @@ exports[`Storyshots common/units/NormalButton Signup SP 1`] = `
       className="chakra-button css-10vawgf"
       type="button"
     >
-      会員登録
+      投稿
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NormalButton Register 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-10vawgf"
+      type="button"
+    >
+      登録
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots common/unit/NormalButton Signup 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <button
+      className="chakra-button css-10vawgf"
+      type="button"
+    >
+      新規会員登録
     </button>
   </div>
 </div>
@@ -331,6 +679,49 @@ exports[`Storyshots layout/containers/Header Logouted Header 1`] = `
     <div
       className="css-1icstj2"
     />
+  </div>
+</div>
+`;
+
+exports[`Storyshots layout/unit/SearchBar Default Search Bar 1`] = `
+<div
+  dir="ltr"
+  id="story-wrapper"
+  style={
+    Object {
+      "minHeight": "100vh",
+    }
+  }
+>
+  <div
+    className="css-qe3950"
+  >
+    <div
+      className="chakra-input__group css-1jtxxi8"
+    >
+      <div
+        className="chakra-input__left-element css-1nfwf9a"
+        size="sm"
+      >
+        <svg
+          className="chakra-icon css-suqwlm"
+          focusable={false}
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+      <input
+        className="chakra-input css-135699n"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        placeholder="キーワードで検索"
+        type="text"
+      />
+    </div>
   </div>
 </div>
 `;
