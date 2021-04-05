@@ -1,20 +1,20 @@
 import { Box } from '@chakra-ui/react'
 import type { Meta, Story } from '@storybook/react/types-6-0'
 
-import { SearchBar } from './SearchBar'
+import { DarkmodeToggle } from './DarkmodeToggle'
 
 // eslint-disable-next-line import/no-default-export
 export default {
-  title: 'layout/unit/SearchBar',
-  component: SearchBar,
+  title: 'common/unit/DarkmodeToggle',
+  component: DarkmodeToggle,
 } as Meta
 
 const Template: Story = (args) => {
   return (
     <Box w={64} h={64}>
-      <SearchBar {...args} />
+      <DarkmodeToggle {...args} />
     </Box>
   )
 }
 
-export const DefaultSearchBar = Template.bind({})
+export const DarkmodeToggleSwitch = Template.bind({})

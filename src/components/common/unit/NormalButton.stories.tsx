@@ -18,41 +18,19 @@ const Template: Story<NormalButtonProps> = (args) => {
   )
 }
 
-export const SignupPC = Template.bind({})
-SignupPC.args = {
+export const Signup = Template.bind({})
+Signup.args = {
   text: '新規会員登録',
   bg: 'green.300',
   color: 'white',
-  size: 'md',
   hover: { bg: 'green.200' },
 } as NormalButtonProps
 
-export const SignupSP = Template.bind({})
-SignupSP.args = {
-  text: '会員登録',
-  bg: 'green.300',
-  color: 'white',
-  size: 'sm',
-  hover: { bg: 'green.200' },
-} as NormalButtonProps
-
-export const LoginPC = Template.bind({})
-LoginPC.args = {
+export const Login = Template.bind({})
+Login.args = {
   text: 'ログイン',
   bg: 'white',
   color: 'green.300',
-  size: 'md',
-  variant: 'outline',
-  borderColor: 'green.300',
-  hover: { bg: 'green.300', color: 'white' },
-} as NormalButtonProps
-
-export const LoginSP = Template.bind({})
-LoginSP.args = {
-  text: 'ログイン',
-  bg: 'white',
-  color: 'green.300',
-  size: 'sm',
   variant: 'outline',
   borderColor: 'green.300',
   hover: { bg: 'green.300', color: 'white' },

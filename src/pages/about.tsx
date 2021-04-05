@@ -1,15 +1,23 @@
+import { Box, Text } from '@chakra-ui/react'
 import Head from 'next/head'
-import Image from 'next/image'
+
+import { NextImage } from '@/components/common/unit/NextImage'
 
 const About = () => {
   return (
     <>
       <Head>
         <title>About</title>
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Image src="/logo1.svg" alt="アプリケーションロゴ" width={175} height={93} />
-      <h2>About</h2>
+      <Box w="100%" h="60px" bg="gray.300" boxShadow="lg" zIndex="1" position="fixed">
+        <Text fontSize="30px" ml="5">
+          Kiraku
+        </Text>
+      </Box>
+      <Box w="100%" h="450px" bg="gray.200" zIndex="0" filter="blur(4px)">
+        <NextImage src="/hero.webp" alt="ヒーロー画像" />
+      </Box>
     </>
   )
 }

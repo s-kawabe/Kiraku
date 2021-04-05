@@ -1,11 +1,12 @@
 import { Button } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
+import { useIsDesktop } from '@/utils/methods/customeHooks'
+
 export type NormalButtonProps = {
   text: string
   bg: string
   color: string
-  size: 'sm' | 'md' | 'lg'
   variant?: string
   borderColor?: string
   borderRadius?: string
@@ -15,15 +16,15 @@ export type NormalButtonProps = {
   }
 }
 
-// TODO SP時のサイズは親コンポーネントから変える必要がある
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
+  const [isDesktop] = useIsDesktop()
   return (
     <Button
       bg={props.bg}
       color={props.color}
       variant={props.variant}
       borderColor={props.borderColor}
-      size={props.size}
+      size={isDesktop ? 'md' : 'sm'}
       _hover={props.hover}
     >
       {props.text}

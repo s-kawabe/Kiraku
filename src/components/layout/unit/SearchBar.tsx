@@ -1,13 +1,15 @@
 /* eslint-disable react/no-children-prop */
 import { Search2Icon } from '@chakra-ui/icons'
-import { Input, InputGroup, InputLeftElement, useMediaQuery } from '@chakra-ui/react'
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import type { VFC } from 'react'
 
+import { useIsDesktop } from '@/utils/methods/customeHooks'
+
 const SearchBar: VFC = () => {
-  const [isLargerThan480] = useMediaQuery('(min-width: 480px)')
+  const [isDesktop] = useIsDesktop()
   return (
-    <InputGroup w={{ base: '200px', sm: '400px' }} size={isLargerThan480 ? 'md' : 'sm'}>
+    <InputGroup w={{ base: '200px', sm: '400px' }} size={isDesktop ? 'md' : 'sm'}>
       <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.500" />} />
       <Input
         type="text"

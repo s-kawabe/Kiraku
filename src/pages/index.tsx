@@ -1,13 +1,13 @@
 import Head from 'next/head'
 
-import { NextImage } from '@/components/common/unit/NextImage'
+import { AboutCard } from '@/components/about/unit'
 
 const Home = () => {
   return (
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <h2>Home</h2>
       <button
@@ -17,7 +17,7 @@ const Home = () => {
       >
         Button
       </button>
-      <NextImage src="/Error_404.svg" alt="hoge" width={500} height={315} />
+      <AboutCard text="ファッションを投稿" src="/post.svg" alt="ファッションを投稿" />
     </>
   )
 }

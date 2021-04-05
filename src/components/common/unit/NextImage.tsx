@@ -4,12 +4,30 @@ import type { VFC } from 'react'
 export type NextImageProps = {
   src: string
   alt: string
-  width: number
-  height: number
+  width?: number
+  height?: number
 }
 
 const NextImage: VFC<NextImageProps> = (props: NextImageProps) => {
-  return <Image src={props.src} alt={props.alt} width={props.width} height={props.height} />
+  // eslint-disable-next-line react/destructuring-assignment
+  const { src, alt, width, height } = props
+
+  return (
+    <>
+      {width === undefined && height === undefined ? (
+        <Image
+          src={props.src}
+          alt={props.alt}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="50% 40%"
+          priority={true}
+        />
+      ) : (
+        <Image src={src} alt={alt} width={width as number} height={height as number} />
+      )}
+    </>
+  )
 }
 
 export { NextImage }
