@@ -1,4 +1,4 @@
-import { Switch } from '@chakra-ui/react'
+import { Switch, Tooltip } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import type { VFC } from 'react'
 import { useEffect, useState } from 'react'
@@ -25,17 +25,19 @@ const DarkmodeToggle: VFC = () => {
   `
 
   return (
-    <div>
-      <Switch
-        size={isDesktop ? 'lg' : 'md'}
-        colorScheme="gray"
-        onChange={() => {
-          handleChange(isDark)
-        }}
-        isChecked={isDark}
-        css={toggle}
-      />
-    </div>
+    <Tooltip label="カラーモードを変更" bg="gray.400" size="sm">
+      <span>
+        <Switch
+          size={isDesktop ? 'lg' : 'md'}
+          colorScheme="gray"
+          onChange={() => {
+            handleChange(isDark)
+          }}
+          isChecked={isDark}
+          css={toggle}
+        />
+      </span>
+    </Tooltip>
   )
 }
 
