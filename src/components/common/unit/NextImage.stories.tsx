@@ -18,6 +18,7 @@ const Template: Story<NextImageProps> = (args) => {
   )
 }
 
+// Attention: changes to the value will be ignored to width and height
 export const HeaderLogo = Template.bind({})
 HeaderLogo.args = {
   src: '/logo.svg',

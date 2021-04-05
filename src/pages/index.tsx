@@ -1,7 +1,5 @@
 import Head from 'next/head'
 
-import { NextImage } from '@/components/common/unit/NextImage'
-
 const Home = () => {
   return (
     <>
@@ -17,7 +15,6 @@ const Home = () => {
       >
         Button
       </button>
-      <NextImage src="/hero.webp" alt="ヒーロー画像" width={2240} height={3360} />
     </>
   )
 }

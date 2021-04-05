@@ -6,7 +6,7 @@ const Page404: VFC = () => {
   return (
     <main>
       <p>お探しのページは存在しません。</p>
-      <NextImage src="/Error_404.svg" alt="Not Found 404" width={400} height={215} />
+      <NextImage src="/Error_404.svg" alt="Not Found 404" width={800} height={430} />
     </main>
   )
 }
