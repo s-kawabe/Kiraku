@@ -7,7 +7,7 @@ const Home = () => {
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <h2>Home</h2>
       <button
