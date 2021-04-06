@@ -1,16 +1,26 @@
 import { MenuDivider, MenuItem, MenuList } from '@chakra-ui/react'
 import type { VFC } from 'react'
+// import type { ReactNode } from 'react'
 
-const ContextMenu: VFC = () => {
+export type ContextMenuProps = {
+  items: JSX.Element[]
+}
+
+const ContextMenu: VFC<ContextMenuProps> = (props: ContextMenuProps) => {
   return (
-    <MenuList>
-      <MenuItem>New File</MenuItem>
-      <MenuDivider />
-      <MenuItem>New Window</MenuItem>
-      <MenuDivider />
-      <MenuItem>Open...</MenuItem>
-      <MenuDivider />
-      <MenuItem>Save File</MenuItem>
+    <MenuList borderRadius="18px">
+      {props.items.map((item, i) => {
+        return (
+          <div key={i}>
+            <MenuItem borderRadius="4px" my={0}>
+              {item}
+            </MenuItem>
+            {props.items.lastIndexOf(item) !== props.items.length - 1 && (
+              <MenuDivider p={0} m={0} />
+            )}
+          </div>
+        )
+      })}
     </MenuList>
   )
 }

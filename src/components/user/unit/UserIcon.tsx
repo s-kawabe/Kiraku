@@ -18,6 +18,7 @@ const UserIcon: VFC<UserIconProps> = (props: UserIconProps) => {
       bg="gray.800"
       overflow="hidden"
       onClick={props.onClick}
+      cursor="pointer"
     >
       <NextImage src={props.src} alt="ユーザアイコン" width={props.width} height={props.height} />
     </Circle>

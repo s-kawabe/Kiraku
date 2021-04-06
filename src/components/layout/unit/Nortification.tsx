@@ -8,7 +8,7 @@ export type NortificationProps = {
 
 const Nortification: VFC<NortificationProps> = (props: NortificationProps) => {
   return (
-    <Avatar m="2" size="sm" background="transparent">
+    <Avatar m="2" size="sm" background="transparent" cursor="pointer">
       <Icon as={FaBell} w="35px" h="35px" color="gray.700" />
       {props.isNortification && <AvatarBadge boxSize="1em" bg="blue.400" />}
     </Avatar>
