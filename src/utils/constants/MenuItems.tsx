@@ -33,21 +33,21 @@ export const userMenuItems = (): JSX.Element[] => {
         マイページを表示
       </Text>
     </Box>,
-    <Text color="gray.800" fontSize="14px">
+    <Text color="gray.800" fontSize="13px">
       自分の投稿
     </Text>,
-    <Text color="gray.800" fontSize="14px">
+    <Text color="gray.800" fontSize="13px">
       お気に入りの投稿
     </Text>,
-    <Text color="gray.800" fontSize="14px">
+    <Text color="gray.800" fontSize="13px">
       アカウント設定
     </Text>,
-    <Text color="gray.800" fontSize="14px">
+    <Text color="gray.800" fontSize="13px">
       ログアウト
     </Text>,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     <Box>
-      <Text color="gray.800" fontSize="14px" mb="1">
+      <Text color="gray.800" fontSize="13px" mb="1">
         カラーモードを変更
       </Text>
       <DarkmodeToggle />

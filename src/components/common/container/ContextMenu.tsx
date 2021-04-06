@@ -12,11 +12,11 @@ const ContextMenu: VFC<ContextMenuProps> = (props: ContextMenuProps) => {
       {props.items.map((item, i) => {
         return (
           <div key={i}>
-            <MenuItem borderRadius="4px" my={0}>
+            <MenuItem borderRadius="4px" my="5px">
               {item}
             </MenuItem>
             {props.items.lastIndexOf(item) !== props.items.length - 1 && (
-              <MenuDivider p={0} m={0} />
+              <MenuDivider p={0} m={0} color="gray.300" />
             )}
           </div>
         )

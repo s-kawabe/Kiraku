@@ -17,11 +17,11 @@ const AboutCard: VFC<AboutCardProps> = (props: AboutCardProps) => {
     <Center
       w={['290px', '390px']}
       h={['290px', '390px']}
-      bg="rgba(102, 49, 11, 0.6)"
+      bg="rgba(102, 49, 11, 0.7)"
       borderRadius="25"
     >
       <VStack spacing="5">
-        <Heading color="white" size="md">
+        <Heading color="white" fontSize={['20px', '24px']}>
           {props.text}
         </Heading>
         <Center w={['250px', '350px']} h={['200px', '300px']} bg="#FFF8DF" borderRadius="5">
