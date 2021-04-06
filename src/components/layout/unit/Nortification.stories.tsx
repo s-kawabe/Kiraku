@@ -6,7 +6,7 @@ import { Nortification } from './Nortification'
 
 // eslint-disable-next-line import/no-default-export
 export default {
-  title: 'layout/containers/Nortification',
+  title: 'layout/unit/Nortification',
   component: Nortification,
 } as Meta
 
