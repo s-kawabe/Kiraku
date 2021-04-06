@@ -1,3 +1,7 @@
+export { Comment } from './Comment'
+export { CommentIconWithCount } from './CommentIconWithCount'
+export { GenderRadioButton } from './GenderRadioButton'
 export { IconButton } from './IconButton'
+export { LikeButtonWithCount } from './LikeButtonWithCount'
 export { NextImage } from './NextImage'
 export { NormalButton } from './NormalButton'

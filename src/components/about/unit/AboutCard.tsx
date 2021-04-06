@@ -25,6 +25,7 @@ const AboutCard: VFC<AboutCardProps> = (props: AboutCardProps) => {
           {props.text}
         </Heading>
         <Center w={['250px', '350px']} h={['200px', '300px']} bg="#FFF8DF" borderRadius="5">
+          {/* Support to SSR problem... */}
           {typeof window !== 'undefined' ? (
             isDesktop ? (
               <NextImage src={props.src} alt={props.alt} width={275} height={250} />
