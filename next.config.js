@@ -2,6 +2,9 @@ module.exports = {
   reactStrictMode: true,
   typescript: { ignoreDevErrors: true },
   poweredByHeader: false,
+  images: {
+    domains: ['firebase.google.com'],
+  },
   env: {
     HASURA_GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET,
     HASURA_URL: process.env.HASURA_URL,
