@@ -25,7 +25,6 @@ const DarkmodeToggle: VFC = () => {
   `
 
   return (
-    // <Tooltip label="カラーモードを変更" bg="gray.400" size="sm">
     <span>
       <Switch
         size={isDesktop ? 'lg' : 'md'}
@@ -37,7 +36,6 @@ const DarkmodeToggle: VFC = () => {
         css={toggle}
       />
     </span>
-    // </Tooltip>
   )
 }
 
