@@ -1,6 +1,7 @@
 import Head from 'next/head'
 
 import { AboutCard } from '@/components/about/unit'
+import { Header } from '@/components/layout/container'
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <Header isLogin={true} />
       <h2>Home</h2>
       <button
         onClick={() => {
