@@ -1,3 +1,3 @@
-export { IconHeading } from './IconHeading'
+export { DarkmodeToggle } from './DarkmodeToggle'
 export { Nortification } from './Nortification'
 export { SearchBar } from './SearchBar'

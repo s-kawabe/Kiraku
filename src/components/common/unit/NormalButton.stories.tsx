@@ -41,7 +41,6 @@ Register.args = {
   text: '登録',
   bg: 'green.300',
   color: 'white',
-  size: 'md',
   hover: { bg: 'green.200' },
 } as NormalButtonProps
 
@@ -50,6 +49,5 @@ Post.args = {
   text: '投稿',
   bg: 'green.300',
   color: 'white',
-  size: 'md',
   hover: { bg: 'green.200' },
 } as NormalButtonProps

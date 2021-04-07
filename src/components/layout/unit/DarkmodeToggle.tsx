@@ -1,4 +1,4 @@
-import { Switch, Tooltip } from '@chakra-ui/react'
+import { Switch } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import type { VFC } from 'react'
 import { useEffect, useState } from 'react'
@@ -8,7 +8,7 @@ import { useIsDesktop } from '@/utils/methods/customeHooks'
 // eslint-disable-next-line react/display-name
 const DarkmodeToggle: VFC = () => {
   const [isDark, setIsDark] = useState(false)
-  const [isDesktop] = useIsDesktop()
+  const isDesktop = useIsDesktop()
 
   const handleChange = (isDark: boolean) => {
     setIsDark(!isDark)
@@ -25,19 +25,17 @@ const DarkmodeToggle: VFC = () => {
   `
 
   return (
-    <Tooltip label="カラーモードを変更" bg="gray.400" size="sm">
-      <span>
-        <Switch
-          size={isDesktop ? 'lg' : 'md'}
-          colorScheme="gray"
-          onChange={() => {
-            handleChange(isDark)
-          }}
-          isChecked={isDark}
-          css={toggle}
-        />
-      </span>
-    </Tooltip>
+    <span>
+      <Switch
+        size={isDesktop ? 'lg' : 'md'}
+        colorScheme="gray"
+        onChange={() => {
+          handleChange(isDark)
+        }}
+        isChecked={isDark}
+        css={toggle}
+      />
+    </span>
   )
 }
 
