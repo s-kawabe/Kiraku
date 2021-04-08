@@ -3,7 +3,7 @@ import { Box, chakra, Icon, Text, Tooltip } from '@chakra-ui/react'
 import type { HTMLMotionProps } from 'framer-motion'
 import { motion, useAnimation } from 'framer-motion'
 import type { VFC } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
 export type LikeButtonWithCountProps = {
@@ -12,16 +12,15 @@ export type LikeButtonWithCountProps = {
 }
 
 const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWithCountProps) => {
-  const [isLike, setIsLike] = useState(true)
+  const [isLike, setIsLike] = useState(false)
   const controls = useAnimation()
 
-  const toggleLike = async () => {
-    await setIsLike(!isLike)
-    animationStart()
+  const toggleLike = () => {
+    setIsLike(!isLike)
   }
 
   const animationStart = () => {
-    if (!isLike) {
+    if (isLike) {
       controls.start({
         scale: [0.9, 1.1, 1.2, 1.2, 1],
         color: ['#FFF5F5', '#FED7D7', '#FEB2B2', '#FC8181', '#F56565'],
@@ -33,6 +32,11 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
   type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>
 
   const MotionBox: React.FC<MotionBoxProps> = motion(chakra.div)
+
+  useEffect(() => {
+    animationStart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLike])
 
   return (
     <Box display="flex" alignItems="center" color="gray.500" transition="all 0.3s">
@@ -47,7 +51,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
           transition={{ duration: 0.2 }}
           color={isLike ? 'red.400' : ''}
         >
-          <Icon as={isLike ? AiFillHeart : AiOutlineHeart} mr="2.5" fontSize="22px" />
+          <Icon as={isLike ? AiFillHeart : AiOutlineHeart} mr="4px" fontSize="22px" />
         </MotionBox>
       </Tooltip>
       <Text>{props.count}</Text>

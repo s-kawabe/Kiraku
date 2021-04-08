@@ -12,6 +12,8 @@ const NextImage: VFC<NextImageProps> = (props: NextImageProps) => {
   // eslint-disable-next-line react/destructuring-assignment
   const { src, alt, width, height } = props
 
+  // eslint-disable-next-line no-console
+
   return (
     <>
       {width === undefined && height === undefined ? (
@@ -21,7 +23,6 @@ const NextImage: VFC<NextImageProps> = (props: NextImageProps) => {
           layout="fill"
           objectFit="cover"
           objectPosition="50% 40%"
-          priority={true}
         />
       ) : (
         <Image src={src} alt={alt} width={width as number} height={height as number} />
