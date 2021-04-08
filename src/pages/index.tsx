@@ -4,8 +4,8 @@ import Head from 'next/head'
 import { AboutCard } from '@/components/about/unit'
 import { Header } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const aboutCardText = require('@/utils/constants/aboutCardText')
+
+import { aboutCardText } from '../utils/constants/aboutCardText'
 
 const Home = () => {
   const { post, blog, show } = aboutCardText
