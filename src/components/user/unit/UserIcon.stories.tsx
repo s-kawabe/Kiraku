@@ -25,6 +25,13 @@ HeaderUserIcon.args = {
   height: 60,
 } as UserIconProps
 
+export const HeaderNoUserIcon = Template.bind({})
+HeaderNoUserIcon.args = {
+  src: '/nouser.svg',
+  width: 60,
+  height: 60,
+} as UserIconProps
+
 export const UserPageIcon = Template.bind({})
 UserPageIcon.args = {
   src: '/myicon.jpg',

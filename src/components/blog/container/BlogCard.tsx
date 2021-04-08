@@ -1,7 +1,13 @@
+import { VStack } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
-const BlogCard: VFC = () => {
-  return <div></div>
+export type BlogCardProps = {
+  width: string
+  height: string
+}
+
+const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
+  return <VStack>{props.width}</VStack>
 }
 
 export { BlogCard }

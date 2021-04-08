@@ -15,7 +15,6 @@ const UserIcon: VFC<UserIconProps> = (props: UserIconProps) => {
     <Circle
       w={props.width + 'px'}
       h={props.height + 'px'}
-      bg="gray.800"
       overflow="hidden"
       onClick={props.onClick}
       cursor="pointer"
