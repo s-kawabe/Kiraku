@@ -31,6 +31,16 @@
   "babel": {
     "presets": [
       "next/babel"
+    ],
+    "plugins": [
+      [
+        "@emotion",
+        {
+          "ssr": true,
+          "displayName": true,
+          "preprocess": false
+        }
+      ]
     ]
   },
   "dependencies": {

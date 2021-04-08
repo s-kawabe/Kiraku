@@ -12,14 +12,26 @@ export default {
 
 const Template: Story<PostCardProps> = (args) => {
   return (
-    <Box w={64} h={64}>
+    <Box w={150} h={150}>
       <PostCard {...args} />
     </Box>
   )
 }
 
-export const DefaultPostCard = Template.bind({})
-DefaultPostCard.args = {
-  width: '580px',
-  height: '276px',
-}
+export const PostCardLongHorizonralImage = Template.bind({})
+PostCardLongHorizonralImage.args = {
+  imageSrc: '/fashion.jpeg',
+  userIcon: '/myicon.jpg',
+} as PostCardProps
+
+export const PostCardLongVerticalImage = Template.bind({})
+PostCardLongVerticalImage.args = {
+  imageSrc: '/fashion2.png',
+  userIcon: '/myicon.jpg',
+} as PostCardProps
+
+export const PostCardLongVerticalImage2 = Template.bind({})
+PostCardLongVerticalImage2.args = {
+  imageSrc: '/fashion3.jpeg',
+  userIcon: '/myicon.jpg',
+} as PostCardProps

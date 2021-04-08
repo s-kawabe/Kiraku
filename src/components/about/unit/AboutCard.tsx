@@ -38,12 +38,12 @@ const AboutCard: VFC<AboutCardProps> = (props: AboutCardProps) => {
           <></>
         )}
         <Text color="gray.600" fontSize={['14px', '18px']}>
-          {texts.map((text) => {
+          {texts.map((text, index) => {
             return (
-              <>
+              <span key={index}>
                 {text}
                 <br />
-              </>
+              </span>
             )
           })}
         </Text>

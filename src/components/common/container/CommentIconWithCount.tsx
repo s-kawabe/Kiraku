@@ -10,8 +10,8 @@ const CommentIconWithCount: VFC<CommentIconWithCountProps> = (props: CommentIcon
   return (
     <Box display="flex" alignItems="center" color="gray.500">
       <Tooltip label="コメントする" bg="gray.400" fontSize="11px">
-        <Text cursor="pointer">
-          <Icon as={FaRegComment} mr="2.5" fontSize="20px" />
+        <Text cursor="pointer" pb="4px">
+          <Icon as={FaRegComment} mr="5px" fontSize="20px" />
         </Text>
       </Tooltip>
       <Text>{props.count}</Text>

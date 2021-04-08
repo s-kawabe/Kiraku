@@ -51,7 +51,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
           transition={{ duration: 0.2 }}
           color={isLike ? 'red.400' : ''}
         >
-          <Icon as={isLike ? AiFillHeart : AiOutlineHeart} mr="2.5" fontSize="22px" />
+          <Icon as={isLike ? AiFillHeart : AiOutlineHeart} mr="4px" fontSize="22px" />
         </MotionBox>
       </Tooltip>
       <Text>{props.count}</Text>
