@@ -20,6 +20,5 @@ const Template: Story<BlogCardProps> = (args) => {
 
 export const DefaultBlogCard = Template.bind({})
 DefaultBlogCard.args = {
-  width: '370px',
-  height: '354px',
+  userIcon: '/myicon.jpg',
 }

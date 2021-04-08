@@ -22,3 +22,9 @@ export const Comment = Template.bind({})
 Comment.args = {
   count: 33,
 }
+
+export const SmallComment = Template.bind({})
+SmallComment.args = {
+  count: 33,
+  fontSize: '14px',
+}
