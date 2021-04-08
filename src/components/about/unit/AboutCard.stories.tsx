@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import type { Meta, Story } from '@storybook/react/types-6-0'
 
-import { aboutCardText } from '@/utils/constants/aboutCardText'
+import { AboutCardText } from '@/utils/constants/AboutCardText'
 
 import type { AboutCardProps } from './AboutCard'
 import { AboutCard } from './AboutCard'
@@ -22,24 +22,24 @@ const Template: Story<AboutCardProps> = (args) => {
 
 export const Post = Template.bind({})
 Post.args = {
-  heading: aboutCardText.post.heading,
-  text: aboutCardText.post.text,
+  heading: AboutCardText.post.heading,
+  text: AboutCardText.post.text,
   src: '/post.svg',
   alt: 'ファッションを投稿',
 }
 
 export const Blog = Template.bind({})
 Blog.args = {
-  heading: aboutCardText.blog.heading,
-  text: aboutCardText.blog.text,
+  heading: AboutCardText.blog.heading,
+  text: AboutCardText.blog.text,
   src: '/blog.svg',
   alt: 'ブログを書く',
 }
 
 export const Show = Template.bind({})
 Show.args = {
-  heading: aboutCardText.show.heading,
-  text: aboutCardText.show.text,
+  heading: AboutCardText.show.heading,
+  text: AboutCardText.show.text,
   src: '/show.svg',
   alt: '投稿を見る',
 }

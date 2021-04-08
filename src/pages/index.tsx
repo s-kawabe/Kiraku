@@ -4,10 +4,10 @@ import Head from 'next/head'
 import { AboutCard } from '@/components/about/unit'
 import { Header } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-import { aboutCardText } from '@/utils/constants/aboutCardText'
+import { AboutCardText } from '@/utils/constants/AboutCardText'
 
 const Home = () => {
-  const { post, blog, show } = aboutCardText
+  const { post, blog, show } = AboutCardText
   return (
     <>
       <Head>
