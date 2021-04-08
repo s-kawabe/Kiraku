@@ -35,7 +35,7 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
           {/* Post Button */}
           <Menu>
             <MenuButton transition="all 0.1s">
-              <NormalButton text="投稿" bg="green.300" color="white" hover={{ bg: 'green.200' }} />
+              <NormalButton text="投稿" bg="green.300" color="white" />
             </MenuButton>
             <ContextMenu items={postMenuItems()} />
           </Menu>

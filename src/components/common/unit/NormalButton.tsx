@@ -18,6 +18,7 @@ export type NormalButtonProps = {
 
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
   const isDesktop = useIsDesktop()
+
   return (
     <Button
       bg={props.bg}

@@ -20,7 +20,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       bg="white"
       p="5px"
       borderRadius="8px"
-      boxShadow="0px 0px 8px rgba(83, 83, 83, 0.15)"
+      boxShadow="0px 0px 4px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
       // transition="all 0.4s"
       // _hover={{
