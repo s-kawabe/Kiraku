@@ -1,4 +1,5 @@
 import { Box, Center, HStack, Text } from '@chakra-ui/react'
+import { css } from '@emotion/react'
 import type { VFC } from 'react'
 
 import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
@@ -16,7 +17,6 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
   return (
     <HStack
       w="540px"
-      h="250px"
       bg="white"
       p="5px"
       borderRadius="8px"
@@ -27,12 +27,11 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       //   boxShadow: '0px 0px 15px rgba(50, 50, 50, 0.2)',
       // }}
     >
-      <Center w="186px" h="250px" borderRadius="8px">
+      <Center w="186px" borderRadius="8px">
         <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} width={200} height={250} />
       </Center>
       <Box
         w="400px"
-        h="242px"
         py="10px"
         px="15px"
         borderRadius="8px"
@@ -40,24 +39,31 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
         flexDirection="column"
         justifyContent="space-between"
       >
-        <HStack background="gray.100" borderRadius="25px">
+        <HStack
+          background="gray.100"
+          borderRadius="25px"
+          css={css`
+            &:hover img {
+              opacity: 0.8;
+            }
+          `}
+        >
           <UserIcon src={props.userIcon} width={52} height={52} />
           <Box>
-            <Text fontSize="18px" color="black">
+            <Text fontSize="16px" color="black">
               Shintaro
             </Text>
-            <Text fontSize="14px" color="gray.500">
+            <Text fontSize="12px" color="gray.500">
               @shin_k_2281
             </Text>
           </Box>
         </HStack>
-        <Box w="300px" h="200px" overflowWrap="break-word" mt="16px">
+        <Box w="300px" overflowWrap="break-word" mt="16px">
           <Text fontSize="13.5px" color="gray.700">
-            ヌメ皮を使用したモダンな財布がお気に入り。 木のボールチェーンブレスレットで手首を
-            上品にドレスアップ！！上品にドレスアップ！！上品にドレスアップ！！うわあああああああああああああ
+            この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです
           </Text>
         </Box>
-        <Box display="flex" alignItems="flex-end">
+        <Box ml="auto">
           <HStack spacing={8}>
             <CommentIconWithCount count={100} />
             <LikeButtonWithCount count={200} isLiked={false} />

@@ -10,8 +10,9 @@ export const AboutCardText = {
   blog: {
     heading: 'ブログを書く',
     text: `ファッションに関する
-    知識共有や最近の出来事を
-    ブログに書いてみよう`,
+    さまざまな投稿のうち
+    長く文章を書きたくなったら
+    ブログを書いてみよう`,
     img: '/blog.svg',
   },
   show: {
