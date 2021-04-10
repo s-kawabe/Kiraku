@@ -32,7 +32,7 @@ HeaderCommentList.args = {
       userIcon: '/myicon.jpg',
       userId: 'hogepiyo',
       comment: `いいですねああああああああああああ
-        ああああああああああああああああああああああああああああああ`,
+        あああああああああああああああああああああああああああああああああああああああ`,
     },
     {
       userIcon: '/myicon.jpg',
