@@ -1,4 +1,4 @@
-export const AboutCardText = {
+export const ABOUT_CARD_TEXT = {
   post: {
     heading: 'ファッションを投稿',
     text: `新しく購入したアイテムや

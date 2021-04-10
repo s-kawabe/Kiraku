@@ -21,5 +21,8 @@ const Template: Story<TextFormProps> = (args) => {
 export const EMailTextForm = Template.bind({})
 EMailTextForm.args = {
   label: 'メールアドレス',
-  name: 'mail',
+  placeholder: 'メールアドレスを入力',
+  name: 'email',
+  type: 'email',
+  isRequired: true,
 } as TextFormProps
