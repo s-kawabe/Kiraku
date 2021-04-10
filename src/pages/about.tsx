@@ -16,7 +16,7 @@ const About = () => {
         </Text>
       </Box>
       <Box w="100%" h="450px" bg="gray.200" zIndex="0" filter="blur(4px)">
-        <NextImage src="/hero.webp" alt="ヒーロー画像" />
+        <NextImage src="/hero.webp" alt="ヒーロー画像" imageType="hero" />
       </Box>
     </>
   )
