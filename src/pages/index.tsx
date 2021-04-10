@@ -6,6 +6,8 @@ import { Header } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 import { AboutCardText } from '@/utils/constants/AboutCardText'
 
+import { BlogCard } from '../components/blog/container/BlogCard'
+
 const Home = () => {
   const { post, blog, show } = AboutCardText
   return (
@@ -36,6 +38,11 @@ const Home = () => {
       <br />
       <br />
       <br />
+      <Stack direction={['column', 'row']} spacing={5} mt="30px">
+        <BlogCard userIcon="/myicon.jpg" />
+        <BlogCard userIcon="/nouser.svg" />
+        <BlogCard userIcon="/logo.svg" />
+      </Stack>
       <br />
       <br />
       <br />

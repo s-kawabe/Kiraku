@@ -42,7 +42,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
 
   return (
     <Box display="flex" alignItems="center" color="gray.500" transition="all 0.3s">
-      <Tooltip label="いいね！" bg="gray.400" fontSize="11px">
+      <Tooltip label="いいね！" bg="gray.500" fontSize="11px">
         <MotionBox
           cursor="pointer"
           onClick={toggleLike}

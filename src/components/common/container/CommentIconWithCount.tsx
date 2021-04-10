@@ -10,7 +10,7 @@ export type CommentIconWithCountProps = {
 const CommentIconWithCount: VFC<CommentIconWithCountProps> = (props: CommentIconWithCountProps) => {
   return (
     <Box display="flex" alignItems="center" color="gray.500">
-      <Tooltip label="コメントする" bg="gray.400" fontSize="11px">
+      <Tooltip label="コメントする" bg="gray.500" fontSize="11px">
         <Text cursor="pointer" pb="4px">
           <Icon as={FaRegComment} mr="5px" fontSize={props.fontSize || '20px'} />
         </Text>

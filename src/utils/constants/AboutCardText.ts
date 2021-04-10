@@ -12,8 +12,7 @@ export const AboutCardText = {
     text: `ファッションに関する
     さまざまな投稿のうち
     長く文章を書きたくなったら
-    ブログを書いてみよう
-    `,
+    ブログを書いてみよう`,
     img: '/blog.svg',
   },
   show: {
