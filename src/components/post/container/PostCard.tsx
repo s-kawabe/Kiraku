@@ -27,8 +27,8 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       //   boxShadow: '0px 0px 15px rgba(50, 50, 50, 0.2)',
       // }}
     >
-      <Center w="186px" borderRadius="8px">
-        <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} width={200} height={250} />
+      <Center w="200px" borderRadius="8px">
+        <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} imageType="card" />
       </Center>
       <Box
         w="400px"

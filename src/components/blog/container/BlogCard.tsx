@@ -53,7 +53,7 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
         </Text>
       </Center>
       <Box h="110px" p="8px" borderRadius="16px" overflow="hidden">
-        <Text fontSize="11px">
+        <Text fontSize="11px" color="gray.600">
           こんにちは、皆様いかがお過ごしでしょうか
           今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
           まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
