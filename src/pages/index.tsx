@@ -2,14 +2,13 @@ import { Stack } from '@chakra-ui/react'
 import Head from 'next/head'
 
 import { AboutCard } from '@/components/about/unit'
+import { BlogCard } from '@/components/blog/container/BlogCard'
 import { Header } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-import { AboutCardText } from '@/utils/constants/AboutCardText'
-
-import { BlogCard } from '../components/blog/container/BlogCard'
+import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
 
 const Home = () => {
-  const { post, blog, show } = AboutCardText
+  const { post, blog, show } = ABOUT_CARD_TEXT
   return (
     <>
       <Head>

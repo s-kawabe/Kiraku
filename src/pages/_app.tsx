@@ -8,7 +8,7 @@ import { ChakraWrapper } from '@/chakra/ChakraWrapper'
 
 const base = css`
   body {
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
       'BIZ UDPGothic', Meiryo, sans-serif !important;
   }
 `

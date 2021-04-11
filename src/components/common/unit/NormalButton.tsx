@@ -10,10 +10,12 @@ export type NormalButtonProps = {
   variant?: string
   borderColor?: string
   borderRadius?: string
+  width?: string
   hover?: {
     bg?: string
     color?: string
   }
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
@@ -21,12 +23,14 @@ const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
 
   return (
     <Button
+      width={props.width}
       bg={props.bg}
       color={props.color}
       variant={props.variant}
       borderColor={props.borderColor}
       size={isDesktop ? 'md' : 'sm'}
       _hover={props.hover}
+      type={props.type}
     >
       {props.text}
     </Button>
