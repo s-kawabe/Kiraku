@@ -7,13 +7,11 @@ export type TextFormProps = {
   name: string
   type: string
   isRequired: boolean
-  errorMessage?: any
+  errorMessage?: string
   registers?: any
 }
 
 const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
-  // eslint-disable-next-line no-console
-  console.log(props.errorMessage)
   return (
     <FormControl id={props.name} w="400px">
       <FormLabel m={1}>
