@@ -12,7 +12,7 @@ export default {
 
 const Template: Story<HeaderProps> = (args) => {
   return (
-    <Box w={64} h={64}>
+    <Box>
       <Header {...args} />
     </Box>
   )
