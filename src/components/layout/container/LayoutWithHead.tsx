@@ -30,9 +30,12 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta property="og:site_name" content="Kiraku" />
         <meta property="og:description" content={description} />
         <meta property="og:title" content={pageTitle} />
-        <meta property="og:image" content={`${ogUrl}/logo_og.jpg`} />
+        <meta property="og:image" content={`${ogUrl}/og.jpg`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@shin_k_2281" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={`${ogUrl}/og.jpg`} />
       </Head>
 
       <Header isLogin={!!props.isLogin} />
