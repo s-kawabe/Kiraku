@@ -3,12 +3,9 @@ import { css } from '@emotion/react'
 import type { VFC } from 'react'
 import { useEffect, useState } from 'react'
 
-import { useIsDesktop } from '@/utils/methods/customeHooks'
-
 // eslint-disable-next-line react/display-name
 const DarkmodeToggle: VFC = () => {
   const [isDark, setIsDark] = useState(false)
-  const isDesktop = useIsDesktop()
 
   const handleChange = (isDark: boolean) => {
     setIsDark(!isDark)
@@ -27,7 +24,7 @@ const DarkmodeToggle: VFC = () => {
   return (
     <span>
       <Switch
-        size={isDesktop ? 'lg' : 'md'}
+        size="lg"
         colorScheme="gray"
         onChange={() => {
           handleChange(isDark)

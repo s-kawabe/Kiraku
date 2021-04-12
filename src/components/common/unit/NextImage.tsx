@@ -19,7 +19,15 @@ const NextImage: VFC<NextImageProps> = (props: NextImageProps) => {
     <>
       {imageType ? (
         imageType === 'hero' ? (
-          <Image src={src} alt={alt} layout="fill" objectFit="cover" objectPosition="50% 40%" />
+          <Image
+            src={src}
+            alt={alt}
+            width={1920}
+            height={600}
+            priority={true}
+            objectFit="cover"
+            objectPosition="55% 38%"
+          />
         ) : (
           <Image src={src} alt={alt} objectFit="contain" width={200} height={200} />
         )

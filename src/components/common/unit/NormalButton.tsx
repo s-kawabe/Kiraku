@@ -7,6 +7,7 @@ export type NormalButtonProps = {
   text: string
   bg: string
   color: string
+  mr?: string
   variant?: string
   borderColor?: string
   borderRadius?: string
@@ -19,21 +20,22 @@ export type NormalButtonProps = {
 }
 
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
-  const isDesktop = useIsDesktop()
+  const isPC = useIsDesktop()
+  // eslint-disable-next-line react/destructuring-assignment
+  const { text, hover, ...inputProps } = props
+
+  const isClient = () => {
+    return typeof window !== 'undefined'
+  }
 
   return (
-    <Button
-      width={props.width}
-      bg={props.bg}
-      color={props.color}
-      variant={props.variant}
-      borderColor={props.borderColor}
-      size={isDesktop ? 'md' : 'sm'}
-      _hover={props.hover}
-      type={props.type}
-    >
-      {props.text}
-    </Button>
+    <>
+      {isClient() && (
+        <Button size={isPC ? 'md' : 'sm'} _hover={hover} {...inputProps}>
+          {text}
+        </Button>
+      )}
+    </>
   )
 }
 
