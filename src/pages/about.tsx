@@ -1,10 +1,9 @@
 import { Box, Heading, Stack, VStack } from '@chakra-ui/react'
 import { css } from '@emotion/react'
-import Head from 'next/head'
 
 import { AboutCard, BackgroundCircle } from '@/components/about/unit'
 import { NextImage } from '@/components/common/unit/NextImage'
-import { Header } from '@/components/layout/container'
+import { LayoutWithHead } from '@/components/layout/container'
 import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
@@ -16,12 +15,7 @@ const About = () => {
     return typeof window !== 'undefined'
   }
   return (
-    <>
-      <Head>
-        <title>About</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header isLogin={false} />
+    <LayoutWithHead>
       {/* jumbotron */}
       <Box
         w="100%"
@@ -53,7 +47,7 @@ const About = () => {
       </VStack>
       {/* recent post */}
       {/* recent blog */}
-    </>
+    </LayoutWithHead>
   )
 }
 

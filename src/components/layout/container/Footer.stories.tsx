@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react'
 import type { Meta, Story } from '@storybook/react/types-6-0'
 
 import { Footer } from './Footer'
@@ -10,11 +9,7 @@ export default {
 } as Meta
 
 const Template: Story = (args) => {
-  return (
-    <Box w={64} h={64}>
-      <Footer {...args} />
-    </Box>
-  )
+  return <Footer {...args} />
 }
 
 export const NormalFooter = Template.bind({})
