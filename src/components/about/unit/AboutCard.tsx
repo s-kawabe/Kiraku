@@ -12,8 +12,12 @@ export type AboutCardProps = {
 }
 
 const AboutCard: VFC<AboutCardProps> = (props: AboutCardProps) => {
-  const isDesktop = useIsDesktop()
+  const isPC = useIsDesktop()
   const texts = props.text.split('\n')
+
+  const isClient = () => {
+    return typeof window !== 'undefined'
+  }
 
   return (
     <Center
@@ -27,15 +31,13 @@ const AboutCard: VFC<AboutCardProps> = (props: AboutCardProps) => {
         <Heading color="gray.600" fontSize={['20px', '24px']}>
           {props.heading}
         </Heading>
-        {/* Support to SSR problem... */}
-        {typeof window !== 'undefined' ? (
-          isDesktop ? (
-            <NextImage src={props.src} alt={props.alt} width={275} height={250} />
-          ) : (
-            <NextImage src={props.src} alt={props.alt} width={175} height={150} />
-          )
-        ) : (
-          <></>
+        {isClient() && (
+          <NextImage
+            src={props.src}
+            alt={props.alt}
+            width={isPC ? 275 : 175}
+            height={isPC ? 250 : 150}
+          />
         )}
         <Text color="gray.600" fontSize={['14px', '18px']}>
           {texts.map((text, index) => {

@@ -706,14 +706,14 @@ exports[`Storyshots common/unit/DarkmodeToggle Darkmode Toggle Switch 1`] = `
         />
         <span
           aria-hidden={true}
-          className="chakra-switch__track css-1vexzru"
+          className="chakra-switch__track css-1cxwh41"
           onMouseDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
           onMouseUp={[Function]}
         >
           <span
-            className="chakra-switch__thumb css-khwc2z"
+            className="chakra-switch__thumb css-126pkve"
           />
         </span>
       </label>
@@ -1369,7 +1369,7 @@ exports[`Storyshots common/unit/NormalButton Login 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-1y3kc4c"
+      className="chakra-button css-8ijn0"
       type="button"
     >
       ログイン
@@ -1392,7 +1392,7 @@ exports[`Storyshots common/unit/NormalButton Post 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-17m25re"
+      className="chakra-button css-154oc8v"
       type="button"
     >
       投稿
@@ -1415,7 +1415,7 @@ exports[`Storyshots common/unit/NormalButton Register 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-17m25re"
+      className="chakra-button css-154oc8v"
       type="button"
     >
       登録
@@ -1438,7 +1438,7 @@ exports[`Storyshots common/unit/NormalButton Signup 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-17m25re"
+      className="chakra-button css-154oc8v"
       type="button"
     >
       新規会員登録
@@ -1624,7 +1624,7 @@ exports[`Storyshots forms/container/LoginForm Normal Login Form 1`] = `
             />
           </div>
           <button
-            className="chakra-button css-1fxk1xl"
+            className="chakra-button css-iv2jxb"
             type="submit"
           >
             ログイン
@@ -1814,7 +1814,7 @@ exports[`Storyshots forms/container/SignupForm Normal Signup Form 1`] = `
           />
         </div>
         <button
-          className="chakra-button css-co25uj"
+          className="chakra-button css-9zj5wk"
           type="submit"
         >
           登録
@@ -1916,7 +1916,7 @@ exports[`Storyshots layout/containers/Header Loggined Header 1`] = `
     className="css-1u8qly9"
   >
     <div
-      className="css-au7i0d"
+      className="css-yq8ap5"
     >
       <div
         className="chakra-stack css-1pant5l"
@@ -1936,11 +1936,11 @@ exports[`Storyshots layout/containers/Header Loggined Header 1`] = `
           </div>
         </a>
         <div
-          className="chakra-input__group css-1jtxxi8"
+          className="chakra-input__group css-nhr88j"
         >
           <div
-            className="chakra-input__left-element css-1nfwf9a"
-            size="sm"
+            className="chakra-input__left-element css-fx53ns"
+            size="md"
           >
             <svg
               className="chakra-icon css-suqwlm"
@@ -1954,7 +1954,7 @@ exports[`Storyshots layout/containers/Header Loggined Header 1`] = `
             </svg>
           </div>
           <input
-            className="chakra-input css-edevcp-SearchBar"
+            className="chakra-input css-nv16pr-SearchBar"
             onBlur={[Function]}
             onFocus={[Function]}
             placeholder="キーワードで検索"
@@ -2356,14 +2356,14 @@ exports[`Storyshots layout/containers/Header Loggined Header 1`] = `
                       />
                       <span
                         aria-hidden={true}
-                        className="chakra-switch__track css-1vexzru"
+                        className="chakra-switch__track css-1cxwh41"
                         onMouseDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
                         onMouseUp={[Function]}
                       >
                         <span
-                          className="chakra-switch__thumb css-khwc2z"
+                          className="chakra-switch__thumb css-126pkve"
                         />
                       </span>
                     </label>
@@ -2386,7 +2386,7 @@ exports[`Storyshots layout/containers/Header Loggined Header 1`] = `
             className="css-1aaibel"
           >
             <button
-              className="chakra-button css-1ilhygx"
+              className="chakra-button css-17bpyml"
               type="button"
             >
               投稿
@@ -2528,7 +2528,7 @@ exports[`Storyshots layout/containers/Header Logouted Header 1`] = `
     className="css-1u8qly9"
   >
     <div
-      className="css-au7i0d"
+      className="css-yq8ap5"
     >
       <div
         className="chakra-stack css-1pant5l"
@@ -2548,11 +2548,11 @@ exports[`Storyshots layout/containers/Header Logouted Header 1`] = `
           </div>
         </a>
         <div
-          className="chakra-input__group css-1jtxxi8"
+          className="chakra-input__group css-nhr88j"
         >
           <div
-            className="chakra-input__left-element css-1nfwf9a"
-            size="sm"
+            className="chakra-input__left-element css-fx53ns"
+            size="md"
           >
             <svg
               className="chakra-icon css-suqwlm"
@@ -2566,7 +2566,7 @@ exports[`Storyshots layout/containers/Header Logouted Header 1`] = `
             </svg>
           </div>
           <input
-            className="chakra-input css-edevcp-SearchBar"
+            className="chakra-input css-nv16pr-SearchBar"
             onBlur={[Function]}
             onFocus={[Function]}
             placeholder="キーワードで検索"
@@ -2578,13 +2578,13 @@ exports[`Storyshots layout/containers/Header Logouted Header 1`] = `
         className="chakra-stack css-1pant5l"
       >
         <button
-          className="chakra-button css-1qd22z6"
+          className="chakra-button css-3ggw22"
           type="button"
         >
           新規会員登録
         </button>
         <button
-          className="chakra-button css-1y3kc4c"
+          className="chakra-button css-9io9of"
           type="button"
         >
           ログイン
@@ -2722,11 +2722,11 @@ exports[`Storyshots layout/unit/SearchBar Default Search Bar 1`] = `
     className="css-qe3950"
   >
     <div
-      className="chakra-input__group css-1jtxxi8"
+      className="chakra-input__group css-nhr88j"
     >
       <div
-        className="chakra-input__left-element css-1nfwf9a"
-        size="sm"
+        className="chakra-input__left-element css-fx53ns"
+        size="md"
       >
         <svg
           className="chakra-icon css-suqwlm"
@@ -2740,7 +2740,7 @@ exports[`Storyshots layout/unit/SearchBar Default Search Bar 1`] = `
         </svg>
       </div>
       <input
-        className="chakra-input css-edevcp-SearchBar"
+        className="chakra-input css-nv16pr-SearchBar"
         onBlur={[Function]}
         onFocus={[Function]}
         placeholder="キーワードで検索"

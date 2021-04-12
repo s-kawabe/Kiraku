@@ -6,22 +6,23 @@ import type { VFC } from 'react'
 
 const SearchBar: VFC = () => {
   return (
-    <InputGroup w={{ base: '200px', sm: '600px' }} size="md">
-      <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.500" />} />
+    <InputGroup w={{ base: '85%', sm: '50vw' }} mx={{ base: 'auto' }}>
+      <InputLeftElement children={<Search2Icon color="gray.500" />} cursor="pointer" />
       <Input
         type="text"
         variant="filled"
         borderRadius="25px"
-        placeholder="キーワードで検索"
+        borderColor="#eee"
+        placeholder="ユーザの投稿やブログをさがす"
         fontSize={{ base: '12px', sm: '14px' }}
         css={css`
-          box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.25) inset;
-          background: #cbd5e0;
+          background: #fff;
           &::placeholder {
             color: #718096;
           }
-          &:focus {
-            background: #cbd5e0;
+          &:focus,
+          &:hover {
+            background: #fff;
           }
         `}
       />

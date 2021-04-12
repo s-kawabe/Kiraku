@@ -1,6 +1,8 @@
 import { Button } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
+import { useIsDesktop } from '@/utils/methods/customeHooks'
+
 export type NormalButtonProps = {
   text: string
   bg: string
@@ -18,13 +20,22 @@ export type NormalButtonProps = {
 }
 
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
+  const isPC = useIsDesktop()
   // eslint-disable-next-line react/destructuring-assignment
   const { text, hover, ...inputProps } = props
 
+  const isClient = () => {
+    return typeof window !== 'undefined'
+  }
+
   return (
-    <Button size="md" _hover={hover} {...inputProps}>
-      {text}
-    </Button>
+    <>
+      {isClient() && (
+        <Button size={isPC ? 'md' : 'sm'} _hover={hover} {...inputProps}>
+          {text}
+        </Button>
+      )}
+    </>
   )
 }
 
