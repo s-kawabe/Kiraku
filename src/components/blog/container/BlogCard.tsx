@@ -6,7 +6,11 @@ import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/c
 import { UserIcon } from '@/components/user/unit'
 
 export type BlogCardProps = {
+  title: string
+  text: string
   userIcon: string
+  userName: string
+  userId: string
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
   // and more... user/created_at/content/like/comment
 }
@@ -17,6 +21,7 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
       w="350px"
       h="250px"
       p="15px"
+      bg="white"
       borderRadius="8px"
       border="0.8px solid"
       borderColor="gray.300"
@@ -34,10 +39,10 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
         <UserIcon src={props.userIcon} width={45} height={45} />
         <Box>
           <Text fontSize="14px" color="black">
-            Shintaro
+            {props.userName}
           </Text>
           <Text fontSize="12px" color="gray.500">
-            @shin_k_2281
+            @{props.userId}
           </Text>
         </Box>
       </HStack>
@@ -49,16 +54,12 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
       </Box>
       <Center p="2px" borderRadius="16px">
         <Text fontWeight="semibold" color="gray.700">
-          春におすすめのメンズ小物３選
+          {props.title}
         </Text>
       </Center>
       <Box h="110px" p="8px" borderRadius="16px" overflow="hidden">
-        <Text fontSize="11px" color="gray.600">
-          こんにちは、皆様いかがお過ごしでしょうか
-          今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-          まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-          まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-          まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
+        <Text fontSize="12px" color="gray.600">
+          {props.text}
         </Text>
       </Box>
     </Box>

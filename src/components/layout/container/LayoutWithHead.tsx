@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
 
@@ -16,7 +17,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
   return (
-    <>
+    <Box position="relative" minHeight="100vh">
       <Head>
         <title>{pageTitle}</title>
         <meta charSet="utf-8" />
@@ -41,7 +42,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       <Header isLogin={!!props.isLogin} />
       {props.children}
       <Footer />
-    </>
+    </Box>
   )
 }
 

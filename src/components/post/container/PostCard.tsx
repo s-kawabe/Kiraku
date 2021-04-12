@@ -8,9 +8,11 @@ import { UserIcon } from '@/components/user/unit'
 
 export type PostCardProps = {
   imageSrc: string
+  text: string
   userIcon: string
+  userName: string
+  userId: string
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
-  // and more... user/created_at/content/like/comment
 }
 
 const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
@@ -22,10 +24,6 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       borderRadius="8px"
       boxShadow="0px 0px 4px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
-      // transition="all 0.4s"
-      // _hover={{
-      //   boxShadow: '0px 0px 15px rgba(50, 50, 50, 0.2)',
-      // }}
     >
       <Center w="200px" borderRadius="8px">
         <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} imageType="card" />
@@ -51,16 +49,16 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
           <UserIcon src={props.userIcon} width={52} height={52} />
           <Box>
             <Text fontSize="16px" color="black">
-              Shintaro
+              {props.userName}
             </Text>
             <Text fontSize="12px" color="gray.500">
-              @shin_k_2281
+              @{props.userId}
             </Text>
           </Box>
         </HStack>
         <Box w="300px" overflowWrap="break-word" mt="16px">
           <Text fontSize="13.5px" color="gray.700">
-            この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです
+            {props.text}
           </Text>
         </Box>
         <Box ml="auto">
