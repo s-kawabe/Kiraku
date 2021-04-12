@@ -25,8 +25,8 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
   }
   return (
     <Box bg="gray.100" h={['120px', '80px']}>
-      <Flex justifyContent="space-between" h={{ base: '70px' }}>
-        <HStack spacing="3" h={{ base: '72px' }}>
+      <Flex justifyContent="space-between" h={{ base: '70px', sm: '80px' }}>
+        <HStack spacing="3" h={{ base: '70px', sm: '80px' }}>
           <Link href="/">
             <a>
               <NextImage src="/logo.svg" alt="アプリケーションロゴ" width={165} height={80} />
