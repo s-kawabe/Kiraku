@@ -24,7 +24,6 @@ const About = () => {
   return (
     <LayoutWithHead>
       {/* jumbotron */}
-
       <Box
         w="100%"
         h="65vh"
@@ -39,7 +38,7 @@ const About = () => {
         <Box position="absolute" top="0" left="0" zIndex="1" w="max(70vw, 200px)">
           <Text
             position="absolute"
-            color="#FFF2C3"
+            color="white"
             top="70px"
             py={['20px', '25px', '30px']}
             px={['30px', '70px', '100px']}
@@ -82,7 +81,7 @@ const About = () => {
 
       {/* cards */}
       <Box>
-        <VStack w="100%" overflow="hidden" bg={['#FFFDEA', 'transparent']}>
+        <VStack w="100%" overflow="hidden">
           <Heading color="gray.700" my="40px">
             できること
           </Heading>
@@ -95,7 +94,7 @@ const About = () => {
             {isClient() && isPC && (
               <>
                 <BackgroundCircle left="-50" top="400" />
-                <BackgroundCircle left="30vw" top="850" />
+                <BackgroundCircle left="30vw" top="1000" />
                 <BackgroundCircle right="0" top="400" />
               </>
             )}

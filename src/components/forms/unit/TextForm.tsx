@@ -13,7 +13,7 @@ export type TextFormProps = {
 
 const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
   return (
-    <FormControl id={props.name} w="400px">
+    <FormControl id={props.name} w="min(400px, 80vw)">
       <FormLabel m={1}>
         <Text display="inline" fontSize="13px" fontWeight="bold">
           {props.label}
@@ -23,9 +23,13 @@ const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
             必須
           </Badge>
         )}
+        <Text color="red.500" fontSize="14px">
+          {props.errorMessage}
+        </Text>
       </FormLabel>
 
       <Input
+        autoComplete={props.type}
         type={props.type}
         placeholder={props.placeholder}
         borderColor="gray.500"
@@ -36,9 +40,6 @@ const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
         }}
         {...props.registers}
       />
-      <Text color="red.500" fontSize="14px">
-        {props.errorMessage}
-      </Text>
     </FormControl>
   )
 }

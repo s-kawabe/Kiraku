@@ -1,5 +1,6 @@
 import { Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import Link from 'next/link'
 import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -39,10 +40,14 @@ const SignupForm: VFC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <VStack py="30px" bg="gray.100" w="650px" spacing="8" borderRadius="20px">
-        <Heading color="green.300" size="sm" cursor="pointer">
-          アカウントをお持ちの方はこちら
-        </Heading>
+      <VStack py="30px" bg="white" w="650px" spacing="8" borderRadius="20px">
+        <Link href="/signin">
+          <a>
+            <Heading color="green.300" size="sm" cursor="pointer">
+              すでにアカウントをお持ちの方はこちら
+            </Heading>
+          </a>
+        </Link>
         <TextForm
           label={'メールアドレス'}
           placeholder={'メールアドレスを入力'}
