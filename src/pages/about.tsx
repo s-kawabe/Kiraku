@@ -82,7 +82,7 @@ const About = () => {
 
       {/* cards */}
       <Box>
-        <VStack w="100%" overflow="hidden">
+        <VStack w="100%" overflow="hidden" bg={['#FFFDEA', 'transparent']}>
           <Heading color="gray.700" my="40px">
             できること
           </Heading>
@@ -117,7 +117,7 @@ const About = () => {
             ポスト
           </Text>
           <Box>
-            <SimpleGrid columns={2} spacing={8}>
+            <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
               <PostCard
                 imageSrc="/fashion.jpeg"
                 text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
@@ -174,7 +174,7 @@ const About = () => {
             ブログ
           </Text>
           <Box>
-            <SimpleGrid columns={3} spacing={7}>
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={7}>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか

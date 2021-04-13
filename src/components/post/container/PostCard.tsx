@@ -18,18 +18,18 @@ export type PostCardProps = {
 const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
   return (
     <HStack
-      w="540px"
+      w="min(95vw, 600px)"
       bg="white"
       p="5px"
       borderRadius="8px"
       boxShadow="0px 0px 4px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
     >
-      <Center w="200px" borderRadius="8px">
+      <Center w="min(40vw, 200px)" borderRadius="8px">
         <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} imageType="card" />
       </Center>
       <Box
-        w="400px"
+        w="min(55vw, 400px)"
         py="10px"
         px="15px"
         borderRadius="8px"
@@ -46,7 +46,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
             }
           `}
         >
-          <UserIcon src={props.userIcon} width={52} height={52} />
+          <UserIcon src={props.userIcon} width={50} height={50} />
           <Box>
             <Text fontSize="16px" color="black">
               {props.userName}
@@ -56,8 +56,8 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
             </Text>
           </Box>
         </HStack>
-        <Box w="300px" overflowWrap="break-word" mt="16px">
-          <Text fontSize="13.5px" color="gray.700">
+        <Box mt="16px">
+          <Text fontSize={['10px', '13.5px']} color="gray.700">
             {props.text}
           </Text>
         </Box>
