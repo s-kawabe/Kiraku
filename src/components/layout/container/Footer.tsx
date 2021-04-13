@@ -24,7 +24,7 @@ const THIS_YEAR = new Date().getFullYear()
 
 const Footer: VFC = () => {
   return (
-    <Box bg="gray.100" h={['90px', '70px']} w="100%" position="absolute" bottom="0">
+    <Box bg="white" h={['90px', '70px']} w="100%">
       <Stack direction={['column', 'row']} h="70px" justifyContent="space-between">
         <HStack spacing="2" align="center" h="70px" color="gray.600">
           <NextImage src="/footerLogo.svg" alt="アプリケーションロゴ" width={100} height={50} />

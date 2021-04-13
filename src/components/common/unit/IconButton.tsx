@@ -31,7 +31,7 @@ const IconButton: VFC<IconButtonProps> = (props: IconButtonProps) => {
       w={{ base: '180px', sm: '250px' }}
       borderRadius="5px"
       fontWeight={props.fontWeight}
-      _hover={{ bg: 'white' }}
+      _hover={{ opacity: 0.8 }}
     >
       {props.iconPosition === 'left' ? (
         <>

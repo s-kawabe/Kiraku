@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import type * as CSS from 'csstype'
 import Head from 'next/head'
 import type { FC } from 'react'
 
@@ -9,6 +9,7 @@ type Props = {
   isLogin?: boolean
   title?: string
   sideMenu?: boolean
+  headerPosition?: CSS.Property.Position
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
@@ -17,7 +18,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
   return (
-    <Box position="relative" minHeight="100vh">
+    <>
       <Head>
         <title>{pageTitle}</title>
         <meta charSet="utf-8" />
@@ -25,7 +26,6 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta name="robots" content="follow, index" />
         <meta name="description" content={description} />
-        <link href="/favicon.ico" rel="shortcut icon" />
         <meta property="og:url" content={ogUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Kiraku" />
@@ -39,10 +39,10 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta name="twitter:image" content={`${ogUrl}/og.jpg`} />
       </Head>
 
-      <Header isLogin={!!props.isLogin} />
+      <Header isLogin={!!props.isLogin} headerPosition={props.headerPosition} />
       {props.children}
       <Footer />
-    </Box>
+    </>
   )
 }
 

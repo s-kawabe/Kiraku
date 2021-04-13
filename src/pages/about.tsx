@@ -1,4 +1,4 @@
-import { Box, Center, Grid, Heading, Stack, Text, VStack } from '@chakra-ui/react'
+import { Box, Center, Heading, Icon, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { AiOutlineIdcard } from 'react-icons/ai'
 import { HiOutlineNewspaper } from 'react-icons/hi'
@@ -21,10 +21,11 @@ const About = () => {
   }
 
   return (
-    <LayoutWithHead>
+    <LayoutWithHead headerPosition={'fixed'}>
       {/* jumbotron */}
       <Box
         w="100%"
+        pt="80px"
         // css={css`
         //   & img {
         //     filter: blur(4px);
@@ -60,12 +61,12 @@ const About = () => {
       <Box w="100%" bg="gray.100" pt="30px" pb="60px">
         <VStack>
           <Text fontSize="26px" color="gray.600" fontWeight="semibold" mb="30px">
-            <Center fontSize="40px">
-              <AiOutlineIdcard />
+            <Center>
+              <Icon as={AiOutlineIdcard} fontSize="40px" />
             </Center>
             ポスト
           </Text>
-          <Grid templateColumns="repeat(2, 1fr)" templateRows="auto" gap={8}>
+          <SimpleGrid columns={2} spacing={8}>
             <PostCard
               imageSrc="/fashion.jpeg"
               text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
@@ -103,12 +104,12 @@ const About = () => {
             />
             <PostCard
               imageSrc="/fashion.jpeg"
-              text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
+              text="この前買った腕時計！！ モダンな雰囲気でとてお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
               userIcon="/myicon.jpg"
               userName="shintaro"
               userId="shin_k_2281"
             />
-          </Grid>
+          </SimpleGrid>
         </VStack>
       </Box>
       {/* recent blog */}
@@ -116,81 +117,93 @@ const About = () => {
         <VStack>
           <Text fontSize="26px" color="gray.600" fontWeight="semibold" mb="30px">
             <Center fontSize="40px">
-              <HiOutlineNewspaper />
+              <Icon as={HiOutlineNewspaper} fontSize="40px" />
             </Center>
             ブログ
           </Text>
-          <Grid templateColumns="repeat(3, 1fr)" templateRows="auto" gap={7}>
-            <BlogCard
-              title="おすすめメンズアイテム5選"
-              text={`こんにちは、皆様いかがお過ごしでしょうか
+          <SimpleGrid columns={3} spacing={8}>
+            <Box>
+              <BlogCard
+                title="おすすめメンズアイテム5選"
+                text={`こんにちは、皆様いかがお過ごしでしょうか
               今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-              userIcon="/myicon.jpg"
-              userName="taro"
-              userId="kusowarota"
-            />
-            <BlogCard
-              title="おすすめメンズアイテム5選"
-              text={`こんにちは、皆様いかがお過ごしでしょうか
+                userIcon="/myicon.jpg"
+                userName="taro"
+                userId="kusowarota"
+              />
+            </Box>
+            <Box>
+              <BlogCard
+                title="おすすめメンズアイテム5選"
+                text={`こんにちは、皆様いかがお過ごしでしょうか
               今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-              userIcon="/myicon.jpg"
-              userName="taro"
-              userId="kusowarota"
-            />
-            <BlogCard
-              title="おすすめメンズアイテム5選"
-              text={`こんにちは、皆様いかがお過ごしでしょうか
+                userIcon="/myicon.jpg"
+                userName="taro"
+                userId="kusowarota"
+              />
+            </Box>
+            <Box>
+              <BlogCard
+                title="おすすめメンズアイテム5選"
+                text={`こんにちは、皆様いかがお過ごしでしょうか
               今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-              userIcon="/myicon.jpg"
-              userName="taro"
-              userId="kusowarota"
-            />
-            <BlogCard
-              title="おすすめメンズアイテム5選"
-              text={`こんにちは、皆様いかがお過ごしでしょうか
+                userIcon="/myicon.jpg"
+                userName="taro"
+                userId="kusowarota"
+              />
+            </Box>
+            <Box>
+              <BlogCard
+                title="おすすめメンズアイテム5選"
+                text={`こんにちは、皆様いかがお過ごしでしょうか
               今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-              userIcon="/myicon.jpg"
-              userName="taro"
-              userId="kusowarota"
-            />
-            <BlogCard
-              title="おすすめメンズアイテム5選"
-              text={`こんにちは、皆様いかがお過ごしでしょうか
+                userIcon="/myicon.jpg"
+                userName="taro"
+                userId="kusowarota"
+              />
+            </Box>
+            <Box>
+              <BlogCard
+                title="おすすめメンズアイテム5選"
+                text={`こんにちは、皆様いかがお過ごしでしょうか
               今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-              userIcon="/myicon.jpg"
-              userName="taro"
-              userId="kusowarota"
-            />
-            <BlogCard
-              title="おすすめメンズアイテム5選"
-              text={`こんにちは、皆様いかがお過ごしでしょうか
+                userIcon="/myicon.jpg"
+                userName="taro"
+                userId="kusowarota"
+              />
+            </Box>
+            <Box>
+              <BlogCard
+                title="おすすめメンズアイテム5選"
+                text={`こんにちは、皆様いかがお過ごしでしょうか
               今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
               まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-              userIcon="/myicon.jpg"
-              userName="taro"
-              userId="kusowarota"
-            />
-          </Grid>
+                userIcon="/myicon.jpg"
+                userName="taro"
+                userId="kusowarota"
+              />
+            </Box>
+          </SimpleGrid>
         </VStack>
       </Box>
-      <Center h="300px">
+      <Center h="200px">
         <Link href="/">
           <a>
             <IconButton
