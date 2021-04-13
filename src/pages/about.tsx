@@ -1,4 +1,5 @@
 import { Box, Center, Heading, Icon, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
+import { css } from '@emotion/react'
 import Link from 'next/link'
 import { AiOutlineIdcard } from 'react-icons/ai'
 import { HiOutlineNewspaper } from 'react-icons/hi'
@@ -21,37 +22,86 @@ const About = () => {
   }
 
   return (
-    <LayoutWithHead headerPosition={'fixed'}>
+    <LayoutWithHead>
       {/* jumbotron */}
+
       <Box
         w="100%"
-        pt="80px"
-        // css={css`
-        //   & img {
-        //     filter: blur(4px);
-        //   }
-        // `}
+        h="65vh"
+        position="relative"
+        zIndex="0"
+        css={css`
+          & img {
+            filter: brightness(70%);
+          }
+        `}
       >
+        <Box position="absolute" top="0" left="0" zIndex="1" w="max(70vw, 200px)">
+          <Text
+            position="absolute"
+            color="#FFF2C3"
+            top="70px"
+            py={['20px', '25px', '30px']}
+            px={['30px', '70px', '100px']}
+            background="rgba(60,60,60,0.2)"
+            fontSize={['22px', '30px', '36px']}
+            fontWeight="bold"
+            letterSpacing="1.4px"
+          >
+            ファッションを&quot;着&quot;楽に
+          </Text>
+          <Text
+            position="absolute"
+            top="250px"
+            left={['15px', '40px']}
+            color="white"
+            fontSize={['12px', '18px']}
+            w="max(29vw, 200px)"
+          >
+            「Kiraku」は誰でも気楽に使えるファッション共有SNSです。その日の気分で自由に投稿してみましょう。
+          </Text>
+          <Box position="absolute" top="370px" left={['15px', '40px']}>
+            <Link href="/">
+              <a>
+                <IconButton
+                  text="ログインせずに試す"
+                  fontWeight="semibold"
+                  bg="white"
+                  border="1px"
+                  borderColor="green.300"
+                  color="green.300"
+                  icon={IoIosArrowForward}
+                  iconPosition="right"
+                />
+              </a>
+            </Link>
+          </Box>
+        </Box>
         <NextImage src="/hero.webp" alt="ヒーロー画像" imageType="hero" />
       </Box>
+
       {/* cards */}
-      <VStack w="100%" overflow="hidden">
-        <Heading color="gray.700" my="40px">
-          できること
-        </Heading>
-        <Stack direction={['column', 'row']} spacing="5vw" mb="100px">
-          <AboutCard heading={post.heading} text={post.text} src={post.img} alt={post.heading} />
-          <AboutCard heading={blog.heading} text={blog.text} src={blog.img} alt={blog.heading} />
-          <AboutCard heading={show.heading} text={show.text} src={show.img} alt={show.heading} />
-        </Stack>
-        {isClient() && isPC && (
-          <>
-            <BackgroundCircle left="-50" top="400" />
-            <BackgroundCircle left="30vw" top="850" />
-            <BackgroundCircle right="-50" top="400" />
-          </>
-        )}
-      </VStack>
+      <Box>
+        <VStack w="100%" overflow="hidden">
+          <Heading color="gray.700" my="40px">
+            できること
+          </Heading>
+          <Stack direction={['column', 'row']} spacing="5vw" mb="100px">
+            <AboutCard heading={post.heading} text={post.text} src={post.img} alt={post.heading} />
+            <AboutCard heading={blog.heading} text={blog.text} src={blog.img} alt={blog.heading} />
+            <AboutCard heading={show.heading} text={show.text} src={show.img} alt={show.heading} />
+          </Stack>
+          <Box>
+            {isClient() && isPC && (
+              <>
+                <BackgroundCircle left="-50" top="400" />
+                <BackgroundCircle left="30vw" top="850" />
+                <BackgroundCircle right="0" top="400" />
+              </>
+            )}
+          </Box>
+        </VStack>
+      </Box>
       <Center h="90px" borderY="1px" borderColor="gray.300" bg="white">
         <Heading size="lg" color="gray.700">
           最近の投稿
@@ -66,50 +116,52 @@ const About = () => {
             </Center>
             ポスト
           </Text>
-          <SimpleGrid columns={2} spacing={8}>
-            <PostCard
-              imageSrc="/fashion.jpeg"
-              text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-              userIcon="/myicon.jpg"
-              userName="shintaro"
-              userId="shin_k_2281"
-            />
-            <PostCard
-              imageSrc="/fashion.jpeg"
-              text="モダンな雰囲気でとてもお気に入りです"
-              userIcon="/myicon.jpg"
-              userName="shintaro"
-              userId="shin_k_2281"
-            />
-            <PostCard
-              imageSrc="/fashion.jpeg"
-              text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-              userIcon="/myicon.jpg"
-              userName="shintaro"
-              userId="shin_k_2281"
-            />
-            <PostCard
-              imageSrc="/fashion.jpeg"
-              text="この前買った腕時計！！ モダンな雰囲気でとてもお気 モダンな雰囲気でとてもお気に入りです"
-              userIcon="/myicon.jpg"
-              userName="shintaro"
-              userId="shin_k_2281"
-            />
-            <PostCard
-              imageSrc="/fashion.jpeg"
-              text="この前買った腕時計！！雰囲気でとてもお気に入りです"
-              userIcon="/myicon.jpg"
-              userName="shintaro"
-              userId="shin_k_2281"
-            />
-            <PostCard
-              imageSrc="/fashion.jpeg"
-              text="この前買った腕時計！！ モダンな雰囲気でとてお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-              userIcon="/myicon.jpg"
-              userName="shintaro"
-              userId="shin_k_2281"
-            />
-          </SimpleGrid>
+          <Box>
+            <SimpleGrid columns={2} spacing={8}>
+              <PostCard
+                imageSrc="/fashion.jpeg"
+                text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
+                userIcon="/myicon.jpg"
+                userName="shintaro"
+                userId="shin_k_2281"
+              />
+              <PostCard
+                imageSrc="/fashion.jpeg"
+                text="モダンな雰囲気でとてもお気に入りです"
+                userIcon="/myicon.jpg"
+                userName="shintaro"
+                userId="shin_k_2281"
+              />
+              <PostCard
+                imageSrc="/fashion.jpeg"
+                text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
+                userIcon="/myicon.jpg"
+                userName="shintaro"
+                userId="shin_k_2281"
+              />
+              <PostCard
+                imageSrc="/fashion.jpeg"
+                text="この前買った腕時計！！ モダンな雰囲気でとてもお気 モダンな雰囲気でとてもお気に入りです"
+                userIcon="/myicon.jpg"
+                userName="shintaro"
+                userId="shin_k_2281"
+              />
+              <PostCard
+                imageSrc="/fashion.jpeg"
+                text="この前買った腕時計！！雰囲気でとてもお気に入りです"
+                userIcon="/myicon.jpg"
+                userName="shintaro"
+                userId="shin_k_2281"
+              />
+              <PostCard
+                imageSrc="/fashion.jpeg"
+                text="この前買った腕時計！！ モダンな雰囲気でとてお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
+                userIcon="/myicon.jpg"
+                userName="shintaro"
+                userId="shin_k_2281"
+              />
+            </SimpleGrid>
+          </Box>
         </VStack>
       </Box>
       {/* recent blog */}
@@ -121,8 +173,8 @@ const About = () => {
             </Center>
             ブログ
           </Text>
-          <SimpleGrid columns={3} spacing={8}>
-            <Box>
+          <Box>
+            <SimpleGrid columns={3} spacing={7}>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか
@@ -134,8 +186,6 @@ const About = () => {
                 userName="taro"
                 userId="kusowarota"
               />
-            </Box>
-            <Box>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか
@@ -147,8 +197,6 @@ const About = () => {
                 userName="taro"
                 userId="kusowarota"
               />
-            </Box>
-            <Box>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか
@@ -160,8 +208,6 @@ const About = () => {
                 userName="taro"
                 userId="kusowarota"
               />
-            </Box>
-            <Box>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか
@@ -173,8 +219,6 @@ const About = () => {
                 userName="taro"
                 userId="kusowarota"
               />
-            </Box>
-            <Box>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか
@@ -186,8 +230,6 @@ const About = () => {
                 userName="taro"
                 userId="kusowarota"
               />
-            </Box>
-            <Box>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか
@@ -199,8 +241,8 @@ const About = () => {
                 userName="taro"
                 userId="kusowarota"
               />
-            </Box>
-          </SimpleGrid>
+            </SimpleGrid>
+          </Box>
         </VStack>
       </Box>
       <Center h="200px">

@@ -1,7 +1,6 @@
 import { Box, Flex, HStack } from '@chakra-ui/react'
 import { Menu, MenuButton } from '@chakra-ui/react'
 import { css } from '@emotion/react'
-import type * as CSS from 'csstype'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
@@ -16,7 +15,6 @@ import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 export type HeaderProps = {
   isLogin: boolean
-  headerPosition?: CSS.Property.Position
 }
 
 const Header: VFC<HeaderProps> = (props: HeaderProps) => {
@@ -26,14 +24,7 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
     return typeof window !== 'undefined'
   }
   return (
-    <Box
-      bg="white"
-      w="100%"
-      h={['120px', '80px']}
-      position={props.headerPosition}
-      zIndex="2"
-      boxShadow="0 0 10px rgba(50,50,50,0.25)"
-    >
+    <Box bg="white" w="100%" h={['120px', '80px']} zIndex="2" boxShadow="0 0 5px rgba(0,0,0,0.2)">
       <Flex justifyContent="space-between" h={{ base: '70px', sm: '80px' }}>
         <HStack spacing="3" h={{ base: '70px', sm: '80px' }}>
           <Link href="/">

@@ -1,4 +1,3 @@
-import type * as CSS from 'csstype'
 import Head from 'next/head'
 import type { FC } from 'react'
 
@@ -9,7 +8,6 @@ type Props = {
   isLogin?: boolean
   title?: string
   sideMenu?: boolean
-  headerPosition?: CSS.Property.Position
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
@@ -39,7 +37,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta name="twitter:image" content={`${ogUrl}/og.jpg`} />
       </Head>
 
-      <Header isLogin={!!props.isLogin} headerPosition={props.headerPosition} />
+      <Header isLogin={!!props.isLogin} />
       {props.children}
       <Footer />
     </>
