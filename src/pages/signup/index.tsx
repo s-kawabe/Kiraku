@@ -12,6 +12,8 @@ const SignupPage = () => {
     return typeof window !== 'undefined'
   }
 
+  // TODO ログイン中にきた場合はルートにリダイレクト
+
   return (
     <Box
       minH={{ base: '100vh', sm: '' }}

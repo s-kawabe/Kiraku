@@ -4,6 +4,8 @@ import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 
+// ログイン状態でない場合は/aboutにリダイレクトさせる
+
 const Home = () => {
   return (
     <LayoutWithHead isLogin>

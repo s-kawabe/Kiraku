@@ -15,5 +15,5 @@
   "[markdown]": {
     "editor.formatOnSave": true
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
 }

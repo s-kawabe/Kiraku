@@ -19,6 +19,13 @@ export const nortificationMenuItems = (): JSX.Element[] => {
     </Text>,
   ]
 }
+// この配列の各要素にonClick時のコールバックを持たせないといけない...
+
+// type MenuItems = {
+//   element: JSX.Element
+//   // eslint-disable-next-line @typescript-eslint/ban-types
+//   onClick: () => {}
+// }[]
 
 export const userMenuItems = (): JSX.Element[] => {
   return [

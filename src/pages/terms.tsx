@@ -4,7 +4,7 @@ import type { VFC } from 'react'
 
 import { LayoutWithHead } from '@/components/layout/container'
 
-const terms: VFC = () => {
+const TermsPage: VFC = () => {
   return (
     <LayoutWithHead title="利用規約">
       <VStack
@@ -257,4 +257,4 @@ const terms: VFC = () => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default terms
+export default TermsPage
