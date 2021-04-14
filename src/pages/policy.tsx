@@ -5,7 +5,7 @@ import type { VFC } from 'react'
 
 import { LayoutWithHead } from '@/components/layout/container'
 
-const policy: VFC = () => {
+const PolicyPage: VFC = () => {
   return (
     <LayoutWithHead title="プライバシーポリシー">
       <VStack
@@ -187,4 +187,4 @@ const policy: VFC = () => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default policy
+export default PolicyPage

@@ -13,7 +13,7 @@ import { PostCard } from '@/components/post/container'
 import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
-const About = () => {
+const AboutPage = () => {
   const isPC = useIsDesktop()
   const { post, blog, show } = ABOUT_CARD_TEXT
 
@@ -265,4 +265,4 @@ const About = () => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default About
+export default AboutPage
