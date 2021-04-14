@@ -80,12 +80,12 @@ const About = () => {
       </Box>
 
       {/* cards */}
-      <Box>
+      <Box bg={['#FFFBF3', 'transparent']}>
         <VStack w="100%" overflow="hidden">
           <Heading color="gray.700" my="40px">
             できること
           </Heading>
-          <Stack direction={['column', 'row']} spacing="5vw" mb="100px">
+          <Stack direction={['column', 'row']} spacing={['8', '5vw']} mb={['50px', '100px']}>
             <AboutCard heading={post.heading} text={post.text} src={post.img} alt={post.heading} />
             <AboutCard heading={blog.heading} text={blog.text} src={blog.img} alt={blog.heading} />
             <AboutCard heading={show.heading} text={show.text} src={show.img} alt={show.heading} />

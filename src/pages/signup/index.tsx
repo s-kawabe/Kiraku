@@ -27,8 +27,8 @@ const SignupPage = () => {
         }
       `}
     >
-      <LayoutWithHead>
-        <Center bg="#EDEDED" h={['800px', 'calc(100vh - 150px)']}>
+      <LayoutWithHead title="アカウント登録">
+        <Center bg="#EDEDED" h={['800px', 'calc(100vh - 150px)']} py="350px">
           <VStack>
             <Heading color="gray.700" size="md" mb="30px">
               アカウント登録

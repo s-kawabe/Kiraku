@@ -27,7 +27,7 @@ const SigninPage = () => {
         }
       `}
     >
-      <LayoutWithHead>
+      <LayoutWithHead title="ログイン">
         <Center h={['800px', 'calc(100vh - 150px)']} bg="#EDEDED">
           <VStack>
             <Heading color="gray.700" size="md" mb="30px">

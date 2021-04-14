@@ -4,7 +4,6 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
-// import type { ContextMenuProps } from '@/components/common/container'
 import { ContextMenu } from '@/components/common/container'
 import { NormalButton } from '@/components/common/unit'
 import { NextImage } from '@/components/common/unit'
