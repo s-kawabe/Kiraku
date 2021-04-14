@@ -1,5 +1,6 @@
 import { Box, Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import Link from 'next/link'
 import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaTwitter } from 'react-icons/fa'
@@ -32,11 +33,15 @@ const LoginForm: VFC = () => {
   }
 
   return (
-    <Box py="30px" bg="gray.100" w="650px" borderRadius="20px">
+    <Box py="30px" bg="white" w="650px" borderRadius="20px">
       <VStack spacing="9" mb="30px">
-        <Heading color="green.300" size="sm" cursor="pointer">
-          アカウントをお持ちでない方はこちら
-        </Heading>
+        <Link href="/signup">
+          <a>
+            <Heading color="green.300" size="sm" cursor="pointer">
+              アカウントをお持ちでない方はこちら
+            </Heading>
+          </a>
+        </Link>
         <IconButton
           text="Googleでログイン"
           fontWeight="semibold"

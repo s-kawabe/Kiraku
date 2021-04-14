@@ -20,5 +20,13 @@ const Template: Story<BlogCardProps> = (args) => {
 
 export const DefaultBlogCard = Template.bind({})
 DefaultBlogCard.args = {
+  title: 'おすすめメンズアイテム5選',
+  text: `こんにちは、皆様いかがお過ごしでしょうか
+  今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
+  まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
+  まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
+  まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`,
   userIcon: '/myicon.jpg',
+  userName: 'shintaro',
+  userId: 'shin_k_2281',
 }

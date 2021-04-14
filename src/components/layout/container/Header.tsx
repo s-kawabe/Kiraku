@@ -4,7 +4,6 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
-// import type { ContextMenuProps } from '@/components/common/container'
 import { ContextMenu } from '@/components/common/container'
 import { NormalButton } from '@/components/common/unit'
 import { NextImage } from '@/components/common/unit'
@@ -14,7 +13,7 @@ import { nortificationMenuItems, postMenuItems, userMenuItems } from '@/utils/co
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 export type HeaderProps = {
-  isLogin: boolean
+  isLogin: boolean // TODO あとで除去（userのsessionを取得するカスタムフックから判断するようにする）
 }
 
 const Header: VFC<HeaderProps> = (props: HeaderProps) => {
@@ -24,7 +23,7 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
     return typeof window !== 'undefined'
   }
   return (
-    <Box bg="gray.100" h={['120px', '80px']}>
+    <Box bg="gray.50" w="100%" h={['120px', '80px']} zIndex="2" boxShadow="0 0 5px rgba(0,0,0,0.2)">
       <Flex justifyContent="space-between" h={{ base: '70px', sm: '80px' }}>
         <HStack spacing="3" h={{ base: '70px', sm: '80px' }}>
           <Link href="/">
@@ -69,21 +68,29 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
             </>
           ) : (
             <>
-              <NormalButton
-                text={isPC ? '新規会員登録' : '会員登録'}
-                bg="green.300"
-                color="white"
-                hover={{ bg: 'green.400' }}
-              />
-              <NormalButton
-                text="ログイン"
-                bg="white"
-                color="green.300"
-                variant="outline"
-                borderColor="green.300"
-                hover={{ bg: 'green.300', color: 'white' }}
-                mr="20px"
-              />
+              <Link href="/signup">
+                <a>
+                  <NormalButton
+                    text={isPC ? '新規会員登録' : '会員登録'}
+                    bg="green.300"
+                    color="white"
+                    hover={{ bg: 'green.400' }}
+                  />
+                </a>
+              </Link>
+              <Link href="/signin">
+                <a>
+                  <NormalButton
+                    text="ログイン"
+                    bg="white"
+                    color="green.300"
+                    variant="outline"
+                    borderColor="green.300"
+                    hover={{ bg: 'green.300', color: 'white' }}
+                    mr="20px"
+                  />
+                </a>
+              </Link>
             </>
           )}
         </HStack>

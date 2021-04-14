@@ -21,17 +21,8 @@ const Template: Story<PostCardProps> = (args) => {
 export const PostCardLongHorizonralImage = Template.bind({})
 PostCardLongHorizonralImage.args = {
   imageSrc: '/fashion.jpeg',
+  text: 'この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです',
   userIcon: '/myicon.jpg',
-} as PostCardProps
-
-export const PostCardLongVerticalImage = Template.bind({})
-PostCardLongVerticalImage.args = {
-  imageSrc: '/fashion2.png',
-  userIcon: '/myicon.jpg',
-} as PostCardProps
-
-export const PostCardLongVerticalImage2 = Template.bind({})
-PostCardLongVerticalImage2.args = {
-  imageSrc: '/fashion3.jpeg',
-  userIcon: '/myicon.jpg',
+  userName: 'shintaro',
+  userId: 'shin_k_2281',
 } as PostCardProps

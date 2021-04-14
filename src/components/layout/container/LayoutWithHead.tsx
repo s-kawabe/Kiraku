@@ -24,7 +24,6 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta name="robots" content="follow, index" />
         <meta name="description" content={description} />
-        <link href="/favicon.ico" rel="shortcut icon" />
         <meta property="og:url" content={ogUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Kiraku" />

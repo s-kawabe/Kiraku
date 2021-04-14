@@ -8,30 +8,28 @@ import { UserIcon } from '@/components/user/unit'
 
 export type PostCardProps = {
   imageSrc: string
+  text: string
   userIcon: string
+  userName: string
+  userId: string
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
-  // and more... user/created_at/content/like/comment
 }
 
 const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
   return (
     <HStack
-      w="540px"
+      w="min(95vw, 600px)"
       bg="white"
       p="5px"
       borderRadius="8px"
       boxShadow="0px 0px 4px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
-      // transition="all 0.4s"
-      // _hover={{
-      //   boxShadow: '0px 0px 15px rgba(50, 50, 50, 0.2)',
-      // }}
     >
-      <Center w="200px" borderRadius="8px">
+      <Center w="min(40vw, 200px)" borderRadius="8px">
         <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} imageType="card" />
       </Center>
       <Box
-        w="400px"
+        w="min(55vw, 400px)"
         py="10px"
         px="15px"
         borderRadius="8px"
@@ -48,25 +46,25 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
             }
           `}
         >
-          <UserIcon src={props.userIcon} width={52} height={52} />
+          <UserIcon src={props.userIcon} width={50} height={50} />
           <Box>
             <Text fontSize="16px" color="black">
-              Shintaro
+              {props.userName}
             </Text>
             <Text fontSize="12px" color="gray.500">
-              @shin_k_2281
+              @{props.userId}
             </Text>
           </Box>
         </HStack>
-        <Box w="300px" overflowWrap="break-word" mt="16px">
-          <Text fontSize="13.5px" color="gray.700">
-            この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです
+        <Box mt="16px">
+          <Text fontSize={['10px', '13.5px']} color="gray.700">
+            {props.text}
           </Text>
         </Box>
         <Box ml="auto">
           <HStack spacing={8}>
-            <CommentIconWithCount count={100} />
-            <LikeButtonWithCount count={200} isLiked={false} />
+            <CommentIconWithCount count={100} fontSize="18px" />
+            <LikeButtonWithCount count={200} isLiked={false} fontSize="18px" />
           </HStack>
         </Box>
       </Box>
