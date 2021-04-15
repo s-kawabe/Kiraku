@@ -13,6 +13,8 @@ const base = css`
   }
 `
 
+// onAuthStateChanged
+
 const App = (props: AppProps) => {
   return (
     <>

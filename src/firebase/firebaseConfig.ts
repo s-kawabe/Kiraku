@@ -22,4 +22,3 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth()
 export const storage = firebase.storage()
 export const functions = firebase.functions()
-export const FirebaseTimestamp = firebase.firestore.Timestamp

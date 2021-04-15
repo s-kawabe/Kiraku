@@ -1,18 +1,27 @@
 import { Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
+import { auth } from '@/firebase/firebaseConfig'
 
 const REQUIRE_MSG = '必須入力項目です'
 const VIOLATION_EMAIL = '正しい形式で入力してください'
 const VIOLATION_NAME_COUNT = '名前は16文字以下で入力してください'
 const VIOLATION_PASSWORD_COUNT = 'パスワードは16文字以下で入力してください'
 const VIOLATION_PASSWORD_CONFIRM = '入力したパスワードが一致しません'
+
+type FormType = {
+  email: string
+  username: string
+  password: string
+  password_confirm: string
+}
 
 const SignupSchema = yup.object().shape({
   email: yup.string().required(REQUIRE_MSG).email(VIOLATION_EMAIL),
@@ -25,6 +34,8 @@ const SignupSchema = yup.object().shape({
 })
 
 const SignupForm: VFC = () => {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -33,9 +44,22 @@ const SignupForm: VFC = () => {
     resolver: yupResolver(SignupSchema),
   })
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormType) => {
     // eslint-disable-next-line no-console
-    console.log(data)
+    auth
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then((userCredential) => {
+        const user = userCredential.user
+        if (user) {
+          // eslint-disable-next-line no-console
+          console.log(user)
+          // hasuraのuserテーブルにmutation
+        }
+        router.push('/')
+      })
+      .catch((error) => {
+        console.error(error.code, error.message)
+      })
   }
 
   return (
