@@ -20,6 +20,11 @@ export const nortificationMenuItems = (): JSX.Element[] => {
   ]
 }
 
+// export type MenuItems = {
+//   element: JSX.Element
+//   onClick:
+// }[]
+
 export const userMenuItems = (): JSX.Element[] => {
   return [
     <Box>
@@ -45,7 +50,6 @@ export const userMenuItems = (): JSX.Element[] => {
     <Text color="gray.800" fontSize="13px">
       ログアウト
     </Text>,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     <Box>
       <Text color="gray.800" fontSize="13px" mb="1">
         カラーモードを変更
