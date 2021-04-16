@@ -13,6 +13,7 @@ export type IconButtonProps = {
   icon: IconType
   iconPosition: 'left' | 'right'
   fontWeight?: string
+  onClick?: () => void
 }
 
 const IconButton: VFC<IconButtonProps> = (props: IconButtonProps) => {
@@ -32,6 +33,7 @@ const IconButton: VFC<IconButtonProps> = (props: IconButtonProps) => {
       borderRadius="5px"
       fontWeight={props.fontWeight}
       _hover={{ opacity: 0.8 }}
+      onClick={props.onClick}
     >
       {props.iconPosition === 'left' ? (
         <>

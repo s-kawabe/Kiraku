@@ -1,17 +1,17 @@
 import { Box, Center, Heading, VStack } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 
-import { Loading } from '@/components/common/unit'
+// import { Loading } from '@/components/common/unit'
 import { SignupForm } from '@/components/forms/container'
 import { LayoutWithHead } from '@/components/layout/container'
-import { useIsDesktop, useRequireUnLogin } from '@/utils/methods/customeHooks'
+import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 const SignupPage = () => {
   const isPC = useIsDesktop()
   // ログイン中に来た場合はルートにリダイレクトする
-  if (useRequireUnLogin()) {
-    return <Loading />
-  }
+  // if (useRequireUnLogin()) {
+  //   return <Loading />
+  // }
 
   const isClient = () => {
     return typeof window !== 'undefined'

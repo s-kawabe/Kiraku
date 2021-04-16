@@ -2,6 +2,7 @@ import Head from 'next/head'
 import type { FC } from 'react'
 
 import { Footer, Header } from '@/components/layout/container'
+import { auth } from '@/firebase/firebaseConfig'
 
 type Props = {
   children: React.ReactNode
@@ -11,6 +12,8 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
+  // useEffectでuser.currentUserを調べる
+
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'
   const description =
@@ -37,7 +40,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta name="twitter:image" content={`${ogUrl}/og.png`} />
       </Head>
 
-      <Header isLogin={!!props.isLogin} />
+      <Header user={auth.currentUser} />
       {props.children}
       <Footer />
     </>

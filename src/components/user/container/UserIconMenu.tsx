@@ -4,10 +4,17 @@ import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 
 import { DarkmodeToggle } from '@/components/layout/unit'
+import { auth } from '@/firebase/firebaseConfig'
 
 // TODO propsにuserIDをもらう
 const UserIconMenu: VFC = () => {
   const router = useRouter()
+
+  const handleLogout = () => {
+    auth.signOut()
+    router.push('/')
+  }
+
   return (
     <MenuList borderRadius="18px">
       <MenuItem
@@ -19,9 +26,10 @@ const UserIconMenu: VFC = () => {
       >
         <Box>
           <Flex align="center">
-            <Heading size="sm">shintaro</Heading>
+            <Heading size="sm">{auth.currentUser?.displayName ?? 'guest'}</Heading>
             <Text ml="2" color="gray.400" fontSize="12px">
-              @shin_k_2281
+              @aaaa
+              {/* Todo 最初の@IDはランダム生成 */}
             </Text>
           </Flex>
           <Text color="gray.800" fontSize="12px" mt="1">
@@ -66,13 +74,7 @@ const UserIconMenu: VFC = () => {
         </Text>
       </MenuItem>
       <MenuDivider p={0} m={0} color="gray.300" />
-      <MenuItem
-        borderRadius="4px"
-        my="5px"
-        onClick={() => {
-          alert('ログアウト！') // TODO
-        }}
-      >
+      <MenuItem borderRadius="4px" my="5px" onClick={handleLogout}>
         <Text color="gray.800" fontSize="13px">
           ログアウト
         </Text>

@@ -1,21 +1,23 @@
 import { Box, SimpleGrid, Stack } from '@chakra-ui/react'
 
 import { BlogCard } from '@/components/blog/container/BlogCard'
-import { Loading } from '@/components/common/unit'
+// import { Loading } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 import { auth } from '@/firebase/firebaseConfig'
-import { useRequireLogin } from '@/utils/methods/customeHooks'
+// import { useRequireLogin } from '@/utils/methods/customeHooks'
 
 const Home = () => {
   // ログイン状態でなければaboutページにリダイレクト
   // aboutページから来た場合は匿名ログイン状態になるので閲覧のみ可能
-  if (useRequireLogin()) {
-    return <Loading />
-  }
+  // if (useRequireLogin()) {
+  //   return <Loading />
+  // }
+
+  // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示
 
   return (
-    <LayoutWithHead isLogin>
+    <LayoutWithHead>
       <Box w="60vw" m="70px">
         <SimpleGrid columns={2} spacing={8}>
           <Box

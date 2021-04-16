@@ -3,7 +3,7 @@ module.exports = {
   typescript: { ignoreDevErrors: true },
   poweredByHeader: false,
   images: {
-    domains: ['firebase.google.com'],
+    domains: ['firebase.google.com', 'lh3.googleusercontent.com', 'pbs.twimg.com'],
   },
   env: {
     HASURA_GRAPHQL_ADMIN_SECRET: process.env.HASURA_GRAPHQL_ADMIN_SECRET,
