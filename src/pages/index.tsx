@@ -1,16 +1,34 @@
 import { Box, SimpleGrid, Stack } from '@chakra-ui/react'
 
 import { BlogCard } from '@/components/blog/container/BlogCard'
+// import { Loading } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-
-// ログイン状態でない場合は/aboutにリダイレクトさせる
+import { auth } from '@/firebase/firebaseConfig'
+// import { useRequireLogin } from '@/utils/methods/customeHooks'
 
 const Home = () => {
+  // ログイン状態でなければaboutページにリダイレクト
+  // aboutページから来た場合は匿名ログイン状態になるので閲覧のみ可能
+  // if (useRequireLogin()) {
+  //   return <Loading />
+  // }
+
+  // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示
+
   return (
-    <LayoutWithHead isLogin>
+    <LayoutWithHead>
       <Box w="60vw" m="70px">
         <SimpleGrid columns={2} spacing={8}>
+          <Box
+            bg="red.200"
+            onClick={() => {
+              // eslint-disable-next-line no-console
+              console.log(auth.currentUser)
+            }}
+          >
+            clickme
+          </Box>
           <PostCard
             imageSrc="/fashion.jpeg"
             text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"

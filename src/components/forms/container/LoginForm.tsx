@@ -1,6 +1,7 @@
 import { Box, Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaTwitter } from 'react-icons/fa'
@@ -9,6 +10,12 @@ import * as yup from 'yup'
 
 import { IconButton, NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
+import firebase, { auth } from '@/firebase/firebaseConfig'
+
+type FormType = {
+  email: string
+  password: string
+}
 
 const REQUIRE_MSG = '必須入力項目です'
 const VIOLATION_EMAIL = '正しい形式で入力してください'
@@ -19,6 +26,7 @@ const LoginSchema = yup.object().shape({
 })
 
 const LoginForm: VFC = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -27,9 +35,49 @@ const LoginForm: VFC = () => {
     resolver: yupResolver(LoginSchema),
   })
 
-  const onSubmit = (data: any) => {
-    // eslint-disable-next-line no-console
-    console.log(data)
+  const emailLogin = (data: FormType) => {
+    auth
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then((userCredential) => {
+        const user = userCredential.user
+        console.log(user)
+        router.push('/')
+      })
+      .catch((error) => {
+        // todo トーストにエラー表示
+        console.error(error.code, error.message)
+        if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          alert('ユーザ名またはパスワードが違います')
+        } else {
+          alert('エラーが発生しました。')
+        }
+      })
+  }
+
+  const googleLogin = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    await auth
+      .signInWithPopup(provider)
+      .then(() => {
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error.code, error.message)
+        alert('エラーが発生しました。')
+      })
+  }
+
+  const twitterLogin = async () => {
+    const provider = new firebase.auth.TwitterAuthProvider()
+    await auth
+      .signInWithPopup(provider)
+      .then(() => {
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error.code, error.message)
+        alert('エラーが発生しました。')
+      })
   }
 
   return (
@@ -51,6 +99,7 @@ const LoginForm: VFC = () => {
           color="gray.700"
           icon={FcGoogle}
           iconPosition="left"
+          onClick={googleLogin}
         />
         <IconButton
           text="Twitterでログイン"
@@ -61,9 +110,10 @@ const LoginForm: VFC = () => {
           color="gray.700"
           icon={FaTwitter}
           iconPosition="left"
+          onClick={twitterLogin}
         />
       </VStack>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(emailLogin)} noValidate>
         <VStack spacing="7">
           <TextForm
             label={'メールアドレス'}

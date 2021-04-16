@@ -13,7 +13,10 @@ const base = css`
   }
 `
 
+// onAuthStateChanged グローバルステートにuserの情報を格納する
+
 const App = (props: AppProps) => {
+  // apolloClientを作り直す
   return (
     <>
       <Global

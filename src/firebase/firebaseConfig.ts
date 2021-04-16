@@ -22,4 +22,5 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth()
 export const storage = firebase.storage()
 export const functions = firebase.functions()
-export const FirebaseTimestamp = firebase.firestore.Timestamp
+// eslint-disable-next-line import/no-default-export
+export default firebase

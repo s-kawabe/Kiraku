@@ -63,6 +63,7 @@ const AboutPage = () => {
             <Link href="/">
               <a>
                 <IconButton
+                  // todo onClick => 匿名ログイン後ルートにpush
                   text="ログインせずに試す"
                   fontWeight="semibold"
                   bg="white"
@@ -248,6 +249,7 @@ const AboutPage = () => {
         <Link href="/">
           <a>
             <IconButton
+              // todo onClick => 匿名ログイン後ルートにpush
               text="ログインせずに試す"
               fontWeight="semibold"
               bg="white"

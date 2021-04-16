@@ -4,16 +4,17 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
-import { ContextMenu } from '@/components/common/container'
+// import { ContextMenu } from '@/components/common/container'
 import { NormalButton } from '@/components/common/unit'
 import { NextImage } from '@/components/common/unit'
 import { Nortification, SearchBar } from '@/components/layout/unit'
+import { NortificationMenu, PostButtonMenu, UserIconMenu } from '@/components/user/container'
 import { UserIcon } from '@/components/user/unit'
-import { nortificationMenuItems, postMenuItems, userMenuItems } from '@/utils/constants/MenuItems'
+import type firebase from '@/firebase/firebaseConfig'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 export type HeaderProps = {
-  isLogin: boolean // TODO あとで除去（userのsessionを取得するカスタムフックから判断するようにする）
+  user: firebase.User | null
 }
 
 const Header: VFC<HeaderProps> = (props: HeaderProps) => {
@@ -34,21 +35,26 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
           {isClient() && isPC && <SearchBar />}
         </HStack>
         <HStack spacing={[2, 4]} alignItems="center">
-          {props.isLogin ? (
+          {props.user ? (
             <>
               {/* Nortification Icon */}
               <Menu>
                 <MenuButton transition="all 0.1s" _hover={{ opacity: 0.9 }}>
                   <Nortification isNortification />
                 </MenuButton>
-                <ContextMenu items={nortificationMenuItems()} />
+                <NortificationMenu />
               </Menu>
               {/* User Icon */}
               <Menu>
                 <MenuButton transition="all 0.1s" _hover={{ opacity: 0.9 }}>
-                  <UserIcon src="/myicon.jpg" width={45} height={45} />
-                </MenuButton>
-                <ContextMenu items={userMenuItems()} />
+                  {props.user.photoURL ? (
+                    <UserIcon src={props.user.photoURL} width={45} height={45} />
+                  ) : (
+                    <UserIcon src="/nouser.svg" width={45} height={45} />
+                  )}
+                </MenuButton>{' '}
+                {/* todo userを渡す */}
+                <UserIconMenu />
               </Menu>
               {/* Post Button */}
               <Menu>
@@ -63,7 +69,7 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
                 >
                   <NormalButton text="投稿" bg="green.300" color="white" />
                 </MenuButton>
-                <ContextMenu items={postMenuItems()} />
+                <PostButtonMenu />
               </Menu>
             </>
           ) : (

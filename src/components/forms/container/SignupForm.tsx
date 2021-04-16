@@ -1,23 +1,36 @@
 import { Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
+import { auth } from '@/firebase/firebaseConfig'
+
+type FormType = {
+  email: string
+  username: string
+  password: string
+  password_confirm: string
+}
 
 const REQUIRE_MSG = '必須入力項目です'
 const VIOLATION_EMAIL = '正しい形式で入力してください'
 const VIOLATION_NAME_COUNT = '名前は16文字以下で入力してください'
-const VIOLATION_PASSWORD_COUNT = 'パスワードは16文字以下で入力してください'
+const VIOLATION_PASSWORD_COUNT = 'パスワードは6文字以上16文字以下で入力してください'
 const VIOLATION_PASSWORD_CONFIRM = '入力したパスワードが一致しません'
 
 const SignupSchema = yup.object().shape({
   email: yup.string().required(REQUIRE_MSG).email(VIOLATION_EMAIL),
   username: yup.string().required(REQUIRE_MSG).max(16, VIOLATION_NAME_COUNT),
-  password: yup.string().required(REQUIRE_MSG).max(16, VIOLATION_PASSWORD_COUNT),
+  password: yup
+    .string()
+    .required(REQUIRE_MSG)
+    .min(6, VIOLATION_PASSWORD_COUNT)
+    .max(16, VIOLATION_PASSWORD_COUNT),
   password_confirm: yup
     .string()
     .required(REQUIRE_MSG)
@@ -25,6 +38,8 @@ const SignupSchema = yup.object().shape({
 })
 
 const SignupForm: VFC = () => {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -33,9 +48,26 @@ const SignupForm: VFC = () => {
     resolver: yupResolver(SignupSchema),
   })
 
-  const onSubmit = (data: any) => {
-    // eslint-disable-next-line no-console
-    console.log(data)
+  const onSubmit = (data: FormType) => {
+    auth
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then((userCredential) => {
+        const user = userCredential.user
+        if (user) {
+          console.log(user)
+          user.updateProfile({ displayName: data.username })
+        }
+        router.push('/')
+      })
+      .catch((error) => {
+        // todo トーストにエラー表示
+        console.error(error.code, error.message)
+        if (error.code === 'auth/email-already-in-use') {
+          alert('入力したメールアドレスは既に登録済みです')
+        } else {
+          alert('エラーが発生しました')
+        }
+      })
   }
 
   return (
