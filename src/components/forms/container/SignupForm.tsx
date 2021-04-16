@@ -56,7 +56,6 @@ const SignupForm: VFC = () => {
         if (user) {
           console.log(user)
           user.updateProfile({ displayName: data.username })
-          // hasuraのuserテーブルにmutation
         }
         router.push('/')
       })

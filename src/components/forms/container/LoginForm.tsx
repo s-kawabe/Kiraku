@@ -58,9 +58,7 @@ const LoginForm: VFC = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     await auth
       .signInWithPopup(provider)
-      .then((userCredential) => {
-        const user = userCredential.user
-        console.log(user)
+      .then(() => {
         router.push('/')
       })
       .catch((error) => {
@@ -73,9 +71,7 @@ const LoginForm: VFC = () => {
     const provider = new firebase.auth.TwitterAuthProvider()
     await auth
       .signInWithPopup(provider)
-      .then((userCredential) => {
-        const user = userCredential.user
-        console.log(user)
+      .then(() => {
         router.push('/')
       })
       .catch((error) => {

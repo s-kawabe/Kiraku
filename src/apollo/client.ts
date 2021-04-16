@@ -3,9 +3,7 @@ import { setContext } from '@apollo/client/link/context'
 
 import { cache } from './cache'
 
-const HASURA_URL = process.env.HASURA_URL
-
-const httpLink = createHttpLink({ uri: HASURA_URL })
+const httpLink = createHttpLink({ uri: process.env.HASURA_URL })
 
 const authLink = setContext(async (_, { headers }) => {
   const token = 'bar' // TODO user token
