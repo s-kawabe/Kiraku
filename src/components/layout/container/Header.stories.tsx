@@ -18,12 +18,7 @@ const Template: Story<HeaderProps> = (args) => {
   )
 }
 
-export const LogginedHeader = Template.bind({})
-LogginedHeader.args = {
-  isLogin: true,
-}
-
 export const LogoutedHeader = Template.bind({})
 LogoutedHeader.args = {
-  isLogin: false,
+  user: null,
 }
