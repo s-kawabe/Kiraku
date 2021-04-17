@@ -16,6 +16,8 @@ const Home = () => {
 
   // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示
 
+  // Todo codegenのテストと、ログイン中のuserにUserRoleが与えられているかのテストを行う
+
   return (
     <LayoutWithHead>
       <Box w="60vw" m="70px">

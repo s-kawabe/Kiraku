@@ -1,10 +1,13 @@
+import type { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { ApolloProvider } from '@apollo/client'
 import { css, Global } from '@emotion/react'
 import reset from 'emotion-reset'
 import type { AppProps } from 'next/app'
+import { useEffect } from 'react'
 
-import { client } from '@/apollo/client'
+import { useApollo } from '@/apollo/client'
 import { ChakraWrapper } from '@/chakra/ChakraWrapper'
+import { auth } from '@/firebase/firebaseConfig'
 
 const base = css`
   body {
@@ -13,10 +16,26 @@ const base = css`
   }
 `
 
-// onAuthStateChanged グローバルステートにuserの情報を格納する
+// const fetchUserDetail = (user: any) => {
+//   // hasuraのuserテーブルからログイン中ユーザの詳細情報を取得し
+//   // ReactiveVarに格納する
+// }
 
 const App = (props: AppProps) => {
-  // apolloClientを作り直す
+  const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // ApolloClientを作り直す
+        // hasuraのuserテーブルから今ログインしたuserの情報をとってきてグローバルステートに格納
+        // fetchUserDetail
+      } else {
+        // logout時: グローバルステートを初期化
+      }
+    })
+  })
+
   return (
     <>
       <Global

@@ -7,13 +7,14 @@ import fetch from 'node-fetch'
 admin.initializeApp(functions.config().firebase)
 
 const createUserMutation = gql`
-  mutation InsertUsers($id: String, $display_id: String, $email: String, $name: String) {
-    insert_users(objects: { id: $id, display_id: $display_id, name: $name, email: $email }) {
+  mutation InsertUsers($id: String, $display_id: String, $email: String, $name: String, $image: String) {
+    insert_users(objects: { id: $id, display_id: $display_id, name: $name, email: $email, image: $image }) {
       returning {
         id
         display_id
-        name
         email
+        name
+        image
         created_at
       }
     }
@@ -26,7 +27,6 @@ const authLink = setContext(async (_, { headers }) => {
     headers: {
       ...headers,
       'x-hasura-admin-secret': functions.config().hasura.admin_secret,
-      'x-Hasura-role': 'admin',
     },
   }
 })
@@ -37,16 +37,18 @@ const client = new ApolloClient({
 })
 
 // firebaseのユーザ作成時のイベントハンドラ
-export const processSignUp = functions.auth.user().onCreate(async (user) => {
+export const processSignUp = functions.auth.user().onCreate((user) => {
   try {
     // displayIDはuserIDの先頭○桁とする
     const display_id = user.uid.substring(0, 8)
-    await client.mutate({
+    const image = user.photoURL
+    client.mutate({
       variables: {
         id: user.uid,
         display_id: display_id,
         email: user.email,
         name: user.displayName || 'guest',
+        image
       },
       mutation: createUserMutation,
     })
