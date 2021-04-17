@@ -1,18 +1,14 @@
 import { Box, SimpleGrid, Stack } from '@chakra-ui/react'
 
 import { BlogCard } from '@/components/blog/container/BlogCard'
-// import { Loading } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 import { auth } from '@/firebase/firebaseConfig'
-// import { useRequireLogin } from '@/utils/methods/customeHooks'
+import { useRedirectWhenUnLogin } from '@/utils/methods/customeHooks'
 
 const Home = () => {
   // ログイン状態でなければaboutページにリダイレクト
-  // aboutページから来た場合は匿名ログイン状態になるので閲覧のみ可能
-  // if (useRequireLogin()) {
-  //   return <Loading />
-  // }
+  useRedirectWhenUnLogin()
 
   // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示
 

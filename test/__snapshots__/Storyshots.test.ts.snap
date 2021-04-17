@@ -14,7 +14,7 @@ exports[`Storyshots about/unit/AboutCard Blog 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-1m5fney"
+      className="css-nqu8eg"
     >
       <div
         className="chakra-stack css-x6kdw3"
@@ -72,7 +72,7 @@ exports[`Storyshots about/unit/AboutCard Post 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-1m5fney"
+      className="css-nqu8eg"
     >
       <div
         className="chakra-stack css-x6kdw3"
@@ -130,7 +130,7 @@ exports[`Storyshots about/unit/AboutCard Show 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-1m5fney"
+      className="css-nqu8eg"
     >
       <div
         className="chakra-stack css-x6kdw3"
@@ -188,7 +188,7 @@ exports[`Storyshots blog/container/BlogCard Default Blog Card 1`] = `
     className="css-qe3950"
   >
     <div
-      className="css-mfeeg5"
+      className="css-1unygd4"
     >
       <div
         className="chakra-stack css-137s849-BlogCard"
@@ -211,12 +211,13 @@ exports[`Storyshots blog/container/BlogCard Default Blog Card 1`] = `
           <p
             className="chakra-text css-uevob5"
           >
-            Shintaro
+            shintaro
           </p>
           <p
             className="chakra-text css-okremr"
           >
-            @shin_k_2281
+            @
+            shin_k_2281
           </p>
         </div>
       </div>
@@ -224,13 +225,13 @@ exports[`Storyshots blog/container/BlogCard Default Blog Card 1`] = `
         className="css-162tvoi"
       >
         <div
-          className="chakra-stack css-6hlqy3"
+          className="chakra-stack css-8slc3a"
         >
           <div
             className="css-jao2y1"
           >
             <p
-              className="chakra-text css-dyov5n"
+              className="chakra-text css-q8txr3"
               onBlur={[Function]}
               onClick={[Function]}
               onFocus={[Function]}
@@ -277,7 +278,7 @@ exports[`Storyshots blog/container/BlogCard Default Blog Card 1`] = `
               style={Object {}}
             >
               <svg
-                className="chakra-icon css-102z4n8"
+                className="chakra-icon css-becrmp"
                 fill="currentColor"
                 focusable={false}
                 height="1em"
@@ -309,18 +310,22 @@ exports[`Storyshots blog/container/BlogCard Default Blog Card 1`] = `
         className="css-1sdzfiq"
       >
         <p
-          className="chakra-text css-1b1rk9g"
+          className="chakra-text css-tvayg8"
         >
-          春におすすめのメンズ小物３選
+          おすすめメンズアイテム5選
         </p>
       </div>
       <div
         className="css-gq81bp"
       >
         <p
-          className="chakra-text css-cptcu2"
+          className="chakra-text css-1k8hew7"
         >
-          こんにちは、皆様いかがお過ごしでしょうか 今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
+          こんにちは、皆様いかがお過ごしでしょうか
+  今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
+  まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
+  まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
+  まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
         </p>
       </div>
     </div>
@@ -353,7 +358,7 @@ exports[`Storyshots common/container/CommentIconWithCount Comment 1`] = `
         onMouseEnter={[Function]}
       >
         <svg
-          className="chakra-icon css-r62qck"
+          className="chakra-icon css-173f1us"
           fill="currentColor"
           focusable={false}
           height="1em"
@@ -400,7 +405,7 @@ exports[`Storyshots common/container/CommentIconWithCount Small Comment 1`] = `
       className="css-jao2y1"
     >
       <p
-        className="chakra-text css-dyov5n"
+        className="chakra-text css-q8txr3"
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -464,7 +469,7 @@ exports[`Storyshots common/container/LikeButtonWithCount Like Button 1`] = `
         style={Object {}}
       >
         <svg
-          className="chakra-icon css-102z4n8"
+          className="chakra-icon css-becrmp"
           fill="currentColor"
           focusable={false}
           height="1em"
@@ -520,7 +525,7 @@ exports[`Storyshots common/container/LikeButtonWithCount Small Like Button 1`] =
         style={Object {}}
       >
         <svg
-          className="chakra-icon css-102z4n8"
+          className="chakra-icon css-becrmp"
           fill="currentColor"
           focusable={false}
           height="1em"
@@ -894,7 +899,7 @@ exports[`Storyshots common/unit/IconButton Google Login 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-1i6oq0n"
+      className="chakra-button css-zeb398"
       type="button"
     >
       <p
@@ -961,7 +966,7 @@ exports[`Storyshots common/unit/IconButton No Login Try 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-1i0huya"
+      className="chakra-button css-e5ixwl"
       type="button"
     >
       ログインせずに試す
@@ -1006,7 +1011,7 @@ exports[`Storyshots common/unit/IconButton Twitter Login 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-1bd9ila"
+      className="chakra-button css-1jxsbf1"
       type="button"
     >
       <p
@@ -1369,7 +1374,7 @@ exports[`Storyshots common/unit/NormalButton Login 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-8ijn0"
+      className="chakra-button css-qslz7q"
       type="button"
     >
       ログイン
@@ -1392,7 +1397,7 @@ exports[`Storyshots common/unit/NormalButton Post 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-154oc8v"
+      className="chakra-button css-10vawgf"
       type="button"
     >
       投稿
@@ -1415,7 +1420,7 @@ exports[`Storyshots common/unit/NormalButton Register 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-154oc8v"
+      className="chakra-button css-10vawgf"
       type="button"
     >
       登録
@@ -1438,389 +1443,11 @@ exports[`Storyshots common/unit/NormalButton Signup 1`] = `
     className="css-qe3950"
   >
     <button
-      className="chakra-button css-154oc8v"
+      className="chakra-button css-10vawgf"
       type="button"
     >
       新規会員登録
     </button>
-  </div>
-</div>
-`;
-
-exports[`Storyshots forms/container/LoginForm Normal Login Form 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-qe3950"
-  >
-    <div
-      className="css-1wvouwd"
-    >
-      <div
-        className="chakra-stack css-1foloyc"
-      >
-        <h2
-          className="chakra-heading css-j4iqt2"
-        >
-          アカウントをお持ちでない方はこちら
-        </h2>
-        <button
-          className="chakra-button css-1i6oq0n"
-          type="button"
-        >
-          <p
-            className="chakra-text css-1j9234w-iconColor"
-          >
-            <svg
-              enableBackground="new 0 0 48 48"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              version="1.1"
-              viewBox="0 0 48 48"
-              width="1em"
-              x="0px"
-              xmlns="http://www.w3.org/2000/svg"
-              y="0px"
-            >
-              <path
-                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12
-	c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
-	c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
-                fill="#FFC107"
-              />
-              <path
-                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657
-	C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
-                fill="#FF3D00"
-              />
-              <path
-                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36
-	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
-                fill="#4CAF50"
-              />
-              <path
-                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571
-	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-                fill="#1976D2"
-              />
-            </svg>
-          </p>
-          Googleでログイン
-        </button>
-        <button
-          className="chakra-button css-1bd9ila"
-          type="button"
-        >
-          <p
-            className="chakra-text css-u7chm8-iconColor"
-          >
-            <svg
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                Object {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
-              />
-            </svg>
-          </p>
-          Twitterでログイン
-        </button>
-      </div>
-      <form
-        noValidate={true}
-        onSubmit={[Function]}
-      >
-        <div
-          className="chakra-stack css-ajkv5y"
-        >
-          <div
-            className="chakra-form-control css-1a63fr1"
-            role="group"
-          >
-            <label
-              className="chakra-form__label css-1t32fqv"
-              htmlFor="email"
-              id="email-label"
-            >
-              <p
-                className="chakra-text css-1yd6l3b"
-              >
-                メールアドレス
-              </p>
-               
-            </label>
-            <input
-              className="chakra-input css-fn2rwy"
-              disabled={false}
-              id="email"
-              name="email"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder="メールアドレスを入力"
-              readOnly={false}
-              required={false}
-              type="email"
-            />
-            <p
-              className="chakra-text css-1abvozv"
-            />
-          </div>
-          <div
-            className="chakra-form-control css-1a63fr1"
-            role="group"
-          >
-            <label
-              className="chakra-form__label css-1t32fqv"
-              htmlFor="password"
-              id="password-label"
-            >
-              <p
-                className="chakra-text css-1yd6l3b"
-              >
-                パスワード
-              </p>
-               
-            </label>
-            <input
-              className="chakra-input css-fn2rwy"
-              disabled={false}
-              id="password"
-              name="password"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              placeholder="パスワードを入力"
-              readOnly={false}
-              required={false}
-              type="password"
-            />
-            <p
-              className="chakra-text css-1abvozv"
-            />
-          </div>
-          <button
-            className="chakra-button css-iv2jxb"
-            type="submit"
-          >
-            ログイン
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots forms/container/SignupForm Normal Signup Form 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-qe3950"
-  >
-    <form
-      noValidate={true}
-      onSubmit={[Function]}
-    >
-      <div
-        className="chakra-stack css-ianjq8"
-      >
-        <h2
-          className="chakra-heading css-j4iqt2"
-        >
-          アカウントをお持ちの方はこちら
-        </h2>
-        <div
-          className="chakra-form-control css-1a63fr1"
-          role="group"
-        >
-          <label
-            className="chakra-form__label css-1t32fqv"
-            htmlFor="email"
-            id="email-label"
-          >
-            <p
-              className="chakra-text css-1yd6l3b"
-            >
-              メールアドレス
-            </p>
-             
-            <span
-              className="chakra-badge css-nxnp9o"
-            >
-              必須
-            </span>
-          </label>
-          <input
-            className="chakra-input css-fn2rwy"
-            disabled={false}
-            id="email"
-            name="email"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            placeholder="メールアドレスを入力"
-            readOnly={false}
-            required={false}
-            type="email"
-          />
-          <p
-            className="chakra-text css-1abvozv"
-          />
-        </div>
-        <div
-          className="chakra-form-control css-1a63fr1"
-          role="group"
-        >
-          <label
-            className="chakra-form__label css-1t32fqv"
-            htmlFor="username"
-            id="username-label"
-          >
-            <p
-              className="chakra-text css-1yd6l3b"
-            >
-              ユーザ名
-            </p>
-             
-            <span
-              className="chakra-badge css-nxnp9o"
-            >
-              必須
-            </span>
-          </label>
-          <input
-            className="chakra-input css-fn2rwy"
-            disabled={false}
-            id="username"
-            name="username"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            placeholder="ユーザ名を入力"
-            readOnly={false}
-            required={false}
-            type="text"
-          />
-          <p
-            className="chakra-text css-1abvozv"
-          />
-        </div>
-        <div
-          className="chakra-form-control css-1a63fr1"
-          role="group"
-        >
-          <label
-            className="chakra-form__label css-1t32fqv"
-            htmlFor="password"
-            id="password-label"
-          >
-            <p
-              className="chakra-text css-1yd6l3b"
-            >
-              パスワード
-            </p>
-             
-            <span
-              className="chakra-badge css-nxnp9o"
-            >
-              必須
-            </span>
-          </label>
-          <input
-            className="chakra-input css-fn2rwy"
-            disabled={false}
-            id="password"
-            name="password"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            placeholder="パスワードを入力"
-            readOnly={false}
-            required={false}
-            type="password"
-          />
-          <p
-            className="chakra-text css-1abvozv"
-          />
-        </div>
-        <div
-          className="chakra-form-control css-1a63fr1"
-          role="group"
-        >
-          <label
-            className="chakra-form__label css-1t32fqv"
-            htmlFor="password_confirm"
-            id="password_confirm-label"
-          >
-            <p
-              className="chakra-text css-1yd6l3b"
-            >
-              パスワード（確認用）
-            </p>
-             
-            <span
-              className="chakra-badge css-nxnp9o"
-            >
-              必須
-            </span>
-          </label>
-          <input
-            className="chakra-input css-fn2rwy"
-            disabled={false}
-            id="password_confirm"
-            name="password_confirm"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            placeholder="上記と同じパスワードを入力"
-            readOnly={false}
-            required={false}
-            type="password"
-          />
-          <p
-            className="chakra-text css-1abvozv"
-          />
-        </div>
-        <button
-          className="chakra-button css-9zj5wk"
-          type="submit"
-        >
-          登録
-        </button>
-      </div>
-    </form>
   </div>
 </div>
 `;
@@ -1839,7 +1466,7 @@ exports[`Storyshots forms/unit/TextForm E Mail Text Form 1`] = `
     className="css-qe3950"
   >
     <div
-      className="chakra-form-control css-1a63fr1"
+      className="chakra-form-control css-7o1c3c"
       role="group"
     >
       <label
@@ -1858,8 +1485,12 @@ exports[`Storyshots forms/unit/TextForm E Mail Text Form 1`] = `
         >
           必須
         </span>
+        <p
+          className="chakra-text css-1abvozv"
+        />
       </label>
       <input
+        autoComplete="email"
         className="chakra-input css-fn2rwy"
         disabled={false}
         id="email"
@@ -1869,9 +1500,6 @@ exports[`Storyshots forms/unit/TextForm E Mail Text Form 1`] = `
         readOnly={false}
         required={false}
         type="email"
-      />
-      <p
-        className="chakra-text css-1abvozv"
       />
     </div>
   </div>
@@ -1889,625 +1517,66 @@ exports[`Storyshots layout/containers/Footer Normal Footer 1`] = `
   }
 >
   <div
-    className="css-qe3950"
-  >
-    <div>
-      <small>
-        © 
-        2021
-         shintaro_k All Rights Reserved.
-      </small>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots layout/containers/Header Loggined Header 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-1u8qly9"
+    className="fixed__footer css-nfkx13"
   >
     <div
-      className="css-yq8ap5"
+      className="chakra-stack css-1xkp5ny"
     >
       <div
-        className="chakra-stack css-1pant5l"
+        className="chakra-stack css-13y4qjp"
+      >
+        <div>
+          <img
+            alt="アプリケーションロゴ"
+            height={50}
+            src="/footerLogo.svg"
+            width={100}
+          />
+        </div>
+        <small
+          lang="en"
+        >
+          © 
+          2021
+           shintaro_k All Rights Reserved.
+        </small>
+      </div>
+      <div
+        className="chakra-stack css-16fu14r-Footer"
       >
         <a
-          href="/"
+          href="/about"
           onClick={[Function]}
           onMouseEnter={[Function]}
         >
-          <div>
-            <img
-              alt="アプリケーションロゴ"
-              height={80}
-              src="/logo.svg"
-              width={165}
-            />
-          </div>
+          <p
+            className="chakra-text css-1fglxl2"
+          >
+            About
+          </p>
         </a>
-        <div
-          className="chakra-input__group css-nhr88j"
-        >
-          <div
-            className="chakra-input__left-element css-fx53ns"
-            size="md"
-          >
-            <svg
-              className="chakra-icon css-suqwlm"
-              focusable={false}
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
-          <input
-            className="chakra-input css-nv16pr-SearchBar"
-            onBlur={[Function]}
-            onFocus={[Function]}
-            placeholder="キーワードで検索"
-            type="text"
-          />
-        </div>
-      </div>
-      <div
-        className="chakra-stack css-1pant5l"
-      >
-        <button
-          aria-controls="menu-list-28"
-          aria-expanded={false}
-          aria-haspopup="menu"
-          className="chakra-menu__menu-button css-ftu4ss"
-          id="menu-button-28"
+        <a
+          href="/terms"
           onClick={[Function]}
-          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
         >
-          <span
-            className="css-1aaibel"
+          <p
+            className="chakra-text css-1fglxl2"
           >
-            <span
-              className="chakra-avatar css-15n0fff"
-            >
-              <svg
-                className="css-1f6vrge"
-                role="img"
-                viewBox="0 0 128 128"
-              >
-                <path
-                  d="M103,102.1388 C93.094,111.92 79.3504,118 64.1638,118 C48.8056,118 34.9294,111.768 25,101.7892 L25,95.2 C25,86.8096 31.981,80 40.6,80 L87.4,80 C96.019,80 103,86.8096 103,95.2 L103,102.1388 Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M63.9961647,24 C51.2938136,24 41,34.2938136 41,46.9961647 C41,59.7061864 51.2938136,70 63.9961647,70 C76.6985159,70 87,59.7061864 87,46.9961647 C87,34.2938136 76.6985159,24 63.9961647,24"
-                  fill="currentColor"
-                />
-              </svg>
-              <svg
-                className="chakra-icon css-1os8v0c"
-                fill="currentColor"
-                focusable={false}
-                height="1em"
-                stroke="currentColor"
-                strokeWidth="0"
-                style={
-                  Object {
-                    "color": undefined,
-                  }
-                }
-                viewBox="0 0 448 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z"
-                />
-              </svg>
-              <div
-                className="chakra-avatar__badge css-onqetl"
-              />
-            </span>
-          </span>
-        </button>
-        <div
-          className="css-bxrgm2"
-          style={
-            Object {
-              "left": "0",
-              "position": "absolute",
-              "top": "0",
-              "visibility": "hidden",
-            }
-          }
-        >
-          <div
-            aria-orientation="vertical"
-            className="chakra-menu__menu-list css-1x9yibu"
-            id="menu-list-28"
-            onKeyDown={[Function]}
-            role="menu"
-            style={
-              Object {
-                "opacity": 0,
-                "transform": "scale(0.8) translateZ(0)",
-                "transformOrigin": "top left",
-                "visibility": "hidden",
-              }
-            }
-            tabIndex={-1}
-          >
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-29"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1yuknwd"
-                >
-                  @neko さんにフォローされました
-                </p>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-30"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1yuknwd"
-                >
-                  @hogehoge さんにフォローされました
-                </p>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-31"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1yuknwd"
-                >
-                  @innu さんにフォローされました
-                </p>
-              </button>
-            </div>
-          </div>
-        </div>
-        <button
-          aria-controls="menu-list-33"
-          aria-expanded={false}
-          aria-haspopup="menu"
-          className="chakra-menu__menu-button css-ftu4ss"
-          id="menu-button-33"
+            利用規約
+          </p>
+        </a>
+        <a
+          href="/policy"
           onClick={[Function]}
-          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
         >
-          <span
-            className="css-1aaibel"
+          <p
+            className="chakra-text css-1fglxl2"
           >
-            <div
-              className="css-1e9tvig"
-            >
-              <div>
-                <img
-                  alt="ユーザアイコン"
-                  height={45}
-                  src="/myicon.jpg"
-                  width={45}
-                />
-              </div>
-            </div>
-          </span>
-        </button>
-        <div
-          className="css-bxrgm2"
-          style={
-            Object {
-              "left": "0",
-              "position": "absolute",
-              "top": "0",
-              "visibility": "hidden",
-            }
-          }
-        >
-          <div
-            aria-orientation="vertical"
-            className="chakra-menu__menu-list css-1x9yibu"
-            id="menu-list-33"
-            onKeyDown={[Function]}
-            role="menu"
-            style={
-              Object {
-                "opacity": 0,
-                "transform": "scale(0.8) translateZ(0)",
-                "transformOrigin": "top left",
-                "visibility": "hidden",
-              }
-            }
-            tabIndex={-1}
-          >
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-34"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <div
-                  className="css-1u8qly9"
-                >
-                  <div
-                    className="css-10mejol"
-                  >
-                    <h2
-                      className="chakra-heading css-1hcyp82"
-                    >
-                      shintaro
-                    </h2>
-                    <p
-                      className="chakra-text css-rj7082"
-                    >
-                      @shin_k_2281
-                    </p>
-                  </div>
-                  <p
-                    className="chakra-text css-10f0yr4"
-                  >
-                    マイページを表示
-                  </p>
-                </div>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-35"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1pet7be"
-                >
-                  自分の投稿
-                </p>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-36"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1pet7be"
-                >
-                  お気に入りの投稿
-                </p>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-37"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1pet7be"
-                >
-                  アカウント設定
-                </p>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-38"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <p
-                  className="chakra-text css-1pet7be"
-                >
-                  ログアウト
-                </p>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-39"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <div
-                  className="css-1u8qly9"
-                >
-                  <p
-                    className="chakra-text css-1q79qd"
-                  >
-                    カラーモードを変更
-                  </p>
-                  <span>
-                    <label
-                      className="chakra-switch css-1up74ie-toggle"
-                    >
-                      <input
-                        checked={false}
-                        className="chakra-switch__input"
-                        onBlur={[Function]}
-                        onChange={[Function]}
-                        onFocus={[Function]}
-                        onKeyDown={[Function]}
-                        onKeyUp={[Function]}
-                        style={
-                          Object {
-                            "border": "0px",
-                            "clip": "rect(0px, 0px, 0px, 0px)",
-                            "height": "1px",
-                            "margin": "-1px",
-                            "overflow": "hidden",
-                            "padding": "0px",
-                            "position": "absolute",
-                            "whiteSpace": "nowrap",
-                            "width": "1px",
-                          }
-                        }
-                        type="checkbox"
-                      />
-                      <span
-                        aria-hidden={true}
-                        className="chakra-switch__track css-1cxwh41"
-                        onMouseDown={[Function]}
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
-                        onMouseUp={[Function]}
-                      >
-                        <span
-                          className="chakra-switch__thumb css-126pkve"
-                        />
-                      </span>
-                    </label>
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-        <button
-          aria-controls="menu-list-41"
-          aria-expanded={false}
-          aria-haspopup="menu"
-          className="chakra-menu__menu-button css-1xtc6d9"
-          id="menu-button-41"
-          onClick={[Function]}
-          onKeyDown={[Function]}
-        >
-          <span
-            className="css-1aaibel"
-          >
-            <button
-              className="chakra-button css-17bpyml"
-              type="button"
-            >
-              投稿
-            </button>
-          </span>
-        </button>
-        <div
-          className="css-bxrgm2"
-          style={
-            Object {
-              "left": "0",
-              "position": "absolute",
-              "top": "0",
-              "visibility": "hidden",
-            }
-          }
-        >
-          <div
-            aria-orientation="vertical"
-            className="chakra-menu__menu-list css-1x9yibu"
-            id="menu-list-41"
-            onKeyDown={[Function]}
-            role="menu"
-            style={
-              Object {
-                "opacity": 0,
-                "transform": "scale(0.8) translateZ(0)",
-                "transformOrigin": "top left",
-                "visibility": "hidden",
-              }
-            }
-            tabIndex={-1}
-          >
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-42"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <h2
-                  className="chakra-heading css-iuwkpl"
-                >
-                  <svg
-                    className="chakra-icon css-cr5d4b"
-                    fill="currentColor"
-                    focusable={false}
-                    height="1em"
-                    stroke="currentColor"
-                    strokeWidth="0"
-                    style={
-                      Object {
-                        "color": undefined,
-                      }
-                    }
-                    viewBox="0 0 1024 1024"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-40 632H136V232h752v560zM610.3 476h123.4c1.3 0 2.3-3.6 2.3-8v-48c0-4.4-1-8-2.3-8H610.3c-1.3 0-2.3 3.6-2.3 8v48c0 4.4 1 8 2.3 8zm4.8 144h185.7c3.9 0 7.1-3.6 7.1-8v-48c0-4.4-3.2-8-7.1-8H615.1c-3.9 0-7.1 3.6-7.1 8v48c0 4.4 3.2 8 7.1 8zM224 673h43.9c4.2 0 7.6-3.3 7.9-7.5 3.8-50.5 46-90.5 97.2-90.5s93.4 40 97.2 90.5c.3 4.2 3.7 7.5 7.9 7.5H522a8 8 0 0 0 8-8.4c-2.8-53.3-32-99.7-74.6-126.1a111.8 111.8 0 0 0 29.1-75.5c0-61.9-49.9-112-111.4-112s-111.4 50.1-111.4 112c0 29.1 11 55.5 29.1 75.5a158.09 158.09 0 0 0-74.6 126.1c-.4 4.6 3.2 8.4 7.8 8.4zm149-262c28.5 0 51.7 23.3 51.7 52s-23.2 52-51.7 52-51.7-23.3-51.7-52 23.2-52 51.7-52z"
-                    />
-                  </svg>
-                  ポスト
-                </h2>
-              </button>
-              <hr
-                aria-orientation="horizontal"
-                className="chakra-menu__divider css-6ll1rr"
-                role="separator"
-              />
-            </div>
-            <div>
-              <button
-                className="chakra-menu__menuitem css-17j21e1"
-                id="menuitem-43"
-                onClick={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                onMouseMove={[Function]}
-                role="menuitem"
-                tabIndex={0}
-                type="button"
-              >
-                <h2
-                  className="chakra-heading css-lr6ldv"
-                >
-                  <svg
-                    className="chakra-icon css-cr5d4b"
-                    fill="none"
-                    focusable={false}
-                    height="1em"
-                    stroke="currentColor"
-                    strokeWidth="0"
-                    style={
-                      Object {
-                        "color": undefined,
-                      }
-                    }
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    />
-                  </svg>
-                  ブログ
-                </h2>
-              </button>
-            </div>
-          </div>
-        </div>
+            プライバシーポリシー
+          </p>
+        </a>
       </div>
     </div>
   </div>
@@ -2528,67 +1597,82 @@ exports[`Storyshots layout/containers/Header Logouted Header 1`] = `
     className="css-1u8qly9"
   >
     <div
-      className="css-yq8ap5"
+      className="css-rmd271"
     >
       <div
-        className="chakra-stack css-1pant5l"
+        className="css-134mzct"
       >
-        <a
-          href="/"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
-        >
-          <div>
-            <img
-              alt="アプリケーションロゴ"
-              height={80}
-              src="/logo.svg"
-              width={165}
-            />
-          </div>
-        </a>
         <div
-          className="chakra-input__group css-nhr88j"
+          className="chakra-stack css-15f1jke"
         >
-          <div
-            className="chakra-input__left-element css-fx53ns"
-            size="md"
+          <a
+            href="/"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
           >
-            <svg
-              className="chakra-icon css-suqwlm"
-              focusable={false}
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
-                fill="currentColor"
+            <div>
+              <img
+                alt="アプリケーションロゴ"
+                height={80}
+                src="/logo.svg"
+                width={165}
               />
-            </svg>
-          </div>
-          <input
-            className="chakra-input css-nv16pr-SearchBar"
-            onBlur={[Function]}
-            onFocus={[Function]}
-            placeholder="キーワードで検索"
-            type="text"
-          />
+            </div>
+          </a>
+        </div>
+        <div
+          className="chakra-stack css-fmhmgu"
+        >
+          <a
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <button
+              className="chakra-button css-14k7ap6"
+              type="button"
+            >
+              会員登録
+            </button>
+          </a>
+          <a
+            href="/signin"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <button
+              className="chakra-button css-lh5bt9"
+              type="button"
+            >
+              ログイン
+            </button>
+          </a>
         </div>
       </div>
       <div
-        className="chakra-stack css-1pant5l"
+        className="chakra-input__group css-1cx1l37"
       >
-        <button
-          className="chakra-button css-3ggw22"
-          type="button"
+        <div
+          className="chakra-input__left-element css-1vv4fni"
         >
-          新規会員登録
-        </button>
-        <button
-          className="chakra-button css-9io9of"
-          type="button"
-        >
-          ログイン
-        </button>
+          <svg
+            className="chakra-icon css-suqwlm"
+            focusable={false}
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <input
+          className="chakra-input css-cx69q0-SearchBar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          placeholder="ユーザの投稿やブログをさがす"
+          type="text"
+        />
       </div>
     </div>
   </div>
@@ -2722,11 +1806,10 @@ exports[`Storyshots layout/unit/SearchBar Default Search Bar 1`] = `
     className="css-qe3950"
   >
     <div
-      className="chakra-input__group css-nhr88j"
+      className="chakra-input__group css-1cx1l37"
     >
       <div
-        className="chakra-input__left-element css-fx53ns"
-        size="md"
+        className="chakra-input__left-element css-1vv4fni"
       >
         <svg
           className="chakra-icon css-suqwlm"
@@ -2740,10 +1823,10 @@ exports[`Storyshots layout/unit/SearchBar Default Search Bar 1`] = `
         </svg>
       </div>
       <input
-        className="chakra-input css-nv16pr-SearchBar"
+        className="chakra-input css-cx69q0-SearchBar"
         onBlur={[Function]}
         onFocus={[Function]}
-        placeholder="キーワードで検索"
+        placeholder="ユーザの投稿やブログをさがす"
         type="text"
       />
     </div>
@@ -2765,10 +1848,10 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
     className="css-vsv5do"
   >
     <div
-      className="chakra-stack css-s0584h"
+      className="chakra-stack css-1d3siay"
     >
       <div
-        className="css-1m211ho"
+        className="css-imcpm1"
       >
         <div>
           <img
@@ -2781,20 +1864,20 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
         </div>
       </div>
       <div
-        className="css-1ql5lfp"
+        className="css-1q3iodp"
       >
         <div
           className="chakra-stack css-1rh3izl-PostCard"
         >
           <div
-            className="css-5j77is"
+            className="css-14qq3xv"
           >
             <div>
               <img
                 alt="ユーザアイコン"
-                height={52}
+                height={50}
                 src="/myicon.jpg"
-                width={52}
+                width={50}
               />
             </div>
           </div>
@@ -2804,20 +1887,21 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
             <p
               className="chakra-text css-qco57t"
             >
-              Shintaro
+              shintaro
             </p>
             <p
               className="chakra-text css-okremr"
             >
-              @shin_k_2281
+              @
+              shin_k_2281
             </p>
           </div>
         </div>
         <div
-          className="css-17y1go0"
+          className="css-14byl6h"
         >
           <p
-            className="chakra-text css-1vsonpg"
+            className="chakra-text css-10t6bab"
           >
             この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです
           </p>
@@ -2832,7 +1916,7 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
               className="css-jao2y1"
             >
               <p
-                className="chakra-text css-dyov5n"
+                className="chakra-text css-1penn2r"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
@@ -2840,7 +1924,7 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
                 onMouseEnter={[Function]}
               >
                 <svg
-                  className="chakra-icon css-r62qck"
+                  className="chakra-icon css-939u34"
                   fill="currentColor"
                   focusable={false}
                   height="1em"
@@ -2861,7 +1945,7 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
                 </svg>
               </p>
               <p
-                className="chakra-text css-1u8qly9"
+                className="chakra-text css-n1e3is"
               >
                 100
               </p>
@@ -2870,7 +1954,7 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
               className="css-jlw4zr"
             >
               <div
-                className="css-17qea9t-LikeButtonWithCount"
+                className="css-19uts22-LikeButtonWithCount"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
@@ -2879,7 +1963,7 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
                 style={Object {}}
               >
                 <svg
-                  className="chakra-icon css-102z4n8"
+                  className="chakra-icon css-becrmp"
                   fill="currentColor"
                   focusable={false}
                   height="1em"
@@ -2900,331 +1984,7 @@ exports[`Storyshots post/container/PostCard Post Card Long Horizonral Image 1`] 
                 </svg>
               </div>
               <p
-                className="chakra-text css-1u8qly9"
-              >
-                200
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots post/container/PostCard Post Card Long Vertical Image 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-vsv5do"
-  >
-    <div
-      className="chakra-stack css-s0584h"
-    >
-      <div
-        className="css-1m211ho"
-      >
-        <div>
-          <img
-            alt="ユーザ投稿画像"
-            height={200}
-            objectFit="contain"
-            src="/fashion2.png"
-            width={200}
-          />
-        </div>
-      </div>
-      <div
-        className="css-1ql5lfp"
-      >
-        <div
-          className="chakra-stack css-1rh3izl-PostCard"
-        >
-          <div
-            className="css-5j77is"
-          >
-            <div>
-              <img
-                alt="ユーザアイコン"
-                height={52}
-                src="/myicon.jpg"
-                width={52}
-              />
-            </div>
-          </div>
-          <div
-            className="css-1u8qly9"
-          >
-            <p
-              className="chakra-text css-qco57t"
-            >
-              Shintaro
-            </p>
-            <p
-              className="chakra-text css-okremr"
-            >
-              @shin_k_2281
-            </p>
-          </div>
-        </div>
-        <div
-          className="css-17y1go0"
-        >
-          <p
-            className="chakra-text css-1vsonpg"
-          >
-            この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです
-          </p>
-        </div>
-        <div
-          className="css-1u0v8vq"
-        >
-          <div
-            className="chakra-stack css-ynu3ti"
-          >
-            <div
-              className="css-jao2y1"
-            >
-              <p
-                className="chakra-text css-dyov5n"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseDown={[Function]}
-                onMouseEnter={[Function]}
-              >
-                <svg
-                  className="chakra-icon css-r62qck"
-                  fill="currentColor"
-                  focusable={false}
-                  height="1em"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 32C114.6 32 0 125.1 0 240c0 47.6 19.9 91.2 52.9 126.3C38 405.7 7 439.1 6.5 439.5c-6.6 7-8.4 17.2-4.6 26S14.4 480 24 480c61.5 0 110-25.7 139.1-46.3C192 442.8 223.2 448 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zm0 368c-26.7 0-53.1-4.1-78.4-12.1l-22.7-7.2-19.5 13.8c-14.3 10.1-33.9 21.4-57.5 29 7.3-12.1 14.4-25.7 19.9-40.2l10.6-28.1-20.6-21.8C69.7 314.1 48 282.2 48 240c0-88.2 93.3-160 208-160s208 71.8 208 160-93.3 160-208 160z"
-                  />
-                </svg>
-              </p>
-              <p
-                className="chakra-text css-1u8qly9"
-              >
-                100
-              </p>
-            </div>
-            <div
-              className="css-jlw4zr"
-            >
-              <div
-                className="css-17qea9t-LikeButtonWithCount"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseDown={[Function]}
-                onMouseEnter={[Function]}
-                style={Object {}}
-              >
-                <svg
-                  className="chakra-icon css-102z4n8"
-                  fill="currentColor"
-                  focusable={false}
-                  height="1em"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 1024 1024"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M923 283.6a260.04 260.04 0 0 0-56.9-82.8 264.4 264.4 0 0 0-84-55.5A265.34 265.34 0 0 0 679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 0 0-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z"
-                  />
-                </svg>
-              </div>
-              <p
-                className="chakra-text css-1u8qly9"
-              >
-                200
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots post/container/PostCard Post Card Long Vertical Image 2 1`] = `
-<div
-  dir="ltr"
-  id="story-wrapper"
-  style={
-    Object {
-      "minHeight": "100vh",
-    }
-  }
->
-  <div
-    className="css-vsv5do"
-  >
-    <div
-      className="chakra-stack css-s0584h"
-    >
-      <div
-        className="css-1m211ho"
-      >
-        <div>
-          <img
-            alt="ユーザ投稿画像"
-            height={200}
-            objectFit="contain"
-            src="/fashion3.jpeg"
-            width={200}
-          />
-        </div>
-      </div>
-      <div
-        className="css-1ql5lfp"
-      >
-        <div
-          className="chakra-stack css-1rh3izl-PostCard"
-        >
-          <div
-            className="css-5j77is"
-          >
-            <div>
-              <img
-                alt="ユーザアイコン"
-                height={52}
-                src="/myicon.jpg"
-                width={52}
-              />
-            </div>
-          </div>
-          <div
-            className="css-1u8qly9"
-          >
-            <p
-              className="chakra-text css-qco57t"
-            >
-              Shintaro
-            </p>
-            <p
-              className="chakra-text css-okremr"
-            >
-              @shin_k_2281
-            </p>
-          </div>
-        </div>
-        <div
-          className="css-17y1go0"
-        >
-          <p
-            className="chakra-text css-1vsonpg"
-          >
-            この前買った腕時計！！ モダンな雰囲気でとてもお気に入りです
-          </p>
-        </div>
-        <div
-          className="css-1u0v8vq"
-        >
-          <div
-            className="chakra-stack css-ynu3ti"
-          >
-            <div
-              className="css-jao2y1"
-            >
-              <p
-                className="chakra-text css-dyov5n"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseDown={[Function]}
-                onMouseEnter={[Function]}
-              >
-                <svg
-                  className="chakra-icon css-r62qck"
-                  fill="currentColor"
-                  focusable={false}
-                  height="1em"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 32C114.6 32 0 125.1 0 240c0 47.6 19.9 91.2 52.9 126.3C38 405.7 7 439.1 6.5 439.5c-6.6 7-8.4 17.2-4.6 26S14.4 480 24 480c61.5 0 110-25.7 139.1-46.3C192 442.8 223.2 448 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32zm0 368c-26.7 0-53.1-4.1-78.4-12.1l-22.7-7.2-19.5 13.8c-14.3 10.1-33.9 21.4-57.5 29 7.3-12.1 14.4-25.7 19.9-40.2l10.6-28.1-20.6-21.8C69.7 314.1 48 282.2 48 240c0-88.2 93.3-160 208-160s208 71.8 208 160-93.3 160-208 160z"
-                  />
-                </svg>
-              </p>
-              <p
-                className="chakra-text css-1u8qly9"
-              >
-                100
-              </p>
-            </div>
-            <div
-              className="css-jlw4zr"
-            >
-              <div
-                className="css-17qea9t-LikeButtonWithCount"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseDown={[Function]}
-                onMouseEnter={[Function]}
-                style={Object {}}
-              >
-                <svg
-                  className="chakra-icon css-102z4n8"
-                  fill="currentColor"
-                  focusable={false}
-                  height="1em"
-                  stroke="currentColor"
-                  strokeWidth="0"
-                  style={
-                    Object {
-                      "color": undefined,
-                    }
-                  }
-                  viewBox="0 0 1024 1024"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M923 283.6a260.04 260.04 0 0 0-56.9-82.8 264.4 264.4 0 0 0-84-55.5A265.34 265.34 0 0 0 679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 0 0-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z"
-                  />
-                </svg>
-              </div>
-              <p
-                className="chakra-text css-1u8qly9"
+                className="chakra-text css-n1e3is"
               >
                 200
               </p>

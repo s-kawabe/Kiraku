@@ -12,7 +12,7 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
-  // useEffectでuser.currentUserを調べる
+  // useEffectでグローバルステートからuserの情報を取る
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'

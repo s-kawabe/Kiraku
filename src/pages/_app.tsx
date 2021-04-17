@@ -30,8 +30,10 @@ const App = (props: AppProps) => {
         // ApolloClientを作り直す
         // hasuraのuserテーブルから今ログインしたuserの情報をとってきてグローバルステートに格納
         // fetchUserDetail
+        console.log('ユーザログイン')
       } else {
         // logout時: グローバルステートを初期化
+        console.log('ユーザログアウト')
       }
     })
   })

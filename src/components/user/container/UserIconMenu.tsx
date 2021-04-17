@@ -10,9 +10,9 @@ import { auth } from '@/firebase/firebaseConfig'
 const UserIconMenu: VFC = () => {
   const router = useRouter()
 
-  const handleLogout = () => {
-    auth.signOut()
-    router.push('/')
+  const handleLogout = async () => {
+    await auth.signOut()
+    router.push('/about')
   }
 
   return (
