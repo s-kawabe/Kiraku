@@ -20,10 +20,9 @@ export type NormalButtonProps = {
 }
 
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {
-  const isPC = useIsDesktop()
   // eslint-disable-next-line react/destructuring-assignment
   const { text, hover, ...inputProps } = props
-
+  const isPC = useIsDesktop()
   const isClient = () => {
     return typeof window !== 'undefined'
   }

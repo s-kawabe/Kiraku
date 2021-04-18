@@ -15,10 +15,12 @@ export const useRedirectWhenUnLogin = () => {
   const router = useRouter()
 
   useEffect(() => {
-    const user = auth.currentUser // TODO グローバルステートから持ってくる
-    if (!user) {
-      router.push('/about')
-    }
+    ;(async () => {
+      const user = await auth.currentUser // TODO グローバルステートから持ってくる
+      if (!user) {
+        router.replace('/about')
+      }
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
@@ -29,11 +31,12 @@ export const useRedirectWhenLogin = () => {
   const router = useRouter()
 
   useEffect(() => {
-    const user = auth.currentUser // TODO グローバルステートから持ってくる
-    if (user) {
-      // setIsChecking(false)
-      router.push('/')
-    }
+    ;(async () => {
+      const user = await auth.currentUser // TODO グローバルステートから持ってくる
+      if (user) {
+        router.replace('/')
+      }
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }

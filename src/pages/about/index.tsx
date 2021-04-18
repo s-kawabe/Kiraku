@@ -10,7 +10,7 @@ import { BlogCard } from '@/components/blog/container'
 import { IconButton, NextImage } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
+import { ABOUT_CARD_TEXT } from '@/utils/constants/aboutCardText'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 const AboutPage = () => {

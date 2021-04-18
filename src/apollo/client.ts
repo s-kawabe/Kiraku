@@ -54,7 +54,6 @@ export const createClient = (isAdmin = false) => {
 export const initializeApollo = (initialState: AppProps['pageProps'] = null) => {
   const _apolloClient = apolloClient ?? createClient()
 
-  console.log('apollo:', _apolloClient)
   if (initialState) {
     const existingCache = _apolloClient.extract()
 

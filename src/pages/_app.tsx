@@ -16,7 +16,7 @@ const base = css`
   }
 `
 
-// const fetchUserDetail = (user: any) => {
+// const fetchUserDetail = (uid: any) => {
 //   // hasuraのuserテーブルからログイン中ユーザの詳細情報を取得し
 //   // ReactiveVarに格納する
 // }

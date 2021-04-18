@@ -14,7 +14,8 @@
     "storyshots": "jest --config ./jest.storyshots.config.js",
     "test-all": "yarn lint && yarn type-check && yarn test",
     "storybook": "start-storybook -s ./public -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "codegen": "graphql-codegen --config src/apollo/codegen.yml"
   },
   "husky": {
     "hooks": {
@@ -67,6 +68,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
+    "@graphql-codegen/cli": "1.21.3",
+    "@graphql-codegen/typescript-operations": "1.17.15",
+    "@graphql-codegen/typescript-react-apollo": "2.2.3",
+    "@graphql-codegen/typescript": "1.21.1",
+    "@graphql-codegen/introspection": "1.18.1",
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",

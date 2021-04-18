@@ -1,0 +1,17 @@
+overwrite: true
+schema: 
+  - ${process.env.HASURA_URL}:
+    headers:
+      "x-hasura-admin-secret": ${process.env.HASURA_GRAPHQL_ADMIN_SECRET}
+documents: ["src/{components,pages}/**/*.{ts,tsx}"]
+generates:
+  src/apollo/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+      withHOC: true
+      withComponent: false
+      reactApolloVersion: 3
