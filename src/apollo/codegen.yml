@@ -3,7 +3,8 @@ schema:
   - ${process.env.HASURA_URL}:
     headers:
       "x-hasura-admin-secret": ${process.env.HASURA_GRAPHQL_ADMIN_SECRET}
-documents: ["src/{components,pages}/**/*.{ts,tsx}"]
+documents: 
+  - "src/{components,pages}/**/*.{ts,tsx}"
 generates:
   src/apollo/graphql.tsx:
     plugins:
@@ -11,7 +12,22 @@ generates:
       - "typescript-operations"
       - "typescript-react-apollo"
     config:
+      skipTipename: false
       withHooks: true
-      withHOC: true
+      withHOC: false
       withComponent: false
+      preResolveTypes: false
+      scalars: 
+        uuid: "string"
+        timestamptz: "string"
+        bigint: "number"
+        _text: "string[]"
       reactApolloVersion: 3
+      namingConvention: 
+        typeNames: "pascal-case#pascalCase"
+        enumValues: "upper-case#upperCase"
+      apolloReactCommonImportFrom: "@apollo/client"
+      apolloReactHooksImportFrom: "@apollo/client"
+  src/apollo/graphql.schema.json:
+    plugins:
+      - "introspection"

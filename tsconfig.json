@@ -19,6 +19,6 @@
       "~/*": ["./*"],
     },
   },
-  "exclude": ["node_modules", ".next", "out", "functions"],
+  "exclude": ["node_modules", ".next", "out", "functions", ".storybook"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"]
 }
