@@ -10,3 +10,10 @@
 # 苦労した点
 
 # 改善点
+
+    "@graphql-codegen/cli": "1.20.1",
+    "@graphql-codegen/introspection": "1.18.1",
+    "@graphql-codegen/typescript": "1.21.0",
+    "@graphql-codegen/typescript-operations": "1.17.14",
+    "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@graphql-codegen/schema-ast": "^1.18.1",

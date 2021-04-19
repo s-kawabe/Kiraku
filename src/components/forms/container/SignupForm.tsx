@@ -7,7 +7,7 @@ import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import { createClient } from '@/apollo/client'
+import { initializeApollo } from '@/apollo/client'
 import { NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import { auth } from '@/firebase/firebaseConfig'
@@ -50,35 +50,30 @@ const SignupForm: VFC = () => {
     resolver: yupResolver(SignupSchema),
   })
 
-  const onSubmit = async (data: FormType) => {
-    let uid = ''
-    await auth
+  const onSubmit = (data: FormType) => {
+    auth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(async (userCredential) => {
         const user = userCredential.user
         if (user) {
-          uid = user.uid
-          await user.updateProfile({ displayName: data.username })
-
-          const client = await createClient(true)
-          await client.mutate({
-            variables: {
-              id: {
-                _eq: uid,
-              },
-              name: data.username,
-            },
+          const uid = user.uid
+          // await user.updateProfile({ displayName: data.username })
+          const client = await initializeApollo()
+          const result = await client.mutate({
             mutation: gql`
-              mutation updateUsers($id: String_comparison_exp, $name: String) {
-                update_users(where: { id: $id }, _set: { name: $name }) {
-                  returning {
-                    id
-                    name
-                  }
+              mutation UpdateUsername($id: String!, $name: String!) {
+                update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
+                  id
+                  name
                 }
               }
             `,
+            variables: {
+              id: uid,
+              name: data.username,
+            },
           })
+          console.log(result)
 
           router.push('/')
         }

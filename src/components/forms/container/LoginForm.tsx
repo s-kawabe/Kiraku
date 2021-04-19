@@ -38,9 +38,7 @@ const LoginForm: VFC = () => {
   const emailLogin = (data: FormType) => {
     auth
       .signInWithEmailAndPassword(data.email, data.password)
-      .then((userCredential) => {
-        const user = userCredential.user
-        console.log(user)
+      .then(() => {
         router.push('/')
       })
       .catch((error) => {

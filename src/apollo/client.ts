@@ -32,7 +32,7 @@ const authLink = setContext(async (_, { headers }) => {
     : { headers }
 })
 
-const adminLink = setContext(async (_, { headers }) => {
+const adminLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
@@ -45,7 +45,7 @@ export const createClient = (isAdmin = false) => {
   const _authLink = isAdmin ? adminLink : authLink
   return new ApolloClient({
     cache,
-    link: typeof window === 'undefined' ? httpLink : _authLink.concat(httpLink),
+    link: _authLink.concat(httpLink),
     ssrMode: typeof window === 'undefined',
   })
 }
