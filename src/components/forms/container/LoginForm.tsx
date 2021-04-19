@@ -8,6 +8,8 @@ import { FaTwitter } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import * as yup from 'yup'
 
+import { loginUserVar, setLoginUserVar } from '@/apollo/cache'
+import { initializeApollo } from '@/apollo/client'
 import { IconButton, NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import firebase, { auth } from '@/firebase/firebaseConfig'
@@ -24,6 +26,12 @@ const LoginSchema = yup.object().shape({
   email: yup.string().required(REQUIRE_MSG).email(VIOLATION_EMAIL),
   password: yup.string().required(REQUIRE_MSG),
 })
+
+const wrapperSetLoginUserVar = async (uid: string) => {
+  const client = initializeApollo()
+  await setLoginUserVar(client, uid)
+  console.log('mutate after update globalstate by googletwitter:', loginUserVar())
+}
 
 const LoginForm: VFC = () => {
   const router = useRouter()
@@ -56,7 +64,9 @@ const LoginForm: VFC = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     await auth
       .signInWithPopup(provider)
-      .then(() => {
+      .then((userCredential) => {
+        const user = userCredential.user
+        user && wrapperSetLoginUserVar(user.uid)
         router.push('/')
       })
       .catch((error) => {
@@ -69,7 +79,9 @@ const LoginForm: VFC = () => {
     const provider = new firebase.auth.TwitterAuthProvider()
     await auth
       .signInWithPopup(provider)
-      .then(() => {
+      .then((userCredential) => {
+        const user = userCredential.user
+        user && wrapperSetLoginUserVar(user.uid)
         router.push('/')
       })
       .catch((error) => {

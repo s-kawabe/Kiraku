@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import type { Meta, Story } from '@storybook/react/types-6-0'
 
-import { ABOUT_CARD_TEXT } from '@/utils/constants/aboutCardText'
+import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
 
 import type { AboutCardProps } from './AboutCard'
 import { AboutCard } from './AboutCard'

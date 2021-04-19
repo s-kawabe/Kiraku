@@ -2,3 +2,4 @@
 **/out/*
 **/.next/*
 **/functions/*
+src/apollo/graphql.tsx

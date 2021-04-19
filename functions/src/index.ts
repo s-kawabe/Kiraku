@@ -37,9 +37,11 @@ const client = new ApolloClient({
 })
 
 // firebaseのユーザ作成時のイベントハンドラ
+// イベントハンドラをやめて普通のHTTPSリクエストにする。
+// 1回のmutationで全て実現可能にする
 export const processSignUp = functions.auth.user().onCreate((user) => {
   try {
-    // displayIDはuserIDの先頭○桁とする
+    // displayIDはuserIDの先頭8桁とする
     const display_id = user.uid.substring(0, 8)
     const image = user.photoURL
     client.mutate({

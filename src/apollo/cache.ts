@@ -1,30 +1,45 @@
-// import type { ReactiveVar } from '@apollo/client'
-import { gql, InMemoryCache } from '@apollo/client'
+import type { ApolloClient, ReactiveVar } from '@apollo/client'
+import type { NormalizedCacheObject } from '@apollo/client'
+import { gql, InMemoryCache, makeVar } from '@apollo/client'
 
-// type LoginUser =
+import type { ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables } from '@/apollo/graphql'
+import type { Users } from '@/apollo/graphql'
+import { ReactiveVarGetUserDocument } from '@/apollo/graphql'
 
-export const cache: InMemoryCache = new InMemoryCache()
-//   {
-//   typePolicies: {
-//     Query: {
-//       fields: {
-//         loginUser: {
-//           read() {
-//             return loginUserVar()
-//           },
-//         },
-//       },
-//     },
-//   },
-// }
+type LoginUser = Pick<
+  Users,
+  'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'email' | 'image' | 'created_at'
+> | null
 
-// const loginUserInitialValue: LoginUser = {}
+export const cache: InMemoryCache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        loginUser: {
+          read() {
+            return loginUserVar()
+          },
+        },
+      },
+    },
+  },
+})
 
-// export const loginUserVar: ReactiveVar<LoginUser> = makeVar<LoginUser>(loginUserInitialValue)
+export const loginUserVar: ReactiveVar<LoginUser> = makeVar<LoginUser>(null)
+
+export const setLoginUserVar = async (client: ApolloClient<NormalizedCacheObject>, uid: string) => {
+  const getUser = await client.query<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>({
+    query: ReactiveVarGetUserDocument,
+    variables: {
+      id: uid,
+    },
+  })
+  loginUserVar(getUser.data.users_by_pk)
+}
 
 gql`
-  query ReactiveVar_GetUser($id: String!) {
-    users(where: { id: { _eq: $id } }) {
+  query ReactiveVarGetUser($id: String!) {
+    users_by_pk(id: $id) {
       id
       display_id
       name

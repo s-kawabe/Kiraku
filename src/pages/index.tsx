@@ -1,18 +1,17 @@
+import { useReactiveVar } from '@apollo/client'
 import { Box, SimpleGrid, Stack } from '@chakra-ui/react'
 
+import { loginUserVar } from '@/apollo/cache'
 import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-import { auth } from '@/firebase/firebaseConfig'
 import { useRedirectWhenUnLogin } from '@/utils/methods/customeHooks'
 
 const Home = () => {
   // ログイン状態でなければaboutページにリダイレクト
   useRedirectWhenUnLogin()
-
+  const loginUser = useReactiveVar(loginUserVar)
   // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示
-
-  // Todo codegenのテストと、ログイン中のuserにUserRoleが与えられているかのテストを行う
 
   return (
     <LayoutWithHead>
@@ -22,7 +21,8 @@ const Home = () => {
             bg="red.200"
             onClick={() => {
               // eslint-disable-next-line no-console
-              console.log(auth.currentUser)
+
+              console.log('グローバルステートからとったログイン中ユーザ:', loginUser)
             }}
           >
             clickme

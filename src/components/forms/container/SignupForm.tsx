@@ -7,7 +7,13 @@ import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
+import { loginUserVar, setLoginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
+import type {
+  EmailSignupUpdateUsernameMutation,
+  EmailSignupUpdateUsernameMutationVariables,
+} from '@/apollo/graphql'
+import { EmailSignupUpdateUsernameDocument } from '@/apollo/graphql'
 import { NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import { auth } from '@/firebase/firebaseConfig'
@@ -56,25 +62,21 @@ const SignupForm: VFC = () => {
       .then(async (userCredential) => {
         const user = userCredential.user
         if (user) {
-          const uid = user.uid
-          // await user.updateProfile({ displayName: data.username })
-          const client = await initializeApollo()
-          const result = await client.mutate({
-            mutation: gql`
-              mutation UpdateUsername($id: String!, $name: String!) {
-                update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
-                  id
-                  name
-                }
-              }
-            `,
+          const client = initializeApollo()
+          const result = await client.mutate<
+            EmailSignupUpdateUsernameMutation,
+            EmailSignupUpdateUsernameMutationVariables
+          >({
+            mutation: EmailSignupUpdateUsernameDocument,
             variables: {
-              id: uid,
+              id: user.uid,
               name: data.username,
             },
           })
-          console.log(result)
+          console.log('after emailsignup mutate:', result)
 
+          await setLoginUserVar(client, user.uid)
+          console.log('mutate after update globalstate by email:', loginUserVar())
           router.push('/')
         }
       })
@@ -150,3 +152,12 @@ const SignupForm: VFC = () => {
 }
 
 export { SignupForm }
+
+gql`
+  mutation EmailSignupUpdateUsername($id: String!, $name: String!) {
+    update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
+      id
+      name
+    }
+  }
+`
