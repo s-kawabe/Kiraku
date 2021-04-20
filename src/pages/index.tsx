@@ -20,7 +20,7 @@ const Home = () => {
   })
 
   return (
-    <LayoutWithHead>
+    <LayoutWithHead sideMenu>
       <Box w="60vw" m="70px">
         <SimpleGrid columns={2} spacing={8}>
           <PostCard

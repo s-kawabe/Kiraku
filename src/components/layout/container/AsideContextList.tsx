@@ -10,12 +10,12 @@ export type AsideContextListProps = {
 
 const AsideContextList: VFC<AsideContextListProps> = (props: AsideContextListProps) => {
   return (
-    <VStack align="left" spacing={1}>
+    <VStack align="left" spacing={1} p="3">
       <IconHeading type="topic" text="トピック" color="#8C5A30" size="md" />
       {props.topics.map((topic) => {
         return (
           <div key={topic}>
-            <Text color="gray.600" fontWeight="light">
+            <Text color="gray.600" fontWeight="normal">
               {topic}
             </Text>
           </div>
@@ -26,7 +26,7 @@ const AsideContextList: VFC<AsideContextListProps> = (props: AsideContextListPro
       {props.brands.map((brand) => {
         return (
           <div key={brand}>
-            <Text color="gray.600" size="lg" fontWeight="light">
+            <Text color="gray.600" size="lg" fontWeight="normal">
               {brand}
             </Text>
           </div>

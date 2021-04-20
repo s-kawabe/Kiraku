@@ -1,8 +1,10 @@
+import { Box, Flex } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { Footer, Header } from '@/components/layout/container'
+import { AsideContextList } from '@/components/layout/container'
 
 type Props = {
   children: React.ReactNode
@@ -41,7 +43,16 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       </Head>
 
       <Header user={loginUserVar()} />
-      {props.children}
+      {props.sideMenu ? (
+        <Flex>
+          <Box h="100%">
+            <AsideContextList topics={['hoge', 'huga', 'piyo']} brands={['hoge', 'huga', 'piyo']} />
+          </Box>
+          <Box>{props.children}</Box>
+        </Flex>
+      ) : (
+        props.children
+      )}
       <Footer />
     </>
   )
