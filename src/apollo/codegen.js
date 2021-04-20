@@ -11,7 +11,7 @@ module.exports = {
       },
     },
   ],
-  documents: ['src/{components,pages,apollo}/**/*.{ts,tsx}'],
+  documents: ['src/{components,pages}/**/*.{ts,tsx}', 'functions/src/index.ts'],
   overwrite: true,
   generates: {
     'src/apollo/graphql.tsx': {

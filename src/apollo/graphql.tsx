@@ -6888,17 +6888,20 @@ export type ReactiveVarGetUserQuery = (
   )> }
 );
 
-export type EmailSignupUpdateUsernameMutationVariables = Exact<{
+export type CreateUserMutationVariables = Exact<{
   id: Scalars['String'];
+  display_id: Scalars['String'];
+  email: Scalars['String'];
   name: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
 }>;
 
 
-export type EmailSignupUpdateUsernameMutation = (
+export type CreateUserMutation = (
   { __typename?: 'mutation_root' }
-  & { update_users_by_pk?: Maybe<(
+  & { insert_users_one?: Maybe<(
     { __typename?: 'users' }
-    & Pick<Users, 'id' | 'name'>
+    & Pick<Users, 'id' | 'display_id' | 'email' | 'name' | 'image' | 'created_at'>
   )> }
 );
 
@@ -6945,38 +6948,47 @@ export function useReactiveVarGetUserLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVarGetUserQuery>;
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
-export const EmailSignupUpdateUsernameDocument = gql`
-    mutation EmailSignupUpdateUsername($id: String!, $name: String!) {
-  update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
+export const CreateUserDocument = gql`
+    mutation createUser($id: String!, $display_id: String!, $email: String!, $name: String!, $image: String) {
+  insert_users_one(
+    object: {id: $id, display_id: $display_id, name: $name, email: $email, image: $image}
+  ) {
     id
+    display_id
+    email
     name
+    image
+    created_at
   }
 }
     `;
-export type EmailSignupUpdateUsernameMutationFn = ApolloReactCommon.MutationFunction<EmailSignupUpdateUsernameMutation, EmailSignupUpdateUsernameMutationVariables>;
+export type CreateUserMutationFn = ApolloReactCommon.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
 
 /**
- * __useEmailSignupUpdateUsernameMutation__
+ * __useCreateUserMutation__
  *
- * To run a mutation, you first call `useEmailSignupUpdateUsernameMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useEmailSignupUpdateUsernameMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [emailSignupUpdateUsernameMutation, { data, loading, error }] = useEmailSignupUpdateUsernameMutation({
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      display_id: // value for 'display_id'
+ *      email: // value for 'email'
  *      name: // value for 'name'
+ *      image: // value for 'image'
  *   },
  * });
  */
-export function useEmailSignupUpdateUsernameMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EmailSignupUpdateUsernameMutation, EmailSignupUpdateUsernameMutationVariables>) {
+export function useCreateUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<EmailSignupUpdateUsernameMutation, EmailSignupUpdateUsernameMutationVariables>(EmailSignupUpdateUsernameDocument, options);
+        return ApolloReactHooks.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
       }
-export type EmailSignupUpdateUsernameMutationHookResult = ReturnType<typeof useEmailSignupUpdateUsernameMutation>;
-export type EmailSignupUpdateUsernameMutationResult = ApolloReactCommon.MutationResult<EmailSignupUpdateUsernameMutation>;
-export type EmailSignupUpdateUsernameMutationOptions = ApolloReactCommon.BaseMutationOptions<EmailSignupUpdateUsernameMutation, EmailSignupUpdateUsernameMutationVariables>;
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;

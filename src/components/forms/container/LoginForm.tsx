@@ -1,5 +1,7 @@
+import { gql } from '@apollo/client'
 import { Box, Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
@@ -8,15 +10,28 @@ import { FaTwitter } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import * as yup from 'yup'
 
-import { loginUserVar, setLoginUserVar } from '@/apollo/cache'
+import type { LoginUser } from '@/apollo/cache'
+import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
+import type { ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables } from '@/apollo/graphql'
+import { ReactiveVarGetUserDocument } from '@/apollo/graphql'
 import { IconButton, NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import firebase, { auth } from '@/firebase/firebaseConfig'
+import { SIGNUP_API } from '@/utils/constants/User'
 
 type FormType = {
   email: string
   password: string
+}
+
+export type SignupReturn = {
+  headers: any
+  body: {
+    data: {
+      insert_users_one: LoginUser
+    }
+  }
 }
 
 const REQUIRE_MSG = '必須入力項目です'
@@ -27,10 +42,33 @@ const LoginSchema = yup.object().shape({
   password: yup.string().required(REQUIRE_MSG),
 })
 
-const wrapperSetLoginUserVar = async (uid: string) => {
+const usersLoginAction = async (credential: firebase.auth.UserCredential) => {
   const client = initializeApollo()
-  await setLoginUserVar(client, uid)
-  console.log('mutate after update globalstate by googletwitter:', loginUserVar())
+  const user = credential.user
+  if (user) {
+    // Google/Twitterによる初回ログインの場合はsignup処理
+    if (credential.additionalUserInfo?.isNewUser) {
+      console.log('GoogleかTwitterで初回ログイン')
+      const resdata = await axios.post<SignupReturn>(SIGNUP_API, {
+        id: user.uid,
+        email: user.email,
+        name: user.displayName,
+        image: user.photoURL,
+      })
+      loginUserVar(resdata.data.body.data.insert_users_one)
+    } else {
+      console.log('初回ログインじゃない')
+      const resdata = await client.query<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>(
+        {
+          query: ReactiveVarGetUserDocument,
+          variables: {
+            id: user.uid,
+          },
+        }
+      )
+      loginUserVar(resdata.data.users_by_pk)
+    }
+  }
 }
 
 const LoginForm: VFC = () => {
@@ -46,7 +84,8 @@ const LoginForm: VFC = () => {
   const emailLogin = (data: FormType) => {
     auth
       .signInWithEmailAndPassword(data.email, data.password)
-      .then(() => {
+      .then(async (userCredential) => {
+        await usersLoginAction(userCredential)
         router.push('/')
       })
       .catch((error) => {
@@ -64,9 +103,8 @@ const LoginForm: VFC = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     await auth
       .signInWithPopup(provider)
-      .then((userCredential) => {
-        const user = userCredential.user
-        user && wrapperSetLoginUserVar(user.uid)
+      .then(async (userCredential) => {
+        await usersLoginAction(userCredential)
         router.push('/')
       })
       .catch((error) => {
@@ -79,9 +117,8 @@ const LoginForm: VFC = () => {
     const provider = new firebase.auth.TwitterAuthProvider()
     await auth
       .signInWithPopup(provider)
-      .then((userCredential) => {
-        const user = userCredential.user
-        user && wrapperSetLoginUserVar(user.uid)
+      .then(async (userCredential) => {
+        await usersLoginAction(userCredential)
         router.push('/')
       })
       .catch((error) => {
@@ -160,3 +197,18 @@ const LoginForm: VFC = () => {
 }
 
 export { LoginForm }
+
+gql`
+  query ReactiveVarGetUser($id: String!) {
+    users_by_pk(id: $id) {
+      id
+      display_id
+      name
+      profile
+      gender
+      email
+      image
+      created_at
+    }
+  }
+`

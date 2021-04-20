@@ -4,6 +4,7 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
+import { loginUserVar } from '@/apollo/cache'
 // import { ContextMenu } from '@/components/common/container'
 import { NormalButton } from '@/components/common/unit'
 import { NextImage } from '@/components/common/unit'
@@ -33,6 +34,16 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
             </a>
           </Link>
           {isClient() && isPC && <SearchBar />}
+          <Box
+            bg="red.200"
+            onClick={() => {
+              // eslint-disable-next-line no-console
+
+              console.log('グローバルステートからとったログイン中ユーザ:', loginUserVar())
+            }}
+          >
+            clickme
+          </Box>
         </HStack>
         <HStack spacing={[2, 4]} alignItems="center">
           {props.user ? (

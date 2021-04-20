@@ -1,28 +1,34 @@
-import { gql } from '@apollo/client'
 import { Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import { loginUserVar, setLoginUserVar } from '@/apollo/cache'
-import { initializeApollo } from '@/apollo/client'
-import type {
-  EmailSignupUpdateUsernameMutation,
-  EmailSignupUpdateUsernameMutationVariables,
-} from '@/apollo/graphql'
-import { EmailSignupUpdateUsernameDocument } from '@/apollo/graphql'
+import type { LoginUser } from '@/apollo/cache'
+import { loginUserVar } from '@/apollo/cache'
+// import { initializeApollo } from '@/apollo/client'
 import { NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import { auth } from '@/firebase/firebaseConfig'
+import { SIGNUP_API } from '@/utils/constants/User'
 
 type FormType = {
   email: string
   username: string
   password: string
   password_confirm: string
+}
+
+export type SignupReturn = {
+  headers: any
+  body: {
+    data: {
+      insert_users_one: LoginUser
+    }
+  }
 }
 
 const REQUIRE_MSG = '必須入力項目です'
@@ -62,21 +68,14 @@ const SignupForm: VFC = () => {
       .then(async (userCredential) => {
         const user = userCredential.user
         if (user) {
-          const client = initializeApollo()
-          const result = await client.mutate<
-            EmailSignupUpdateUsernameMutation,
-            EmailSignupUpdateUsernameMutationVariables
-          >({
-            mutation: EmailSignupUpdateUsernameDocument,
-            variables: {
-              id: user.uid,
-              name: data.username,
-            },
+          const resdata = await axios.post<SignupReturn>(SIGNUP_API, {
+            id: user.uid,
+            email: user.email,
+            name: data.username,
           })
-          console.log('after emailsignup mutate:', result)
-
-          await setLoginUserVar(client, user.uid)
-          console.log('mutate after update globalstate by email:', loginUserVar())
+          // グローバルステートにユーザ情報格納
+          console.log('API response:', resdata.data)
+          loginUserVar(resdata.data.body.data.insert_users_one)
           router.push('/')
         }
       })
@@ -152,12 +151,3 @@ const SignupForm: VFC = () => {
 }
 
 export { SignupForm }
-
-gql`
-  mutation EmailSignupUpdateUsername($id: String!, $name: String!) {
-    update_users_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
-      id
-      name
-    }
-  }
-`
