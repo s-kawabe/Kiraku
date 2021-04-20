@@ -1,24 +1,20 @@
 // import { useReactiveVar } from '@apollo/client'
 import { Box, SimpleGrid, Stack } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
-import { loginUserVar } from '@/apollo/cache'
+// import { useRouter } from 'next/router'
+// import { useEffect } from 'react'
+// import { loginUserVar } from '@/apollo/cache'
 import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 
 const Home = () => {
-  const router = useRouter()
+  // const router = useRouter()
+  // const usingLoginUserVar = useReactiveVar(loginUserVar)
 
   // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示?
 
-  useEffect(() => {
-    if (loginUserVar() === null) {
-      router.replace('/about')
-    }
-  })
-
+  // できればログアウト時aboutにリダイレクトしたいがお試しユーザの挙動が難しい
   return (
     <LayoutWithHead sideMenu>
       <Box w="60vw" m="70px">

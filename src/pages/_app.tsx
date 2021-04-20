@@ -1,9 +1,8 @@
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client'
-import { ApolloProvider } from '@apollo/client'
+import { ApolloProvider, useReactiveVar } from '@apollo/client'
 import { css, Global } from '@emotion/react'
 import reset from 'emotion-reset'
 import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
@@ -22,15 +21,14 @@ const base = css`
 
 const App = (props: AppProps) => {
   const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
-  const router = useRouter()
+  const usingLoginUserVar = useReactiveVar(loginUserVar)
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.log('ユーザログイン')
-        console.log(loginUserVar())
         // ログイン時はグローバルステートをセットするがログイン後にURLを直接更新するとリセットされるため呼んでおく
-        if (loginUserVar() === null) {
+        if (usingLoginUserVar === null) {
           client
             .query<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>({
               query: ReactiveVarGetUserDocument,
@@ -40,7 +38,6 @@ const App = (props: AppProps) => {
             })
             .then((getUser) => {
               loginUserVar(getUser.data.users_by_pk)
-              router.replace(props.router.pathname)
             })
         }
       } else {
@@ -50,7 +47,7 @@ const App = (props: AppProps) => {
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.router.pathname])
+  }, [])
 
   return (
     <>
