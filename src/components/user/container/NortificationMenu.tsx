@@ -3,7 +3,12 @@ import { Text } from '@chakra-ui/react'
 import { MenuDivider, MenuItem, MenuList } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
-// TODO propsにuserIdをもらい、通知テーブルから取得してmapでまわす
+// import type { LoginUser } from '@/apollo/cache'
+// todo: もらったuserのidで通知テーブルから取得する
+// type NortificationMenuProps = {
+//   user: LoginUser
+// }
+
 const items: JSX.Element[] = [
   <Text color="gray.800" fontSize="13px" my="2">
     @neko さんにフォローされました

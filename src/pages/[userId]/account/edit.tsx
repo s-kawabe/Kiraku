@@ -4,7 +4,7 @@ const PasswordEditPage = () => {
   return (
     <LayoutWithHead title="パスワード変更">
       <>
-        <p>this is /userId/account/passedit page </p>
+        <p>this is /userId/account/edit page </p>
       </>
     </LayoutWithHead>
   )

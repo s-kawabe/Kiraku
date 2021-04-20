@@ -1,15 +1,23 @@
 // import { useReactiveVar } from '@apollo/client'
 import { Box, SimpleGrid, Stack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
+import { loginUserVar } from '@/apollo/cache'
 import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
-import { useRedirectWhenUnLogin } from '@/utils/methods/customeHooks'
 
 const Home = () => {
-  // ログイン状態でなければaboutページにリダイレクト
-  useRedirectWhenUnLogin()
-  // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示
+  const router = useRouter()
+
+  // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示?
+
+  useEffect(() => {
+    if (loginUserVar() === null) {
+      router.replace('/about')
+    }
+  })
 
   return (
     <LayoutWithHead>

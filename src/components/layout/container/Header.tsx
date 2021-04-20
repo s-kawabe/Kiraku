@@ -4,18 +4,16 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
-import { loginUserVar } from '@/apollo/cache'
-// import { ContextMenu } from '@/components/common/container'
+import type { LoginUser } from '@/apollo/cache'
 import { NormalButton } from '@/components/common/unit'
 import { NextImage } from '@/components/common/unit'
 import { Nortification, SearchBar } from '@/components/layout/unit'
 import { NortificationMenu, PostButtonMenu, UserIconMenu } from '@/components/user/container'
 import { UserIcon } from '@/components/user/unit'
-import type firebase from '@/firebase/firebaseConfig'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 export type HeaderProps = {
-  user: firebase.User | null
+  user: LoginUser
 }
 
 const Header: VFC<HeaderProps> = (props: HeaderProps) => {
@@ -39,7 +37,7 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
             onClick={() => {
               // eslint-disable-next-line no-console
 
-              console.log('グローバルステートからとったログイン中ユーザ:', loginUserVar())
+              console.log('グローバルステートからとったログイン中ユーザ:', props.user)
             }}
           >
             clickme
@@ -58,14 +56,14 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
               {/* User Icon */}
               <Menu>
                 <MenuButton transition="all 0.1s" _hover={{ opacity: 0.9 }}>
-                  {props.user.photoURL ? (
-                    <UserIcon src={props.user.photoURL} width={45} height={45} />
+                  {props.user.image ? (
+                    <UserIcon src={props.user.image} width={45} height={45} />
                   ) : (
                     <UserIcon src="/nouser.svg" width={45} height={45} />
                   )}
                 </MenuButton>{' '}
                 {/* todo userを渡す */}
-                <UserIconMenu />
+                <UserIconMenu user={props.user} />
               </Menu>
               {/* Post Button */}
               <Menu>

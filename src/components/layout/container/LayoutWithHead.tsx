@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import type { FC } from 'react'
 
+import { loginUserVar } from '@/apollo/cache'
 import { Footer, Header } from '@/components/layout/container'
-import { auth } from '@/firebase/firebaseConfig'
 
 type Props = {
   children: React.ReactNode
@@ -40,7 +40,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta name="twitter:image" content={`${ogUrl}/og.png`} />
       </Head>
 
-      <Header user={auth.currentUser} />
+      <Header user={loginUserVar()} />
       {props.children}
       <Footer />
     </>
