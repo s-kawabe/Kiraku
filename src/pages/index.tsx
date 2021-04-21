@@ -22,7 +22,6 @@ const Home = () => {
   }
 
   if (data) {
-    console.log(data)
     sideMenuVar(data)
   }
 
