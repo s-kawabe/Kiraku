@@ -10,7 +10,6 @@ import { FaTwitter } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import * as yup from 'yup'
 
-import type { LoginUser } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type { ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables } from '@/apollo/graphql'
@@ -18,6 +17,7 @@ import { ReactiveVarGetUserDocument } from '@/apollo/graphql'
 import { IconButton, NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import firebase, { auth } from '@/firebase/firebaseConfig'
+import type { LoginUser } from '@/utils/constants/User'
 import { SIGNUP_API } from '@/utils/constants/User'
 
 type FormType = {

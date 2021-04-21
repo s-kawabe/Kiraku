@@ -4,12 +4,12 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
-import type { LoginUser } from '@/apollo/cache'
 import { NormalButton } from '@/components/common/unit'
 import { NextImage } from '@/components/common/unit'
 import { Nortification, SearchBar } from '@/components/layout/unit'
 import { NortificationMenu, PostButtonMenu, UserIconMenu } from '@/components/user/container'
 import { UserIcon } from '@/components/user/unit'
+import type { LoginUser } from '@/utils/constants/User'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 export type HeaderProps = {

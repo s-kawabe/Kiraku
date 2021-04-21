@@ -3,9 +3,9 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 
-import type { LoginUser } from '@/apollo/cache'
 import { DarkmodeToggle } from '@/components/layout/unit'
 import { auth } from '@/firebase/firebaseConfig'
+import type { LoginUser } from '@/utils/constants/User'
 
 type UserIconMenuProps = {
   user: LoginUser
