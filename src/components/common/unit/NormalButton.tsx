@@ -1,3 +1,4 @@
+import type { SystemProps } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
@@ -10,7 +11,8 @@ export type NormalButtonProps = {
   mr?: string
   variant?: string
   borderColor?: string
-  borderRadius?: string
+  borderRadius?: SystemProps['borderRadius']
+  fontWeight?: SystemProps['fontWeight']
   width?: string
   hover?: {
     bg?: string

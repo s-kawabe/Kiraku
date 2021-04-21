@@ -78,7 +78,7 @@ const AboutPage = () => {
             <Link href="/">
               <a>
                 <IconButton
-                  text="テストユーザでログインしてみる"
+                  text="テストログイン"
                   fontWeight="semibold"
                   bg="white"
                   border="1px"
@@ -264,8 +264,7 @@ const AboutPage = () => {
         <Link href="/">
           <a>
             <IconButton
-              // todo onClick => 匿名ログイン後ルートにpush
-              text="テストユーザでログインしてみる"
+              text="テストログイン"
               fontWeight="semibold"
               bg="white"
               border="1px"

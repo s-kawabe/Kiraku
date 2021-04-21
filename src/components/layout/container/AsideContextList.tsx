@@ -21,7 +21,13 @@ const AsideContextList: VFC<AsideContextListProps> = (props: AsideContextListPro
       <IconHeading type="topic" text="トピック" color="gray.600" size="md" />
       {props.topics.map((topic) => {
         return (
-          <Box key={topic.name} pl="1">
+          <Box
+            key={topic.name}
+            px="2"
+            borderRadius="10px"
+            transition="all 0.1s"
+            _hover={{ bg: 'gray.100' }}
+          >
             <Link href="/topics/[topicId]" as={`/topics/${topic.id}`}>
               <a>
                 <Text color="gray.500" fontWeight="normal" fontSize="13px" mt="2px">
@@ -36,7 +42,13 @@ const AsideContextList: VFC<AsideContextListProps> = (props: AsideContextListPro
       <IconHeading type="brand" text="ブランド" color="gray.600" size="md" />
       {props.brands.map((brand) => {
         return (
-          <Box key={brand.name} pl="1">
+          <Box
+            key={brand.name}
+            px="2"
+            borderRadius="10px"
+            transition="all 0.1s"
+            _hover={{ bg: 'gray.100' }}
+          >
             <Link href="/brands/[brandId]" as={`/brands/${brand.id}`}>
               <a>
                 <Text color="gray.500" size="lg" fontWeight="normal" fontSize="13px" mt="2px">

@@ -6,7 +6,7 @@ import type { VFC } from 'react'
 
 const SearchBar: VFC = () => {
   return (
-    <InputGroup w={{ base: '85%', sm: '50vw' }} mx={{ base: 'auto' }}>
+    <InputGroup w={{ base: '85%', sm: '40vw' }} mx={{ base: 'auto' }}>
       <InputLeftElement children={<Search2Icon color="gray.500" />} cursor="pointer" />
       <Input
         type="text"

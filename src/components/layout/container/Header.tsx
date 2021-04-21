@@ -32,16 +32,6 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
             </a>
           </Link>
           {isClient() && isPC && <SearchBar />}
-          <Box
-            bg="red.200"
-            onClick={() => {
-              // eslint-disable-next-line no-console
-
-              console.log('グローバルステートからとったログイン中ユーザ:', props.user)
-            }}
-          >
-            clickme
-          </Box>
         </HStack>
         <HStack spacing={[2, 4]} alignItems="center">
           {props.user ? (

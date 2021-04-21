@@ -21,6 +21,7 @@ const authLink = setContext(async (_, { headers }) => {
   // 匿名ログインでない、かつidTokenが存在すればidTokenを設定
   if (!auth.currentUser?.isAnonymous && auth.currentUser) {
     token = await auth.currentUser.getIdToken()
+    console.log(token)
   }
   return token
     ? {
@@ -32,20 +33,10 @@ const authLink = setContext(async (_, { headers }) => {
     : { headers }
 })
 
-const adminLink = setContext((_, { headers }) => {
-  return {
-    headers: {
-      ...headers,
-      'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET,
-    },
-  }
-})
-
-export const createClient = (isAdmin = false) => {
-  const _authLink = isAdmin ? adminLink : authLink
+export const createClient = () => {
   return new ApolloClient({
     cache,
-    link: _authLink.concat(httpLink),
+    link: authLink.concat(httpLink),
     ssrMode: typeof window === 'undefined',
   })
 }

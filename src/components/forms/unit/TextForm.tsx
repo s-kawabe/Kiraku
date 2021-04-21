@@ -15,9 +15,11 @@ const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
   return (
     <FormControl id={props.name} w="min(400px, 80vw)">
       <FormLabel m={1}>
-        <Text display="inline" fontSize="13px" fontWeight="bold">
-          {props.label}
-        </Text>{' '}
+        {props.label && (
+          <Text display="inline" fontSize="13px" fontWeight="bold">
+            {props.label}
+          </Text>
+        )}
         {props.isRequired && (
           <Badge bg="red.400" color="white" py="3px" px="5px" borderRadius="7px">
             必須

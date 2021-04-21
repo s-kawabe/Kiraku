@@ -8,6 +8,7 @@ import { sideMenuVar } from '@/apollo/cache'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList } from '@/components/layout/container'
 import type { SideMenu } from '@/utils/constants/Common'
+import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
   children: React.ReactNode
@@ -18,6 +19,7 @@ type Props = {
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
   const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
+  const isLargerThan1200 = useIsDesktop('1200px')
 
   useEffect(() => {
     setSideMenuContext(sideMenuVar())
@@ -53,7 +55,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       <Header user={loginUserVar()} />
       {props.sideMenu ? (
         <Flex>
-          {sideMenuContext && (
+          {sideMenuContext && isLargerThan1200 && (
             <Box maxH="100vh" overflow="auto">
               <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
             </Box>
