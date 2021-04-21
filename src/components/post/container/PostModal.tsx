@@ -62,7 +62,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl">
       <ModalOverlay bg="rgba(30, 30, 30, 0.5)" />
       <ModalContent bg="gray.100" borderRadius="20px">
-        <ModalHeader fontWeight="semibold" fontSize="19px" color="gray.700" pb="20px">
+        <ModalHeader fontWeight="semibold" fontSize="20px" color="gray.700" py="30px">
           <Center>ポストを投稿</Center>
         </ModalHeader>
         <ModalCloseButton />
@@ -104,7 +104,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   <CircularProgress
                     value={textLimit}
                     ml="10px"
-                    size={['30px', '45px']}
+                    size={'35px'}
                     thickness="7px"
                     max={TEXT_LIMIT}
                     color={textLimit < TEXT_LIMIT ? 'blue.500' : 'red'}
