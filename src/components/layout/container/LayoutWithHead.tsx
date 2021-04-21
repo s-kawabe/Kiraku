@@ -1,10 +1,13 @@
 import { Box, Flex } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
+import { useEffect, useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
+import { sideMenuVar } from '@/apollo/cache'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList } from '@/components/layout/container'
+import type { SideMenu } from '@/utils/constants/Common'
 
 type Props = {
   children: React.ReactNode
@@ -14,12 +17,17 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
-  // useEffectでグローバルステートからuserの情報を取る
+  const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
+
+  useEffect(() => {
+    setSideMenuContext(sideMenuVar())
+  }, [])
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
+
   return (
     <>
       <Head>
@@ -45,9 +53,11 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       <Header user={loginUserVar()} />
       {props.sideMenu ? (
         <Flex>
-          <Box h="100%">
-            <AsideContextList topics={['hoge', 'huga', 'piyo']} brands={['hoge', 'huga', 'piyo']} />
-          </Box>
+          {sideMenuContext && (
+            <Box maxH="100vh" overflow="auto">
+              <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
+            </Box>
+          )}
           <Box>{props.children}</Box>
         </Flex>
       ) : (

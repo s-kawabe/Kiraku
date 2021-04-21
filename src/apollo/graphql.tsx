@@ -6394,7 +6394,7 @@ export type Users = {
   blogs_aggregate: BlogsAggregate;
   created_at: Scalars['timestamptz'];
   display_id: Scalars['String'];
-  email: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
@@ -6888,6 +6888,20 @@ export type ReactiveVarGetUserQuery = (
   )> }
 );
 
+export type Top10TopicAndBrandQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Top10TopicAndBrandQuery = (
+  { __typename?: 'query_root' }
+  & { topics: Array<(
+    { __typename?: 'topics' }
+    & Pick<Topics, 'name' | 'id'>
+  )>, brands: Array<(
+    { __typename?: 'brands' }
+    & Pick<Brands, 'name' | 'id'>
+  )> }
+);
+
 export type CreateUserMutationVariables = Exact<{
   id: Scalars['String'];
   display_id: Scalars['String'];
@@ -6948,6 +6962,45 @@ export function useReactiveVarGetUserLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVarGetUserQuery>;
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
+export const Top10TopicAndBrandDocument = gql`
+    query Top10TopicAndBrand {
+  topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {
+    name
+    id
+  }
+  brands(limit: 10, order_by: {post_brands_aggregate: {count: desc}}) {
+    name
+    id
+  }
+}
+    `;
+
+/**
+ * __useTop10TopicAndBrandQuery__
+ *
+ * To run a query within a React component, call `useTop10TopicAndBrandQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTop10TopicAndBrandQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTop10TopicAndBrandQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTop10TopicAndBrandQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>(Top10TopicAndBrandDocument, options);
+      }
+export function useTop10TopicAndBrandLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>(Top10TopicAndBrandDocument, options);
+        }
+export type Top10TopicAndBrandQueryHookResult = ReturnType<typeof useTop10TopicAndBrandQuery>;
+export type Top10TopicAndBrandLazyQueryHookResult = ReturnType<typeof useTop10TopicAndBrandLazyQuery>;
+export type Top10TopicAndBrandQueryResult = ApolloReactCommon.QueryResult<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>;
 export const CreateUserDocument = gql`
     mutation createUser($id: String!, $display_id: String!, $email: String!, $name: String!, $image: String) {
   insert_users_one(

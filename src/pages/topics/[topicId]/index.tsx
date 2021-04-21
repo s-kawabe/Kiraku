@@ -1,10 +1,14 @@
+import { useRouter } from 'next/router'
+
 import { LayoutWithHead } from '@/components/layout/container'
 
 const TopicPage = () => {
+  const router = useRouter()
+  const { topicId } = router.query
   return (
     <LayoutWithHead title="□□ - トピック">
       <>
-        <p>this is /userId/followings page </p>
+        <p>this is /topics/topicId/ page:{topicId} </p>
       </>
     </LayoutWithHead>
   )

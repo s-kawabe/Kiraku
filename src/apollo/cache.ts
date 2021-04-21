@@ -1,16 +1,8 @@
 import type { ReactiveVar } from '@apollo/client'
-// import type { ApolloClient, ReactiveVar } from '@apollo/client'
-// import type { NormalizedCacheObject } from '@apollo/client'
 import { InMemoryCache, makeVar } from '@apollo/client'
 
-// import type { ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables } from '@/apollo/graphql'
-import type { Users } from '@/apollo/graphql'
-// import { ReactiveVarGetUserDocument } from '@/apollo/graphql'
-
-export type LoginUser = Pick<
-  Users,
-  'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'email' | 'image' | 'created_at'
-> | null
+import type { SideMenu } from '@/utils/constants/Common'
+import type { LoginUser } from '@/utils/constants/User'
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -21,9 +13,15 @@ export const cache: InMemoryCache = new InMemoryCache({
             return loginUserVar()
           },
         },
+        sideMenu: {
+          read() {
+            return sideMenuVar()
+          },
+        },
       },
     },
   },
 })
 
 export const loginUserVar: ReactiveVar<LoginUser> = makeVar<LoginUser>(null)
+export const sideMenuVar: ReactiveVar<SideMenu> = makeVar<SideMenu>(null)

@@ -4,6 +4,28 @@ import type { Meta, Story } from '@storybook/react/types-6-0'
 import type { AsideContextListProps } from './AsideContextList'
 import { AsideContextList } from './AsideContextList'
 
+const brands = [
+  {
+    name: 'huga',
+    id: 1,
+  },
+  {
+    name: 'piyoyo',
+    id: 2,
+  },
+]
+
+const topics = [
+  {
+    name: 'hogehoge',
+    id: 1,
+  },
+  {
+    name: 'pya----',
+    id: 2,
+  },
+]
+
 // eslint-disable-next-line import/no-default-export
 export default {
   title: 'common/unit/AsideContextList',
@@ -20,6 +42,6 @@ const Template: Story<AsideContextListProps> = (args) => {
 
 export const AsideList = Template.bind({})
 AsideList.args = {
-  topics: ['hoge', 'huga', 'piyo'],
-  brands: ['hoge', 'huga', 'piyo'],
+  topics,
+  brands,
 } as AsideContextListProps
