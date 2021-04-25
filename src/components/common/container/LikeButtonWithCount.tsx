@@ -11,6 +11,7 @@ export type LikeButtonWithCountProps = {
   count: number
   isLiked: boolean
   fontSize?: string
+  iconSize?: string
 }
 
 const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWithCountProps) => {
@@ -54,8 +55,8 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
           color={isLike ? 'red.400' : ''}
           css={css`
             & svg {
-              width: ${props.fontSize};
-              height: ${props.fontSize};
+              width: ${props.iconSize ?? props.fontSize};
+              height: ${props.iconSize ?? props.fontSize};
             }
           `}
         >

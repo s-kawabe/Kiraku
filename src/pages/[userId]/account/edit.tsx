@@ -1,14 +1,14 @@
 import { LayoutWithHead } from '@/components/layout/container'
 
-const NewPostPage = () => {
+const PasswordEditPage = () => {
   return (
-    <LayoutWithHead title="新規ポスト投稿">
+    <LayoutWithHead title="パスワード変更">
       <>
-        <p>this is /posts/new page, </p>
+        <p>this is /userId/account/edit page </p>
       </>
     </LayoutWithHead>
   )
 }
 
 // eslint-disable-next-line import/no-default-export
-export default NewPostPage
+export default PasswordEditPage

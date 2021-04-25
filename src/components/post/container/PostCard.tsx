@@ -64,7 +64,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
         <Box ml="auto">
           <HStack spacing={8}>
             <CommentIconWithCount count={100} fontSize="18px" />
-            <LikeButtonWithCount count={200} isLiked={false} fontSize="18px" />
+            <LikeButtonWithCount count={200} isLiked={false} fontSize="18px" iconSize="21px" />
           </HStack>
         </Box>
       </Box>

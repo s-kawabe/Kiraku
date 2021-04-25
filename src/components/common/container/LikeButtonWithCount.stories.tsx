@@ -22,6 +22,8 @@ export const LikeButton = Template.bind({})
 LikeButton.args = {
   count: 100,
   isLiked: true,
+  fontSize: '18px',
+  iconSize: '21px',
 }
 
 export const SmallLikeButton = Template.bind({})
@@ -29,4 +31,5 @@ SmallLikeButton.args = {
   count: 100,
   isLiked: true,
   fontSize: '14px',
+  iconSize: '17px',
 }

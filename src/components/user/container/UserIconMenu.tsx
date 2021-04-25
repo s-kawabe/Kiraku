@@ -5,9 +5,13 @@ import type { VFC } from 'react'
 
 import { DarkmodeToggle } from '@/components/layout/unit'
 import { auth } from '@/firebase/firebaseConfig'
+import type { LoginUser } from '@/utils/constants/User'
 
-// TODO propsにuserIDをもらう
-const UserIconMenu: VFC = () => {
+type UserIconMenuProps = {
+  user: LoginUser
+}
+
+const UserIconMenu: VFC<UserIconMenuProps> = (props: UserIconMenuProps) => {
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -21,15 +25,14 @@ const UserIconMenu: VFC = () => {
         borderRadius="4px"
         my="5px"
         onClick={() => {
-          router.push('/useruseruser')
+          router.push(`/${props.user?.display_id}`)
         }}
       >
         <Box>
           <Flex align="center">
-            <Heading size="sm">{auth.currentUser?.displayName ?? 'guest'}</Heading>
+            <Heading size="sm">{props.user?.name ?? 'guest'}</Heading>
             <Text ml="2" color="gray.400" fontSize="12px">
-              @aaaa
-              {/* Todo 最初の@IDはランダム生成 */}
+              @{props.user?.display_id}
             </Text>
           </Flex>
           <Text color="gray.800" fontSize="12px" mt="1">
@@ -42,7 +45,7 @@ const UserIconMenu: VFC = () => {
         borderRadius="4px"
         my="5px"
         onClick={() => {
-          router.push('/useruseruser')
+          router.push(`/${props.user?.display_id}`)
         }}
       >
         <Text color="gray.800" fontSize="13px">
@@ -54,7 +57,7 @@ const UserIconMenu: VFC = () => {
         borderRadius="4px"
         my="5px"
         onClick={() => {
-          router.push('/useruseruser/likes/posts')
+          router.push(`/${props.user?.display_id}/likes/posts`)
         }}
       >
         <Text color="gray.800" fontSize="13px">
@@ -66,7 +69,7 @@ const UserIconMenu: VFC = () => {
         borderRadius="4px"
         my="5px"
         onClick={() => {
-          router.push('/useruseruser/account/passedit')
+          router.push(`/${props.user?.display_id}/account/edit`)
         }}
       >
         <Text color="gray.800" fontSize="13px">

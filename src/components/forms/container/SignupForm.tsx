@@ -7,12 +7,12 @@ import type { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
-import type { LoginUser } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
 // import { initializeApollo } from '@/apollo/client'
 import { NormalButton } from '@/components/common/unit'
 import { TextForm } from '@/components/forms/unit'
 import { auth } from '@/firebase/firebaseConfig'
+import type { LoginUser } from '@/utils/constants/User'
 import { SIGNUP_API } from '@/utils/constants/User'
 
 type FormType = {

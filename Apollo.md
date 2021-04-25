@@ -132,6 +132,12 @@ const { loading, error, data } = useQuery(GET_DOGS, {
 })
 ```
 
+## InMemryCache クラスのメソッド
+
+### readQuery
+
+### writeQuery
+
 # 2. ReactiveVariables
 
 ## 2-1. ReactiveVariables とは何か

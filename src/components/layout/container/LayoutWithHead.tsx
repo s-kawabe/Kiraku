@@ -1,8 +1,14 @@
+import { Box, Flex } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
+import { useEffect, useState } from 'react'
 
+import { loginUserVar } from '@/apollo/cache'
+import { sideMenuVar } from '@/apollo/cache'
 import { Footer, Header } from '@/components/layout/container'
-import { auth } from '@/firebase/firebaseConfig'
+import { AsideContextList } from '@/components/layout/container'
+import type { SideMenu } from '@/utils/constants/Common'
+import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
   children: React.ReactNode
@@ -12,12 +18,18 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
-  // useEffectでグローバルステートからuserの情報を取る
+  const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
+  const isLargerThan1200 = useIsDesktop('1200px')
+
+  useEffect(() => {
+    setSideMenuContext(sideMenuVar())
+  }, [])
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
+
   return (
     <>
       <Head>
@@ -40,8 +52,19 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta name="twitter:image" content={`${ogUrl}/og.png`} />
       </Head>
 
-      <Header user={auth.currentUser} />
-      {props.children}
+      <Header user={loginUserVar()} />
+      {props.sideMenu ? (
+        <Flex>
+          {sideMenuContext && isLargerThan1200 && (
+            <Box maxH="100vh" overflow="auto">
+              <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
+            </Box>
+          )}
+          <Box>{props.children}</Box>
+        </Flex>
+      ) : (
+        props.children
+      )}
       <Footer />
     </>
   )

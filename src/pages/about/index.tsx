@@ -1,6 +1,7 @@
 import { Box, Center, Heading, Icon, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { AiOutlineIdcard } from 'react-icons/ai'
 import { HiOutlineNewspaper } from 'react-icons/hi'
 import { IoIosArrowForward } from 'react-icons/io'
@@ -10,15 +11,29 @@ import { BlogCard } from '@/components/blog/container'
 import { IconButton, NextImage } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
+import { auth } from '@/firebase/firebaseConfig'
 import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 const AboutPage = () => {
+  const router = useRouter()
   const isPC = useIsDesktop()
   const { post, blog, show } = ABOUT_CARD_TEXT
 
   const isClient = () => {
     return typeof window !== 'undefined'
+  }
+
+  const handleTryLogin = () => {
+    auth
+      .signInWithEmailAndPassword('test@example.com', 'password')
+      .then(() => {
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error)
+        alert('申し訳ございません、エラーが発生しました。')
+      })
   }
 
   return (
@@ -63,8 +78,7 @@ const AboutPage = () => {
             <Link href="/">
               <a>
                 <IconButton
-                  // todo onClick => 匿名ログイン後ルートにpush
-                  text="ログインせずに試す"
+                  text="テストログイン"
                   fontWeight="semibold"
                   bg="white"
                   border="1px"
@@ -72,6 +86,7 @@ const AboutPage = () => {
                   color="green.300"
                   icon={IoIosArrowForward}
                   iconPosition="right"
+                  onClick={handleTryLogin}
                 />
               </a>
             </Link>
@@ -249,8 +264,7 @@ const AboutPage = () => {
         <Link href="/">
           <a>
             <IconButton
-              // todo onClick => 匿名ログイン後ルートにpush
-              text="ログインせずに試す"
+              text="テストログイン"
               fontWeight="semibold"
               bg="white"
               border="1px"
@@ -258,6 +272,7 @@ const AboutPage = () => {
               color="green.300"
               icon={IoIosArrowForward}
               iconPosition="right"
+              onClick={handleTryLogin}
             />
           </a>
         </Link>
