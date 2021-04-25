@@ -35,7 +35,7 @@ import type {
 } from '@/apollo/graphql'
 import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
-import { NormalButton } from '@/components/common/unit'
+import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
 
 type PostModalProps = {
@@ -44,7 +44,6 @@ type PostModalProps = {
   onClose: () => void
   postData?: any // edit時にポストのデータをもらう
 }
-
 const TEXT_LIMIT = 250
 const client = initializeApollo()
 
@@ -52,17 +51,16 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const router = useRouter()
   const [disableSubmit, setDisableSubmit] = useState(true)
   const [content, setContent] = useState('')
-  const [textCount, setTextCount] = useState(0)
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
   const [allTopics, setAllTopics] = useState<string[]>([])
   const [allBrands, setAllBrands] = useState<string[]>([])
   const [gender, setGender] = useState<Gender>('ALL')
+  const [image, setImage] = useState<File | null>(null)
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
     setDisableSubmit(text.length === 0 || text.length > TEXT_LIMIT)
-    setTextCount(text.length)
     setContent(text)
   }
 
@@ -70,7 +68,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     setContent('')
     setRegisterTopics([])
     setRegisterBrands([])
-    setTextCount(0)
     isShowPostModalVar(false)
   }
 
@@ -83,7 +80,13 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const handleSubmit = () => {
     console.log({ registerTopics }, { registerBrands })
     console.log(gender)
+    console.log(image)
     resetState()
+
+    // 画像をfirebaseにアップロードする(アップロード後の画像URLを返してもらう)
+    // brandとtopicの新規INSERT判定処理を行う
+    // hasuraに諸々データを突っ込んで投稿の詳細ページに遷移
+
     props.onClose()
     router.push('/')
   }
@@ -124,7 +127,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   })
 
   return (
-    <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
+    <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="inside">
       <ModalOverlay bg="rgba(30, 30, 30, 0.5)" />
       <ModalContent bg="gray.100" borderRadius="20px">
         <ModalHeader fontWeight="semibold" fontSize="20px" color="gray.700" py="30px">
@@ -133,22 +136,8 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
         <ModalCloseButton />
         <ModalBody mb="20px" display="flex" justifyContent="center">
           <Stack direction={{ base: 'column', lg: 'row' }}>
-            <Box mr={['', '40px']} mb={['30px', '']}>
-              <NormalButton
-                text="画像を選択"
-                bg="gray.500"
-                color="white"
-                borderRadius="20px"
-                width="150px"
-                fontWeight="normal"
-                hover={{ bg: 'gray.600' }}
-              />
-              <Box
-                w={{ base: '330px', lg: '20vw' }}
-                h={{ base: '450px', lg: '28vw' }}
-                bg="gray.200"
-                mt="20px"
-              ></Box>
+            <Box mr={['', '40px']} mb={['30px', '']} ml={['20px', '']}>
+              <ImageArea setImage={setImage} />
             </Box>
             <VStack>
               <Box mb="20px" position="relative">
@@ -167,14 +156,16 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                 />
                 <Box position="absolute" right="4" top="2" zIndex="1">
                   <CircularProgress
-                    value={textCount}
+                    value={content.length}
                     ml="10px"
                     size={'35px'}
                     thickness="7px"
                     max={TEXT_LIMIT}
-                    color={textCount < TEXT_LIMIT ? 'blue.500' : 'red'}
+                    color={content.length < TEXT_LIMIT ? 'blue.500' : 'red'}
                   >
-                    {textCount >= TEXT_LIMIT && <CircularProgressLabel>over</CircularProgressLabel>}
+                    {content.length >= TEXT_LIMIT && (
+                      <CircularProgressLabel>over</CircularProgressLabel>
+                    )}
                   </CircularProgress>
                 </Box>
               </Box>
