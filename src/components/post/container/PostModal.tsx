@@ -1,3 +1,4 @@
+//TODO 画像の処理 topics/brandsの存在チェック＋DBに無いデータの新規INSERT
 import '@pathofdev/react-tag-input/build/index.css'
 
 import { gql } from '@apollo/client'
@@ -15,6 +16,7 @@ import {
   ModalOverlay,
   Stack,
   Textarea,
+  Tooltip,
   VStack,
 } from '@chakra-ui/react'
 import { Box, Text } from '@chakra-ui/react'
@@ -34,6 +36,7 @@ import type {
 import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { NormalButton } from '@/components/common/unit'
+import type { Gender } from '@/utils/constants/Common'
 
 type PostModalProps = {
   isNew: boolean
@@ -54,6 +57,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
   const [allTopics, setAllTopics] = useState<string[]>([])
   const [allBrands, setAllBrands] = useState<string[]>([])
+  const [gender, setGender] = useState<Gender>('ALL')
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -77,6 +81,8 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   }
 
   const handleSubmit = () => {
+    console.log({ registerTopics }, { registerBrands })
+    console.log(gender)
     resetState()
     props.onClose()
     router.push('/')
@@ -178,7 +184,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                 justifyContent="space-between"
               >
                 <Box>
-                  <Text color="gray.700">トピックを追加</Text>
+                  <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                    <Text color="gray.700">トピックを追加</Text>
+                  </Tooltip>
                   <Box w={{ base: '88vw', lg: '295px' }}>
                     <ReactTagInput
                       placeholder="トピックは5つまで"
@@ -200,7 +208,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   </Box>
                 </Box>
                 <Box>
-                  <Text color="gray.700">ブランドを追加</Text>
+                  <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                    <Text color="gray.700">ブランドを追加</Text>
+                  </Tooltip>
                   <Box w={{ base: '88vw', lg: '295px' }}>
                     <ReactTagInput
                       placeholder="ブランドは5つまで"
@@ -228,7 +238,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                 </Text>
               </Box>
               <Box w="100%">
-                <GenderRadioButton />
+                <GenderRadioButton default="ALL" setGender={setGender} />
               </Box>
             </VStack>
           </Stack>

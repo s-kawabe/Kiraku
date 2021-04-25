@@ -1,9 +1,25 @@
 import { Radio, RadioGroup, Stack, Text } from '@chakra-ui/react'
 import type { VFC } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
-const GenderRadioButton: VFC = () => {
+import type { Gender } from '@/utils/constants/Common'
+
+type GenderRadioButtonProps = {
+  default?: Gender
+  setGender?: Dispatch<SetStateAction<Gender>>
+}
+
+const GenderRadioButton: VFC<GenderRadioButtonProps> = (props: GenderRadioButtonProps) => {
   return (
-    <RadioGroup name="gender">
+    <RadioGroup
+      name="gender"
+      defaultValue={props.default}
+      onChange={(e: Gender) => {
+        if (props.setGender) {
+          props.setGender(e)
+        }
+      }}
+    >
       <Stack direction="row" color="gray.500" fontSize="15px">
         <Radio value="ALL" colorScheme="teal" size="lg" color="gray.400">
           <Text fontSize={['14px', '16px']}>ALL</Text>
