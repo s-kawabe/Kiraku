@@ -4,6 +4,7 @@ import type { VFC } from 'react'
 import { AiOutlineIdcard } from 'react-icons/ai'
 import { HiOutlineNewspaper } from 'react-icons/hi'
 
+import { isShowPostModalVar } from '@/apollo/cache'
 import { PostModal } from '@/components/post/container'
 
 const PostButtonMenu: VFC = () => {
@@ -12,7 +13,14 @@ const PostButtonMenu: VFC = () => {
   return (
     <>
       <MenuList borderRadius="18px">
-        <MenuItem borderRadius="4px" my="5px" onClick={onOpen}>
+        <MenuItem
+          borderRadius="4px"
+          my="5px"
+          onClick={() => {
+            isShowPostModalVar(true)
+            onOpen()
+          }}
+        >
           <Heading display="flex" alignItems="center" size="sm" fontWeight="semibold">
             <Icon as={AiOutlineIdcard} mr="2" />
             ポスト
@@ -32,6 +40,7 @@ const PostButtonMenu: VFC = () => {
           </Heading>
         </MenuItem>
       </MenuList>
+      {/* ポスト投稿/編集時のモーダル */}
       <PostModal isOpen={isOpen} onClose={onClose} isNew />
     </>
   )

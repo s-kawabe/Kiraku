@@ -6953,12 +6953,10 @@ export type InsertPostOneWithTopicsAndBrandsMutation = (
   )> }
 );
 
-export type SearchTopicsQueryVariables = Exact<{
-  word: Scalars['String'];
-}>;
+export type GetAllTopicsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SearchTopicsQuery = (
+export type GetAllTopicsQuery = (
   { __typename?: 'query_root' }
   & { topics: Array<(
     { __typename?: 'topics' }
@@ -6966,12 +6964,10 @@ export type SearchTopicsQuery = (
   )> }
 );
 
-export type SearchBrandsQueryVariables = Exact<{
-  word: Scalars['String'];
-}>;
+export type GetAllBrandsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SearchBrandsQuery = (
+export type GetAllBrandsQuery = (
   { __typename?: 'query_root' }
   & { brands: Array<(
     { __typename?: 'brands' }
@@ -7112,7 +7108,7 @@ export const InsertPostOneWithTopicsDocument = gql`
   }
 }
     `;
-export type InsertPostOneWithTopicsMutationFn = ApolloReactCommon.MutationFunction<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
+export type Fn = ApolloReactCommon.MutationFunction<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
 
 /**
  * __useInsertPostOneWithTopicsMutation__
@@ -7231,76 +7227,74 @@ export function useInsertPostOneWithTopicsAndBrandsMutation(baseOptions?: Apollo
 export type InsertPostOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertPostOneWithTopicsAndBrandsMutation>;
 export type InsertPostOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithTopicsAndBrandsMutation>;
 export type InsertPostOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>;
-export const SearchTopicsDocument = gql`
-    query SearchTopics($word: String!) {
-  topics(where: {name: {_ilike: $word}}) {
+export const GetAllTopicsDocument = gql`
+    query GetAllTopics {
+  topics {
     name
   }
 }
     `;
 
 /**
- * __useSearchTopicsQuery__
+ * __useGetAllTopicsQuery__
  *
- * To run a query within a React component, call `useSearchTopicsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchTopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAllTopicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllTopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchTopicsQuery({
+ * const { data, loading, error } = useGetAllTopicsQuery({
  *   variables: {
- *      word: // value for 'word'
  *   },
  * });
  */
-export function useSearchTopicsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchTopicsQuery, SearchTopicsQueryVariables>) {
+export function useGetAllTopicsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAllTopicsQuery, GetAllTopicsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<SearchTopicsQuery, SearchTopicsQueryVariables>(SearchTopicsDocument, options);
+        return ApolloReactHooks.useQuery<GetAllTopicsQuery, GetAllTopicsQueryVariables>(GetAllTopicsDocument, options);
       }
-export function useSearchTopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchTopicsQuery, SearchTopicsQueryVariables>) {
+export function useGetAllTopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllTopicsQuery, GetAllTopicsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<SearchTopicsQuery, SearchTopicsQueryVariables>(SearchTopicsDocument, options);
+          return ApolloReactHooks.useLazyQuery<GetAllTopicsQuery, GetAllTopicsQueryVariables>(GetAllTopicsDocument, options);
         }
-export type SearchTopicsQueryHookResult = ReturnType<typeof useSearchTopicsQuery>;
-export type SearchTopicsLazyQueryHookResult = ReturnType<typeof useSearchTopicsLazyQuery>;
-export type SearchTopicsQueryResult = ApolloReactCommon.QueryResult<SearchTopicsQuery, SearchTopicsQueryVariables>;
-export const SearchBrandsDocument = gql`
-    query SearchBrands($word: String!) {
-  brands(where: {name: {_ilike: $word}}) {
+export type GetAllTopicsQueryHookResult = ReturnType<typeof useGetAllTopicsQuery>;
+export type GetAllTopicsLazyQueryHookResult = ReturnType<typeof useGetAllTopicsLazyQuery>;
+export type GetAllTopicsQueryResult = ApolloReactCommon.QueryResult<GetAllTopicsQuery, GetAllTopicsQueryVariables>;
+export const GetAllBrandsDocument = gql`
+    query GetAllBrands {
+  brands {
     name
   }
 }
     `;
 
 /**
- * __useSearchBrandsQuery__
+ * __useGetAllBrandsQuery__
  *
- * To run a query within a React component, call `useSearchBrandsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchBrandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAllBrandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllBrandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchBrandsQuery({
+ * const { data, loading, error } = useGetAllBrandsQuery({
  *   variables: {
- *      word: // value for 'word'
  *   },
  * });
  */
-export function useSearchBrandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchBrandsQuery, SearchBrandsQueryVariables>) {
+export function useGetAllBrandsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAllBrandsQuery, GetAllBrandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<SearchBrandsQuery, SearchBrandsQueryVariables>(SearchBrandsDocument, options);
+        return ApolloReactHooks.useQuery<GetAllBrandsQuery, GetAllBrandsQueryVariables>(GetAllBrandsDocument, options);
       }
-export function useSearchBrandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchBrandsQuery, SearchBrandsQueryVariables>) {
+export function useGetAllBrandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllBrandsQuery, GetAllBrandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<SearchBrandsQuery, SearchBrandsQueryVariables>(SearchBrandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<GetAllBrandsQuery, GetAllBrandsQueryVariables>(GetAllBrandsDocument, options);
         }
-export type SearchBrandsQueryHookResult = ReturnType<typeof useSearchBrandsQuery>;
-export type SearchBrandsLazyQueryHookResult = ReturnType<typeof useSearchBrandsLazyQuery>;
-export type SearchBrandsQueryResult = ApolloReactCommon.QueryResult<SearchBrandsQuery, SearchBrandsQueryVariables>;
+export type GetAllBrandsQueryHookResult = ReturnType<typeof useGetAllBrandsQuery>;
+export type GetAllBrandsLazyQueryHookResult = ReturnType<typeof useGetAllBrandsLazyQuery>;
+export type GetAllBrandsQueryResult = ApolloReactCommon.QueryResult<GetAllBrandsQuery, GetAllBrandsQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

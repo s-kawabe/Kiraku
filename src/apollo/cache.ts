@@ -18,6 +18,11 @@ export const cache: InMemoryCache = new InMemoryCache({
             return sideMenuVar()
           },
         },
+        isShowPostModal: {
+          read() {
+            return isShowPostModalVar()
+          },
+        },
       },
     },
   },
@@ -25,3 +30,4 @@ export const cache: InMemoryCache = new InMemoryCache({
 
 export const loginUserVar: ReactiveVar<LoginUser> = makeVar<LoginUser>(null)
 export const sideMenuVar: ReactiveVar<SideMenu> = makeVar<SideMenu>(null)
+export const isShowPostModalVar: ReactiveVar<boolean> = makeVar<boolean>(false)

@@ -21,11 +21,17 @@ import { Box, Text } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { isShowPostModalVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
-import type { SearchTopicsQuery, SearchTopicsQueryVariables } from '@/apollo/graphql'
-import { SearchTopicsDocument } from '@/apollo/graphql'
+import type {
+  GetAllBrandsQuery,
+  GetAllBrandsQueryVariables,
+  GetAllTopicsQuery,
+  GetAllTopicsQueryVariables,
+} from '@/apollo/graphql'
+import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { NormalButton } from '@/components/common/unit'
 
@@ -46,7 +52,8 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [textCount, setTextCount] = useState(0)
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
-  const [suggestTopics, setSuggestTopics] = useState<string[]>([])
+  const [allTopics, setAllTopics] = useState<string[]>([])
+  const [allBrands, setAllBrands] = useState<string[]>([])
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -60,6 +67,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     setRegisterTopics([])
     setRegisterBrands([])
     setTextCount(0)
+    isShowPostModalVar(false)
   }
 
   const wrapperOnClose = () => {
@@ -74,18 +82,40 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     router.push('/')
   }
 
-  const handleChangeTopics = async (word: string) => {
-    const topics = await client.query<SearchTopicsQuery, SearchTopicsQueryVariables>({
-      query: SearchTopicsDocument,
-      variables: {
-        word: `%${word}%`,
-      },
-    })
-    const resultSearchTopics = topics.data.topics.map((topic) => {
-      return topic.name
-    })
-    setSuggestTopics(resultSearchTopics)
-  }
+  // TopicsとBrandsのデータを全件取得してstateに入れておく
+  useEffect(() => {
+    if (isShowPostModalVar()) {
+      ;(async () => {
+        const fetchAllTopics = await client.query<GetAllTopicsQuery, GetAllTopicsQueryVariables>({
+          query: GetAllTopicsDocument,
+        })
+        const fetchAllBrands = await client.query<GetAllBrandsQuery, GetAllBrandsQueryVariables>({
+          query: GetAllBrandsDocument,
+        })
+
+        const allTopicsData = fetchAllTopics.data.topics.map((data) => {
+          return data.name
+        })
+        const allBrandsData = fetchAllBrands.data.brands.map((data) => {
+          return data.name
+        })
+
+        setAllTopics(allTopicsData)
+        setAllBrands(allBrandsData)
+      })()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShowPostModalVar()])
+
+  useEffect(() => {
+    const inputElems = document.getElementsByClassName('react-tag-input__input')
+    inputElems[0]?.setAttribute('type', 'text')
+    inputElems[0]?.setAttribute('list', 'topics-list')
+    inputElems[0]?.setAttribute('autocomplete', 'on')
+    inputElems[1]?.setAttribute('type', 'text')
+    inputElems[1]?.setAttribute('list', 'brands-list')
+    inputElems[1]?.setAttribute('autocomplete', 'on')
+  })
 
   return (
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
@@ -149,15 +179,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
               >
                 <Box>
                   <Text color="gray.700">トピックを追加</Text>
-                  <Box
-                    w={{ base: '88vw', lg: '295px' }}
-                    onChange={(e) => {
-                      const word = e.currentTarget
-                        .getElementsByClassName('react-tag-input__input')[0]
-                        .getAttribute('value') as string
-                      handleChangeTopics(word)
-                    }}
-                  >
+                  <Box w={{ base: '88vw', lg: '295px' }}>
                     <ReactTagInput
                       placeholder="トピックは5つまで"
                       maxTags={5}
@@ -170,51 +192,16 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                         return !registerTopics.includes(value)
                       }}
                     />
-                  </Box>
-                  {suggestTopics.length !== 0 && registerTopics.length < 5 && (
-                    <Box
-                      bg="white"
-                      borderRadius="12px"
-                      p="5px"
-                      h="200px"
-                      overflow="auto"
-                      position="absolute"
-                      zIndex="2"
-                    >
-                      {suggestTopics.map((topic) => {
-                        return (
-                          <Text
-                            fontSize="12px"
-                            color="gray.700"
-                            key={topic}
-                            transition="all 0.2s"
-                            _hover={{ bg: 'gray.100' }}
-                            cursor="pointer"
-                            onClick={(e) => {
-                              const word = e.currentTarget.innerHTML
-                              const newArray = [...registerTopics]
-                              newArray.push(word)
-                              setRegisterTopics(newArray)
-                            }}
-                          >
-                            {topic}
-                          </Text>
-                        )
+                    <datalist id="topics-list">
+                      {allTopics.map((topic) => {
+                        return <option key={topic} value={topic} />
                       })}
-                    </Box>
-                  )}
+                    </datalist>
+                  </Box>
                 </Box>
                 <Box>
                   <Text color="gray.700">ブランドを追加</Text>
-                  <Box
-                    w={{ base: '88vw', lg: '295px' }}
-                    onChange={(e) => {
-                      const text = e.currentTarget
-                        .getElementsByClassName('react-tag-input__input')[0]
-                        .getAttribute('value')
-                      console.log(text)
-                    }}
-                  >
+                  <Box w={{ base: '88vw', lg: '295px' }}>
                     <ReactTagInput
                       placeholder="ブランドは5つまで"
                       maxTags={5}
@@ -227,6 +214,11 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                         return !registerBrands.includes(value)
                       }}
                     />
+                    <datalist id="brands-list">
+                      {allBrands.map((topic) => {
+                        return <option key={topic} value={topic} />
+                      })}
+                    </datalist>
                   </Box>
                 </Box>
               </Stack>
@@ -372,8 +364,8 @@ gql`
 
 // topicsのサジェスト用クエリ
 gql`
-  query SearchTopics($word: String!) {
-    topics(where: { name: { _ilike: $word } }) {
+  query GetAllTopics {
+    topics {
       name
     }
   }
@@ -381,8 +373,8 @@ gql`
 
 // brandsのサジェスト用クエリ
 gql`
-  query SearchBrands($word: String!) {
-    brands(where: { name: { _ilike: $word } }) {
+  query GetAllBrands {
+    brands {
       name
     }
   }
