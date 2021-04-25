@@ -1,3 +1,5 @@
+import '@pathofdev/react-tag-input/build/index.css'
+
 import { gql } from '@apollo/client'
 import {
   Button,
@@ -16,11 +18,14 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { Box, Text } from '@chakra-ui/react'
+import ReactTagInput from '@pathofdev/react-tag-input'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useState } from 'react'
 
-// import { initializeApollo } from '@/apollo/client'
+import { initializeApollo } from '@/apollo/client'
+import type { SearchTopicsQuery, SearchTopicsQueryVariables } from '@/apollo/graphql'
+import { SearchTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { NormalButton } from '@/components/common/unit'
 
@@ -31,17 +36,17 @@ type PostModalProps = {
   postData?: any // edit時にポストのデータをもらう
 }
 
+const TEXT_LIMIT = 250
+const client = initializeApollo()
+
 const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const router = useRouter()
   const [disableSubmit, setDisableSubmit] = useState(true)
   const [content, setContent] = useState('')
   const [textCount, setTextCount] = useState(0)
-  // const [registerTopics, setRegisterTopics] = useState<string[]>([])
-  // const [registerBrands, setRegisterBrands] = useState<string[]>([])
-
-  const TEXT_LIMIT = 300
-
-  // const client = initializeApollo()
+  const [registerTopics, setRegisterTopics] = useState<string[]>([])
+  const [registerBrands, setRegisterBrands] = useState<string[]>([])
+  const [suggestTopics, setSuggestTopics] = useState<string[]>([])
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -50,18 +55,36 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     setContent(text)
   }
 
+  const resetState = () => {
+    setContent('')
+    setRegisterTopics([])
+    setRegisterBrands([])
+    setTextCount(0)
+  }
+
   const wrapperOnClose = () => {
     if (!confirm('投稿を終了しますか？（内容は破棄されます。）')) return
-    setContent('')
-    setTextCount(0)
+    resetState()
     props.onClose()
   }
 
   const handleSubmit = () => {
-    setContent('')
-    setTextCount(0)
+    resetState()
     props.onClose()
     router.push('/')
+  }
+
+  const handleChangeTopics = async (word: string) => {
+    const topics = await client.query<SearchTopicsQuery, SearchTopicsQueryVariables>({
+      query: SearchTopicsDocument,
+      variables: {
+        word: `%${word}%`,
+      },
+    })
+    const resultSearchTopics = topics.data.topics.map((topic) => {
+      return topic.name
+    })
+    setSuggestTopics(resultSearchTopics)
   }
 
   return (
@@ -120,7 +143,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                 </Box>
               </Box>
               <Stack
-                mb="30px"
                 direction={{ base: 'column', lg: 'row' }}
                 spacing="30"
                 justifyContent="space-between"
@@ -128,22 +150,91 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                 <Box>
                   <Text color="gray.700">トピックを追加</Text>
                   <Box
-                    bg="white"
-                    borderRadius="14px"
-                    w={{ base: '88vw', lg: '300px' }}
-                    h="120px"
-                  ></Box>
+                    w={{ base: '88vw', lg: '295px' }}
+                    onChange={(e) => {
+                      const word = e.currentTarget
+                        .getElementsByClassName('react-tag-input__input')[0]
+                        .getAttribute('value') as string
+                      handleChangeTopics(word)
+                    }}
+                  >
+                    <ReactTagInput
+                      placeholder="トピックは5つまで"
+                      maxTags={5}
+                      tags={registerTopics}
+                      removeOnBackspace={true}
+                      onChange={(newTopic: any) => {
+                        return setRegisterTopics(newTopic)
+                      }}
+                      validator={(value) => {
+                        return !registerTopics.includes(value)
+                      }}
+                    />
+                  </Box>
+                  {suggestTopics.length !== 0 && registerTopics.length < 5 && (
+                    <Box
+                      bg="white"
+                      borderRadius="12px"
+                      p="5px"
+                      h="200px"
+                      overflow="auto"
+                      position="absolute"
+                      zIndex="2"
+                    >
+                      {suggestTopics.map((topic) => {
+                        return (
+                          <Text
+                            fontSize="12px"
+                            color="gray.700"
+                            key={topic}
+                            transition="all 0.2s"
+                            _hover={{ bg: 'gray.100' }}
+                            cursor="pointer"
+                            onClick={(e) => {
+                              const word = e.currentTarget.innerHTML
+                              const newArray = [...registerTopics]
+                              newArray.push(word)
+                              setRegisterTopics(newArray)
+                            }}
+                          >
+                            {topic}
+                          </Text>
+                        )
+                      })}
+                    </Box>
+                  )}
                 </Box>
                 <Box>
                   <Text color="gray.700">ブランドを追加</Text>
                   <Box
-                    bg="white"
-                    borderRadius="14px"
-                    w={{ base: '88vw', lg: '300px' }}
-                    h="120px"
-                  ></Box>
+                    w={{ base: '88vw', lg: '295px' }}
+                    onChange={(e) => {
+                      const text = e.currentTarget
+                        .getElementsByClassName('react-tag-input__input')[0]
+                        .getAttribute('value')
+                      console.log(text)
+                    }}
+                  >
+                    <ReactTagInput
+                      placeholder="ブランドは5つまで"
+                      maxTags={5}
+                      tags={registerBrands}
+                      removeOnBackspace={true}
+                      onChange={(newBrand) => {
+                        return setRegisterBrands(newBrand)
+                      }}
+                      validator={(value) => {
+                        return !registerBrands.includes(value)
+                      }}
+                    />
+                  </Box>
                 </Box>
               </Stack>
+              <Box mb="30px" textAlign="left" w="100%">
+                <Text color="red.300" fontSize="13px">
+                  ※トピックとブランドは後から変更できません
+                </Text>
+              </Box>
               <Box w="100%">
                 <GenderRadioButton />
               </Box>
@@ -168,8 +259,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 }
 
 export { PostModal }
-
-// 更新時の場合を想定してmutationはon_confrictを設定するべきだと思う
 
 // 新規投稿時：brand,topicをそれぞれ一つも登録しない場合
 // 編集時：brand,topicをそれぞれ一つも修正しない場合
@@ -281,42 +370,20 @@ gql`
   }
 `
 
-// ###
+// topicsのサジェスト用クエリ
 gql`
-  mutation InsertPostOneWithTopicsAndBrands(
-    $id: Int
-    $user_id: String!
-    $content: String!
-    $image: String
-    $gender: String!
-    $topicsIds: [post_topics_insert_input!]!
-    $brandsIds: [post_brands_insert_input!]!
-  ) {
-    insert_posts_one(
-      object: {
-        id: $id
-        user_id: $user_id
-        content: $content
-        image: $image
-        gender: $gender
-        topics: {
-          data: $topicsIds
-          on_conflict: { constraint: post_topics_pkey, update_columns: [id, topic_id, topic_id] }
-        }
-        brands: {
-          data: $brandsIds
-          on_conflict: { constraint: post_brands_pkey, update_columns: [id, post_id, brand_id] }
-        }
-      }
-      on_conflict: { constraint: posts_pkey, update_columns: [content, image, gender, updated_at] }
-    ) {
-      id
-      user_id
-      content
-      image
-      gender
-      created_at
-      updated_at
+  query SearchTopics($word: String!) {
+    topics(where: { name: { _ilike: $word } }) {
+      name
+    }
+  }
+`
+
+// brandsのサジェスト用クエリ
+gql`
+  query SearchBrands($word: String!) {
+    brands(where: { name: { _ilike: $word } }) {
+      name
     }
   }
 `

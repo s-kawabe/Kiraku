@@ -4143,8 +4143,6 @@ export type PostTopicsBoolExp = {
 /** unique or primary key constraints on table "post_topics" */
 export enum PostTopicsConstraint {
   /** unique or primary key constraint */
-  POST_TOPICS_ID_KEY = 'post_topics_id_key',
-  /** unique or primary key constraint */
   POST_TOPICS_PKEY = 'post_topics_pkey'
 }
 
@@ -4555,8 +4553,6 @@ export type PostsBoolExp = {
 
 /** unique or primary key constraints on table "posts" */
 export enum PostsConstraint {
-  /** unique or primary key constraint */
-  POSTS_ID_KEY = 'posts_id_key',
   /** unique or primary key constraint */
   POSTS_PKEY = 'posts_pkey'
 }
@@ -6888,6 +6884,101 @@ export type ReactiveVarGetUserQuery = (
   )> }
 );
 
+export type InsertPostOneMutationVariables = Exact<{
+  id?: Maybe<Scalars['Int']>;
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  gender: Scalars['String'];
+}>;
+
+
+export type InsertPostOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertPostOneWithTopicsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  gender: Scalars['String'];
+  topicsIds: Array<PostTopicsInsertInput> | PostTopicsInsertInput;
+}>;
+
+
+export type InsertPostOneWithTopicsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertPostOneWithBrandsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  gender: Scalars['String'];
+  brandsIds: Array<PostBrandsInsertInput> | PostBrandsInsertInput;
+}>;
+
+
+export type InsertPostOneWithBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertPostOneWithTopicsAndBrandsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+  gender: Scalars['String'];
+  topicsIds: Array<PostTopicsInsertInput> | PostTopicsInsertInput;
+  brandsIds: Array<PostBrandsInsertInput> | PostBrandsInsertInput;
+}>;
+
+
+export type InsertPostOneWithTopicsAndBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type SearchTopicsQueryVariables = Exact<{
+  word: Scalars['String'];
+}>;
+
+
+export type SearchTopicsQuery = (
+  { __typename?: 'query_root' }
+  & { topics: Array<(
+    { __typename?: 'topics' }
+    & Pick<Topics, 'name'>
+  )> }
+);
+
+export type SearchBrandsQueryVariables = Exact<{
+  word: Scalars['String'];
+}>;
+
+
+export type SearchBrandsQuery = (
+  { __typename?: 'query_root' }
+  & { brands: Array<(
+    { __typename?: 'brands' }
+    & Pick<Brands, 'name'>
+  )> }
+);
+
 export type Top10TopicAndBrandQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6962,6 +7053,254 @@ export function useReactiveVarGetUserLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVarGetUserQuery>;
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
+export const InsertPostOneDocument = gql`
+    mutation InsertPostOne($id: Int, $user_id: String!, $content: String!, $image: String, $gender: String!) {
+  insert_posts_one(
+    object: {id: $id, user_id: $user_id, content: $content, image: $image, gender: $gender}
+    on_conflict: {constraint: posts_pkey, update_columns: [content, image, gender, updated_at]}
+  ) {
+    id
+    user_id
+    content
+    image
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertPostOneMutationFn = ApolloReactCommon.MutationFunction<InsertPostOneMutation, InsertPostOneMutationVariables>;
+
+/**
+ * __useInsertPostOneMutation__
+ *
+ * To run a mutation, you first call `useInsertPostOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPostOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPostOneMutation, { data, loading, error }] = useInsertPostOneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      image: // value for 'image'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useInsertPostOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertPostOneMutation, InsertPostOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertPostOneMutation, InsertPostOneMutationVariables>(InsertPostOneDocument, options);
+      }
+export type InsertPostOneMutationHookResult = ReturnType<typeof useInsertPostOneMutation>;
+export type InsertPostOneMutationResult = ApolloReactCommon.MutationResult<InsertPostOneMutation>;
+export type InsertPostOneMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneMutation, InsertPostOneMutationVariables>;
+export const InsertPostOneWithTopicsDocument = gql`
+    mutation InsertPostOneWithTopics($user_id: String!, $content: String!, $image: String, $gender: String!, $topicsIds: [post_topics_insert_input!]!) {
+  insert_posts_one(
+    object: {user_id: $user_id, content: $content, image: $image, gender: $gender, topics: {data: $topicsIds}}
+  ) {
+    id
+    user_id
+    content
+    image
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertPostOneWithTopicsMutationFn = ApolloReactCommon.MutationFunction<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
+
+/**
+ * __useInsertPostOneWithTopicsMutation__
+ *
+ * To run a mutation, you first call `useInsertPostOneWithTopicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPostOneWithTopicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPostOneWithTopicsMutation, { data, loading, error }] = useInsertPostOneWithTopicsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      image: // value for 'image'
+ *      gender: // value for 'gender'
+ *      topicsIds: // value for 'topicsIds'
+ *   },
+ * });
+ */
+export function useInsertPostOneWithTopicsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>(InsertPostOneWithTopicsDocument, options);
+      }
+export type InsertPostOneWithTopicsMutationHookResult = ReturnType<typeof useInsertPostOneWithTopicsMutation>;
+export type InsertPostOneWithTopicsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithTopicsMutation>;
+export type InsertPostOneWithTopicsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
+export const InsertPostOneWithBrandsDocument = gql`
+    mutation InsertPostOneWithBrands($user_id: String!, $content: String!, $image: String, $gender: String!, $brandsIds: [post_brands_insert_input!]!) {
+  insert_posts_one(
+    object: {user_id: $user_id, content: $content, image: $image, gender: $gender, brands: {data: $brandsIds}}
+  ) {
+    id
+    user_id
+    content
+    image
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertPostOneWithBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertPostOneWithBrandsMutation, InsertPostOneWithBrandsMutationVariables>;
+
+/**
+ * __useInsertPostOneWithBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertPostOneWithBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPostOneWithBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPostOneWithBrandsMutation, { data, loading, error }] = useInsertPostOneWithBrandsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      image: // value for 'image'
+ *      gender: // value for 'gender'
+ *      brandsIds: // value for 'brandsIds'
+ *   },
+ * });
+ */
+export function useInsertPostOneWithBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertPostOneWithBrandsMutation, InsertPostOneWithBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertPostOneWithBrandsMutation, InsertPostOneWithBrandsMutationVariables>(InsertPostOneWithBrandsDocument, options);
+      }
+export type InsertPostOneWithBrandsMutationHookResult = ReturnType<typeof useInsertPostOneWithBrandsMutation>;
+export type InsertPostOneWithBrandsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithBrandsMutation>;
+export type InsertPostOneWithBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithBrandsMutation, InsertPostOneWithBrandsMutationVariables>;
+export const InsertPostOneWithTopicsAndBrandsDocument = gql`
+    mutation InsertPostOneWithTopicsAndBrands($user_id: String!, $content: String!, $image: String, $gender: String!, $topicsIds: [post_topics_insert_input!]!, $brandsIds: [post_brands_insert_input!]!) {
+  insert_posts_one(
+    object: {user_id: $user_id, content: $content, image: $image, gender: $gender, topics: {data: $topicsIds}, brands: {data: $brandsIds}}
+  ) {
+    id
+    user_id
+    content
+    image
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertPostOneWithTopicsAndBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>;
+
+/**
+ * __useInsertPostOneWithTopicsAndBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertPostOneWithTopicsAndBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPostOneWithTopicsAndBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPostOneWithTopicsAndBrandsMutation, { data, loading, error }] = useInsertPostOneWithTopicsAndBrandsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      image: // value for 'image'
+ *      gender: // value for 'gender'
+ *      topicsIds: // value for 'topicsIds'
+ *      brandsIds: // value for 'brandsIds'
+ *   },
+ * });
+ */
+export function useInsertPostOneWithTopicsAndBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>(InsertPostOneWithTopicsAndBrandsDocument, options);
+      }
+export type InsertPostOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertPostOneWithTopicsAndBrandsMutation>;
+export type InsertPostOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithTopicsAndBrandsMutation>;
+export type InsertPostOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>;
+export const SearchTopicsDocument = gql`
+    query SearchTopics($word: String!) {
+  topics(where: {name: {_ilike: $word}}) {
+    name
+  }
+}
+    `;
+
+/**
+ * __useSearchTopicsQuery__
+ *
+ * To run a query within a React component, call `useSearchTopicsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchTopicsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchTopicsQuery({
+ *   variables: {
+ *      word: // value for 'word'
+ *   },
+ * });
+ */
+export function useSearchTopicsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchTopicsQuery, SearchTopicsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchTopicsQuery, SearchTopicsQueryVariables>(SearchTopicsDocument, options);
+      }
+export function useSearchTopicsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchTopicsQuery, SearchTopicsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchTopicsQuery, SearchTopicsQueryVariables>(SearchTopicsDocument, options);
+        }
+export type SearchTopicsQueryHookResult = ReturnType<typeof useSearchTopicsQuery>;
+export type SearchTopicsLazyQueryHookResult = ReturnType<typeof useSearchTopicsLazyQuery>;
+export type SearchTopicsQueryResult = ApolloReactCommon.QueryResult<SearchTopicsQuery, SearchTopicsQueryVariables>;
+export const SearchBrandsDocument = gql`
+    query SearchBrands($word: String!) {
+  brands(where: {name: {_ilike: $word}}) {
+    name
+  }
+}
+    `;
+
+/**
+ * __useSearchBrandsQuery__
+ *
+ * To run a query within a React component, call `useSearchBrandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchBrandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchBrandsQuery({
+ *   variables: {
+ *      word: // value for 'word'
+ *   },
+ * });
+ */
+export function useSearchBrandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<SearchBrandsQuery, SearchBrandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<SearchBrandsQuery, SearchBrandsQueryVariables>(SearchBrandsDocument, options);
+      }
+export function useSearchBrandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SearchBrandsQuery, SearchBrandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<SearchBrandsQuery, SearchBrandsQueryVariables>(SearchBrandsDocument, options);
+        }
+export type SearchBrandsQueryHookResult = ReturnType<typeof useSearchBrandsQuery>;
+export type SearchBrandsLazyQueryHookResult = ReturnType<typeof useSearchBrandsLazyQuery>;
+export type SearchBrandsQueryResult = ApolloReactCommon.QueryResult<SearchBrandsQuery, SearchBrandsQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

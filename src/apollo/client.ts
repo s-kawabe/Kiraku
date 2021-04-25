@@ -21,7 +21,6 @@ const authLink = setContext(async (_, { headers }) => {
   // 匿名ログインでない、かつidTokenが存在すればidTokenを設定
   if (!auth.currentUser?.isAnonymous && auth.currentUser) {
     token = await auth.currentUser.getIdToken()
-    console.log(token)
   }
   return token
     ? {
