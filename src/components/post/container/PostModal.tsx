@@ -37,6 +37,7 @@ import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
+import { insertPostToHasura, uploadPostImage } from '@/utils/methods/Post'
 
 type PostModalProps = {
   isNew: boolean
@@ -49,12 +50,13 @@ const client = initializeApollo()
 
 const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const router = useRouter()
+  const [allTopics, setAllTopics] = useState<string[]>([])
+  const [allBrands, setAllBrands] = useState<string[]>([])
+
   const [disableSubmit, setDisableSubmit] = useState(true)
   const [content, setContent] = useState('')
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
-  const [allTopics, setAllTopics] = useState<string[]>([])
-  const [allBrands, setAllBrands] = useState<string[]>([])
   const [gender, setGender] = useState<Gender>('ALL')
   const [image, setImage] = useState<File | null>(null)
 
@@ -69,6 +71,8 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     setRegisterTopics([])
     setRegisterBrands([])
     isShowPostModalVar(false)
+    setDisableSubmit(true)
+    setImage(null)
   }
 
   const wrapperOnClose = () => {
@@ -77,16 +81,22 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     props.onClose()
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log(content)
     console.log({ registerTopics }, { registerBrands })
     console.log(gender)
-    console.log(image)
-    resetState()
 
     // 画像をfirebaseにアップロードする(アップロード後の画像URLを返してもらう)
-    // brandとtopicの新規INSERT判定処理を行う
+    let imageURL = null
+    if (image) {
+      imageURL = await uploadPostImage(image)
+      console.log(imageURL)
+    }
     // hasuraに諸々データを突っ込んで投稿の詳細ページに遷移
+    // この中でbrandとtopicの新規INSERT判定処理を行う
+    insertPostToHasura({ content, registerTopics, registerBrands, gender, imageURL })
 
+    resetState()
     props.onClose()
     router.push('/')
   }
@@ -117,14 +127,18 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   }, [isShowPostModalVar()])
 
   useEffect(() => {
-    const inputElems = document.getElementsByClassName('react-tag-input__input')
-    inputElems[0]?.setAttribute('type', 'text')
-    inputElems[0]?.setAttribute('list', 'topics-list')
-    inputElems[0]?.setAttribute('autocomplete', 'on')
-    inputElems[1]?.setAttribute('type', 'text')
-    inputElems[1]?.setAttribute('list', 'brands-list')
-    inputElems[1]?.setAttribute('autocomplete', 'on')
+    if (!props.postData) {
+      const inputElems = document.getElementsByClassName('react-tag-input__input')
+      inputElems[0]?.setAttribute('type', 'text')
+      inputElems[0]?.setAttribute('list', 'topics-list')
+      inputElems[0]?.setAttribute('autocomplete', 'on')
+      inputElems[1]?.setAttribute('type', 'text')
+      inputElems[1]?.setAttribute('list', 'brands-list')
+      inputElems[1]?.setAttribute('autocomplete', 'on')
+    }
   })
+
+  console.log(registerTopics)
 
   return (
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
@@ -174,54 +188,55 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                 spacing="30"
                 justifyContent="space-between"
               >
-                <Box>
-                  <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                  <Box>
                     <Text color="gray.700">トピックを追加</Text>
-                  </Tooltip>
-                  <Box w={{ base: '88vw', lg: '295px' }}>
-                    <ReactTagInput
-                      placeholder="トピックは5つまで"
-                      maxTags={5}
-                      tags={registerTopics}
-                      removeOnBackspace={true}
-                      onChange={(newTopic: any) => {
-                        return setRegisterTopics(newTopic)
-                      }}
-                      validator={(value) => {
-                        return !registerTopics.includes(value)
-                      }}
-                    />
-                    <datalist id="topics-list">
-                      {allTopics.map((topic) => {
-                        return <option key={topic} value={topic} />
-                      })}
-                    </datalist>
+                    <Box w={{ base: '88vw', lg: '295px' }}>
+                      <ReactTagInput
+                        placeholder="トピックは5つまで"
+                        maxTags={5}
+                        tags={registerTopics}
+                        removeOnBackspace={true}
+                        onChange={(newTopic: any) => {
+                          return setRegisterTopics(newTopic)
+                        }}
+                        validator={(value) => {
+                          return !registerTopics.includes(value)
+                        }}
+                      />
+                      <datalist id="topics-list">
+                        {allTopics.map((topic) => {
+                          return <option key={topic} value={topic} />
+                        })}
+                      </datalist>
+                    </Box>
                   </Box>
-                </Box>
-                <Box>
-                  <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                </Tooltip>
+                <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                  <Box>
                     <Text color="gray.700">ブランドを追加</Text>
-                  </Tooltip>
-                  <Box w={{ base: '88vw', lg: '295px' }}>
-                    <ReactTagInput
-                      placeholder="ブランドは5つまで"
-                      maxTags={5}
-                      tags={registerBrands}
-                      removeOnBackspace={true}
-                      onChange={(newBrand) => {
-                        return setRegisterBrands(newBrand)
-                      }}
-                      validator={(value) => {
-                        return !registerBrands.includes(value)
-                      }}
-                    />
-                    <datalist id="brands-list">
-                      {allBrands.map((topic) => {
-                        return <option key={topic} value={topic} />
-                      })}
-                    </datalist>
+
+                    <Box w={{ base: '88vw', lg: '295px' }}>
+                      <ReactTagInput
+                        placeholder="ブランドは5つまで"
+                        maxTags={5}
+                        tags={registerBrands}
+                        removeOnBackspace={true}
+                        onChange={(newBrand) => {
+                          return setRegisterBrands(newBrand)
+                        }}
+                        validator={(value) => {
+                          return !registerBrands.includes(value)
+                        }}
+                      />
+                      <datalist id="brands-list">
+                        {allBrands.map((topic) => {
+                          return <option key={topic} value={topic} />
+                        })}
+                      </datalist>
+                    </Box>
                   </Box>
-                </Box>
+                </Tooltip>
               </Stack>
               <Box mb="30px" w="100%">
                 <Text color="red.300" fontSize="13px">

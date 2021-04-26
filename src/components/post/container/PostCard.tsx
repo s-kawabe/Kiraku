@@ -26,6 +26,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       cursor="pointer"
     >
       <Center w="min(40vw, 200px)" borderRadius="8px">
+        {/* imageSrcがないパターンはNO IMAGEをつける */}
         <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} imageType="card" />
       </Center>
       <Box
