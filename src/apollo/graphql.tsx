@@ -6975,6 +6975,58 @@ export type GetAllBrandsQuery = (
   )> }
 );
 
+export type InsertTopicsMutationVariables = Exact<{
+  newItems: Array<TopicsInsertInput> | TopicsInsertInput;
+}>;
+
+
+export type InsertTopicsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_topics?: Maybe<(
+    { __typename?: 'topics_mutation_response' }
+    & Pick<TopicsMutationResponse, 'affected_rows'>
+  )> }
+);
+
+export type InsertBrandsMutationVariables = Exact<{
+  newItems: Array<BrandsInsertInput> | BrandsInsertInput;
+}>;
+
+
+export type InsertBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_brands?: Maybe<(
+    { __typename?: 'brands_mutation_response' }
+    & Pick<BrandsMutationResponse, 'affected_rows'>
+  )> }
+);
+
+export type MappingTopicsToIdQueryVariables = Exact<{
+  topics: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type MappingTopicsToIdQuery = (
+  { __typename?: 'query_root' }
+  & { topics: Array<(
+    { __typename?: 'topics' }
+    & { topic_id: Topics['id'] }
+  )> }
+);
+
+export type MappingBrandsToIdQueryVariables = Exact<{
+  brands: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type MappingBrandsToIdQuery = (
+  { __typename?: 'query_root' }
+  & { brands: Array<(
+    { __typename?: 'brands' }
+    & { brand_id: Brands['id'] }
+  )> }
+);
+
 export type Top10TopicAndBrandQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7108,7 +7160,7 @@ export const InsertPostOneWithTopicsDocument = gql`
   }
 }
     `;
-export type Fn = ApolloReactCommon.MutationFunction<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
+export type InsertPostOneWithTopicsMutationFn = ApolloReactCommon.MutationFunction<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
 
 /**
  * __useInsertPostOneWithTopicsMutation__
@@ -7295,6 +7347,142 @@ export function useGetAllBrandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GetAllBrandsQueryHookResult = ReturnType<typeof useGetAllBrandsQuery>;
 export type GetAllBrandsLazyQueryHookResult = ReturnType<typeof useGetAllBrandsLazyQuery>;
 export type GetAllBrandsQueryResult = ApolloReactCommon.QueryResult<GetAllBrandsQuery, GetAllBrandsQueryVariables>;
+export const InsertTopicsDocument = gql`
+    mutation InsertTopics($newItems: [topics_insert_input!]!) {
+  insert_topics(objects: $newItems) {
+    affected_rows
+  }
+}
+    `;
+export type InsertTopicsMutationFn = ApolloReactCommon.MutationFunction<InsertTopicsMutation, InsertTopicsMutationVariables>;
+
+/**
+ * __useInsertTopicsMutation__
+ *
+ * To run a mutation, you first call `useInsertTopicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertTopicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertTopicsMutation, { data, loading, error }] = useInsertTopicsMutation({
+ *   variables: {
+ *      newItems: // value for 'newItems'
+ *   },
+ * });
+ */
+export function useInsertTopicsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertTopicsMutation, InsertTopicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertTopicsMutation, InsertTopicsMutationVariables>(InsertTopicsDocument, options);
+      }
+export type InsertTopicsMutationHookResult = ReturnType<typeof useInsertTopicsMutation>;
+export type InsertTopicsMutationResult = ApolloReactCommon.MutationResult<InsertTopicsMutation>;
+export type InsertTopicsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertTopicsMutation, InsertTopicsMutationVariables>;
+export const InsertBrandsDocument = gql`
+    mutation InsertBrands($newItems: [brands_insert_input!]!) {
+  insert_brands(objects: $newItems) {
+    affected_rows
+  }
+}
+    `;
+export type InsertBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertBrandsMutation, InsertBrandsMutationVariables>;
+
+/**
+ * __useInsertBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBrandsMutation, { data, loading, error }] = useInsertBrandsMutation({
+ *   variables: {
+ *      newItems: // value for 'newItems'
+ *   },
+ * });
+ */
+export function useInsertBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBrandsMutation, InsertBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBrandsMutation, InsertBrandsMutationVariables>(InsertBrandsDocument, options);
+      }
+export type InsertBrandsMutationHookResult = ReturnType<typeof useInsertBrandsMutation>;
+export type InsertBrandsMutationResult = ApolloReactCommon.MutationResult<InsertBrandsMutation>;
+export type InsertBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBrandsMutation, InsertBrandsMutationVariables>;
+export const MappingTopicsToIdDocument = gql`
+    query MappingTopicsToId($topics: [String!]!) {
+  topics(where: {name: {_in: $topics}}) {
+    topic_id: id
+  }
+}
+    `;
+
+/**
+ * __useMappingTopicsToIdQuery__
+ *
+ * To run a query within a React component, call `useMappingTopicsToIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMappingTopicsToIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMappingTopicsToIdQuery({
+ *   variables: {
+ *      topics: // value for 'topics'
+ *   },
+ * });
+ */
+export function useMappingTopicsToIdQuery(baseOptions: ApolloReactHooks.QueryHookOptions<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>(MappingTopicsToIdDocument, options);
+      }
+export function useMappingTopicsToIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>(MappingTopicsToIdDocument, options);
+        }
+export type MappingTopicsToIdQueryHookResult = ReturnType<typeof useMappingTopicsToIdQuery>;
+export type MappingTopicsToIdLazyQueryHookResult = ReturnType<typeof useMappingTopicsToIdLazyQuery>;
+export type MappingTopicsToIdQueryResult = ApolloReactCommon.QueryResult<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>;
+export const MappingBrandsToIdDocument = gql`
+    query MappingBrandsToId($brands: [String!]!) {
+  brands(where: {name: {_in: $brands}}) {
+    brand_id: id
+  }
+}
+    `;
+
+/**
+ * __useMappingBrandsToIdQuery__
+ *
+ * To run a query within a React component, call `useMappingBrandsToIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMappingBrandsToIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMappingBrandsToIdQuery({
+ *   variables: {
+ *      brands: // value for 'brands'
+ *   },
+ * });
+ */
+export function useMappingBrandsToIdQuery(baseOptions: ApolloReactHooks.QueryHookOptions<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>(MappingBrandsToIdDocument, options);
+      }
+export function useMappingBrandsToIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>(MappingBrandsToIdDocument, options);
+        }
+export type MappingBrandsToIdQueryHookResult = ReturnType<typeof useMappingBrandsToIdQuery>;
+export type MappingBrandsToIdLazyQueryHookResult = ReturnType<typeof useMappingBrandsToIdLazyQuery>;
+export type MappingBrandsToIdQueryResult = ApolloReactCommon.QueryResult<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

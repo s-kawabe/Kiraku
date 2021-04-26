@@ -37,7 +37,7 @@ import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
-import { insertPostToHasura, uploadPostImage } from '@/utils/methods/Post'
+import { checkExistTable, insertPostToHasura, uploadPostImage } from '@/utils/methods/Post'
 
 type PostModalProps = {
   isNew: boolean
@@ -82,23 +82,19 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   }
 
   const handleSubmit = async () => {
-    console.log(content)
-    console.log({ registerTopics }, { registerBrands })
-    console.log(gender)
-
     // 画像をfirebaseにアップロードする(アップロード後の画像URLを返してもらう)
     let imageURL = null
     if (image) {
       imageURL = await uploadPostImage(image)
-      console.log(imageURL)
     }
-    // hasuraに諸々データを突っ込んで投稿の詳細ページに遷移
-    // この中でbrandとtopicの新規INSERT判定処理を行う
+    // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
+    checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
+    checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
+    // hasuraのpostsに色々INSERTし、そのpostsのidを返して、その/posts/[postId].tsxページに遷移する
     insertPostToHasura({ content, registerTopics, registerBrands, gender, imageURL })
-
     resetState()
     props.onClose()
-    router.push('/')
+    router.push('/') // todo
   }
 
   // TopicsとBrandsのデータを全件取得してstateに入れておく
@@ -107,9 +103,11 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       ;(async () => {
         const fetchAllTopics = await client.query<GetAllTopicsQuery, GetAllTopicsQueryVariables>({
           query: GetAllTopicsDocument,
+          fetchPolicy: 'network-only',
         })
         const fetchAllBrands = await client.query<GetAllBrandsQuery, GetAllBrandsQueryVariables>({
           query: GetAllBrandsDocument,
+          fetchPolicy: 'network-only',
         })
 
         const allTopicsData = fetchAllTopics.data.topics.map((data) => {
@@ -137,8 +135,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       inputElems[1]?.setAttribute('autocomplete', 'on')
     }
   })
-
-  console.log(registerTopics)
 
   return (
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
@@ -392,6 +388,40 @@ gql`
   query GetAllBrands {
     brands {
       name
+    }
+  }
+`
+
+// 新規topics登録用
+gql`
+  mutation InsertTopics($newItems: [topics_insert_input!]!) {
+    insert_topics(objects: $newItems) {
+      affected_rows
+    }
+  }
+`
+
+// 新規brands登録用
+gql`
+  mutation InsertBrands($newItems: [brands_insert_input!]!) {
+    insert_brands(objects: $newItems) {
+      affected_rows
+    }
+  }
+`
+
+gql`
+  query MappingTopicsToId($topics: [String!]!) {
+    topics(where: { name: { _in: $topics } }) {
+      topic_id: id
+    }
+  }
+`
+
+gql`
+  query MappingBrandsToId($brands: [String!]!) {
+    brands(where: { name: { _in: $brands } }) {
+      brand_id: id
     }
   }
 `
