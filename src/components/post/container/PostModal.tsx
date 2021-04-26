@@ -7,11 +7,11 @@ import {
   Center,
   CircularProgress,
   CircularProgressLabel,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Stack,
@@ -127,7 +127,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   })
 
   return (
-    <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="inside">
+    <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
       <ModalOverlay bg="rgba(30, 30, 30, 0.5)" />
       <ModalContent bg="gray.100" borderRadius="20px">
         <ModalHeader fontWeight="semibold" fontSize="20px" color="gray.700" py="30px">
@@ -135,8 +135,8 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody mb="20px" display="flex" justifyContent="center">
-          <Stack direction={{ base: 'column', lg: 'row' }}>
-            <Box mr={['', '40px']} mb={['30px', '']} ml={['20px', '']}>
+          <Stack direction={{ base: 'column', lg: 'row' }} spacing="10">
+            <Box mx={'auto'}>
               <ImageArea setImage={setImage} />
             </Box>
             <VStack>
@@ -223,7 +223,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   </Box>
                 </Box>
               </Stack>
-              <Box mb="30px" textAlign="left" w="100%">
+              <Box mb="30px" w="100%">
                 <Text color="red.300" fontSize="13px">
                   ※トピックとブランドは後から変更できません
                 </Text>
@@ -231,21 +231,21 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
               <Box w="100%">
                 <GenderRadioButton default="ALL" setGender={setGender} />
               </Box>
+              <Flex w="100%" justify="flex-end">
+                <Button
+                  colorScheme="teal"
+                  mb={3}
+                  mt={3}
+                  onClick={handleSubmit}
+                  px="50px"
+                  isDisabled={disableSubmit}
+                >
+                  投稿
+                </Button>
+              </Flex>
             </VStack>
           </Stack>
         </ModalBody>
-        <ModalFooter>
-          <Button
-            colorScheme="teal"
-            mr={3}
-            mb={3}
-            onClick={handleSubmit}
-            px="50px"
-            isDisabled={disableSubmit}
-          >
-            投稿
-          </Button>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   )
