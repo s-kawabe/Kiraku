@@ -88,10 +88,10 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       imageURL = await uploadPostImage(image)
     }
     // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
-    checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
-    checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
+    await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
+    await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
     // hasuraのpostsに色々INSERTし、そのpostsのidを返して、その/posts/[postId].tsxページに遷移する
-    insertPostToHasura({ content, registerTopics, registerBrands, gender, imageURL })
+    await insertPostToHasura({ content, registerTopics, registerBrands, gender, imageURL })
     resetState()
     props.onClose()
     router.push('/') // todo

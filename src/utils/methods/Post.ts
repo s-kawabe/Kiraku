@@ -179,7 +179,6 @@ export const insertPostToHasura = async ({
     const registerTopicsIds = (await mappingContentToId('topics', registerTopics)) as {
       topic_id: number
     }[]
-    console.log(registerTopicsIds)
     await client.mutate<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>({
       mutation: InsertPostOneWithTopicsDocument,
       variables: {
