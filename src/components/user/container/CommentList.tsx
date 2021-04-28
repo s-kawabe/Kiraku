@@ -18,19 +18,19 @@ const CommentList: VFC<CommentListProps> = (props: CommentListProps) => {
       w="540px"
       css={css`
         & div:not(:last-child) {
-          margin-bottom: 20px;
+          margin-bottom: 8px;
         }
       `}
     >
       {props.comments.map((comment) => {
         return (
           <div key={comment.userId}>
-            <Text fontSize="13px" color="gray.500">
+            <Text fontSize="13px" color="gray.500" mb="1">
               @{comment.userId}
             </Text>
             <Box display="flex" alignItems="flex-start">
               <UserIcon src={comment.userIcon} width={46} height={46} />
-              <Box py="12px" px="20px" ml="10px" bg="gray.100" borderRadius="30px">
+              <Box py="10px" px="20px" ml="10px" bg="gray.100" borderRadius="30px">
                 <Text fontSize="14px" color="gray.700">
                   {comment.comment}
                 </Text>

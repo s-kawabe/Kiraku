@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client'
+import { Box, Button, Center, Flex, Heading, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
+import { useState } from 'react'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -10,20 +13,177 @@ import type {
   Users,
 } from '@/apollo/graphql'
 import { GetAllUsersWithPostsDocument, GetOneUserWithPostDocument } from '@/apollo/graphql'
+import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
+import { NormalButton } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
+import { CommentList } from '@/components/user/container'
+import { UserIcon } from '@/components/user/unit'
 
 type Props = {
   user: Users
 }
 
+const dummyComments = [
+  {
+    userIcon: '/nouser.svg',
+    userId: 'hogehoge',
+    comment: 'すごくいいですね',
+  },
+  {
+    userIcon: '/nouser.svg',
+    userId: 'hugagaga',
+    comment: 'めっちゃやべえな',
+  },
+  {
+    userIcon: '/nouser.svg',
+    userId: 'hugagaga',
+    comment:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis ut voluptatem fugit, natus at placeat beatae ',
+  },
+]
 const UserPostPage: NextPage<Props> = (props: Props) => {
+  const [comment, setComment] = useState('')
+  const [user, post] = [props.user, props.user.posts[0]]
+
+  console.log(comment)
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value)
+  }
+
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
-      <>
-        <p>this is /userId/posts/postId page, </p>
-        <h1>username: {props.user.name}</h1>
-        <p>post content: {props.user.posts[0].content}</p>
-      </>
+      <Center w="100%">
+        <Box my="70px">
+          {/* Header */}
+          <Flex mb="30px" align="flex-end" justifyContent="space-between">
+            <Flex align="center">
+              <UserIcon src={user.image ?? '/nouser.svg'} width={85} height={85} />
+              <Box ml="10px">
+                <Heading fontSize="26px" mb="2px" color="gray.700">
+                  {user.name}
+                </Heading>
+                <Text fontSize="16px" color="gray.500">
+                  @{user.display_id}
+                </Text>
+              </Box>
+              {/* TODO */}
+              <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
+                フォロー
+              </Button>
+            </Flex>
+            <HStack spacing="6">
+              <CommentIconWithCount count={100} fontSize="24px" />
+              <LikeButtonWithCount count={200} isLiked={false} fontSize="24px" iconSize="27px" />
+            </HStack>
+          </Flex>
+          {/* Main */}
+          <Flex>
+            {/* Post Image */}
+            <Box position="relative">
+              <Center w="430px" h="630px" bg={'gray.50'} position="relative" borderRadius="20px">
+                {post.image ? (
+                  <Image
+                    src={post.image}
+                    alt="ファッション投稿画像"
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                ) : (
+                  <Text fontWeight="bold" fontSize="16px" color="gray.600">
+                    No Image
+                  </Text>
+                )}
+              </Center>
+              {/* Topic/Brand */}
+              {post.topics.length > 0 && (
+                <Box mt="20px">
+                  <Heading fontSize="18px" color="gray.600" mb="8px">
+                    トピック
+                  </Heading>
+                  <Flex maxW="430px" flexWrap="wrap">
+                    {post.topics.map(({ topic }) => {
+                      return (
+                        <Tag
+                          key={topic.id}
+                          mr="15px"
+                          mb="10px"
+                          p="1.5"
+                          borderRadius="8px"
+                          fontSize="13px"
+                        >
+                          {topic.name}
+                        </Tag>
+                      )
+                    })}
+                  </Flex>
+                </Box>
+              )}
+              {post.brands.length > 0 && (
+                <Box mt="20px">
+                  <Heading fontSize="18px" color="gray.600" mb="8px">
+                    ブランド
+                  </Heading>
+                  <Flex maxW="430px" flexWrap="wrap">
+                    {post.brands.map(({ brand }) => {
+                      return (
+                        <Tag key={brand.id} mr="15px" mb="10px" borderRadius="0">
+                          {brand.name}
+                        </Tag>
+                      )
+                    })}
+                  </Flex>
+                </Box>
+              )}
+            </Box>
+            <Box w="37vw" ml="70px">
+              {/* Content */}
+              <Box
+                p="30px"
+                borderRadius="20px"
+                boxShadow="0px 0px 5px rgba(40,40,40,0.15)"
+                mb="50px"
+              >
+                <Text fontSize="18px" color="gray.700">
+                  {post.content}ああああああああああああああああああああ
+                  ああああああああああああああああああああああああああああ
+                  あああああああああああああああああ
+                </Text>
+                <Box w="100%" mt="70px" textAlign="right">
+                  <Text color="gray.500">{post.created_at}</Text>
+                </Box>
+              </Box>
+              {/* Comment */}
+              <Box mb="120px">
+                <Heading fontSize="20px" color="gray.700" mb="5px">
+                  コメント(1)
+                </Heading>
+                <CommentList comments={dummyComments} />
+              </Box>
+              <Box>
+                <Textarea
+                  placeholder="コメントを書く"
+                  borderColor="gray.400"
+                  h="150px"
+                  onChange={(e) => {
+                    handleCommentChange(e)
+                  }}
+                />
+                <Box textAlign="right">
+                  <NormalButton
+                    text="送信"
+                    bg="green.300"
+                    color="white"
+                    borderRadius="none"
+                    hover={{ bg: 'green.400' }}
+                    width="100px"
+                  />
+                </Box>
+              </Box>
+            </Box>
+          </Flex>
+        </Box>
+      </Center>
     </LayoutWithHead>
   )
 }

@@ -166,7 +166,7 @@ export const insertPostToHasura = async ({
     const registerBrandsIds = (await mappingContentToId('brands', registerBrands)) as {
       brand_id: number
     }[]
-    await client.mutate<
+    return await client.mutate<
       InsertPostOneWithTopicsAndBrandsMutation,
       InsertPostOneWithTopicsAndBrandsMutationVariables
     >({
@@ -186,7 +186,10 @@ export const insertPostToHasura = async ({
     const registerTopicsIds = (await mappingContentToId('topics', registerTopics)) as {
       topic_id: number
     }[]
-    await client.mutate<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>({
+    return await client.mutate<
+      InsertPostOneWithTopicsMutation,
+      InsertPostOneWithTopicsMutationVariables
+    >({
       mutation: InsertPostOneWithTopicsDocument,
       variables: {
         user_id: loginUser.id,
@@ -202,7 +205,10 @@ export const insertPostToHasura = async ({
     const registerBrandsIds = (await mappingContentToId('brands', registerBrands)) as {
       brand_id: number
     }[]
-    await client.mutate<InsertPostOneWithBrandsMutation, InsertPostOneWithBrandsMutationVariables>({
+    return await client.mutate<
+      InsertPostOneWithBrandsMutation,
+      InsertPostOneWithBrandsMutationVariables
+    >({
       mutation: InsertPostOneWithBrandsDocument,
       variables: {
         user_id: loginUser.id,
@@ -215,7 +221,7 @@ export const insertPostToHasura = async ({
     })
     // topic,brandをどちらも登録しない
   } else {
-    await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
+    return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
       mutation: InsertPostOneDocument,
       variables: {
         user_id: loginUser.id,

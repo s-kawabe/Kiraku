@@ -98,7 +98,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
     await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
     // hasuraのpostsに色々INSERTし、そのpostsのidを返して、その/posts/[postId].tsxページに遷移する
-    await insertPostToHasura({
+    const ret = await insertPostToHasura({
       content,
       registerTopics,
       registerBrands,
@@ -106,9 +106,19 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       image: imageInfo.image,
       imageId: imageInfo.imageId,
     })
+
     resetState()
     props.onClose()
-    router.push('/') // todo
+
+    const data = ret?.data?.insert_posts_one
+    data &&
+      router.push({
+        pathname: '/[userId]/posts/[postId]',
+        query: {
+          userId: data.user_id.substring(0, 8),
+          postId: data.id,
+        },
+      }) // todo
   }
 
   // TopicsとBrandsのデータを全件取得してstateに入れておく

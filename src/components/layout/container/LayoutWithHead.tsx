@@ -67,11 +67,11 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       {props.sideMenu ? (
         <Flex>
           {sideMenuContext && isLargerThan1200 && (
-            <Box maxH="100vh" overflow="auto">
+            <Box maxH="100vh" overflow="auto" minW="190px">
               <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
             </Box>
           )}
-          <Box>{props.children}</Box>
+          <Box w="100%">{props.children}</Box>
         </Flex>
       ) : (
         props.children
