@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
       postId,
     },
   })
-  if (!data.users_by_pk) {
+  if (!data.users_by_pk || !data.users_by_pk.posts) {
     return {
       notFound: true,
     }
@@ -60,6 +60,7 @@ export const getStaticPaths: GetStaticPaths<{ userId: string; postId: string }> 
     GetAllUsersWithPostsQueryVariables
   >({
     query: GetAllUsersWithPostsDocument,
+    fetchPolicy: 'network-only',
   })
   const paths = data.users
     .map((user) => {
