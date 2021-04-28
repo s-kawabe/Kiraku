@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { sideMenuVar } from '@/apollo/cache'
+import { useTop10TopicAndBrandQuery } from '@/apollo/graphql'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList } from '@/components/layout/container'
 import type { SideMenu } from '@/utils/constants/Common'
@@ -12,7 +13,6 @@ import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
   children: React.ReactNode
-  isLogin?: boolean
   title?: string
   sideMenu?: boolean
 }
@@ -23,7 +23,18 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
 
   useEffect(() => {
     setSideMenuContext(sideMenuVar())
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sideMenuVar()])
+
+  const { data, loading, error } = useTop10TopicAndBrandQuery()
+
+  if (loading) return <div>loading...</div>
+  if (error) {
+    console.log(error)
+  }
+  if (data) {
+    sideMenuVar(data)
+  }
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'

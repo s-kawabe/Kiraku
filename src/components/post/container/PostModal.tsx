@@ -1,4 +1,3 @@
-//TODO 画像の処理 topics/brandsの存在チェック＋DBに無いデータの新規INSERT
 import '@pathofdev/react-tag-input/build/index.css'
 
 import { gql } from '@apollo/client'
@@ -44,6 +43,8 @@ type PostModalProps = {
   isOpen: boolean
   onClose: () => void
   postData?: any // edit時にポストのデータをもらう
+  // edit時、firebase storageの画像のrefが分からない可能性がある
+  // URLからrefを割り出せれば良いが。
 }
 const TEXT_LIMIT = 250
 const client = initializeApollo()
@@ -83,15 +84,28 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 
   const handleSubmit = async () => {
     // 画像をfirebaseにアップロードする(アップロード後の画像URLを返してもらう)
-    let imageURL = null
+    let imageInfo: {
+      image: string | null
+      imageId: string | null
+    } = {
+      image: null,
+      imageId: null,
+    }
     if (image) {
-      imageURL = await uploadPostImage(image)
+      imageInfo = await uploadPostImage(image)
     }
     // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
     await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
     await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
     // hasuraのpostsに色々INSERTし、そのpostsのidを返して、その/posts/[postId].tsxページに遷移する
-    await insertPostToHasura({ content, registerTopics, registerBrands, gender, imageURL })
+    await insertPostToHasura({
+      content,
+      registerTopics,
+      registerBrands,
+      gender,
+      image: imageInfo.image,
+      imageId: imageInfo.imageId,
+    })
     resetState()
     props.onClose()
     router.push('/') // todo
@@ -272,16 +286,28 @@ gql`
     $user_id: String!
     $content: String!
     $image: String
+    $image_id: String
     $gender: String!
   ) {
     insert_posts_one(
-      object: { id: $id, user_id: $user_id, content: $content, image: $image, gender: $gender }
-      on_conflict: { constraint: posts_pkey, update_columns: [content, image, gender, updated_at] }
+      object: {
+        id: $id
+        user_id: $user_id
+        content: $content
+        image: $image
+        image_id: $image_id
+        gender: $gender
+      }
+      on_conflict: {
+        constraint: posts_pkey
+        update_columns: [content, image, image_id, gender, updated_at]
+      }
     ) {
       id
       user_id
       content
       image
+      image_id
       gender
       created_at
     }
@@ -294,6 +320,7 @@ gql`
     $user_id: String!
     $content: String!
     $image: String
+    $image_id: String
     $gender: String!
     $topicsIds: [post_topics_insert_input!]!
   ) {
@@ -302,6 +329,7 @@ gql`
         user_id: $user_id
         content: $content
         image: $image
+        image_id: $image_id
         gender: $gender
         topics: { data: $topicsIds }
       }
@@ -310,6 +338,7 @@ gql`
       user_id
       content
       image
+      image_id
       gender
       created_at
     }
@@ -322,6 +351,7 @@ gql`
     $user_id: String!
     $content: String!
     $image: String
+    $image_id: String
     $gender: String!
     $brandsIds: [post_brands_insert_input!]!
   ) {
@@ -330,6 +360,7 @@ gql`
         user_id: $user_id
         content: $content
         image: $image
+        image_id: $image_id
         gender: $gender
         brands: { data: $brandsIds }
       }
@@ -338,6 +369,7 @@ gql`
       user_id
       content
       image
+      image_id
       gender
       created_at
     }
@@ -350,6 +382,7 @@ gql`
     $user_id: String!
     $content: String!
     $image: String
+    $image_id: String
     $gender: String!
     $topicsIds: [post_topics_insert_input!]!
     $brandsIds: [post_brands_insert_input!]!
@@ -359,6 +392,7 @@ gql`
         user_id: $user_id
         content: $content
         image: $image
+        image_id: $image_id
         gender: $gender
         topics: { data: $topicsIds }
         brands: { data: $brandsIds }
@@ -368,6 +402,7 @@ gql`
       user_id
       content
       image
+      image_id
       gender
       created_at
     }

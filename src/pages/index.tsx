@@ -2,28 +2,16 @@
 import { gql } from '@apollo/client'
 import { Center, SimpleGrid } from '@chakra-ui/react'
 
-import { sideMenuVar } from '@/apollo/cache'
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '@/apollo/graphql'
-import { Top10TopicAndBrandDocument, useTop10TopicAndBrandQuery } from '@/apollo/graphql'
+import { Top10TopicAndBrandDocument } from '@/apollo/graphql'
 // import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 
 const Home = () => {
   // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示?
-  const { data, loading, error } = useTop10TopicAndBrandQuery()
   // todo できればログアウト時aboutにリダイレクトしたいがお試しユーザの挙動が難しい
-
-  if (loading) return <div>loading...</div>
-
-  if (error) {
-    console.log(error)
-  }
-
-  if (data) {
-    sideMenuVar(data)
-  }
 
   return (
     <LayoutWithHead sideMenu>

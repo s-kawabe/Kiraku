@@ -4376,6 +4376,7 @@ export type Posts = {
   gender: Scalars['String'];
   id: Scalars['Int'];
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   /** An array relationship */
   likes: Array<PostLikes>;
   /** An aggregated array relationship */
@@ -4544,6 +4545,7 @@ export type PostsBoolExp = {
   gender?: Maybe<StringComparisonExp>;
   id?: Maybe<IntComparisonExp>;
   image?: Maybe<StringComparisonExp>;
+  image_id?: Maybe<StringComparisonExp>;
   likes?: Maybe<PostLikesBoolExp>;
   topics?: Maybe<PostTopicsBoolExp>;
   updated_at?: Maybe<TimestamptzComparisonExp>;
@@ -4571,6 +4573,7 @@ export type PostsInsertInput = {
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   likes?: Maybe<PostLikesArrRelInsertInput>;
   topics?: Maybe<PostTopicsArrRelInsertInput>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -4586,6 +4589,7 @@ export type PostsMaxFields = {
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4597,6 +4601,7 @@ export type PostsMaxOrderBy = {
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
   image?: Maybe<OrderBy>;
+  image_id?: Maybe<OrderBy>;
   updated_at?: Maybe<OrderBy>;
   user_id?: Maybe<OrderBy>;
 };
@@ -4609,6 +4614,7 @@ export type PostsMinFields = {
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4620,6 +4626,7 @@ export type PostsMinOrderBy = {
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
   image?: Maybe<OrderBy>;
+  image_id?: Maybe<OrderBy>;
   updated_at?: Maybe<OrderBy>;
   user_id?: Maybe<OrderBy>;
 };
@@ -4655,6 +4662,7 @@ export type PostsOrderBy = {
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
   image?: Maybe<OrderBy>;
+  image_id?: Maybe<OrderBy>;
   likes_aggregate?: Maybe<PostLikesAggregateOrderBy>;
   topics_aggregate?: Maybe<PostTopicsAggregateOrderBy>;
   updated_at?: Maybe<OrderBy>;
@@ -4680,6 +4688,8 @@ export enum PostsSelectColumn {
   /** column name */
   IMAGE = 'image',
   /** column name */
+  IMAGE_ID = 'image_id',
+  /** column name */
   UPDATED_AT = 'updated_at',
   /** column name */
   USER_ID = 'user_id'
@@ -4692,6 +4702,7 @@ export type PostsSetInput = {
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['String']>;
 };
@@ -4752,6 +4763,8 @@ export enum PostsUpdateColumn {
   ID = 'id',
   /** column name */
   IMAGE = 'image',
+  /** column name */
+  IMAGE_ID = 'image_id',
   /** column name */
   UPDATED_AT = 'updated_at',
   /** column name */
@@ -6889,6 +6902,7 @@ export type InsertPostOneMutationVariables = Exact<{
   user_id: Scalars['String'];
   content: Scalars['String'];
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   gender: Scalars['String'];
 }>;
 
@@ -6897,7 +6911,7 @@ export type InsertPostOneMutation = (
   { __typename?: 'mutation_root' }
   & { insert_posts_one?: Maybe<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
   )> }
 );
 
@@ -6905,6 +6919,7 @@ export type InsertPostOneWithTopicsMutationVariables = Exact<{
   user_id: Scalars['String'];
   content: Scalars['String'];
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   gender: Scalars['String'];
   topicsIds: Array<PostTopicsInsertInput> | PostTopicsInsertInput;
 }>;
@@ -6914,7 +6929,7 @@ export type InsertPostOneWithTopicsMutation = (
   { __typename?: 'mutation_root' }
   & { insert_posts_one?: Maybe<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
   )> }
 );
 
@@ -6922,6 +6937,7 @@ export type InsertPostOneWithBrandsMutationVariables = Exact<{
   user_id: Scalars['String'];
   content: Scalars['String'];
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   gender: Scalars['String'];
   brandsIds: Array<PostBrandsInsertInput> | PostBrandsInsertInput;
 }>;
@@ -6931,7 +6947,7 @@ export type InsertPostOneWithBrandsMutation = (
   { __typename?: 'mutation_root' }
   & { insert_posts_one?: Maybe<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
   )> }
 );
 
@@ -6939,6 +6955,7 @@ export type InsertPostOneWithTopicsAndBrandsMutationVariables = Exact<{
   user_id: Scalars['String'];
   content: Scalars['String'];
   image?: Maybe<Scalars['String']>;
+  image_id?: Maybe<Scalars['String']>;
   gender: Scalars['String'];
   topicsIds: Array<PostTopicsInsertInput> | PostTopicsInsertInput;
   brandsIds: Array<PostBrandsInsertInput> | PostBrandsInsertInput;
@@ -6949,7 +6966,7 @@ export type InsertPostOneWithTopicsAndBrandsMutation = (
   { __typename?: 'mutation_root' }
   & { insert_posts_one?: Maybe<(
     { __typename?: 'posts' }
-    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'gender' | 'created_at'>
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
   )> }
 );
 
@@ -7024,6 +7041,21 @@ export type MappingBrandsToIdQuery = (
   & { brands: Array<(
     { __typename?: 'brands' }
     & { brand_id: Brands['id'] }
+  )> }
+);
+
+export type GetAllUsersWithPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllUsersWithPostsQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id'>
+    & { posts: Array<(
+      { __typename?: 'posts' }
+      & Pick<Posts, 'id'>
+    )> }
   )> }
 );
 
@@ -7102,15 +7134,16 @@ export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVar
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
 export const InsertPostOneDocument = gql`
-    mutation InsertPostOne($id: Int, $user_id: String!, $content: String!, $image: String, $gender: String!) {
+    mutation InsertPostOne($id: Int, $user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!) {
   insert_posts_one(
-    object: {id: $id, user_id: $user_id, content: $content, image: $image, gender: $gender}
-    on_conflict: {constraint: posts_pkey, update_columns: [content, image, gender, updated_at]}
+    object: {id: $id, user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
+    on_conflict: {constraint: posts_pkey, update_columns: [content, image, image_id, gender, updated_at]}
   ) {
     id
     user_id
     content
     image
+    image_id
     gender
     created_at
   }
@@ -7135,6 +7168,7 @@ export type InsertPostOneMutationFn = ApolloReactCommon.MutationFunction<InsertP
  *      user_id: // value for 'user_id'
  *      content: // value for 'content'
  *      image: // value for 'image'
+ *      image_id: // value for 'image_id'
  *      gender: // value for 'gender'
  *   },
  * });
@@ -7147,14 +7181,15 @@ export type InsertPostOneMutationHookResult = ReturnType<typeof useInsertPostOne
 export type InsertPostOneMutationResult = ApolloReactCommon.MutationResult<InsertPostOneMutation>;
 export type InsertPostOneMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneMutation, InsertPostOneMutationVariables>;
 export const InsertPostOneWithTopicsDocument = gql`
-    mutation InsertPostOneWithTopics($user_id: String!, $content: String!, $image: String, $gender: String!, $topicsIds: [post_topics_insert_input!]!) {
+    mutation InsertPostOneWithTopics($user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!, $topicsIds: [post_topics_insert_input!]!) {
   insert_posts_one(
-    object: {user_id: $user_id, content: $content, image: $image, gender: $gender, topics: {data: $topicsIds}}
+    object: {user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender, topics: {data: $topicsIds}}
   ) {
     id
     user_id
     content
     image
+    image_id
     gender
     created_at
   }
@@ -7178,6 +7213,7 @@ export type InsertPostOneWithTopicsMutationFn = ApolloReactCommon.MutationFuncti
  *      user_id: // value for 'user_id'
  *      content: // value for 'content'
  *      image: // value for 'image'
+ *      image_id: // value for 'image_id'
  *      gender: // value for 'gender'
  *      topicsIds: // value for 'topicsIds'
  *   },
@@ -7191,14 +7227,15 @@ export type InsertPostOneWithTopicsMutationHookResult = ReturnType<typeof useIns
 export type InsertPostOneWithTopicsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithTopicsMutation>;
 export type InsertPostOneWithTopicsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithTopicsMutation, InsertPostOneWithTopicsMutationVariables>;
 export const InsertPostOneWithBrandsDocument = gql`
-    mutation InsertPostOneWithBrands($user_id: String!, $content: String!, $image: String, $gender: String!, $brandsIds: [post_brands_insert_input!]!) {
+    mutation InsertPostOneWithBrands($user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!, $brandsIds: [post_brands_insert_input!]!) {
   insert_posts_one(
-    object: {user_id: $user_id, content: $content, image: $image, gender: $gender, brands: {data: $brandsIds}}
+    object: {user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender, brands: {data: $brandsIds}}
   ) {
     id
     user_id
     content
     image
+    image_id
     gender
     created_at
   }
@@ -7222,6 +7259,7 @@ export type InsertPostOneWithBrandsMutationFn = ApolloReactCommon.MutationFuncti
  *      user_id: // value for 'user_id'
  *      content: // value for 'content'
  *      image: // value for 'image'
+ *      image_id: // value for 'image_id'
  *      gender: // value for 'gender'
  *      brandsIds: // value for 'brandsIds'
  *   },
@@ -7235,14 +7273,15 @@ export type InsertPostOneWithBrandsMutationHookResult = ReturnType<typeof useIns
 export type InsertPostOneWithBrandsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithBrandsMutation>;
 export type InsertPostOneWithBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithBrandsMutation, InsertPostOneWithBrandsMutationVariables>;
 export const InsertPostOneWithTopicsAndBrandsDocument = gql`
-    mutation InsertPostOneWithTopicsAndBrands($user_id: String!, $content: String!, $image: String, $gender: String!, $topicsIds: [post_topics_insert_input!]!, $brandsIds: [post_brands_insert_input!]!) {
+    mutation InsertPostOneWithTopicsAndBrands($user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!, $topicsIds: [post_topics_insert_input!]!, $brandsIds: [post_brands_insert_input!]!) {
   insert_posts_one(
-    object: {user_id: $user_id, content: $content, image: $image, gender: $gender, topics: {data: $topicsIds}, brands: {data: $brandsIds}}
+    object: {user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender, topics: {data: $topicsIds}, brands: {data: $brandsIds}}
   ) {
     id
     user_id
     content
     image
+    image_id
     gender
     created_at
   }
@@ -7266,6 +7305,7 @@ export type InsertPostOneWithTopicsAndBrandsMutationFn = ApolloReactCommon.Mutat
  *      user_id: // value for 'user_id'
  *      content: // value for 'content'
  *      image: // value for 'image'
+ *      image_id: // value for 'image_id'
  *      gender: // value for 'gender'
  *      topicsIds: // value for 'topicsIds'
  *      brandsIds: // value for 'brandsIds'
@@ -7483,6 +7523,43 @@ export function useMappingBrandsToIdLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type MappingBrandsToIdQueryHookResult = ReturnType<typeof useMappingBrandsToIdQuery>;
 export type MappingBrandsToIdLazyQueryHookResult = ReturnType<typeof useMappingBrandsToIdLazyQuery>;
 export type MappingBrandsToIdQueryResult = ApolloReactCommon.QueryResult<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>;
+export const GetAllUsersWithPostsDocument = gql`
+    query GetAllUsersWithPosts {
+  users {
+    id
+    posts {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllUsersWithPostsQuery__
+ *
+ * To run a query within a React component, call `useGetAllUsersWithPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUsersWithPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUsersWithPostsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllUsersWithPostsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>(GetAllUsersWithPostsDocument, options);
+      }
+export function useGetAllUsersWithPostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>(GetAllUsersWithPostsDocument, options);
+        }
+export type GetAllUsersWithPostsQueryHookResult = ReturnType<typeof useGetAllUsersWithPostsQuery>;
+export type GetAllUsersWithPostsLazyQueryHookResult = ReturnType<typeof useGetAllUsersWithPostsLazyQuery>;
+export type GetAllUsersWithPostsQueryResult = ApolloReactCommon.QueryResult<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

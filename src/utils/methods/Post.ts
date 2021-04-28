@@ -37,7 +37,8 @@ type FromSubmitData = {
   registerTopics: string[]
   registerBrands: string[]
   gender: string
-  imageURL: string | null
+  image: string | null
+  imageId: string | null
 }
 
 type CheckExistTopics = {
@@ -47,7 +48,7 @@ type CheckExistTopics = {
 }
 
 // 画像をfirebaseにアップロードする
-export const uploadPostImage = async (file: File): Promise<string> => {
+export const uploadPostImage = async (file: File) => {
   const loginUser = loginUserVar()
   const compressedFile = await imageCompression(file, {
     maxSizeMB: 0.5,
@@ -66,7 +67,7 @@ export const uploadPostImage = async (file: File): Promise<string> => {
 
   const uploadRef = storage.ref(`images/post/${loginUser?.id}`).child(fileName)
 
-  return new Promise((resolve, _) => {
+  const image: string = await new Promise((resolve, _) => {
     uploadRef
       .put(blob)
       .then((snap) => {
@@ -78,6 +79,10 @@ export const uploadPostImage = async (file: File): Promise<string> => {
         console.log(error)
       })
   })
+  return {
+    image,
+    imageId: fileName,
+  }
 }
 
 // 渡されたtopicかbrandsを判定しDBに無い物があれば新しくINSERTする
@@ -143,7 +148,8 @@ export const insertPostToHasura = async ({
   registerTopics,
   registerBrands,
   gender,
-  imageURL,
+  image,
+  imageId,
 }: FromSubmitData) => {
   const client = initializeApollo()
   const loginUser = loginUserVar()
@@ -168,7 +174,8 @@ export const insertPostToHasura = async ({
       variables: {
         user_id: loginUser.id,
         content: content,
-        image: imageURL,
+        image: image,
+        image_id: imageId,
         gender: gender,
         topicsIds: registerTopicsIds,
         brandsIds: registerBrandsIds,
@@ -184,7 +191,8 @@ export const insertPostToHasura = async ({
       variables: {
         user_id: loginUser.id,
         content: content,
-        image: imageURL,
+        image: image,
+        image_id: imageId,
         gender: gender,
         topicsIds: registerTopicsIds,
       },
@@ -199,7 +207,8 @@ export const insertPostToHasura = async ({
       variables: {
         user_id: loginUser.id,
         content: content,
-        image: imageURL,
+        image: image,
+        image_id: imageId,
         gender: gender,
         brandsIds: registerBrandsIds,
       },
@@ -211,7 +220,8 @@ export const insertPostToHasura = async ({
       variables: {
         user_id: loginUser.id,
         content: content,
-        image: imageURL,
+        image: image,
+        image_id: imageId,
         gender: gender,
       },
     })
