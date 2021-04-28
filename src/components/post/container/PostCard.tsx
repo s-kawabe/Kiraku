@@ -26,6 +26,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       cursor="pointer"
     >
       <Center w="min(40vw, 200px)" borderRadius="8px">
+        {/* imageSrcがないパターンはNO IMAGEをつける */}
         <NextImage src={props.imageSrc} alt={'ユーザ投稿画像'} imageType="card" />
       </Center>
       <Box
@@ -64,6 +65,8 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
         <Box ml="auto">
           <HStack spacing={8}>
             <CommentIconWithCount count={100} fontSize="18px" />
+            {/* 投稿のIDも渡す必要がある */}
+            {/* いいねボタンが押されたらそのIDの投稿とログイン中ユーザを紐づける */}
             <LikeButtonWithCount count={200} isLiked={false} fontSize="18px" iconSize="21px" />
           </HStack>
         </Box>
