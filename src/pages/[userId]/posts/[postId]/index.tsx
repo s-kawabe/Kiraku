@@ -43,6 +43,11 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
       postId,
     },
   })
+  if (!data.users_by_pk) {
+    return {
+      notFound: true,
+    }
+  }
   return addApolloState(client, { props: { user: data.users_by_pk }, revalidate: 5 })
 }
 
@@ -59,7 +64,7 @@ export const getStaticPaths: GetStaticPaths<{ userId: string; postId: string }> 
   const paths = data.users
     .map((user) => {
       return user.posts.map((post) => {
-        return { params: { userId: user.id, postId: post.id.toString() } }
+        return { params: { userId: user.display_id, postId: post.id.toString() } }
       })
     })
     .flat()
@@ -77,6 +82,7 @@ gql`
   query GetAllUsersWithPosts {
     users {
       id
+      display_id
       posts {
         id
       }

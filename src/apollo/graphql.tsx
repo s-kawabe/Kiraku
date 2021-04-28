@@ -7051,7 +7051,7 @@ export type GetAllUsersWithPostsQuery = (
   { __typename?: 'query_root' }
   & { users: Array<(
     { __typename?: 'users' }
-    & Pick<Users, 'id'>
+    & Pick<Users, 'id' | 'display_id'>
     & { posts: Array<(
       { __typename?: 'posts' }
       & Pick<Posts, 'id'>
@@ -7558,6 +7558,7 @@ export const GetAllUsersWithPostsDocument = gql`
     query GetAllUsersWithPosts {
   users {
     id
+    display_id
     posts {
       id
     }
