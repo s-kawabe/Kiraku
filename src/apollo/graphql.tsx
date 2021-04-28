@@ -7059,6 +7059,37 @@ export type GetAllUsersWithPostsQuery = (
   )> }
 );
 
+export type GetOneUserWithPostQueryVariables = Exact<{
+  userId: Scalars['String'];
+  postId: Scalars['Int'];
+}>;
+
+
+export type GetOneUserWithPostQuery = (
+  { __typename?: 'query_root' }
+  & { users_by_pk?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'image'>
+    & { posts: Array<(
+      { __typename?: 'posts' }
+      & Pick<Posts, 'content' | 'image' | 'gender' | 'created_at'>
+      & { topics: Array<(
+        { __typename?: 'post_topics' }
+        & { topic: (
+          { __typename?: 'topics' }
+          & Pick<Topics, 'name'>
+        ) }
+      )>, brands: Array<(
+        { __typename?: 'post_brands' }
+        & { brand: (
+          { __typename?: 'brands' }
+          & Pick<Brands, 'name'>
+        ) }
+      )> }
+    )> }
+  )> }
+);
+
 export type Top10TopicAndBrandQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7560,6 +7591,61 @@ export function useGetAllUsersWithPostsLazyQuery(baseOptions?: ApolloReactHooks.
 export type GetAllUsersWithPostsQueryHookResult = ReturnType<typeof useGetAllUsersWithPostsQuery>;
 export type GetAllUsersWithPostsLazyQueryHookResult = ReturnType<typeof useGetAllUsersWithPostsLazyQuery>;
 export type GetAllUsersWithPostsQueryResult = ApolloReactCommon.QueryResult<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>;
+export const GetOneUserWithPostDocument = gql`
+    query GetOneUserWithPost($userId: String!, $postId: Int!) {
+  users_by_pk(id: $userId) {
+    id
+    display_id
+    name
+    image
+    posts(where: {id: {_eq: $postId}}) {
+      content
+      image
+      gender
+      created_at
+      topics {
+        topic {
+          name
+        }
+      }
+      brands {
+        brand {
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOneUserWithPostQuery__
+ *
+ * To run a query within a React component, call `useGetOneUserWithPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneUserWithPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneUserWithPostQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useGetOneUserWithPostQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOneUserWithPostQuery, GetOneUserWithPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOneUserWithPostQuery, GetOneUserWithPostQueryVariables>(GetOneUserWithPostDocument, options);
+      }
+export function useGetOneUserWithPostLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOneUserWithPostQuery, GetOneUserWithPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOneUserWithPostQuery, GetOneUserWithPostQueryVariables>(GetOneUserWithPostDocument, options);
+        }
+export type GetOneUserWithPostQueryHookResult = ReturnType<typeof useGetOneUserWithPostQuery>;
+export type GetOneUserWithPostLazyQueryHookResult = ReturnType<typeof useGetOneUserWithPostLazyQuery>;
+export type GetOneUserWithPostQueryResult = ApolloReactCommon.QueryResult<GetOneUserWithPostQuery, GetOneUserWithPostQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {
