@@ -43,12 +43,12 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
       postId,
     },
   })
-  if (!data.users_by_pk || !data.users_by_pk.posts) {
+  if (data.users.length === 0 || data.users[0].posts.length === 0) {
     return {
       notFound: true,
     }
   }
-  return addApolloState(client, { props: { user: data.users_by_pk }, revalidate: 5 })
+  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 5 })
 }
 
 // - userのid一覧を取得するquery
@@ -60,7 +60,6 @@ export const getStaticPaths: GetStaticPaths<{ userId: string; postId: string }> 
     GetAllUsersWithPostsQueryVariables
   >({
     query: GetAllUsersWithPostsDocument,
-    fetchPolicy: 'network-only',
   })
   const paths = data.users
     .map((user) => {
@@ -94,7 +93,7 @@ gql`
 // todo comment_aggregate, like_aggregare, commentの内容 を追加する必要あり
 gql`
   query GetOneUserWithPost($userId: String!, $postId: Int!) {
-    users_by_pk(id: $userId) {
+    users(where: { display_id: { _eq: $userId } }) {
       id
       display_id
       name

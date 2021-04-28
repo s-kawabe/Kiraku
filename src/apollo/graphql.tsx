@@ -7067,7 +7067,7 @@ export type GetOneUserWithPostQueryVariables = Exact<{
 
 export type GetOneUserWithPostQuery = (
   { __typename?: 'query_root' }
-  & { users_by_pk?: Maybe<(
+  & { users: Array<(
     { __typename?: 'users' }
     & Pick<Users, 'id' | 'display_id' | 'name' | 'image'>
     & { posts: Array<(
@@ -7594,7 +7594,7 @@ export type GetAllUsersWithPostsLazyQueryHookResult = ReturnType<typeof useGetAl
 export type GetAllUsersWithPostsQueryResult = ApolloReactCommon.QueryResult<GetAllUsersWithPostsQuery, GetAllUsersWithPostsQueryVariables>;
 export const GetOneUserWithPostDocument = gql`
     query GetOneUserWithPost($userId: String!, $postId: Int!) {
-  users_by_pk(id: $userId) {
+  users(where: {display_id: {_eq: $userId}}) {
     id
     display_id
     name
