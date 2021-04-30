@@ -1,8 +1,7 @@
 import { gql } from '@apollo/client'
-import { Box, Button, Center, Flex, Heading, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Heading, HStack, Tag, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
-import { useState } from 'react'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -14,10 +13,10 @@ import type {
 } from '@/apollo/graphql'
 import { GetAllUsersWithPostsDocument, GetOneUserWithPostDocument } from '@/apollo/graphql'
 import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
-import { NormalButton } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
-import { UserIcon } from '@/components/user/unit'
+import { CommentForm, UserIcon } from '@/components/user/unit'
+import { useConvertDateFromHasura } from '@/utils/methods/customeHooks'
 
 type Props = {
   user: Users
@@ -26,12 +25,12 @@ type Props = {
 const dummyComments = [
   {
     userIcon: '/nouser.svg',
-    userId: 'hogehoge',
+    userId: 'hogeh123oge',
     comment: 'すごくいいですね',
   },
   {
     userIcon: '/nouser.svg',
-    userId: 'hugagaga',
+    userId: 'hu234agaga',
     comment: 'めっちゃやべえな',
   },
   {
@@ -42,14 +41,8 @@ const dummyComments = [
   },
 ]
 const UserPostPage: NextPage<Props> = (props: Props) => {
-  const [comment, setComment] = useState('')
   const [user, post] = [props.user, props.user.posts[0]]
-
-  console.log(comment)
-
-  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value)
-  }
+  const createdAt = useConvertDateFromHasura(post.created_at)
 
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
@@ -136,7 +129,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 </Box>
               )}
             </Box>
-            <Box w="37vw" ml="70px">
+            <Box w="37vw" ml="50px">
               {/* Content */}
               <Box
                 p="30px"
@@ -144,13 +137,11 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 boxShadow="0px 0px 5px rgba(40,40,40,0.15)"
                 mb="50px"
               >
-                <Text fontSize="18px" color="gray.700">
-                  {post.content}ああああああああああああああああああああ
-                  ああああああああああああああああああああああああああああ
-                  あああああああああああああああああ
+                <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
+                  {post.content}
                 </Text>
                 <Box w="100%" mt="70px" textAlign="right">
-                  <Text color="gray.500">{post.created_at}</Text>
+                  <Text color="gray.500">{createdAt}</Text>
                 </Box>
               </Box>
               {/* Comment */}
@@ -160,26 +151,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 </Heading>
                 <CommentList comments={dummyComments} />
               </Box>
-              <Box>
-                <Textarea
-                  placeholder="コメントを書く"
-                  borderColor="gray.400"
-                  h="150px"
-                  onChange={(e) => {
-                    handleCommentChange(e)
-                  }}
-                />
-                <Box textAlign="right">
-                  <NormalButton
-                    text="送信"
-                    bg="green.300"
-                    color="white"
-                    borderRadius="none"
-                    hover={{ bg: 'green.400' }}
-                    width="100px"
-                  />
-                </Box>
-              </Box>
+              <CommentForm userId={user.id} />
             </Box>
           </Flex>
         </Box>
@@ -265,11 +237,13 @@ gql`
         created_at
         topics {
           topic {
+            id
             name
           }
         }
         brands {
           brand {
+            id
             name
           }
         }
