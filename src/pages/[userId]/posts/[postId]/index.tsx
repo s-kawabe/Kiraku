@@ -2,6 +2,8 @@ import { gql } from '@apollo/client'
 import { Box, Button, Center, Flex, Heading, HStack, Tag, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
+import { Fragment } from 'react'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -22,7 +24,7 @@ type Props = {
   user: Users
 }
 
-const dummyComments = [
+const comments = [
   {
     userIcon: '/nouser.svg',
     userId: 'hogeh123oge',
@@ -49,7 +51,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
       <Center w="100%">
         <Box my="70px">
           {/* Header */}
-          <Flex mb="30px" align="flex-end" justifyContent="space-between">
+          <Flex mb="30px" align="flex-end" justifyContent="space-between" p="5" borderRadius="25px">
             <Flex align="center">
               <UserIcon src={user.image ?? '/nouser.svg'} width={85} height={85} />
               <Box ml="10px">
@@ -74,7 +76,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
           <Flex>
             {/* Post Image */}
             <Box position="relative">
-              <Center w="430px" h="630px" bg={'gray.50'} position="relative" borderRadius="20px">
+              <Center w="430px" h="630px" position="relative" borderRadius="20px">
                 {post.image ? (
                   <Image
                     src={post.image}
@@ -83,9 +85,11 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                     objectFit="contain"
                   />
                 ) : (
-                  <Text fontWeight="bold" fontSize="16px" color="gray.600">
-                    No Image
-                  </Text>
+                  <Center bg="gray.50" w="100%" h="100%" borderRadius="inherit">
+                    <Text fontWeight="bold" fontSize="16px" color="gray.600">
+                      No Image
+                    </Text>
+                  </Center>
                 )}
               </Center>
               {/* Topic/Brand */}
@@ -97,16 +101,28 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   <Flex maxW="430px" flexWrap="wrap">
                     {post.topics.map(({ topic }) => {
                       return (
-                        <Tag
-                          key={topic.id}
-                          mr="15px"
-                          mb="10px"
-                          p="1.5"
-                          borderRadius="8px"
-                          fontSize="13px"
-                        >
-                          {topic.name}
-                        </Tag>
+                        <Fragment key={topic.id}>
+                          <Link
+                            href={{
+                              pathname: '/topics/[topicId]',
+                              query: { topicId: topic.id },
+                            }}
+                          >
+                            <a>
+                              <Tag
+                                mr="15px"
+                                mb="10px"
+                                p="1.5"
+                                borderRadius="8px"
+                                fontSize="13px"
+                                cursor="pointer"
+                                _hover={{ bg: 'gray.200' }}
+                              >
+                                {topic.name}
+                              </Tag>
+                            </a>
+                          </Link>
+                        </Fragment>
                       )
                     })}
                   </Flex>
@@ -120,9 +136,27 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   <Flex maxW="430px" flexWrap="wrap">
                     {post.brands.map(({ brand }) => {
                       return (
-                        <Tag key={brand.id} mr="15px" mb="10px" borderRadius="0">
-                          {brand.name}
-                        </Tag>
+                        <Fragment key={brand.id}>
+                          <Link
+                            href={{
+                              pathname: '/brands/[brandId]',
+                              query: { brandId: brand.id },
+                            }}
+                          >
+                            <a>
+                              <Tag
+                                key={brand.id}
+                                mr="15px"
+                                mb="10px"
+                                borderRadius="0"
+                                cursor="pointer"
+                                _hover={{ bg: 'gray.200' }}
+                              >
+                                {brand.name}
+                              </Tag>
+                            </a>
+                          </Link>
+                        </Fragment>
                       )
                     })}
                   </Flex>
@@ -149,7 +183,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 <Heading fontSize="20px" color="gray.700" mb="5px">
                   コメント(1)
                 </Heading>
-                <CommentList comments={dummyComments} />
+                <CommentList comments={comments} />
               </Box>
               <CommentForm userId={user.id} />
             </Box>
@@ -245,6 +279,18 @@ gql`
           brand {
             id
             name
+          }
+        }
+        comments {
+          comment
+          user {
+            display_id
+            image
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
           }
         }
       }

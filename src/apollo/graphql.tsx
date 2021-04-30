@@ -29,6 +29,19 @@ export type BooleanComparisonExp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+/** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
+export type IntComparisonExp = {
+  _eq?: Maybe<Scalars['Int']>;
+  _gt?: Maybe<Scalars['Int']>;
+  _gte?: Maybe<Scalars['Int']>;
+  _in?: Maybe<Array<Scalars['Int']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Int']>;
+  _lte?: Maybe<Scalars['Int']>;
+  _neq?: Maybe<Scalars['Int']>;
+  _nin?: Maybe<Array<Scalars['Int']>>;
+};
+
 /** expression to compare columns of type String. All fields are combined with logical 'AND'. */
 export type StringComparisonExp = {
   _eq?: Maybe<Scalars['String']>;
@@ -3240,17 +3253,13 @@ export type PostBrandsIncInput = {
   post_id?: Maybe<Scalars['Int']>;
 };
 
-/** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
-export type IntComparisonExp = {
-  _eq?: Maybe<Scalars['Int']>;
-  _gt?: Maybe<Scalars['Int']>;
-  _gte?: Maybe<Scalars['Int']>;
-  _in?: Maybe<Array<Scalars['Int']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['Int']>;
-  _lte?: Maybe<Scalars['Int']>;
-  _neq?: Maybe<Scalars['Int']>;
-  _nin?: Maybe<Array<Scalars['Int']>>;
+/** input type for inserting data into table "post_brands" */
+export type PostBrandsInsertInput = {
+  brand?: Maybe<BrandsObjRelInsertInput>;
+  brand_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  post?: Maybe<PostsObjRelInsertInput>;
+  post_id?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate max on columns */
@@ -6875,15 +6884,6 @@ export enum UsersUpdateColumn {
   UPDATED_AT = 'updated_at'
 }
 
-/** input type for inserting data into table "post_brands" */
-export type PostBrandsInsertInput = {
-  brand?: Maybe<BrandsObjRelInsertInput>;
-  brand_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  post?: Maybe<PostsObjRelInsertInput>;
-  post_id?: Maybe<Scalars['Int']>;
-};
-
 export type ReactiveVarGetUserQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -7077,15 +7077,28 @@ export type GetOneUserWithPostQuery = (
         { __typename?: 'post_topics' }
         & { topic: (
           { __typename?: 'topics' }
-          & Pick<Topics, 'name'>
+          & Pick<Topics, 'id' | 'name'>
         ) }
       )>, brands: Array<(
         { __typename?: 'post_brands' }
         & { brand: (
           { __typename?: 'brands' }
-          & Pick<Brands, 'name'>
+          & Pick<Brands, 'id' | 'name'>
         ) }
-      )> }
+      )>, comments: Array<(
+        { __typename?: 'post_comments' }
+        & Pick<PostComments, 'comment'>
+        & { user: (
+          { __typename?: 'users' }
+          & Pick<Users, 'display_id' | 'image'>
+        ) }
+      )>, likes_aggregate: (
+        { __typename?: 'post_likes_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'post_likes_aggregate_fields' }
+          & Pick<PostLikesAggregateFields, 'count'>
+        )> }
+      ) }
     )> }
   )> }
 );
@@ -7606,12 +7619,26 @@ export const GetOneUserWithPostDocument = gql`
       created_at
       topics {
         topic {
+          id
           name
         }
       }
       brands {
         brand {
+          id
           name
+        }
+      }
+      comments {
+        comment
+        user {
+          display_id
+          image
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
         }
       }
     }

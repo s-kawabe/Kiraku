@@ -118,7 +118,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
           userId: data.user_id.substring(0, 8),
           postId: data.id,
         },
-      }) // todo
+      })
   }
 
   // TopicsとBrandsのデータを全件取得してstateに入れておく
