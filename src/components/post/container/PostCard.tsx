@@ -67,7 +67,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
             <CommentIconWithCount count={100} fontSize="18px" />
             {/* 投稿のIDも渡す必要がある */}
             {/* いいねボタンが押されたらそのIDの投稿とログイン中ユーザを紐づける */}
-            <LikeButtonWithCount count={200} isLiked={false} fontSize="18px" iconSize="21px" />
+            <LikeButtonWithCount count={200} fontSize="18px" iconSize="21px" initial={false} />
           </HStack>
         </Box>
       </Box>

@@ -7072,7 +7072,7 @@ export type GetOneUserWithPostQuery = (
     & Pick<Users, 'id' | 'display_id' | 'name' | 'image'>
     & { posts: Array<(
       { __typename?: 'posts' }
-      & Pick<Posts, 'content' | 'image' | 'gender' | 'created_at'>
+      & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'created_at'>
       & { topics: Array<(
         { __typename?: 'post_topics' }
         & { topic: (
@@ -7092,14 +7092,49 @@ export type GetOneUserWithPostQuery = (
           { __typename?: 'users' }
           & Pick<Users, 'display_id' | 'image'>
         ) }
-      )>, likes_aggregate: (
-        { __typename?: 'post_likes_aggregate' }
-        & { aggregate?: Maybe<(
-          { __typename?: 'post_likes_aggregate_fields' }
-          & Pick<PostLikesAggregateFields, 'count'>
-        )> }
-      ) }
+      )> }
     )> }
+  )> }
+);
+
+export type GetPostLikeCountQueryVariables = Exact<{
+  postId: Scalars['Int'];
+}>;
+
+
+export type GetPostLikeCountQuery = (
+  { __typename?: 'query_root' }
+  & { post_likes: Array<(
+    { __typename?: 'post_likes' }
+    & Pick<PostLikes, 'id' | 'post_id' | 'user_id'>
+  )> }
+);
+
+export type AddPostLikeMutationVariables = Exact<{
+  userId: Scalars['String'];
+  postId: Scalars['Int'];
+}>;
+
+
+export type AddPostLikeMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_post_likes_one?: Maybe<(
+    { __typename?: 'post_likes' }
+    & Pick<PostLikes, 'id' | 'user_id' | 'post_id'>
+  )> }
+);
+
+export type RemovePostLikeMutationVariables = Exact<{
+  userId: Scalars['String'];
+  postId: Scalars['Int'];
+}>;
+
+
+export type RemovePostLikeMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_post_likes?: Maybe<(
+    { __typename?: 'post_likes_mutation_response' }
+    & Pick<PostLikesMutationResponse, 'affected_rows'>
   )> }
 );
 
@@ -7613,6 +7648,7 @@ export const GetOneUserWithPostDocument = gql`
     name
     image
     posts(where: {id: {_eq: $postId}}) {
+      id
       content
       image
       gender
@@ -7634,11 +7670,6 @@ export const GetOneUserWithPostDocument = gql`
         user {
           display_id
           image
-        }
-      }
-      likes_aggregate {
-        aggregate {
-          count(columns: id)
         }
       }
     }
@@ -7674,6 +7705,115 @@ export function useGetOneUserWithPostLazyQuery(baseOptions?: ApolloReactHooks.La
 export type GetOneUserWithPostQueryHookResult = ReturnType<typeof useGetOneUserWithPostQuery>;
 export type GetOneUserWithPostLazyQueryHookResult = ReturnType<typeof useGetOneUserWithPostLazyQuery>;
 export type GetOneUserWithPostQueryResult = ApolloReactCommon.QueryResult<GetOneUserWithPostQuery, GetOneUserWithPostQueryVariables>;
+export const GetPostLikeCountDocument = gql`
+    query GetPostLikeCount($postId: Int!) {
+  post_likes(where: {post_id: {_eq: $postId}}) {
+    id
+    post_id
+    user_id
+  }
+}
+    `;
+
+/**
+ * __useGetPostLikeCountQuery__
+ *
+ * To run a query within a React component, call `useGetPostLikeCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostLikeCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostLikeCountQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useGetPostLikeCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>(GetPostLikeCountDocument, options);
+      }
+export function useGetPostLikeCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>(GetPostLikeCountDocument, options);
+        }
+export type GetPostLikeCountQueryHookResult = ReturnType<typeof useGetPostLikeCountQuery>;
+export type GetPostLikeCountLazyQueryHookResult = ReturnType<typeof useGetPostLikeCountLazyQuery>;
+export type GetPostLikeCountQueryResult = ApolloReactCommon.QueryResult<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>;
+export const AddPostLikeDocument = gql`
+    mutation AddPostLike($userId: String!, $postId: Int!) {
+  insert_post_likes_one(object: {user_id: $userId, post_id: $postId}) {
+    id
+    user_id
+    post_id
+  }
+}
+    `;
+export type AddPostLikeMutationFn = ApolloReactCommon.MutationFunction<AddPostLikeMutation, AddPostLikeMutationVariables>;
+
+/**
+ * __useAddPostLikeMutation__
+ *
+ * To run a mutation, you first call `useAddPostLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostLikeMutation, { data, loading, error }] = useAddPostLikeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useAddPostLikeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostLikeMutation, AddPostLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddPostLikeMutation, AddPostLikeMutationVariables>(AddPostLikeDocument, options);
+      }
+export type AddPostLikeMutationHookResult = ReturnType<typeof useAddPostLikeMutation>;
+export type AddPostLikeMutationResult = ApolloReactCommon.MutationResult<AddPostLikeMutation>;
+export type AddPostLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostLikeMutation, AddPostLikeMutationVariables>;
+export const RemovePostLikeDocument = gql`
+    mutation RemovePostLike($userId: String!, $postId: Int!) {
+  delete_post_likes(
+    where: {_and: {user_id: {_eq: $userId}, post_id: {_eq: $postId}}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type RemovePostLikeMutationFn = ApolloReactCommon.MutationFunction<RemovePostLikeMutation, RemovePostLikeMutationVariables>;
+
+/**
+ * __useRemovePostLikeMutation__
+ *
+ * To run a mutation, you first call `useRemovePostLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemovePostLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removePostLikeMutation, { data, loading, error }] = useRemovePostLikeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useRemovePostLikeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RemovePostLikeMutation, RemovePostLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<RemovePostLikeMutation, RemovePostLikeMutationVariables>(RemovePostLikeDocument, options);
+      }
+export type RemovePostLikeMutationHookResult = ReturnType<typeof useRemovePostLikeMutation>;
+export type RemovePostLikeMutationResult = ApolloReactCommon.MutationResult<RemovePostLikeMutation>;
+export type RemovePostLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<RemovePostLikeMutation, RemovePostLikeMutationVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

@@ -1,14 +1,12 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { useReactiveVar } from '@apollo/client'
+import { Box, Center, Flex, Spinner } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
-import { sideMenuVar } from '@/apollo/cache'
 import { useTop10TopicAndBrandQuery } from '@/apollo/graphql'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList } from '@/components/layout/container'
-import type { SideMenu } from '@/utils/constants/Common'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
@@ -18,28 +16,27 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
-  const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
   const isLargerThan1200 = useIsDesktop('1200px')
-
-  useEffect(() => {
-    setSideMenuContext(sideMenuVar())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sideMenuVar()])
+  const loginUser = useReactiveVar(loginUserVar)
 
   const { data, loading, error } = useTop10TopicAndBrandQuery()
 
-  if (loading) return <div>loading...</div>
   if (error) {
     console.log(error)
-  }
-  if (data) {
-    sideMenuVar(data)
   }
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
+
+  if (loading) {
+    return (
+      <Center mt="30px">
+        <Spinner />
+      </Center>
+    )
+  }
 
   return (
     <>
@@ -63,12 +60,12 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta name="twitter:image" content={`${ogUrl}/og.png`} />
       </Head>
 
-      <Header user={loginUserVar()} />
+      <Header user={loginUser} />
       {props.sideMenu ? (
         <Flex>
-          {sideMenuContext && isLargerThan1200 && (
+          {data && isLargerThan1200 && (
             <Box maxH="100vh" overflow="auto" minW="190px">
-              <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
+              <AsideContextList topics={data.topics} brands={data.brands} />
             </Box>
           )}
           <Box w="100%">{props.children}</Box>

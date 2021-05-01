@@ -9,17 +9,20 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
 export type LikeButtonWithCountProps = {
   count: number
-  isLiked: boolean
   fontSize?: string
   iconSize?: string
+  initial: boolean
 }
 
+// 初期状態はpropsで持ってくる
 const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWithCountProps) => {
-  const [isLike, setIsLike] = useState(false)
+  const [isLike, setIsLike] = useState<boolean>(props.initial)
   const controls = useAnimation()
 
   const toggleLike = () => {
-    setIsLike(!isLike)
+    setIsLike((prev) => {
+      return !prev
+    })
   }
 
   const animationStart = () => {
@@ -41,6 +44,14 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLike])
 
+  useEffect(() => {
+    setIsLike(props.initial)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  console.log('props:', props.initial)
+  console.log('state:', isLike)
+
   return (
     <Box display="flex" alignItems="center" color="gray.500" transition="all 0.3s">
       <Tooltip label="いいね！" bg="gray.500" fontSize="11px">
@@ -52,7 +63,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
           justifyContent="center"
           alignItems="center"
           transition={{ duration: 0.2 }}
-          color={isLike ? 'red.400' : ''}
+          color={props.initial ? 'red.400' : ''}
           css={css`
             & svg {
               width: ${props.iconSize ?? props.fontSize};
@@ -60,7 +71,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
             }
           `}
         >
-          <Icon as={isLike ? AiFillHeart : AiOutlineHeart} mr="4px" />
+          <Icon as={props.initial ? AiFillHeart : AiOutlineHeart} mr="4px" />
         </MotionBox>
       </Tooltip>
       <Text fontSize={props.fontSize}>{props.count}</Text>

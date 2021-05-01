@@ -1,19 +1,32 @@
-import { gql } from '@apollo/client'
+import { gql, useReactiveVar } from '@apollo/client'
 import { Box, Button, Center, Flex, Heading, HStack, Tag, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { createRef, Fragment, useEffect, useState } from 'react'
 
+import { loginUserVar } from '@/apollo/cache'
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
+  AddPostLikeMutation,
+  AddPostLikeMutationVariables,
   GetAllUsersWithPostsQuery,
   GetAllUsersWithPostsQueryVariables,
   GetOneUserWithPostQuery,
   GetOneUserWithPostQueryVariables,
+  GetPostLikeCountQuery,
+  GetPostLikeCountQueryVariables,
+  RemovePostLikeMutation,
+  RemovePostLikeMutationVariables,
   Users,
 } from '@/apollo/graphql'
-import { GetAllUsersWithPostsDocument, GetOneUserWithPostDocument } from '@/apollo/graphql'
+import {
+  AddPostLikeDocument,
+  GetAllUsersWithPostsDocument,
+  GetOneUserWithPostDocument,
+  GetPostLikeCountDocument,
+  RemovePostLikeDocument,
+} from '@/apollo/graphql'
 import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
@@ -42,16 +55,135 @@ const comments = [
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis ut voluptatem fugit, natus at placeat beatae ',
   },
 ]
+
+const initialData = {
+  post_likes: [
+    {
+      id: 0,
+      post_id: 0,
+      user_id: '',
+    },
+  ],
+}
+
 const UserPostPage: NextPage<Props> = (props: Props) => {
   const [user, post] = [props.user, props.user.posts[0]]
   const createdAt = useConvertDateFromHasura(post.created_at)
+  const loginUser = useReactiveVar(loginUserVar)
+  const client = initializeApollo()
+  const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialData)
+  // const [likeCount, setLikeCount] = useState(0)
+  // const [isCurrentUserLiked, setIsCurrentUserLiked] = useState(false)
+  const commentInput = createRef<HTMLTextAreaElement>()
+  // いいねは頻繁に更新される為クライアントfetchで対応する
+  // const { data } = useGetPostLikeCountQuery({
+  //   variables: {
+  //     postId: post.id,
+  //   },
+  //   fetchPolicy: 'network-only',
+  // })
+
+  console.log({ likeData })
+
+  const fetchLike = async () => {
+    const data = await client.query<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>({
+      query: GetPostLikeCountDocument,
+      variables: {
+        postId: post.id,
+      },
+      fetchPolicy: 'network-only',
+    })
+    setLikeData(data.data)
+  }
+
+  const isCurrentUserLiked = () => {
+    if (likeData) {
+      return likeData.post_likes.some((item) => {
+        return item.user_id === loginUser?.id
+      })
+    }
+    return false
+  }
+
+  // useEffect(() => {
+  //   if (likeData) {
+  //     console.log(likeData)
+  //     setLikeCount(likeData.data.post_likes.length)
+  //     setIsCurrentUserLiked(
+  //       likeData.data.post_likes.some((item) => {
+  //         return item.user_id === loginUser?.id
+  //       })
+  //     )
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [likeData])
+
+  useEffect(() => {
+    ;(async () => {
+      await fetchLike()
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // useEffect(() => {
+  //   ;(async () => {
+  //     if (isCurrentUserLiked()) {
+  //       // insert mutation
+  //       await client.mutate<RemovePostLikeMutation, RemovePostLikeMutationVariables>({
+  //         mutation: RemovePostLikeDocument,
+  //         variables: {
+  //           userId: loginUser?.id as string,
+  //           postId: post.id,
+  //         },
+  //         fetchPolicy: 'no-cache',
+  //       })
+  //     } else {
+  //       // delete mutation
+  //       await client.mutate<AddPostLikeMutation, AddPostLikeMutationVariables>({
+  //         mutation: AddPostLikeDocument,
+  //         variables: {
+  //           userId: loginUser?.id as string,
+  //           postId: post.id,
+  //         },
+  //         fetchPolicy: 'no-cache',
+  //       })
+  //     }
+  //     await fetchLike()
+  //   })()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [LikeButtonWithCount])
+
+  const handleToggleLike = async () => {
+    if (isCurrentUserLiked()) {
+      // insert mutation
+      await client.mutate<RemovePostLikeMutation, RemovePostLikeMutationVariables>({
+        mutation: RemovePostLikeDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          postId: post.id,
+        },
+        fetchPolicy: 'no-cache',
+      })
+    } else {
+      // delete mutation
+      await client.mutate<AddPostLikeMutation, AddPostLikeMutationVariables>({
+        mutation: AddPostLikeDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          postId: post.id,
+        },
+        fetchPolicy: 'no-cache',
+      })
+    }
+    await fetchLike()
+  }
 
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
       <Center w="100%">
         <Box my="70px">
           {/* Header */}
-          <Flex mb="30px" align="flex-end" justifyContent="space-between" p="5" borderRadius="25px">
+          <Flex mb="20px" align="flex-end" justifyContent="space-between" p="5" borderRadius="25px">
             <Flex align="center">
               <UserIcon src={user.image ?? '/nouser.svg'} width={85} height={85} />
               <Box ml="10px">
@@ -68,8 +200,25 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
               </Button>
             </Flex>
             <HStack spacing="6">
-              <CommentIconWithCount count={100} fontSize="24px" />
-              <LikeButtonWithCount count={200} isLiked={false} fontSize="24px" iconSize="27px" />
+              <Box
+                onClick={() => {
+                  commentInput.current?.focus()
+                }}
+              >
+                <CommentIconWithCount count={post.comments.length} fontSize="24px" />
+              </Box>
+              <Box
+                onClick={async () => {
+                  await handleToggleLike()
+                }}
+              >
+                <LikeButtonWithCount
+                  count={likeData.post_likes.length}
+                  fontSize="24px"
+                  iconSize="27px"
+                  initial={isCurrentUserLiked()}
+                />
+              </Box>
             </HStack>
           </Flex>
           {/* Main */}
@@ -181,11 +330,11 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
               {/* Comment */}
               <Box mb="120px">
                 <Heading fontSize="20px" color="gray.700" mb="5px">
-                  コメント(1)
+                  コメント({post.comments.length})
                 </Heading>
                 <CommentList comments={comments} />
               </Box>
-              <CommentForm userId={user.id} />
+              <CommentForm userId={user.id} commentInput={commentInput} />
             </Box>
           </Flex>
         </Box>
@@ -256,7 +405,6 @@ gql`
   }
 `
 
-// todo comment_aggregate, like_aggregare, commentの内容 を追加する必要あり
 gql`
   query GetOneUserWithPost($userId: String!, $postId: Int!) {
     users(where: { display_id: { _eq: $userId } }) {
@@ -265,6 +413,7 @@ gql`
       name
       image
       posts(where: { id: { _eq: $postId } }) {
+        id
         content
         image
         gender
@@ -288,12 +437,35 @@ gql`
             image
           }
         }
-        likes_aggregate {
-          aggregate {
-            count(columns: id)
-          }
-        }
       }
+    }
+  }
+`
+
+gql`
+  query GetPostLikeCount($postId: Int!) {
+    post_likes(where: { post_id: { _eq: $postId } }) {
+      id
+      post_id
+      user_id
+    }
+  }
+`
+
+gql`
+  mutation AddPostLike($userId: String!, $postId: Int!) {
+    insert_post_likes_one(object: { user_id: $userId, post_id: $postId }) {
+      id
+      user_id
+      post_id
+    }
+  }
+`
+
+gql`
+  mutation RemovePostLike($userId: String!, $postId: Int!) {
+    delete_post_likes(where: { _and: { user_id: { _eq: $userId }, post_id: { _eq: $postId } } }) {
+      affected_rows
     }
   }
 `
