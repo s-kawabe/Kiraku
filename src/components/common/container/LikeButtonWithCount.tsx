@@ -1,3 +1,4 @@
+import { useReactiveVar } from '@apollo/client'
 import type { HTMLChakraProps } from '@chakra-ui/react'
 import { Box, chakra, Icon, Text, Tooltip } from '@chakra-ui/react'
 import { css } from '@emotion/react'
@@ -6,6 +7,8 @@ import { motion, useAnimation } from 'framer-motion'
 import type { VFC } from 'react'
 import { useEffect, useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+
+import { loginUserVar } from '@/apollo/cache'
 
 export type LikeButtonWithCountProps = {
   count: number
@@ -16,12 +19,12 @@ export type LikeButtonWithCountProps = {
 
 const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWithCountProps) => {
   const [isLike, setIsLike] = useState(props.initial)
+  const loginUser = useReactiveVar(loginUserVar)
   const controls = useAnimation()
-
-  console.log('props', props.initial)
-  console.log('state', isLike)
-
   const toggleLike = () => {
+    if (!loginUser) {
+      return
+    }
     setIsLike((prev) => {
       return !prev
     })

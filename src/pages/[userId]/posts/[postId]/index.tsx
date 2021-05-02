@@ -154,6 +154,10 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
               </Box>
               <Box
                 onClick={async () => {
+                  if (!loginUser) {
+                    alert('いいね機能をご利用いただくにはログインが必要です')
+                    return
+                  }
                   await handleToggleLike()
                 }}
               >

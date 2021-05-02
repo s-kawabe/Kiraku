@@ -22,7 +22,7 @@ const CommentForm: VFC<Props> = (props: Props) => {
   return (
     <>
       {loginUser ? (
-        <Box>
+        <>
           <Textarea
             ref={props.commentInput}
             placeholder="コメントを書く"
@@ -43,9 +43,21 @@ const CommentForm: VFC<Props> = (props: Props) => {
               width="100px"
             />
           </Box>
-        </Box>
+        </>
       ) : (
-        <div>ログインしてね</div>
+        <>
+          <Textarea
+            isReadOnly
+            ref={props.commentInput}
+            placeholder="コメントを投稿するにはログインが必要です"
+            borderColor="gray.400"
+            h="150px"
+            onChange={(e) => {
+              handleCommentChange(e)
+            }}
+            value={comment}
+          />
+        </>
       )}
     </>
   )
