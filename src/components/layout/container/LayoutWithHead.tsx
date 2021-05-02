@@ -32,7 +32,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
 
   if (loading) {
     return (
-      <Center mt="30px">
+      <Center mt="30px" h="100vh" w="100vw">
         <Spinner />
       </Center>
     )
@@ -64,7 +64,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       {props.sideMenu ? (
         <Flex>
           {data && isLargerThan1200 && (
-            <Box maxH="100vh" overflow="auto" minW="190px">
+            <Box maxH="100vh" overflow="auto">
               <AsideContextList topics={data.topics} brands={data.brands} />
             </Box>
           )}

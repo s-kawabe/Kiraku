@@ -72,18 +72,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
   const loginUser = useReactiveVar(loginUserVar)
   const client = initializeApollo()
   const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialData)
-  // const [likeCount, setLikeCount] = useState(0)
-  // const [isCurrentUserLiked, setIsCurrentUserLiked] = useState(false)
   const commentInput = createRef<HTMLTextAreaElement>()
-  // いいねは頻繁に更新される為クライアントfetchで対応する
-  // const { data } = useGetPostLikeCountQuery({
-  //   variables: {
-  //     postId: post.id,
-  //   },
-  //   fetchPolicy: 'network-only',
-  // })
-
-  console.log({ likeData })
 
   const fetchLike = async () => {
     const data = await client.query<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>({
@@ -97,26 +86,10 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
   }
 
   const isCurrentUserLiked = () => {
-    if (likeData) {
-      return likeData.post_likes.some((item) => {
-        return item.user_id === loginUser?.id
-      })
-    }
-    return false
+    return likeData.post_likes.some((item) => {
+      return item.user_id === loginUser?.id
+    })
   }
-
-  // useEffect(() => {
-  //   if (likeData) {
-  //     console.log(likeData)
-  //     setLikeCount(likeData.data.post_likes.length)
-  //     setIsCurrentUserLiked(
-  //       likeData.data.post_likes.some((item) => {
-  //         return item.user_id === loginUser?.id
-  //       })
-  //     )
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [likeData])
 
   useEffect(() => {
     ;(async () => {
@@ -124,34 +97,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // useEffect(() => {
-  //   ;(async () => {
-  //     if (isCurrentUserLiked()) {
-  //       // insert mutation
-  //       await client.mutate<RemovePostLikeMutation, RemovePostLikeMutationVariables>({
-  //         mutation: RemovePostLikeDocument,
-  //         variables: {
-  //           userId: loginUser?.id as string,
-  //           postId: post.id,
-  //         },
-  //         fetchPolicy: 'no-cache',
-  //       })
-  //     } else {
-  //       // delete mutation
-  //       await client.mutate<AddPostLikeMutation, AddPostLikeMutationVariables>({
-  //         mutation: AddPostLikeDocument,
-  //         variables: {
-  //           userId: loginUser?.id as string,
-  //           postId: post.id,
-  //         },
-  //         fetchPolicy: 'no-cache',
-  //       })
-  //     }
-  //     await fetchLike()
-  //   })()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [LikeButtonWithCount])
 
   const handleToggleLike = async () => {
     if (isCurrentUserLiked()) {
@@ -343,9 +288,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
   )
 }
 
-// - propsのuserIdを元に一人のuser情報一式を取得するquery
-// - propsのpostIdを元に一つのpost情報一式を取得するquery
-// - propsのpostIdを元にそれに紐づいたコメント情報一式を取得するquery ※あとまわし
 export const getStaticProps: GetStaticProps<Props, { userId: string; postId: string }> = async ({
   params,
 }) => {
@@ -366,8 +308,6 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
   return addApolloState(client, { props: { user: data.users[0] }, revalidate: 5 })
 }
 
-// - userのid一覧を取得するquery
-// - 記事のid一覧を取得するquery
 export const getStaticPaths: GetStaticPaths<{ userId: string; postId: string }> = async () => {
   const client = initializeApollo()
   const { data } = await client.query<
