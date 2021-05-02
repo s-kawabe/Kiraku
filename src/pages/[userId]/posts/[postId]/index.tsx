@@ -26,6 +26,7 @@ import {
   GetOneUserWithPostDocument,
   GetPostLikeCountDocument,
   RemovePostLikeDocument,
+  usePostCommentSubscriptionSubscription,
 } from '@/apollo/graphql'
 import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
@@ -37,7 +38,7 @@ type Props = {
   user: Users
 }
 
-const initialData = {
+const initialLikeData = {
   post_likes: [
     {
       id: 0,
@@ -52,8 +53,14 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
   const createdAt = useConvertDateFromHasura(post.created_at)
   const loginUser = useReactiveVar(loginUserVar)
   const client = initializeApollo()
-  const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialData)
+  const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialLikeData)
   const commentInput = createRef<HTMLTextAreaElement>()
+
+  const { data } = usePostCommentSubscriptionSubscription({
+    variables: {
+      postId: post.id,
+    },
+  })
 
   const fetchLike = async () => {
     const data = await client.query<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>({
@@ -105,14 +112,17 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
   }
 
   const shapingComments = () => {
-    return post.comments.map((comment) => {
-      return {
-        userIcon: comment.user.image,
-        userName: comment.user.name,
-        userId: comment.user.display_id,
-        comment: comment.comment,
-      }
-    })
+    if (data) {
+      return data?.post_comments.map((comment) => {
+        return {
+          userIcon: comment.user.image,
+          userName: comment.user.name,
+          userId: comment.user.display_id,
+          comment: comment.comment,
+        }
+      })
+    }
+    return []
   }
 
   return (
@@ -142,7 +152,10 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   commentInput.current?.focus()
                 }}
               >
-                <CommentIconWithCount count={post.comments.length} fontSize="24px" />
+                <CommentIconWithCount
+                  count={data?.post_comments.length as number}
+                  fontSize="24px"
+                />
               </Box>
               <Box
                 onClick={async () => {
@@ -271,11 +284,11 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
               {/* Comment */}
               <Box mb="120px">
                 <Heading fontSize="20px" color="gray.700" mb="5px">
-                  コメント({post.comments.length})
+                  コメント({data?.post_comments.length})
                 </Heading>
                 <CommentList comments={shapingComments()} />
               </Box>
-              <CommentForm userId={user.id} commentInput={commentInput} />
+              <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} />
             </Box>
           </Flex>
         </Box>
@@ -403,6 +416,33 @@ gql`
   mutation RemovePostLike($userId: String!, $postId: Int!) {
     delete_post_likes(where: { _and: { user_id: { _eq: $userId }, post_id: { _eq: $postId } } }) {
       affected_rows
+    }
+  }
+`
+
+gql`
+  mutation AddPostComment($userId: String!, $postId: Int!, $comment: String!) {
+    insert_post_comments_one(object: { user_id: $userId, post_id: $postId, comment: $comment }) {
+      id
+      comment
+      user {
+        id
+        display_id
+        image
+      }
+    }
+  }
+`
+
+gql`
+  subscription PostCommentSubscription($postId: Int!) {
+    post_comments(where: { post_id: { _eq: $postId } }) {
+      comment
+      user {
+        display_id
+        name
+        image
+      }
     }
   }
 `

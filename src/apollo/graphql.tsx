@@ -7138,6 +7138,42 @@ export type RemovePostLikeMutation = (
   )> }
 );
 
+export type AddPostCommentMutationVariables = Exact<{
+  userId: Scalars['String'];
+  postId: Scalars['Int'];
+  comment: Scalars['String'];
+}>;
+
+
+export type AddPostCommentMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_post_comments_one?: Maybe<(
+    { __typename?: 'post_comments' }
+    & Pick<PostComments, 'id' | 'comment'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image'>
+    ) }
+  )> }
+);
+
+export type PostCommentSubscriptionSubscriptionVariables = Exact<{
+  postId: Scalars['Int'];
+}>;
+
+
+export type PostCommentSubscriptionSubscription = (
+  { __typename?: 'subscription_root' }
+  & { post_comments: Array<(
+    { __typename?: 'post_comments' }
+    & Pick<PostComments, 'comment'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'display_id' | 'name' | 'image'>
+    ) }
+  )> }
+);
+
 export type Top10TopicAndBrandQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7815,6 +7851,84 @@ export function useRemovePostLikeMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type RemovePostLikeMutationHookResult = ReturnType<typeof useRemovePostLikeMutation>;
 export type RemovePostLikeMutationResult = ApolloReactCommon.MutationResult<RemovePostLikeMutation>;
 export type RemovePostLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<RemovePostLikeMutation, RemovePostLikeMutationVariables>;
+export const AddPostCommentDocument = gql`
+    mutation AddPostComment($userId: String!, $postId: Int!, $comment: String!) {
+  insert_post_comments_one(
+    object: {user_id: $userId, post_id: $postId, comment: $comment}
+  ) {
+    id
+    comment
+    user {
+      id
+      display_id
+      image
+    }
+  }
+}
+    `;
+export type AddPostCommentMutationFn = ApolloReactCommon.MutationFunction<AddPostCommentMutation, AddPostCommentMutationVariables>;
+
+/**
+ * __useAddPostCommentMutation__
+ *
+ * To run a mutation, you first call `useAddPostCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostCommentMutation, { data, loading, error }] = useAddPostCommentMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      postId: // value for 'postId'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useAddPostCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddPostCommentMutation, AddPostCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddPostCommentMutation, AddPostCommentMutationVariables>(AddPostCommentDocument, options);
+      }
+export type AddPostCommentMutationHookResult = ReturnType<typeof useAddPostCommentMutation>;
+export type AddPostCommentMutationResult = ApolloReactCommon.MutationResult<AddPostCommentMutation>;
+export type AddPostCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddPostCommentMutation, AddPostCommentMutationVariables>;
+export const PostCommentSubscriptionDocument = gql`
+    subscription PostCommentSubscription($postId: Int!) {
+  post_comments(where: {post_id: {_eq: $postId}}) {
+    comment
+    user {
+      display_id
+      name
+      image
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostCommentSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `usePostCommentSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `usePostCommentSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostCommentSubscriptionSubscription({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePostCommentSubscriptionSubscription(baseOptions: ApolloReactHooks.SubscriptionHookOptions<PostCommentSubscriptionSubscription, PostCommentSubscriptionSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<PostCommentSubscriptionSubscription, PostCommentSubscriptionSubscriptionVariables>(PostCommentSubscriptionDocument, options);
+      }
+export type PostCommentSubscriptionSubscriptionHookResult = ReturnType<typeof usePostCommentSubscriptionSubscription>;
+export type PostCommentSubscriptionSubscriptionResult = ApolloReactCommon.SubscriptionResult<PostCommentSubscriptionSubscription>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

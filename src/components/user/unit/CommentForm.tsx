@@ -4,19 +4,44 @@ import type { RefObject, VFC } from 'react'
 import { useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
+import { initializeApollo } from '@/apollo/client'
+import type { AddPostCommentMutation, AddPostCommentMutationVariables } from '@/apollo/graphql'
+import { AddPostCommentDocument } from '@/apollo/graphql'
 import { NormalButton } from '@/components/common/unit'
 
 type Props = {
   userId: string
-  commentInput: RefObject<HTMLTextAreaElement>
+  commentInput?: RefObject<HTMLTextAreaElement>
+  postId?: number
+  blogId?: number
 }
 
 const CommentForm: VFC<Props> = (props: Props) => {
   const [comment, setComment] = useState('')
+  const [disableSubmit, setDisableSubmit] = useState(true)
   const loginUser = useReactiveVar(loginUserVar)
+  const client = initializeApollo()
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value)
+    const text = e.target.value
+    setComment(text)
+    setDisableSubmit(text.length === 0 || text.length > 100)
+  }
+
+  const handleSubmit = async () => {
+    if (props.postId) {
+      await client.mutate<AddPostCommentMutation, AddPostCommentMutationVariables>({
+        mutation: AddPostCommentDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          postId: props.postId,
+          comment: comment,
+        },
+      })
+      setComment('')
+    } else if (props.blogId) {
+      // blogにコメントする時の処理
+    }
   }
 
   return (
@@ -25,7 +50,7 @@ const CommentForm: VFC<Props> = (props: Props) => {
         <>
           <Textarea
             ref={props.commentInput}
-            placeholder="コメントを書く"
+            placeholder="コメントを書く（100文字以内）"
             borderColor="gray.400"
             h="150px"
             onChange={(e) => {
@@ -34,14 +59,17 @@ const CommentForm: VFC<Props> = (props: Props) => {
             value={comment}
           />
           <Box textAlign="right">
-            <NormalButton
-              text="送信"
-              bg="green.300"
-              color="white"
-              borderRadius="none"
-              hover={{ bg: 'green.400' }}
-              width="100px"
-            />
+            <Box onClick={handleSubmit}>
+              <NormalButton
+                isDisabled={disableSubmit}
+                text="送信"
+                bg="green.300"
+                color="white"
+                borderRadius="none"
+                hover={{ bg: 'green.400' }}
+                width="100px"
+              />
+            </Box>
           </Box>
         </>
       ) : (
