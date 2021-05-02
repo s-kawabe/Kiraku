@@ -18,7 +18,6 @@ export type CommentListProps = {
 const CommentList: VFC<CommentListProps> = (props: CommentListProps) => {
   return (
     <Box
-      w="540px"
       minH="200px"
       css={css`
         & div:not(:last-child) {

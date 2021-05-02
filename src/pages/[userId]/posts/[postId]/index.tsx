@@ -1,5 +1,16 @@
 import { gql, useReactiveVar } from '@apollo/client'
-import { Box, Button, Center, Flex, Heading, HStack, Spinner, Tag, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  HStack,
+  Spinner,
+  Stack,
+  Tag,
+  Text,
+} from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -150,12 +161,19 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
 
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
-      <Center w="100%">
-        <Box my="70px">
+      <Center mb="80px">
+        <Box my={{ base: '', sm: '15px', lg: '30px' }}>
           {/* Header */}
-          <Flex mb="20px" align="flex-end" justifyContent="space-between" p="5" borderRadius="25px">
+          <Stack
+            direction={{ base: 'column', sm: 'row' }}
+            mb="20px"
+            align={['flex-start', 'flex-end']}
+            justifyContent="space-between"
+            p="5"
+            borderRadius="25px"
+          >
             <Flex align="center">
-              <UserIcon src={user.image ?? '/nouser.svg'} width={85} height={85} />
+              <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
               <Box ml="10px">
                 <Heading fontSize="26px" mb="2px" color="gray.700">
                   {user.name}
@@ -197,12 +215,17 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 />
               </Box>
             </HStack>
-          </Flex>
+          </Stack>
           {/* Main */}
-          <Flex>
+          <Stack direction={{ base: 'column', lg: 'row' }} spacing="14">
             {/* Post Image */}
             <Box position="relative">
-              <Center w="430px" h="630px" position="relative" borderRadius="20px">
+              <Center
+                w={['330px', '430px']}
+                h={['520px', '630px']}
+                position="relative"
+                borderRadius="20px"
+              >
                 {post.image ? (
                   <Image
                     src={post.image}
@@ -289,9 +312,10 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 </Box>
               )}
             </Box>
-            <Box w="37vw" ml="50px">
+            <Box>
               {/* Content */}
               <Box
+                w={{ base: '95vw', md: '540px' }}
                 p="30px"
                 borderRadius="20px"
                 boxShadow="0px 0px 5px rgba(40,40,40,0.15)"
@@ -300,7 +324,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
                   {post.content}
                 </Text>
-                <HStack w="100%" mt="70px" justifyContent="space-between">
+                <HStack mt="70px" justifyContent="space-between">
                   {isMine && <EditMenu post={post} />}
                   <Text fontSize="14px" color="gray.400">
                     {createdAt}
@@ -322,9 +346,10 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   </Box>
                 )}
               </Box>
+              {/* setState関数は渡さず、コンポーネント内でのmutationをsubscriptionsで検知する */}
               <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} />
             </Box>
-          </Flex>
+          </Stack>
         </Box>
       </Center>
     </LayoutWithHead>
