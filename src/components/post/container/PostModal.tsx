@@ -55,6 +55,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [allBrands, setAllBrands] = useState<string[]>([])
 
   const [disableSubmit, setDisableSubmit] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [content, setContent] = useState('')
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
@@ -83,6 +84,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   }
 
   const handleSubmit = async () => {
+    setIsLoading(true)
     // 画像をfirebaseにアップロードする(アップロード後の画像URLを返してもらう)
     let imageInfo: {
       image: string | null
@@ -274,6 +276,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   onClick={handleSubmit}
                   px="50px"
                   isDisabled={disableSubmit}
+                  isLoading={isLoading}
                 >
                   投稿
                 </Button>

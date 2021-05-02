@@ -28,7 +28,7 @@ import {
   RemovePostLikeDocument,
   usePostCommentSubscriptionSubscription,
 } from '@/apollo/graphql'
-import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
+import { CommentIconWithCount, EditMenu, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
 import { CommentForm, UserIcon } from '@/components/user/unit'
@@ -277,13 +277,16 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
                   {post.content}
                 </Text>
-                <Box w="100%" mt="70px" textAlign="right">
-                  <Text color="gray.500">{createdAt}</Text>
-                </Box>
+                <HStack w="100%" mt="70px" justifyContent="space-between">
+                  {loginUser?.id === user.id && <EditMenu postId={post.id} />}
+                  <Text fontSize="14px" color="gray.400">
+                    {createdAt}
+                  </Text>
+                </HStack>
               </Box>
               {/* Comment */}
               <Box mb="120px">
-                <Heading fontSize="20px" color="gray.700" mb="5px">
+                <Heading fontSize="20px" color="gray.700" mb="">
                   コメント({data?.post_comments.length})
                 </Heading>
                 <CommentList comments={shapingComments()} />

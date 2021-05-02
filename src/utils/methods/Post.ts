@@ -85,6 +85,18 @@ export const uploadPostImage = async (file: File) => {
   }
 }
 
+// 投稿が削除された際のその投稿に登録されている画像も削除する
+export const deletePostImage = (userId: string, fileName: string) => {
+  const imageRef = storage.ref(`images/post/${userId}`).child(fileName)
+  imageRef
+    .delete()
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    .then(() => {})
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 // 渡されたtopicかbrandsを判定しDBに無い物があれば新しくINSERTする
 export const checkExistTable = async ({ key, formInsert, allData }: CheckExistTopics) => {
   const client = initializeApollo()

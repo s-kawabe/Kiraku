@@ -45,23 +45,22 @@ const CommentList: VFC<CommentListProps> = (props: CommentListProps) => {
           )
         })
       ) : (
-        <VStack
-          alignItems="center"
-          mt="30px"
-          minH="inherit"
-          p="5"
-          borderRadius="20px"
-          bg="gray.100"
-        >
+        <VStack alignItems="center" mt="30px" minH="inherit" p="5" borderRadius="20px" bg="gray.50">
           <Text color="gray.600" fontSize="13px" my="20px">
             まだコメントはありません、コメントを投稿してみよう。
           </Text>
-          <NextImage
-            src="/nocomment.svg"
-            alt="コメントが無い場合のアイコン"
-            width={250}
-            height={260}
-          />
+          <Box
+            css={css`
+              filter: grayscale(50%);
+            `}
+          >
+            <NextImage
+              src="/nocomment.svg"
+              alt="コメントが無い場合のアイコン"
+              width={250}
+              height={260}
+            />
+          </Box>
         </VStack>
       )}
     </Box>

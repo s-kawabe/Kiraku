@@ -6884,6 +6884,32 @@ export enum UsersUpdateColumn {
   UPDATED_AT = 'updated_at'
 }
 
+export type DeletePostOneMutationVariables = Exact<{
+  postId: Scalars['Int'];
+}>;
+
+
+export type DeletePostOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_posts_by_pk?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'image' | 'image_id' | 'user_id'>
+  )> }
+);
+
+export type DeleteBlogOneMutationVariables = Exact<{
+  blogId: Scalars['Int'];
+}>;
+
+
+export type DeleteBlogOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_blogs_by_pk?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id'>
+  )> }
+);
+
 export type ReactiveVarGetUserQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -7206,6 +7232,75 @@ export type CreateUserMutation = (
 );
 
 
+export const DeletePostOneDocument = gql`
+    mutation DeletePostOne($postId: Int!) {
+  delete_posts_by_pk(id: $postId) {
+    id
+    image
+    image_id
+    user_id
+  }
+}
+    `;
+export type DeletePostOneMutationFn = ApolloReactCommon.MutationFunction<DeletePostOneMutation, DeletePostOneMutationVariables>;
+
+/**
+ * __useDeletePostOneMutation__
+ *
+ * To run a mutation, you first call `useDeletePostOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePostOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePostOneMutation, { data, loading, error }] = useDeletePostOneMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useDeletePostOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeletePostOneMutation, DeletePostOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<DeletePostOneMutation, DeletePostOneMutationVariables>(DeletePostOneDocument, options);
+      }
+export type DeletePostOneMutationHookResult = ReturnType<typeof useDeletePostOneMutation>;
+export type DeletePostOneMutationResult = ApolloReactCommon.MutationResult<DeletePostOneMutation>;
+export type DeletePostOneMutationOptions = ApolloReactCommon.BaseMutationOptions<DeletePostOneMutation, DeletePostOneMutationVariables>;
+export const DeleteBlogOneDocument = gql`
+    mutation DeleteBlogOne($blogId: Int!) {
+  delete_blogs_by_pk(id: $blogId) {
+    id
+  }
+}
+    `;
+export type DeleteBlogOneMutationFn = ApolloReactCommon.MutationFunction<DeleteBlogOneMutation, DeleteBlogOneMutationVariables>;
+
+/**
+ * __useDeleteBlogOneMutation__
+ *
+ * To run a mutation, you first call `useDeleteBlogOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBlogOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBlogOneMutation, { data, loading, error }] = useDeleteBlogOneMutation({
+ *   variables: {
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useDeleteBlogOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteBlogOneMutation, DeleteBlogOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<DeleteBlogOneMutation, DeleteBlogOneMutationVariables>(DeleteBlogOneDocument, options);
+      }
+export type DeleteBlogOneMutationHookResult = ReturnType<typeof useDeleteBlogOneMutation>;
+export type DeleteBlogOneMutationResult = ApolloReactCommon.MutationResult<DeleteBlogOneMutation>;
+export type DeleteBlogOneMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteBlogOneMutation, DeleteBlogOneMutationVariables>;
 export const ReactiveVarGetUserDocument = gql`
     query ReactiveVarGetUser($id: String!) {
   users_by_pk(id: $id) {
