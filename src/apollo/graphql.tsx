@@ -7098,7 +7098,7 @@ export type GetOneUserWithPostQuery = (
     & Pick<Users, 'id' | 'display_id' | 'name' | 'image'>
     & { posts: Array<(
       { __typename?: 'posts' }
-      & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'created_at'>
+      & Pick<Posts, 'id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
       & { topics: Array<(
         { __typename?: 'post_topics' }
         & { topic: (
@@ -7782,6 +7782,7 @@ export const GetOneUserWithPostDocument = gql`
       id
       content
       image
+      image_id
       gender
       created_at
       topics {

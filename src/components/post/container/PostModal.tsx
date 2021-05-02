@@ -25,26 +25,30 @@ import type { VFC } from 'react'
 import { useEffect, useState } from 'react'
 
 import { isShowPostModalVar } from '@/apollo/cache'
+import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
   GetAllBrandsQuery,
   GetAllBrandsQueryVariables,
   GetAllTopicsQuery,
   GetAllTopicsQueryVariables,
+  Posts,
 } from '@/apollo/graphql'
 import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
-import { checkExistTable, insertPostToHasura, uploadPostImage } from '@/utils/methods/Post'
+import {
+  checkExistTable,
+  deletePostImage,
+  insertPostToHasura,
+  uploadPostImage,
+} from '@/utils/methods/Post'
 
 type PostModalProps = {
-  isNew: boolean
   isOpen: boolean
   onClose: () => void
-  postData?: any // edit時にポストのデータをもらう
-  // edit時、firebase storageの画像のrefが分からない可能性がある
-  // URLからrefを割り出せれば良いが。
+  postData?: Posts // edit時のみ取得
 }
 const TEXT_LIMIT = 250
 const client = initializeApollo()
@@ -60,7 +64,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
   const [gender, setGender] = useState<Gender>('ALL')
-  const [image, setImage] = useState<File | null>(null)
+  const [image, setImage] = useState<File | string | null>(null)
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -79,7 +83,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 
   const wrapperOnClose = () => {
     if (!confirm('投稿を終了しますか？（内容は破棄されます。）')) return
-    resetState()
+    if (!props.postData) {
+      resetState()
+    }
     props.onClose()
   }
 
@@ -93,14 +99,26 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       image: null,
       imageId: null,
     }
-    if (image) {
+    // 新規投稿時に画像を設定している/編集時に画像を切り替えた 場合のみ実行
+    if (image && typeof image !== 'string') {
+      // 編集時は前の画像をfirebaseStorageから削除
+      if (props.postData) {
+        const loginUser = loginUserVar()
+        if (loginUser && props.postData.image_id) {
+          deletePostImage(loginUser.id, props.postData.image_id)
+        }
+      }
       imageInfo = await uploadPostImage(image)
     }
-    // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
-    await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
-    await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
+    // 新規投稿時のみトピックとブランドの判定処理を実行
+    if (!props.postData) {
+      // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
+      await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
+      await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
+    }
     // hasuraのpostsに色々INSERTし、そのpostsのidを返して、その/posts/[postId].tsxページに遷移する
     const ret = await insertPostToHasura({
+      id: props.postData?.id,
       content,
       registerTopics,
       registerBrands,
@@ -108,19 +126,25 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       image: imageInfo.image,
       imageId: imageInfo.imageId,
     })
-
-    resetState()
+    if (!props.postData) {
+      resetState()
+    }
     props.onClose()
 
+    setIsLoading(false)
     const data = ret?.data?.insert_posts_one
-    data &&
-      router.push({
-        pathname: '/[userId]/posts/[postId]',
-        query: {
-          userId: data.user_id.substring(0, 8),
-          postId: data.id,
-        },
-      })
+    if (data) {
+      // 編集時はページをリロードして変更を反映させる
+      props.postData
+        ? router.reload()
+        : router.push({
+            pathname: '/[userId]/posts/[postId]',
+            query: {
+              userId: data.user_id.substring(0, 8),
+              postId: data.id,
+            },
+          })
+    }
   }
 
   // TopicsとBrandsのデータを全件取得してstateに入れておく
@@ -151,29 +175,35 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   }, [isShowPostModalVar()])
 
   useEffect(() => {
-    if (!props.postData) {
-      const inputElems = document.getElementsByClassName('react-tag-input__input')
-      inputElems[0]?.setAttribute('type', 'text')
-      inputElems[0]?.setAttribute('list', 'topics-list')
-      inputElems[0]?.setAttribute('autocomplete', 'on')
-      inputElems[1]?.setAttribute('type', 'text')
-      inputElems[1]?.setAttribute('list', 'brands-list')
-      inputElems[1]?.setAttribute('autocomplete', 'on')
+    if (props.postData) {
+      setContent(props.postData.content)
+      if (props.postData.image) {
+        setImage(props.postData.image)
+      }
     }
-  })
+    const inputElems = document.getElementsByClassName('react-tag-input__input')
+    inputElems[0]?.setAttribute('type', 'text')
+    inputElems[0]?.setAttribute('list', 'topics-list')
+    inputElems[0]?.setAttribute('autocomplete', 'on')
+    inputElems[1]?.setAttribute('type', 'text')
+    inputElems[1]?.setAttribute('list', 'brands-list')
+    inputElems[1]?.setAttribute('autocomplete', 'on')
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
       <ModalOverlay bg="rgba(30, 30, 30, 0.5)" />
       <ModalContent bg="gray.100" borderRadius="20px">
         <ModalHeader fontWeight="semibold" fontSize="20px" color="gray.700" py="30px">
-          <Center>ポストを投稿</Center>
+          <Center>ポストを{props.postData ? '編集' : '投稿'}</Center>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody mb="20px" display="flex" justifyContent="center">
           <Stack direction={{ base: 'column', lg: 'row' }} spacing="10">
             <Box mx={'auto'}>
-              <ImageArea setImage={setImage} />
+              <ImageArea setImage={setImage} image={props.postData && (image as string)} />
             </Box>
             <VStack>
               <Box mb="20px" position="relative">
@@ -205,68 +235,77 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   </CircularProgress>
                 </Box>
               </Box>
-              <Stack
-                direction={{ base: 'column', lg: 'row' }}
-                spacing="30"
-                justifyContent="space-between"
-              >
-                <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
-                  <Box>
-                    <Text color="gray.700">トピックを追加</Text>
-                    <Box w={{ base: '88vw', lg: '295px' }}>
-                      <ReactTagInput
-                        placeholder="トピックは5つまで"
-                        maxTags={5}
-                        tags={registerTopics}
-                        removeOnBackspace={true}
-                        onChange={(newTopic: any) => {
-                          return setRegisterTopics(newTopic)
-                        }}
-                        validator={(value) => {
-                          return !registerTopics.includes(value)
-                        }}
-                      />
-                      <datalist id="topics-list">
-                        {allTopics.map((topic) => {
-                          return <option key={topic} value={topic} />
-                        })}
-                      </datalist>
-                    </Box>
+              {/* トピックとブランドは編集不可とする */}
+              <datalist id="topics-list">
+                {allTopics.map((topic) => {
+                  return <option key={topic} value={topic} />
+                })}
+              </datalist>
+              <datalist id="brands-list">
+                {allBrands.map((topic) => {
+                  return <option key={topic} value={topic} />
+                })}
+              </datalist>
+              {!props.postData ? (
+                <>
+                  <Stack
+                    direction={{ base: 'column', lg: 'row' }}
+                    spacing="30"
+                    justifyContent="space-between"
+                  >
+                    <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                      <Box>
+                        <Text color="gray.700">トピックを追加</Text>
+                        <Box w={{ base: '88vw', lg: '295px' }}>
+                          <ReactTagInput
+                            placeholder="トピックは5つまで"
+                            maxTags={5}
+                            tags={registerTopics}
+                            removeOnBackspace={true}
+                            onChange={(newTopic: any) => {
+                              return setRegisterTopics(newTopic)
+                            }}
+                            validator={(value) => {
+                              return !registerTopics.includes(value)
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Tooltip>
+                    <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                      <Box>
+                        <Text color="gray.700">ブランドを追加</Text>
+                        <Box w={{ base: '88vw', lg: '295px' }}>
+                          <ReactTagInput
+                            placeholder="ブランドは5つまで"
+                            maxTags={5}
+                            tags={registerBrands}
+                            removeOnBackspace={true}
+                            onChange={(newBrand) => {
+                              return setRegisterBrands(newBrand)
+                            }}
+                            validator={(value) => {
+                              return !registerBrands.includes(value)
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Tooltip>
+                  </Stack>
+                  <Box mb="30px" w="100%">
+                    <Text color="red.300" fontSize="13px">
+                      ※トピックとブランドは後から変更できません
+                    </Text>
                   </Box>
-                </Tooltip>
-                <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
-                  <Box>
-                    <Text color="gray.700">ブランドを追加</Text>
-
-                    <Box w={{ base: '88vw', lg: '295px' }}>
-                      <ReactTagInput
-                        placeholder="ブランドは5つまで"
-                        maxTags={5}
-                        tags={registerBrands}
-                        removeOnBackspace={true}
-                        onChange={(newBrand) => {
-                          return setRegisterBrands(newBrand)
-                        }}
-                        validator={(value) => {
-                          return !registerBrands.includes(value)
-                        }}
-                      />
-                      <datalist id="brands-list">
-                        {allBrands.map((topic) => {
-                          return <option key={topic} value={topic} />
-                        })}
-                      </datalist>
-                    </Box>
-                  </Box>
-                </Tooltip>
-              </Stack>
-              <Box mb="30px" w="100%">
-                <Text color="red.300" fontSize="13px">
-                  ※トピックとブランドは後から変更できません
-                </Text>
-              </Box>
+                </>
+              ) : (
+                <></>
+              )}
               <Box w="100%">
-                <GenderRadioButton default="ALL" setGender={setGender} />
+                <GenderRadioButton
+                  default={(props.postData?.gender as 'ALL' | 'MEN' | 'WOMEN') ?? 'ALL'}
+                  setGender={setGender}
+                />
               </Box>
               <Flex w="100%" justify="flex-end">
                 <Button
@@ -278,7 +317,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   isDisabled={disableSubmit}
                   isLoading={isLoading}
                 >
-                  投稿
+                  {props.postData ? '編集' : '投稿'}
                 </Button>
               </Flex>
             </VStack>

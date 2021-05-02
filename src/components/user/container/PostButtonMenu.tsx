@@ -40,8 +40,8 @@ const PostButtonMenu: VFC = () => {
           </Heading>
         </MenuItem>
       </MenuList>
-      {/* ポスト投稿/編集時のモーダル */}
-      <PostModal isOpen={isOpen} onClose={onClose} isNew />
+      {/* ポスト投稿時のモーダル */}
+      <PostModal isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

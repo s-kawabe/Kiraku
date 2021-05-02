@@ -1,38 +1,41 @@
 import { gql } from '@apollo/client'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { Menu, MenuButton, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 
 import { initializeApollo } from '@/apollo/client'
+import type { Posts } from '@/apollo/graphql'
 import type { DeletePostOneMutation, DeletePostOneMutationVariables } from '@/apollo/graphql'
 import { DeletePostOneDocument } from '@/apollo/graphql'
+import { PostModal } from '@/components/post/container'
 import { deletePostImage } from '@/utils/methods/Post'
 
 type Props = {
-  postId?: number
+  post: Posts
   blogId?: number
 }
 
 const EditMenu: VFC<Props> = (props: Props) => {
   const client = initializeApollo()
   const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleEdit = async () => {
-    if (props.postId) {
-      alert(props.postId)
+    if (props.post) {
+      onOpen()
     } else if (props.blogId) {
       // blog編集ページへ
     }
   }
 
   const handleDelete = async () => {
-    if (props.postId) {
+    if (props.post) {
       if (confirm('本当にこの投稿を削除しますか？')) {
         const result = await client.mutate<DeletePostOneMutation, DeletePostOneMutationVariables>({
           mutation: DeletePostOneDocument,
           variables: {
-            postId: props.postId,
+            postId: props.post.id,
           },
         })
         const deletedPost = result.data?.delete_posts_by_pk
@@ -60,6 +63,8 @@ const EditMenu: VFC<Props> = (props: Props) => {
           <MenuItem onClick={handleDelete}>削除</MenuItem>
         </MenuList>
       </Menu>
+      {/* postデータを注入する */}
+      <PostModal isOpen={isOpen} onClose={onClose} postData={props.post} />
     </>
   )
 }

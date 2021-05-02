@@ -33,6 +33,7 @@ import {
 import { storage } from '@/firebase/firebaseConfig'
 
 type FromSubmitData = {
+  id?: number
   content: string
   registerTopics: string[]
   registerBrands: string[]
@@ -156,6 +157,7 @@ const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) 
 
 // 入力データを元にhasuraのpostsテーブルにINSERTする
 export const insertPostToHasura = async ({
+  id,
   content,
   registerTopics,
   registerBrands,
@@ -236,6 +238,7 @@ export const insertPostToHasura = async ({
     return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
       mutation: InsertPostOneDocument,
       variables: {
+        id: id,
         user_id: loginUser.id,
         content: content,
         image: image,

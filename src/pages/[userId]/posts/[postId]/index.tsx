@@ -1,5 +1,5 @@
 import { gql, useReactiveVar } from '@apollo/client'
-import { Box, Button, Center, Flex, Heading, HStack, Tag, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Heading, HStack, Spinner, Tag, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,6 +16,7 @@ import type {
   GetOneUserWithPostQueryVariables,
   GetPostLikeCountQuery,
   GetPostLikeCountQueryVariables,
+  Posts,
   RemovePostLikeMutation,
   RemovePostLikeMutationVariables,
   Users,
@@ -49,14 +50,18 @@ const initialLikeData = {
 }
 
 const UserPostPage: NextPage<Props> = (props: Props) => {
-  const [user, post] = [props.user, props.user.posts[0]]
+  const [user, setUser] = useState<Users>(props.user)
+  const [post, setPost] = useState<Posts>(props.user.posts[0])
   const createdAt = useConvertDateFromHasura(post.created_at)
   const loginUser = useReactiveVar(loginUserVar)
   const client = initializeApollo()
   const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialLikeData)
   const commentInput = createRef<HTMLTextAreaElement>()
 
-  const { data } = usePostCommentSubscriptionSubscription({
+  // 表示している投稿がログイン中のユーザのものかどうか
+  const isMine = loginUser && loginUser.id === user.id
+
+  const { data, loading } = usePostCommentSubscriptionSubscription({
     variables: {
       postId: post.id,
     },
@@ -81,7 +86,25 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
 
   useEffect(() => {
     ;(async () => {
-      await fetchLike()
+      // 投稿編集後は最新情報が反映されない為、投稿者本人の場合のみクライアントで投稿を再fetch
+      if (isMine) {
+        const { data } = await client.query<
+          GetOneUserWithPostQuery,
+          GetOneUserWithPostQueryVariables
+        >({
+          query: GetOneUserWithPostDocument,
+          variables: {
+            userId: user.display_id,
+            postId: post.id,
+          },
+          fetchPolicy: 'network-only',
+        })
+        setUser(data.users[0] as Users)
+        setPost(data.users[0].posts[0] as Posts)
+      } else {
+        // いいね情報を取得し直す
+        await fetchLike()
+      }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -278,7 +301,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   {post.content}
                 </Text>
                 <HStack w="100%" mt="70px" justifyContent="space-between">
-                  {loginUser?.id === user.id && <EditMenu postId={post.id} />}
+                  {isMine && <EditMenu post={post} />}
                   <Text fontSize="14px" color="gray.400">
                     {createdAt}
                   </Text>
@@ -289,7 +312,15 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 <Heading fontSize="20px" color="gray.700" mb="">
                   コメント({data?.post_comments.length})
                 </Heading>
-                <CommentList comments={shapingComments()} />
+                {loading ? (
+                  <Center mt="30px" h="100vh" w="100vw">
+                    <Spinner />
+                  </Center>
+                ) : (
+                  <Box mt="10px">
+                    <CommentList comments={shapingComments()} />
+                  </Box>
+                )}
               </Box>
               <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} />
             </Box>
@@ -368,6 +399,7 @@ gql`
         id
         content
         image
+        image_id
         gender
         created_at
         topics {
