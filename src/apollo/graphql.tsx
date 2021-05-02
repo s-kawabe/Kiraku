@@ -7090,7 +7090,7 @@ export type GetOneUserWithPostQuery = (
         & Pick<PostComments, 'comment'>
         & { user: (
           { __typename?: 'users' }
-          & Pick<Users, 'display_id' | 'image'>
+          & Pick<Users, 'display_id' | 'name' | 'image'>
         ) }
       )> }
     )> }
@@ -7669,6 +7669,7 @@ export const GetOneUserWithPostDocument = gql`
         comment
         user {
           display_id
+          name
           image
         }
       }

@@ -37,25 +37,6 @@ type Props = {
   user: Users
 }
 
-const comments = [
-  {
-    userIcon: '/nouser.svg',
-    userId: 'hogeh123oge',
-    comment: 'すごくいいですね',
-  },
-  {
-    userIcon: '/nouser.svg',
-    userId: 'hu234agaga',
-    comment: 'めっちゃやべえな',
-  },
-  {
-    userIcon: '/nouser.svg',
-    userId: 'hugagaga',
-    comment:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis ut voluptatem fugit, natus at placeat beatae ',
-  },
-]
-
 const initialData = {
   post_likes: [
     {
@@ -121,6 +102,17 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
       })
     }
     await fetchLike()
+  }
+
+  const shapingComments = () => {
+    return post.comments.map((comment) => {
+      return {
+        userIcon: comment.user.image,
+        userName: comment.user.name,
+        userId: comment.user.display_id,
+        comment: comment.comment,
+      }
+    })
   }
 
   return (
@@ -281,7 +273,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 <Heading fontSize="20px" color="gray.700" mb="5px">
                   コメント({post.comments.length})
                 </Heading>
-                <CommentList comments={comments} />
+                <CommentList comments={shapingComments()} />
               </Box>
               <CommentForm userId={user.id} commentInput={commentInput} />
             </Box>
@@ -378,6 +370,7 @@ gql`
           comment
           user {
             display_id
+            name
             image
           }
         }
