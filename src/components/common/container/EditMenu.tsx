@@ -53,7 +53,7 @@ const EditMenu: VFC<Props> = (props: Props) => {
   return (
     <>
       <Menu>
-        <MenuButton px="4px" borderRadius="5px" _hover={{ bg: 'gray.100' }}>
+        <MenuButton px="6px" borderRadius="5px" _hover={{ bg: 'gray.100' }}>
           {/* <Box p="4px" borderRadius="5px" _hover={{ bg: 'gray.100' }}> */}
           <HamburgerIcon color="gray.600" />
           {/* </Box> */}

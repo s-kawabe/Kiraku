@@ -2,11 +2,14 @@ import { useReactiveVar } from '@apollo/client'
 import { Box, Center, Flex, Spinner } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
+import { useEffect, useState } from 'react'
 
+import { sideMenuVar } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
 import { useTop10TopicAndBrandQuery } from '@/apollo/graphql'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList } from '@/components/layout/container'
+import type { SideMenu } from '@/utils/constants/Common'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
@@ -16,13 +19,22 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
+  const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
   const isLargerThan1200 = useIsDesktop('1200px')
   const loginUser = useReactiveVar(loginUserVar)
 
   const { data, loading, error } = useTop10TopicAndBrandQuery()
 
+  useEffect(() => {
+    setSideMenuContext(sideMenuVar())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sideMenuVar()])
+
   if (error) {
     console.log(error)
+  }
+  if (data) {
+    sideMenuVar(data)
   }
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
@@ -63,9 +75,9 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       <Header user={loginUser} />
       {props.sideMenu ? (
         <Flex>
-          {data && isLargerThan1200 && (
-            <Box maxH="100vh" overflow="auto">
-              <AsideContextList topics={data.topics} brands={data.brands} />
+          {sideMenuContext && isLargerThan1200 && (
+            <Box>
+              <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
             </Box>
           )}
           <Box w="100%">{props.children}</Box>
