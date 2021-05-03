@@ -334,11 +334,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 
 export { PostModal }
 
-// 新規投稿時：brand,topicをそれぞれ一つも登録しない場合
-// 編集時：brand,topicをそれぞれ一つも修正しない場合
+// 新規投稿: brand,topicをそれぞれ一つも登録しない場合
 gql`
   mutation InsertPostOne(
-    $id: Int
     $user_id: String!
     $content: String!
     $image: String
@@ -347,16 +345,11 @@ gql`
   ) {
     insert_posts_one(
       object: {
-        id: $id
         user_id: $user_id
         content: $content
         image: $image
         image_id: $image_id
         gender: $gender
-      }
-      on_conflict: {
-        constraint: posts_pkey
-        update_columns: [content, image, image_id, gender, updated_at]
       }
     ) {
       id
@@ -370,7 +363,7 @@ gql`
   }
 `
 
-// topicsのみを1つ以上登録する場合
+// 新規投稿: topicsのみを1つ以上登録する場合
 gql`
   mutation InsertPostOneWithTopics(
     $user_id: String!
@@ -401,7 +394,7 @@ gql`
   }
 `
 
-// brandsのみを一つ以上登録する場合
+// 新規投稿: brandsのみを一つ以上登録する場合
 gql`
   mutation InsertPostOneWithBrands(
     $user_id: String!
@@ -432,7 +425,7 @@ gql`
   }
 `
 
-// topicとbrands両方を一つ以上登録する場合
+// 新規投稿: topicとbrands両方を一つ以上登録する場合
 gql`
   mutation InsertPostOneWithTopicsAndBrands(
     $user_id: String!
@@ -453,6 +446,64 @@ gql`
         topics: { data: $topicsIds }
         brands: { data: $brandsIds }
       }
+    ) {
+      id
+      user_id
+      content
+      image
+      image_id
+      gender
+      created_at
+    }
+  }
+`
+
+// 投稿編集時(画像を編集)
+gql`
+  mutation EditPostOne(
+    $id: Int!
+    $user_id: String!
+    $content: String!
+    $image: String!
+    $image_id: String!
+    $gender: String!
+  ) {
+    insert_posts_one(
+      object: {
+        id: $id
+        user_id: $user_id
+        content: $content
+        image: $image
+        image_id: $image_id
+        gender: $gender
+      }
+      on_conflict: {
+        constraint: posts_pkey
+        update_columns: [content, image, image_id, gender, updated_at]
+      }
+    ) {
+      id
+      user_id
+      content
+      image
+      image_id
+      gender
+      created_at
+    }
+  }
+`
+
+// // 投稿編集時(画像は編集しない)
+gql`
+  mutation EditPostOneImageNoUpdate(
+    $id: Int!
+    $user_id: String!
+    $content: String!
+    $gender: String!
+  ) {
+    insert_posts_one(
+      object: { id: $id, user_id: $user_id, content: $content, gender: $gender }
+      on_conflict: { constraint: posts_pkey, update_columns: [content, gender, updated_at] }
     ) {
       id
       user_id

@@ -3,6 +3,10 @@ import imageCompression from 'browser-image-compression'
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
+  EditPostOneImageNoUpdateMutation,
+  EditPostOneImageNoUpdateMutationVariables,
+  EditPostOneMutation,
+  EditPostOneMutationVariables,
   InsertBrandsMutation,
   InsertBrandsMutationVariables,
   InsertPostOneMutation,
@@ -21,6 +25,8 @@ import type {
   MappingTopicsToIdQueryVariables,
 } from '@/apollo/graphql'
 import {
+  EditPostOneDocument,
+  EditPostOneImageNoUpdateDocument,
   InsertBrandsDocument,
   InsertPostOneDocument,
   InsertPostOneWithBrandsDocument,
@@ -157,7 +163,7 @@ const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) 
 
 // 入力データを元にhasuraのpostsテーブルにINSERTする
 export const insertPostToHasura = async ({
-  id,
+  id, // idがある場合は編集mutation
   content,
   registerTopics,
   registerBrands,
@@ -235,16 +241,78 @@ export const insertPostToHasura = async ({
     })
     // topic,brandをどちらも登録しない
   } else {
-    return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
-      mutation: InsertPostOneDocument,
-      variables: {
-        id: id,
-        user_id: loginUser.id,
-        content: content,
-        image: image,
-        image_id: imageId,
-        gender: gender,
-      },
-    })
+    // return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
+    //   mutation: InsertPostOneDocument,
+    //   variables: id
+    //     ? image && imageId
+    //       ? {
+    //           // 投稿編集時(画像変更あり時)
+    //           id: id,
+    //           user_id: loginUser.id,
+    //           content: content,
+    //           image: image,
+    //           image_id: imageId,
+    //           gender: gender,
+    //         }
+    //       : {
+    //           // 投稿編集時(画像変更なし時)
+    //           id: id,
+    //           user_id: loginUser.id,
+    //           content: content,
+    //           gender: gender,
+    //         }
+    //     : {
+    //         // 新規投稿時
+    //         user_id: loginUser.id,
+    //         content: content,
+    //         image: image,
+    //         image_id: imageId,
+    //         gender: gender,
+    //       },
+    // })
+    if (id) {
+      // 投稿編集時
+      if (image && imageId) {
+        // 画像変更あり
+        return await client.mutate<EditPostOneMutation, EditPostOneMutationVariables>({
+          mutation: EditPostOneDocument,
+          variables: {
+            id: id,
+            user_id: loginUser.id,
+            content: content,
+            image: image,
+            image_id: imageId,
+            gender: gender,
+          },
+        })
+      } else {
+        // 画像変更なし
+        return await client.mutate<
+          EditPostOneImageNoUpdateMutation,
+          EditPostOneImageNoUpdateMutationVariables
+        >({
+          mutation: EditPostOneImageNoUpdateDocument,
+          variables: {
+            // 投稿編集時
+            id: id,
+            user_id: loginUser.id,
+            content: content,
+            gender: gender,
+          },
+        })
+      }
+    } else {
+      // 新規投稿時
+      return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
+        mutation: InsertPostOneDocument,
+        variables: {
+          user_id: loginUser.id,
+          content: content,
+          image: image,
+          image_id: imageId,
+          gender: gender,
+        },
+      })
+    }
   }
 }

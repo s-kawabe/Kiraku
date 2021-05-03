@@ -6924,7 +6924,6 @@ export type ReactiveVarGetUserQuery = (
 );
 
 export type InsertPostOneMutationVariables = Exact<{
-  id?: Maybe<Scalars['Int']>;
   user_id: Scalars['String'];
   content: Scalars['String'];
   image?: Maybe<Scalars['String']>;
@@ -6989,6 +6988,40 @@ export type InsertPostOneWithTopicsAndBrandsMutationVariables = Exact<{
 
 
 export type InsertPostOneWithTopicsAndBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type EditPostOneMutationVariables = Exact<{
+  id: Scalars['Int'];
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  image: Scalars['String'];
+  image_id: Scalars['String'];
+  gender: Scalars['String'];
+}>;
+
+
+export type EditPostOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type EditPostOneImageNoUpdateMutationVariables = Exact<{
+  id: Scalars['Int'];
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  gender: Scalars['String'];
+}>;
+
+
+export type EditPostOneImageNoUpdateMutation = (
   { __typename?: 'mutation_root' }
   & { insert_posts_one?: Maybe<(
     { __typename?: 'posts' }
@@ -7344,10 +7377,9 @@ export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVar
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
 export const InsertPostOneDocument = gql`
-    mutation InsertPostOne($id: Int, $user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!) {
+    mutation InsertPostOne($user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!) {
   insert_posts_one(
-    object: {id: $id, user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
-    on_conflict: {constraint: posts_pkey, update_columns: [content, image, image_id, gender, updated_at]}
+    object: {user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
   ) {
     id
     user_id
@@ -7374,7 +7406,6 @@ export type InsertPostOneMutationFn = ApolloReactCommon.MutationFunction<InsertP
  * @example
  * const [insertPostOneMutation, { data, loading, error }] = useInsertPostOneMutation({
  *   variables: {
- *      id: // value for 'id'
  *      user_id: // value for 'user_id'
  *      content: // value for 'content'
  *      image: // value for 'image'
@@ -7529,6 +7560,98 @@ export function useInsertPostOneWithTopicsAndBrandsMutation(baseOptions?: Apollo
 export type InsertPostOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertPostOneWithTopicsAndBrandsMutation>;
 export type InsertPostOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithTopicsAndBrandsMutation>;
 export type InsertPostOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>;
+export const EditPostOneDocument = gql`
+    mutation EditPostOne($id: Int!, $user_id: String!, $content: String!, $image: String!, $image_id: String!, $gender: String!) {
+  insert_posts_one(
+    object: {id: $id, user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
+    on_conflict: {constraint: posts_pkey, update_columns: [content, image, image_id, gender, updated_at]}
+  ) {
+    id
+    user_id
+    content
+    image
+    image_id
+    gender
+    created_at
+  }
+}
+    `;
+export type EditPostOneMutationFn = ApolloReactCommon.MutationFunction<EditPostOneMutation, EditPostOneMutationVariables>;
+
+/**
+ * __useEditPostOneMutation__
+ *
+ * To run a mutation, you first call `useEditPostOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPostOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPostOneMutation, { data, loading, error }] = useEditPostOneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      image: // value for 'image'
+ *      image_id: // value for 'image_id'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useEditPostOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostOneMutation, EditPostOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<EditPostOneMutation, EditPostOneMutationVariables>(EditPostOneDocument, options);
+      }
+export type EditPostOneMutationHookResult = ReturnType<typeof useEditPostOneMutation>;
+export type EditPostOneMutationResult = ApolloReactCommon.MutationResult<EditPostOneMutation>;
+export type EditPostOneMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostOneMutation, EditPostOneMutationVariables>;
+export const EditPostOneImageNoUpdateDocument = gql`
+    mutation EditPostOneImageNoUpdate($id: Int!, $user_id: String!, $content: String!, $gender: String!) {
+  insert_posts_one(
+    object: {id: $id, user_id: $user_id, content: $content, gender: $gender}
+    on_conflict: {constraint: posts_pkey, update_columns: [content, gender, updated_at]}
+  ) {
+    id
+    user_id
+    content
+    image
+    image_id
+    gender
+    created_at
+  }
+}
+    `;
+export type EditPostOneImageNoUpdateMutationFn = ApolloReactCommon.MutationFunction<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>;
+
+/**
+ * __useEditPostOneImageNoUpdateMutation__
+ *
+ * To run a mutation, you first call `useEditPostOneImageNoUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPostOneImageNoUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPostOneImageNoUpdateMutation, { data, loading, error }] = useEditPostOneImageNoUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useEditPostOneImageNoUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>(EditPostOneImageNoUpdateDocument, options);
+      }
+export type EditPostOneImageNoUpdateMutationHookResult = ReturnType<typeof useEditPostOneImageNoUpdateMutation>;
+export type EditPostOneImageNoUpdateMutationResult = ApolloReactCommon.MutationResult<EditPostOneImageNoUpdateMutation>;
+export type EditPostOneImageNoUpdateMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>;
 export const GetAllTopicsDocument = gql`
     query GetAllTopics {
   topics {
