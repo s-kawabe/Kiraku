@@ -53,6 +53,7 @@
     "@hookform/resolvers": "^2.2.0",
     "axios": "^0.21.1",
     "deepmerge": "^4.2.2",
+    "draft-js": "^0.11.7",
     "emotion-reset": "^3.0.0",
     "firebase": "^8.3.1",
     "firebase-tools": "^9.6.1",
