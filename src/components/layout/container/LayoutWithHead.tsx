@@ -94,8 +94,8 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
                   w="45px"
                   h="45px"
                   zIndex="2"
-                  bottom="60px"
-                  right="60px"
+                  bottom={['30px', '60px']}
+                  right={['30px', '60px']}
                   boxShadow="1px 1px 6px rgba(30,30,30,0.3)"
                 />
                 <SidebarDrawer isOpen={isOpen} onClose={onClose}>

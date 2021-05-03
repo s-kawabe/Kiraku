@@ -25,7 +25,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       boxShadow="0px 0px 4px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
       transition="all 0.2s"
-      _hover={{ transform: 'translateY(-5px)' }}
+      _hover={{ transform: 'translateY(-4px)', boxShadow: '0px 2px 6px rgba(60, 60, 60, 0.15)' }}
     >
       <Center w="min(40vw, 200px)" borderRadius="8px">
         {/* imageSrcがないパターンはNO IMAGEをつける */}
