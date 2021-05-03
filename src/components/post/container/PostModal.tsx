@@ -2,6 +2,7 @@ import '@pathofdev/react-tag-input/build/index.css'
 
 import { gql } from '@apollo/client'
 import {
+  Box,
   Button,
   Center,
   CircularProgress,
@@ -14,11 +15,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
+  Text,
   Textarea,
   Tooltip,
   VStack,
 } from '@chakra-ui/react'
-import { Box, Text } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
@@ -310,7 +311,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
               <Flex w="100%" justify="flex-end">
                 <Button
                   colorScheme="teal"
-                  mb={3}
+                  mb={[10, 3]}
                   mt={3}
                   onClick={handleSubmit}
                   px="50px"

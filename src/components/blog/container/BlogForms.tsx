@@ -126,8 +126,8 @@ const BlogForms: VFC = () => {
           colorScheme="teal"
           onClick={handleSubmit}
           position="fixed"
-          bottom="90px"
-          right="100px"
+          bottom={['90px', '120px']}
+          right={['30px', '60px']}
         >
           公開
         </Button>
