@@ -97,7 +97,7 @@ const AboutPage = () => {
       </Box>
 
       {/* cards */}
-      <Box bg={['#f6f6f6', 'transparent']}>
+      <Box>
         <VStack w="100%" overflow="hidden">
           <Heading color="gray.700" my="40px">
             できること

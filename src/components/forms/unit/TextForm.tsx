@@ -9,6 +9,7 @@ export type TextFormProps = {
   isRequired: boolean
   errorMessage?: string
   registers?: any
+  // w?: SystemProps['w']
 }
 
 const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
@@ -21,7 +22,7 @@ const TextForm: VFC<TextFormProps> = (props: TextFormProps) => {
           </Text>
         )}
         {props.isRequired && (
-          <Badge bg="red.400" color="white" py="3px" px="5px" borderRadius="7px">
+          <Badge bg="red.400" color="white" py="3px" px="5px" borderRadius="7px" ml="5px">
             必須
           </Badge>
         )}

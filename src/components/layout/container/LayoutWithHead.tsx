@@ -21,7 +21,7 @@ type Props = {
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
   const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
-  const isLargerThan1200 = useIsDesktop('1200px')
+  const isLargerThan1280 = useIsDesktop('1280px')
   const loginUser = useReactiveVar(loginUserVar)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -78,7 +78,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       {sideMenuContext &&
         (props.sideMenu ? (
           <Flex position="relative">
-            {isLargerThan1200 ? (
+            {isLargerThan1280 ? (
               <Box>
                 <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
               </Box>

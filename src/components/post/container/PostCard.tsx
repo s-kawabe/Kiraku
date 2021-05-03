@@ -24,6 +24,8 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       borderRadius="8px"
       boxShadow="0px 0px 4px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
+      transition="all 0.2s"
+      _hover={{ transform: 'translateY(-5px)' }}
     >
       <Center w="min(40vw, 200px)" borderRadius="8px">
         {/* imageSrcがないパターンはNO IMAGEをつける */}
