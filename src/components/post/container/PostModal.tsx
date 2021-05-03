@@ -67,6 +67,16 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [gender, setGender] = useState<Gender>('ALL')
   const [image, setImage] = useState<File | string | null>(null)
 
+  // FIXME: タグのコンポーネント内のInputに属性を追加したいが現状直接DOMを触りにいくしか方法がない
+  const inputElems = document.getElementsByClassName('react-tag-input__input')
+  inputElems[0]?.setAttribute('type', 'text')
+  inputElems[0]?.setAttribute('list', 'topics-list')
+  inputElems[0]?.setAttribute('autocomplete', 'on')
+  inputElems[1]?.setAttribute('type', 'text')
+  inputElems[1]?.setAttribute('list', 'brands-list')
+  inputElems[1]?.setAttribute('autocomplete', 'on')
+  console.log(inputElems)
+
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
     setDisableSubmit(text.length === 0 || text.length > TEXT_LIMIT)
@@ -135,6 +145,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     setIsLoading(false)
     const data = ret?.data?.insert_posts_one
     if (data) {
+      // 投稿時は投稿したポストの詳細ページへ遷移
       // 編集時はページをリロードして変更を反映させる
       props.postData
         ? router.reload()
@@ -182,14 +193,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
         setImage(props.postData.image)
       }
     }
-    const inputElems = document.getElementsByClassName('react-tag-input__input')
-    inputElems[0]?.setAttribute('type', 'text')
-    inputElems[0]?.setAttribute('list', 'topics-list')
-    inputElems[0]?.setAttribute('autocomplete', 'on')
-    inputElems[1]?.setAttribute('type', 'text')
-    inputElems[1]?.setAttribute('list', 'brands-list')
-    inputElems[1]?.setAttribute('autocomplete', 'on')
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
