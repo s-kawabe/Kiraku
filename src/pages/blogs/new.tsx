@@ -1,11 +1,14 @@
+import { Center } from '@chakra-ui/react'
+import type { NextPage } from 'next'
+
 import { LayoutWithHead } from '@/components/layout/container'
 
-const NewBlogPage = () => {
+const NewBlogPage: NextPage = () => {
   return (
-    <LayoutWithHead title="新規ブログ投稿">
-      <>
+    <LayoutWithHead title="ブログ新規投稿" sideMenu>
+      <Center mb="80px">
         <p>this is /blogs/new page, </p>
-      </>
+      </Center>
     </LayoutWithHead>
   )
 }
