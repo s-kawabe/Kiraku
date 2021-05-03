@@ -7103,6 +7103,58 @@ export type MappingBrandsToIdQuery = (
   )> }
 );
 
+export type GetAllBlogsByOneUserQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetAllBlogsByOneUserQuery = (
+  { __typename?: 'query_root' }
+  & { blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+    & { topics: Array<(
+      { __typename?: 'blog_topics' }
+      & { topic: (
+        { __typename?: 'topics' }
+        & Pick<Topics, 'id' | 'name'>
+      ) }
+    )>, brands: Array<(
+      { __typename?: 'blog_brands' }
+      & { brand: (
+        { __typename?: 'brands' }
+        & Pick<Brands, 'id' | 'name'>
+      ) }
+    )> }
+  )> }
+);
+
+export type GetAllPostsByOneUserQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetAllPostsByOneUserQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
+    & { topics: Array<(
+      { __typename?: 'post_topics' }
+      & { topic: (
+        { __typename?: 'topics' }
+        & Pick<Topics, 'id' | 'name'>
+      ) }
+    )>, brands: Array<(
+      { __typename?: 'post_brands' }
+      & { brand: (
+        { __typename?: 'brands' }
+        & Pick<Brands, 'id' | 'name'>
+      ) }
+    )> }
+  )> }
+);
+
 export type GetAllUsersWithPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7856,6 +7908,110 @@ export function useMappingBrandsToIdLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type MappingBrandsToIdQueryHookResult = ReturnType<typeof useMappingBrandsToIdQuery>;
 export type MappingBrandsToIdLazyQueryHookResult = ReturnType<typeof useMappingBrandsToIdLazyQuery>;
 export type MappingBrandsToIdQueryResult = ApolloReactCommon.QueryResult<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>;
+export const GetAllBlogsByOneUserDocument = gql`
+    query GetAllBlogsByOneUser($userId: String!) {
+  blogs(where: {user_id: {_eq: $userId}}) {
+    id
+    user_id
+    content
+    gender
+    created_at
+    topics {
+      topic {
+        id
+        name
+      }
+    }
+    brands {
+      brand {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllBlogsByOneUserQuery__
+ *
+ * To run a query within a React component, call `useGetAllBlogsByOneUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllBlogsByOneUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllBlogsByOneUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetAllBlogsByOneUserQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>(GetAllBlogsByOneUserDocument, options);
+      }
+export function useGetAllBlogsByOneUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>(GetAllBlogsByOneUserDocument, options);
+        }
+export type GetAllBlogsByOneUserQueryHookResult = ReturnType<typeof useGetAllBlogsByOneUserQuery>;
+export type GetAllBlogsByOneUserLazyQueryHookResult = ReturnType<typeof useGetAllBlogsByOneUserLazyQuery>;
+export type GetAllBlogsByOneUserQueryResult = ApolloReactCommon.QueryResult<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>;
+export const GetAllPostsByOneUserDocument = gql`
+    query GetAllPostsByOneUser($userId: String!) {
+  posts(where: {user_id: {_eq: $userId}}) {
+    id
+    user_id
+    content
+    image
+    image_id
+    gender
+    created_at
+    topics {
+      topic {
+        id
+        name
+      }
+    }
+    brands {
+      brand {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllPostsByOneUserQuery__
+ *
+ * To run a query within a React component, call `useGetAllPostsByOneUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPostsByOneUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPostsByOneUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetAllPostsByOneUserQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>(GetAllPostsByOneUserDocument, options);
+      }
+export function useGetAllPostsByOneUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>(GetAllPostsByOneUserDocument, options);
+        }
+export type GetAllPostsByOneUserQueryHookResult = ReturnType<typeof useGetAllPostsByOneUserQuery>;
+export type GetAllPostsByOneUserLazyQueryHookResult = ReturnType<typeof useGetAllPostsByOneUserLazyQuery>;
+export type GetAllPostsByOneUserQueryResult = ApolloReactCommon.QueryResult<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>;
 export const GetAllUsersWithPostsDocument = gql`
     query GetAllUsersWithPosts {
   users {

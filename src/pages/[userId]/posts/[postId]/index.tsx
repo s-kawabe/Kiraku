@@ -110,6 +110,9 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
           },
           fetchPolicy: 'network-only',
         })
+
+        console.log('クライアント側で再fetchした：', data)
+
         setUser(data.users[0] as Users)
         setPost(data.users[0].posts[0] as Posts)
       } else {
@@ -376,6 +379,7 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
   return addApolloState(client, { props: { user: data.users[0] }, revalidate: 5 })
 }
 
+// pathの作成にはuserのidではなくdisplay_idを使用
 export const getStaticPaths: GetStaticPaths<{ userId: string; postId: string }> = async () => {
   const client = initializeApollo()
   const { data } = await client.query<
