@@ -46,7 +46,7 @@ const AboutPage = () => {
         zIndex="0"
         css={css`
           & img {
-            filter: brightness(70%);
+            filter: brightness(85%);
           }
         `}
       >
@@ -71,6 +71,7 @@ const AboutPage = () => {
             color="white"
             fontSize={['12px', '18px']}
             w="max(29vw, 200px)"
+            textShadow="1px 1px 0px #555"
           >
             「Kiraku」は誰でも気楽に使えるファッション共有SNSです。その日の気分で自由に投稿してみましょう。
           </Text>
@@ -92,11 +93,11 @@ const AboutPage = () => {
             </Link>
           </Box>
         </Box>
-        <NextImage src="/hero.webp" alt="ヒーロー画像" imageType="hero" />
+        <NextImage src="/foo.jpg" alt="ヒーロー画像" imageType="hero" />
       </Box>
 
       {/* cards */}
-      <Box bg={['#FFFBF3', 'transparent']}>
+      <Box bg={['#f6f6f6', 'transparent']}>
         <VStack w="100%" overflow="hidden">
           <Heading color="gray.700" my="40px">
             できること

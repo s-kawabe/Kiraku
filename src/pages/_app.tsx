@@ -13,6 +13,9 @@ import { ChakraWrapper } from '@/chakra/ChakraWrapper'
 import { auth } from '@/firebase/firebaseConfig'
 
 const base = css`
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
       'BIZ UDPGothic', Meiryo, sans-serif !important;
@@ -21,15 +24,15 @@ const base = css`
 
 const App = (props: AppProps) => {
   const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
-  const usingLoginUserVar = useReactiveVar(loginUserVar)
+  const loginUser = useReactiveVar(loginUserVar)
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
         console.log('ユーザログイン')
         // ログイン時はグローバルステートをセットするがログイン後にURLを直接更新するとリセットされるため呼んでおく
-        if (usingLoginUserVar === null) {
-          client
+        if (loginUser === null) {
+          await client
             .query<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>({
               query: ReactiveVarGetUserDocument,
               variables: {

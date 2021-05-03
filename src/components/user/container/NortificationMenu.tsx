@@ -23,7 +23,7 @@ const items: JSX.Element[] = [
 
 const NortificationMenu: VFC = () => {
   return (
-    <MenuList borderRadius="18px">
+    <MenuList borderRadius="18px" boxShadow="1px 1px 8px rgba(50,50,50,0.15)">
       {items.map((item, i) => {
         return (
           <div key={i}>

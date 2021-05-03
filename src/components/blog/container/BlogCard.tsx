@@ -49,9 +49,12 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
       <Box display="flex">
         <HStack spacing={8} ml="auto" mr="10px" my="5px">
           <CommentIconWithCount count={100} fontSize="14px" />
-          {/* ブログのIDも渡す必要がある */}
-          {/* いいねボタンが押されたらそのIDの投稿とログイン中ユーザを紐づける */}
-          <LikeButtonWithCount count={200} isLiked={false} fontSize="14px" iconSize="17px" />
+          <LikeButtonWithCount
+            count={200}
+            fontSize="14px"
+            iconSize="17px"
+            initial={false} // TODO
+          />
         </HStack>
       </Box>
       <Center p="2px" borderRadius="16px">

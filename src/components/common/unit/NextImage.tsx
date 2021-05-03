@@ -25,7 +25,7 @@ const NextImage: VFC<NextImageProps> = (props: NextImageProps) => {
             layout="fill"
             priority={true}
             objectFit="cover"
-            objectPosition="55% 27%"
+            objectPosition="55% 30%"
           />
         ) : (
           <Image src={src} alt={alt} objectFit="contain" width={200} height={200} />

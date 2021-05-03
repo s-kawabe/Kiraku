@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { RiUploadCloudFill } from 'react-icons/ri'
 
 type ImageAreaProps = {
-  setImage: Dispatch<SetStateAction<File | null>>
+  setImage: Dispatch<SetStateAction<File | string | null>>
+  image?: string
 }
 
 const ImageArea: VFC<ImageAreaProps> = (props: ImageAreaProps) => {
-  const [preview, setPreview] = useState('none')
+  const [preview, setPreview] = useState(props.image ?? 'none')
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (files) {

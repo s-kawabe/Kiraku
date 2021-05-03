@@ -14,12 +14,12 @@ const BackgroundCircle: VFC<Props> = (props: Props) => {
   return (
     <Box
       zIndex="-1"
-      w="43vw"
-      h="43vw"
-      bg="#FFFBF3"
+      w="41vw"
+      h="41vw"
+      bg="#f6f6f6"
       borderRadius="50%"
       position="absolute"
-      filter="blur(2px)"
+      filter="blur(4px)"
       {...inputProps}
     ></Box>
   )

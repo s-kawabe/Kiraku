@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 import type { VFC } from 'react'
 
+// import { memo } from 'react'
 import { NextImage } from '@/components/common/unit'
 
 const FOOTER_LINK = [

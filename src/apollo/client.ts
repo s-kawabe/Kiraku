@@ -1,6 +1,8 @@
 import type { NormalizedCacheObject } from '@apollo/client'
-import { ApolloClient, createHttpLink } from '@apollo/client'
+import { ApolloClient, createHttpLink, split } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { WebSocketLink } from '@apollo/client/link/ws'
+import { getMainDefinition } from '@apollo/client/utilities'
 import merge from 'deepmerge'
 import isEqual from 'lodash.isequal'
 import type { AppProps } from 'next/app'
@@ -14,8 +16,16 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-const httpLink = createHttpLink({ uri: process.env.HASURA_URL })
+const wsLink = process.browser
+  ? new WebSocketLink({
+      uri: process.env.HASURA_WS_URL as string,
+      options: {
+        reconnect: true,
+      },
+    })
+  : undefined
 
+const httpLink = createHttpLink({ uri: process.env.HASURA_URL })
 const authLink = setContext(async (_, { headers }) => {
   let token = ''
   // 匿名ログインでない、かつidTokenが存在すればidTokenを設定
@@ -32,10 +42,22 @@ const authLink = setContext(async (_, { headers }) => {
     : { headers }
 })
 
+// Subscriptionsを使う場合はWebSocket, Query/Mutationを使う場合はHTTPで通信を行うように設定
+const splitLink = process.browser
+  ? split(
+      ({ query }) => {
+        const definition = getMainDefinition(query)
+        return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+      },
+      wsLink as WebSocketLink,
+      authLink.concat(httpLink)
+    )
+  : authLink.concat(httpLink)
+
 export const createClient = () => {
   return new ApolloClient({
     cache,
-    link: authLink.concat(httpLink),
+    link: splitLink,
     ssrMode: typeof window === 'undefined',
   })
 }

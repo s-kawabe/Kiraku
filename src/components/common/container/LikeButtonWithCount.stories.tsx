@@ -21,15 +21,15 @@ const Template: Story<LikeButtonWithCountProps> = (args) => {
 export const LikeButton = Template.bind({})
 LikeButton.args = {
   count: 100,
-  isLiked: true,
   fontSize: '18px',
   iconSize: '21px',
+  initial: false,
 }
 
 export const SmallLikeButton = Template.bind({})
 SmallLikeButton.args = {
   count: 100,
-  isLiked: true,
   fontSize: '14px',
   iconSize: '17px',
+  initial: false,
 }

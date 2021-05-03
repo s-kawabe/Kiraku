@@ -33,6 +33,7 @@ import {
 import { storage } from '@/firebase/firebaseConfig'
 
 type FromSubmitData = {
+  id?: number
   content: string
   registerTopics: string[]
   registerBrands: string[]
@@ -83,6 +84,18 @@ export const uploadPostImage = async (file: File) => {
     image,
     imageId: fileName,
   }
+}
+
+// 投稿が削除された際のその投稿に登録されている画像も削除する
+export const deletePostImage = (userId: string, fileName: string) => {
+  const imageRef = storage.ref(`images/post/${userId}`).child(fileName)
+  imageRef
+    .delete()
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    .then(() => {})
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 // 渡されたtopicかbrandsを判定しDBに無い物があれば新しくINSERTする
@@ -144,6 +157,7 @@ const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) 
 
 // 入力データを元にhasuraのpostsテーブルにINSERTする
 export const insertPostToHasura = async ({
+  id,
   content,
   registerTopics,
   registerBrands,
@@ -224,6 +238,7 @@ export const insertPostToHasura = async ({
     return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
       mutation: InsertPostOneDocument,
       variables: {
+        id: id,
         user_id: loginUser.id,
         content: content,
         image: image,

@@ -19,6 +19,7 @@ export type NormalButtonProps = {
     color?: string
   }
   type?: 'button' | 'submit' | 'reset'
+  isDisabled?: boolean
 }
 
 const NormalButton: VFC<NormalButtonProps> = (props: NormalButtonProps) => {

@@ -12,7 +12,7 @@ const PostButtonMenu: VFC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <MenuList borderRadius="18px">
+      <MenuList borderRadius="18px" boxShadow="1px 1px 8px rgba(50,50,50,0.15)">
         <MenuItem
           borderRadius="4px"
           my="5px"
@@ -40,8 +40,8 @@ const PostButtonMenu: VFC = () => {
           </Heading>
         </MenuItem>
       </MenuList>
-      {/* ポスト投稿/編集時のモーダル */}
-      <PostModal isOpen={isOpen} onClose={onClose} isNew />
+      {/* ポスト投稿時のモーダル */}
+      <PostModal isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

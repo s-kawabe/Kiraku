@@ -1,64 +1,179 @@
-import { gql } from '@apollo/client'
-import { Box, Button, Center, Flex, Heading, HStack, Tag, Text, Textarea } from '@chakra-ui/react'
+import { gql, useReactiveVar } from '@apollo/client'
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  HStack,
+  Spinner,
+  Stack,
+  Tag,
+  Text,
+} from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
-import { useState } from 'react'
+import Link from 'next/link'
+import { createRef, Fragment, useEffect, useState } from 'react'
 
+import { loginUserVar } from '@/apollo/cache'
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
+  AddPostLikeMutation,
+  AddPostLikeMutationVariables,
   GetAllUsersWithPostsQuery,
   GetAllUsersWithPostsQueryVariables,
   GetOneUserWithPostQuery,
   GetOneUserWithPostQueryVariables,
+  GetPostLikeCountQuery,
+  GetPostLikeCountQueryVariables,
+  Posts,
+  RemovePostLikeMutation,
+  RemovePostLikeMutationVariables,
   Users,
 } from '@/apollo/graphql'
-import { GetAllUsersWithPostsDocument, GetOneUserWithPostDocument } from '@/apollo/graphql'
-import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
-import { NormalButton } from '@/components/common/unit'
+import {
+  AddPostLikeDocument,
+  GetAllUsersWithPostsDocument,
+  GetOneUserWithPostDocument,
+  GetPostLikeCountDocument,
+  RemovePostLikeDocument,
+  usePostCommentSubscriptionSubscription,
+} from '@/apollo/graphql'
+import { CommentIconWithCount, EditMenu, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
-import { UserIcon } from '@/components/user/unit'
+import { CommentForm, UserIcon } from '@/components/user/unit'
+import { useConvertDateFromHasura } from '@/utils/methods/customeHooks'
 
 type Props = {
   user: Users
 }
 
-const dummyComments = [
-  {
-    userIcon: '/nouser.svg',
-    userId: 'hogehoge',
-    comment: 'すごくいいですね',
-  },
-  {
-    userIcon: '/nouser.svg',
-    userId: 'hugagaga',
-    comment: 'めっちゃやべえな',
-  },
-  {
-    userIcon: '/nouser.svg',
-    userId: 'hugagaga',
-    comment:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis ut voluptatem fugit, natus at placeat beatae ',
-  },
-]
+const initialLikeData = {
+  post_likes: [
+    {
+      id: 0,
+      post_id: 0,
+      user_id: '',
+    },
+  ],
+}
+
 const UserPostPage: NextPage<Props> = (props: Props) => {
-  const [comment, setComment] = useState('')
-  const [user, post] = [props.user, props.user.posts[0]]
+  const [user, setUser] = useState<Users>(props.user)
+  const [post, setPost] = useState<Posts>(props.user.posts[0])
+  const createdAt = useConvertDateFromHasura(post.created_at)
+  const loginUser = useReactiveVar(loginUserVar)
+  const client = initializeApollo()
+  const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialLikeData)
+  const commentInput = createRef<HTMLTextAreaElement>()
 
-  console.log(comment)
+  // 表示している投稿がログイン中のユーザのものかどうか
+  const isMine = loginUser && loginUser.id === user.id
 
-  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value)
+  const { data, loading } = usePostCommentSubscriptionSubscription({
+    variables: {
+      postId: post.id,
+    },
+  })
+
+  const fetchLike = async () => {
+    const data = await client.query<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>({
+      query: GetPostLikeCountDocument,
+      variables: {
+        postId: post.id,
+      },
+      fetchPolicy: 'network-only',
+    })
+    setLikeData(data.data)
+  }
+
+  const isCurrentUserLiked = () => {
+    return likeData.post_likes.some((item) => {
+      return item.user_id === loginUser?.id
+    })
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      // 投稿編集後は最新情報が反映されない為、投稿者本人の場合のみクライアントで投稿を再fetch
+      if (isMine) {
+        const { data } = await client.query<
+          GetOneUserWithPostQuery,
+          GetOneUserWithPostQueryVariables
+        >({
+          query: GetOneUserWithPostDocument,
+          variables: {
+            userId: user.display_id,
+            postId: post.id,
+          },
+          fetchPolicy: 'network-only',
+        })
+        setUser(data.users[0] as Users)
+        setPost(data.users[0].posts[0] as Posts)
+      } else {
+        // いいね情報を取得し直す
+        await fetchLike()
+      }
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleToggleLike = async () => {
+    if (isCurrentUserLiked()) {
+      // insert mutation
+      await client.mutate<RemovePostLikeMutation, RemovePostLikeMutationVariables>({
+        mutation: RemovePostLikeDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          postId: post.id,
+        },
+        fetchPolicy: 'no-cache',
+      })
+    } else {
+      // delete mutation
+      await client.mutate<AddPostLikeMutation, AddPostLikeMutationVariables>({
+        mutation: AddPostLikeDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          postId: post.id,
+        },
+        fetchPolicy: 'no-cache',
+      })
+    }
+    await fetchLike()
+  }
+
+  const shapingComments = () => {
+    if (data) {
+      return data?.post_comments.map((comment) => {
+        return {
+          userIcon: comment.user.image,
+          userName: comment.user.name,
+          userId: comment.user.display_id,
+          comment: comment.comment,
+        }
+      })
+    }
+    return []
   }
 
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
-      <Center w="100%">
-        <Box my="70px">
+      <Center mb="80px">
+        <Box my={{ base: '', sm: '15px', lg: '30px' }}>
           {/* Header */}
-          <Flex mb="30px" align="flex-end" justifyContent="space-between">
+          <Stack
+            direction={{ base: 'column', sm: 'row' }}
+            mb="20px"
+            align={['flex-start', 'flex-end']}
+            justifyContent="space-between"
+            p="5"
+            borderRadius="25px"
+          >
             <Flex align="center">
-              <UserIcon src={user.image ?? '/nouser.svg'} width={85} height={85} />
+              <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
               <Box ml="10px">
                 <Heading fontSize="26px" mb="2px" color="gray.700">
                   {user.name}
@@ -73,15 +188,44 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
               </Button>
             </Flex>
             <HStack spacing="6">
-              <CommentIconWithCount count={100} fontSize="24px" />
-              <LikeButtonWithCount count={200} isLiked={false} fontSize="24px" iconSize="27px" />
+              <Box
+                onClick={() => {
+                  commentInput.current?.focus()
+                }}
+              >
+                <CommentIconWithCount
+                  count={data?.post_comments.length as number}
+                  fontSize="24px"
+                />
+              </Box>
+              <Box
+                onClick={async () => {
+                  if (!loginUser) {
+                    alert('いいね機能をご利用いただくにはログインが必要です')
+                    return
+                  }
+                  await handleToggleLike()
+                }}
+              >
+                <LikeButtonWithCount
+                  count={likeData.post_likes.length}
+                  fontSize="24px"
+                  iconSize="27px"
+                  initial={isCurrentUserLiked()}
+                />
+              </Box>
             </HStack>
-          </Flex>
+          </Stack>
           {/* Main */}
-          <Flex>
+          <Stack direction={{ base: 'column', lg: 'row' }} spacing="14">
             {/* Post Image */}
             <Box position="relative">
-              <Center w="430px" h="630px" bg={'gray.50'} position="relative" borderRadius="20px">
+              <Center
+                w={['330px', '430px']}
+                h={['520px', '630px']}
+                position="relative"
+                borderRadius="20px"
+              >
                 {post.image ? (
                   <Image
                     src={post.image}
@@ -90,9 +234,11 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                     objectFit="contain"
                   />
                 ) : (
-                  <Text fontWeight="bold" fontSize="16px" color="gray.600">
-                    No Image
-                  </Text>
+                  <Center bg="gray.50" w="100%" h="100%" borderRadius="inherit">
+                    <Text fontWeight="bold" fontSize="16px" color="gray.600">
+                      No Image
+                    </Text>
+                  </Center>
                 )}
               </Center>
               {/* Topic/Brand */}
@@ -104,16 +250,28 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   <Flex maxW="430px" flexWrap="wrap">
                     {post.topics.map(({ topic }) => {
                       return (
-                        <Tag
-                          key={topic.id}
-                          mr="15px"
-                          mb="10px"
-                          p="1.5"
-                          borderRadius="8px"
-                          fontSize="13px"
-                        >
-                          {topic.name}
-                        </Tag>
+                        <Fragment key={topic.id}>
+                          <Link
+                            href={{
+                              pathname: '/topics/[topicId]',
+                              query: { topicId: topic.id },
+                            }}
+                          >
+                            <a>
+                              <Tag
+                                mr="15px"
+                                mb="10px"
+                                p="1.5"
+                                borderRadius="8px"
+                                fontSize="13px"
+                                cursor="pointer"
+                                _hover={{ bg: 'gray.200' }}
+                              >
+                                {topic.name}
+                              </Tag>
+                            </a>
+                          </Link>
+                        </Fragment>
                       )
                     })}
                   </Flex>
@@ -127,70 +285,77 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   <Flex maxW="430px" flexWrap="wrap">
                     {post.brands.map(({ brand }) => {
                       return (
-                        <Tag key={brand.id} mr="15px" mb="10px" borderRadius="0">
-                          {brand.name}
-                        </Tag>
+                        <Fragment key={brand.id}>
+                          <Link
+                            href={{
+                              pathname: '/brands/[brandId]',
+                              query: { brandId: brand.id },
+                            }}
+                          >
+                            <a>
+                              <Tag
+                                key={brand.id}
+                                mr="15px"
+                                mb="10px"
+                                borderRadius="0"
+                                cursor="pointer"
+                                _hover={{ bg: 'gray.200' }}
+                              >
+                                {brand.name}
+                              </Tag>
+                            </a>
+                          </Link>
+                        </Fragment>
                       )
                     })}
                   </Flex>
                 </Box>
               )}
             </Box>
-            <Box w="37vw" ml="70px">
+            <Box>
               {/* Content */}
               <Box
+                w={{ base: '95vw', md: '540px' }}
                 p="30px"
                 borderRadius="20px"
                 boxShadow="0px 0px 5px rgba(40,40,40,0.15)"
                 mb="50px"
               >
-                <Text fontSize="18px" color="gray.700">
-                  {post.content}ああああああああああああああああああああ
-                  ああああああああああああああああああああああああああああ
-                  あああああああああああああああああ
+                <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
+                  {post.content}
                 </Text>
-                <Box w="100%" mt="70px" textAlign="right">
-                  <Text color="gray.500">{post.created_at}</Text>
-                </Box>
+                <HStack mt="70px" justifyContent="space-between">
+                  {isMine && <EditMenu post={post} />}
+                  <Text fontSize="14px" color="gray.400">
+                    {createdAt}
+                  </Text>
+                </HStack>
               </Box>
               {/* Comment */}
               <Box mb="120px">
-                <Heading fontSize="20px" color="gray.700" mb="5px">
-                  コメント(1)
+                <Heading fontSize="20px" color="gray.700" mb="">
+                  コメント({data?.post_comments.length})
                 </Heading>
-                <CommentList comments={dummyComments} />
+                {loading ? (
+                  <Center mt="30px" h="100vh" w="100vw">
+                    <Spinner />
+                  </Center>
+                ) : (
+                  <Box mt="10px">
+                    <CommentList comments={shapingComments()} />
+                  </Box>
+                )}
               </Box>
-              <Box>
-                <Textarea
-                  placeholder="コメントを書く"
-                  borderColor="gray.400"
-                  h="150px"
-                  onChange={(e) => {
-                    handleCommentChange(e)
-                  }}
-                />
-                <Box textAlign="right">
-                  <NormalButton
-                    text="送信"
-                    bg="green.300"
-                    color="white"
-                    borderRadius="none"
-                    hover={{ bg: 'green.400' }}
-                    width="100px"
-                  />
-                </Box>
-              </Box>
+              {/* setState関数は渡さず、コンポーネント内でのmutationをsubscriptionsで検知する */}
+              <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} />
             </Box>
-          </Flex>
+          </Stack>
         </Box>
       </Center>
     </LayoutWithHead>
   )
 }
 
-// - propsのuserIdを元に一人のuser情報一式を取得するquery
-// - propsのpostIdを元に一つのpost情報一式を取得するquery
-// - propsのpostIdを元にそれに紐づいたコメント情報一式を取得するquery ※あとまわし
 export const getStaticProps: GetStaticProps<Props, { userId: string; postId: string }> = async ({
   params,
 }) => {
@@ -211,8 +376,6 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
   return addApolloState(client, { props: { user: data.users[0] }, revalidate: 5 })
 }
 
-// - userのid一覧を取得するquery
-// - 記事のid一覧を取得するquery
 export const getStaticPaths: GetStaticPaths<{ userId: string; postId: string }> = async () => {
   const client = initializeApollo()
   const { data } = await client.query<
@@ -250,7 +413,6 @@ gql`
   }
 `
 
-// todo comment_aggregate, like_aggregare, commentの内容 を追加する必要あり
 gql`
   query GetOneUserWithPost($userId: String!, $postId: Int!) {
     users(where: { display_id: { _eq: $userId } }) {
@@ -259,20 +421,87 @@ gql`
       name
       image
       posts(where: { id: { _eq: $postId } }) {
+        id
         content
         image
+        image_id
         gender
         created_at
         topics {
           topic {
+            id
             name
           }
         }
         brands {
           brand {
+            id
             name
           }
         }
+        comments {
+          comment
+          user {
+            display_id
+            name
+            image
+          }
+        }
+      }
+    }
+  }
+`
+
+gql`
+  query GetPostLikeCount($postId: Int!) {
+    post_likes(where: { post_id: { _eq: $postId } }) {
+      id
+      post_id
+      user_id
+    }
+  }
+`
+
+gql`
+  mutation AddPostLike($userId: String!, $postId: Int!) {
+    insert_post_likes_one(object: { user_id: $userId, post_id: $postId }) {
+      id
+      user_id
+      post_id
+    }
+  }
+`
+
+gql`
+  mutation RemovePostLike($userId: String!, $postId: Int!) {
+    delete_post_likes(where: { _and: { user_id: { _eq: $userId }, post_id: { _eq: $postId } } }) {
+      affected_rows
+    }
+  }
+`
+
+gql`
+  mutation AddPostComment($userId: String!, $postId: Int!, $comment: String!) {
+    insert_post_comments_one(object: { user_id: $userId, post_id: $postId, comment: $comment }) {
+      id
+      comment
+      user {
+        id
+        display_id
+        image
+      }
+    }
+  }
+`
+
+gql`
+  subscription PostCommentSubscription($postId: Int!) {
+    post_comments(where: { post_id: { _eq: $postId } }) {
+      comment
+      user {
+        display_id
+        name
+        image
       }
     }
   }
