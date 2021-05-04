@@ -3,11 +3,13 @@ import { InMemoryCache, makeVar } from '@apollo/client'
 
 import type { SideMenu } from '@/utils/constants/Common'
 import type { LoginUser } from '@/utils/constants/User'
+import { mergeFields } from '@/utils/methods/apollo'
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
+        // local variables
         loginUser: {
           read() {
             return loginUserVar()
@@ -23,6 +25,27 @@ export const cache: InMemoryCache = new InMemoryCache({
             return isShowPostModalVar()
           },
         },
+        // API variables
+        topics: {
+          // keyArgsの指定によりAll取得と10件取得のqueryを区別してキャッシュされる
+          // 同じテーブルから複数の条件queryがある場合など？に指定
+          keyArgs: ['order_by', 'limit'],
+          merge(existing = [], incoming) {
+            return mergeFields(existing, incoming)
+          },
+        },
+        brands: {
+          keyArgs: ['order_by', 'limit'],
+          merge(existing = [], incoming) {
+            return mergeFields(existing, incoming)
+          },
+        },
+        // post_likes: {
+        //   keyArgs: ['where'],
+        //   merge(existing = [], incoming) {
+        //     return mergeFields(existing, incoming)
+        //   },
+        // },
       },
     },
   },

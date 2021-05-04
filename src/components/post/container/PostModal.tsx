@@ -44,7 +44,7 @@ import {
   deletePostImage,
   insertPostToHasura,
   uploadPostImage,
-} from '@/utils/methods/Post'
+} from '@/utils/methods/post'
 
 type PostModalProps = {
   isOpen: boolean
@@ -75,7 +75,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   inputElems[1]?.setAttribute('type', 'text')
   inputElems[1]?.setAttribute('list', 'brands-list')
   inputElems[1]?.setAttribute('autocomplete', 'on')
-  console.log(inputElems)
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -165,11 +164,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
       ;(async () => {
         const fetchAllTopics = await client.query<GetAllTopicsQuery, GetAllTopicsQueryVariables>({
           query: GetAllTopicsDocument,
-          fetchPolicy: 'network-only',
         })
         const fetchAllBrands = await client.query<GetAllBrandsQuery, GetAllBrandsQueryVariables>({
           query: GetAllBrandsDocument,
-          fetchPolicy: 'network-only',
         })
 
         const allTopicsData = fetchAllTopics.data.topics.map((data) => {

@@ -59,6 +59,11 @@ export const createClient = () => {
     cache,
     link: splitLink,
     ssrMode: typeof window === 'undefined',
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-and-network',
+      },
+    },
   })
 }
 

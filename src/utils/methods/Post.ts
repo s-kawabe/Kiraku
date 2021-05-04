@@ -241,35 +241,6 @@ export const insertPostToHasura = async ({
     })
     // topic,brandをどちらも登録しない
   } else {
-    // return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
-    //   mutation: InsertPostOneDocument,
-    //   variables: id
-    //     ? image && imageId
-    //       ? {
-    //           // 投稿編集時(画像変更あり時)
-    //           id: id,
-    //           user_id: loginUser.id,
-    //           content: content,
-    //           image: image,
-    //           image_id: imageId,
-    //           gender: gender,
-    //         }
-    //       : {
-    //           // 投稿編集時(画像変更なし時)
-    //           id: id,
-    //           user_id: loginUser.id,
-    //           content: content,
-    //           gender: gender,
-    //         }
-    //     : {
-    //         // 新規投稿時
-    //         user_id: loginUser.id,
-    //         content: content,
-    //         image: image,
-    //         image_id: imageId,
-    //         gender: gender,
-    //       },
-    // })
     if (id) {
       // 投稿編集時
       if (image && imageId) {

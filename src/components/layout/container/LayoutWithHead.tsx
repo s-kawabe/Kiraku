@@ -75,10 +75,10 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       </Head>
 
       <Header user={loginUser} />
-      {sideMenuContext &&
-        (props.sideMenu ? (
-          <Flex position="relative">
-            {isLargerThan1280 ? (
+      {props.sideMenu ? (
+        <Flex position="relative">
+          {sideMenuContext &&
+            (isLargerThan1280 ? (
               <Box>
                 <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
               </Box>
@@ -105,12 +105,12 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
                   />
                 </SidebarDrawer>
               </>
-            )}
-            <Box w="100%">{props.children}</Box>
-          </Flex>
-        ) : (
-          props.children
-        ))}
+            ))}
+          <Box w="100%">{props.children}</Box>
+        </Flex>
+      ) : (
+        props.children
+      )}
       <Footer />
     </>
   )

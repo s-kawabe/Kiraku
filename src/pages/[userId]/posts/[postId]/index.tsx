@@ -51,13 +51,7 @@ type Props = {
 }
 
 const initialLikeData = {
-  post_likes: [
-    {
-      id: 0,
-      post_id: 0,
-      user_id: '',
-    },
-  ],
+  post_likes: [],
 }
 
 const UserPostPage: NextPage<Props> = (props: Props) => {
@@ -111,17 +105,13 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
           fetchPolicy: 'network-only',
         })
 
-        console.log('クライアント側で再fetchした：', data)
-
         setUser(data.users[0] as Users)
         setPost(data.users[0].posts[0] as Posts)
-      } else {
-        // いいね情報を取得し直す
-        await fetchLike()
       }
+      await fetchLike()
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loginUser])
 
   const handleToggleLike = async () => {
     if (isCurrentUserLiked()) {
@@ -132,7 +122,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
           userId: loginUser?.id as string,
           postId: post.id,
         },
-        fetchPolicy: 'no-cache',
       })
     } else {
       // delete mutation
@@ -142,9 +131,9 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
           userId: loginUser?.id as string,
           postId: post.id,
         },
-        fetchPolicy: 'no-cache',
       })
     }
+    console.log('fetchLike!')
     await fetchLike()
   }
 
@@ -376,7 +365,7 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
       notFound: true,
     }
   }
-  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 5 })
+  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 60 })
 }
 
 // pathの作成にはuserのidではなくdisplay_idを使用
