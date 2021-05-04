@@ -3,3 +3,4 @@
 **/.next/*
 **/functions/*
 src/apollo/graphql.tsx
+storybook-static/*

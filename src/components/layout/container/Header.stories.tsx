@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import type { Meta, Story } from '@storybook/react/types-6-0'
 
+import { mockUser } from '../../../../test/mock'
 import type { HeaderProps } from './Header'
 import { Header } from './Header'
 
@@ -21,4 +22,9 @@ const Template: Story<HeaderProps> = (args) => {
 export const LogoutedHeader = Template.bind({})
 LogoutedHeader.args = {
   user: null,
+}
+
+export const LoginnedHeader = Template.bind({})
+LogoutedHeader.args = {
+  user: mockUser,
 }

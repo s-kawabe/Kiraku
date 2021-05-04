@@ -5,3 +5,4 @@ package-lock.json
 public
 functions
 src/apollo/graphql.tsx
+storybook-static/*
