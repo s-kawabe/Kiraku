@@ -21,7 +21,7 @@ const Template: Story<NextImageProps> = (args) => {
 // Attention: changes to the value will be ignored to width and height
 export const HeaderLogo = Template.bind({})
 HeaderLogo.args = {
-  src: '/logo.svg',
+  src: './logo.svg',
   alt: 'アプリケーションロゴ',
   width: 172,
   height: 90,
@@ -29,7 +29,7 @@ HeaderLogo.args = {
 
 export const FooterLogo = Template.bind({})
 FooterLogo.args = {
-  src: '/footerLogo.svg',
+  src: './footerLogo.svg',
   alt: 'アプリケーションロゴ',
   width: 120,
   height: 60,
@@ -37,7 +37,7 @@ FooterLogo.args = {
 
 export const NotFound = Template.bind({})
 NotFound.args = {
-  src: '/Error_404.svg',
+  src: './Error_404.svg',
   alt: 'NotFound Error 404',
   width: 500,
   height: 315,
@@ -45,7 +45,7 @@ NotFound.args = {
 
 export const Post = Template.bind({})
 Post.args = {
-  src: '/post.svg',
+  src: './post.svg',
   alt: 'test',
   width: 440,
   height: 400,
@@ -53,7 +53,7 @@ Post.args = {
 
 export const Blog = Template.bind({})
 Blog.args = {
-  src: '/blog.svg',
+  src: './blog.svg',
   alt: 'test',
   width: 440,
   height: 400,
@@ -61,7 +61,7 @@ Blog.args = {
 
 export const Show = Template.bind({})
 Show.args = {
-  src: '/show.svg',
+  src: './show.svg',
   alt: 'test',
   width: 440,
   height: 400,

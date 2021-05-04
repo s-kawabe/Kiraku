@@ -22,17 +22,17 @@ export const ExistCommentList = Template.bind({})
 ExistCommentList.args = {
   comments: [
     {
-      userIcon: '/myicon.jpg',
+      userIcon: './myicon.jpg',
       userId: 'shin_k_2281',
       comment: `いいですね`,
     },
     {
-      userIcon: '/nouser.svg',
+      userIcon: './nouser.svg',
       userId: 'hogepiyo',
       comment: `ありがとう！！！！`,
     },
     {
-      userIcon: '/myicon.jpg',
+      userIcon: './myicon.jpg',
       userId: 'hugahuga',
       comment: `Lorem ipsum dolor sit amet consectetur adipisicing elit. A minus beatae odit harum nam fugiat iste itaque quam`,
     },

@@ -12,8 +12,8 @@
     "type-check": "tsc --pretty --noEmit",
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test",
-    "storybook": "start-storybook -s public -p 6006",
-    "build-storybook": "build-storybook -s public -c .storybook",
+    "storybook": "start-storybook -s ./public -p 6006",
+    "build-storybook": "build-storybook -s ./public -c .storybook",
     "deploy-storybook": "gh-pages -d storybook-static",
     "codegen": "graphql-codegen --config src/apollo/codegen.js"
   },
