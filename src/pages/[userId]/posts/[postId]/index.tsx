@@ -406,6 +406,7 @@ gql`
   }
 `
 
+// fixme postsを最初のクエリにするよう修正したい
 gql`
   query GetOneUserWithPost($userId: String!, $postId: Int!) {
     users(where: { display_id: { _eq: $userId } }) {
