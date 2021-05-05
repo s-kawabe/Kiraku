@@ -4090,6 +4090,14 @@
   resolved "https://registry.yarnpkg.com/@types/browser-image-compression/-/browser-image-compression-1.0.1.tgz#af984c2d22c0e3fd1f33ab8bba9bebcf44675b92"
   integrity sha512-WjmYq0kGKDs1rBNlrb3WG9/03RXnM6/zvmo93r3uoDa8y19tJ04JWZOJmRdjDph0FtU0kNJMhUrnceFynOQxGQ==
 
+"@types/draft-js@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@types/draft-js/-/draft-js-0.11.1.tgz#f67920c9583054143e263704e250dd3086de3ef3"
+  integrity sha512-jV4LAXYdVvS0ahIROZehkKqHgfLxaDBl3fzfEVqho8NxFAtEaObdIiu7FpPUu/Y97PlJVxGajar7aSikQqz9sQ==
+  dependencies:
+    "@types/react" "*"
+    immutable "~3.7.4"
+
 "@types/duplexify@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@types/duplexify/-/duplexify-3.6.0.tgz#dfc82b64bd3a2168f5bd26444af165bf0237dcd8"

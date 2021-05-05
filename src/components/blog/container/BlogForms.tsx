@@ -6,7 +6,7 @@ import {
   Input,
   Stack,
   Text,
-  Textarea,
+  // Textarea,
   Tooltip,
   VStack,
 } from '@chakra-ui/react'
@@ -15,6 +15,7 @@ import ReactTagInput from '@pathofdev/react-tag-input'
 import type { VFC } from 'react'
 import { useState } from 'react'
 
+import { BlogEditor } from '@/components/blog/unit'
 import { GenderRadioButton } from '@/components/common/unit'
 import type { Gender } from '@/utils/constants/Common'
 
@@ -110,15 +111,7 @@ const BlogForms: VFC = () => {
           </Box>
         </Box>
         {/* Main Text area */}
-        <Textarea
-          placeholder="本文を入力"
-          borderColor="transparent"
-          borderRadius="10px"
-          color="gray.600"
-          fontSize="20px"
-          lineHeight="2"
-          minH="400px"
-        />
+        <BlogEditor />
         {/* Publish Button */}
         <Button
           borderRadius="20px"
