@@ -98,12 +98,12 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
                 onClick={onOpen}
                 position="fixed"
                 borderRadius="50%"
-                w="45px"
-                h="45px"
+                w={['45px', '50px']}
+                h={['45px', '50px']}
                 zIndex="2"
                 bottom={['30px', '60px']}
                 right={['30px', '60px']}
-                boxShadow="1px 1px 6px rgba(30,30,30,0.3)"
+                boxShadow="1px 1px 10px rgba(30,30,30,0.3)"
               />
               {sideMenuContext && (
                 <SidebarDrawer isOpen={isOpen} onClose={onClose}>
