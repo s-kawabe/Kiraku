@@ -1,16 +1,5 @@
 import { gql, useReactiveVar } from '@apollo/client'
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  HStack,
-  Spinner,
-  Stack,
-  Tag,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Heading, HStack, Stack, Tag, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -71,6 +60,8 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
       postId: post.id,
     },
   })
+
+  // TODO:完全な表示になるまでの動きが微妙なので、ローディングを実装したい
 
   const fetchLike = async () => {
     const data = await client.query<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>({
@@ -153,197 +144,193 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
 
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
-      <Center mb="80px">
-        <Box my={{ base: '', sm: '15px', lg: '30px' }}>
-          {/* Header */}
-          <Stack
-            direction={{ base: 'column', sm: 'row' }}
-            mb="20px"
-            align={['flex-start', 'flex-end']}
-            justifyContent="space-between"
-            p="5"
-            borderRadius="25px"
-          >
-            <Flex align="center">
-              <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
-              <Box ml="10px">
-                <Heading fontSize="26px" mb="2px" color="gray.700">
-                  {user.name}
-                </Heading>
-                <Text fontSize="16px" color="gray.500">
-                  @{user.display_id}
-                </Text>
-              </Box>
-              {/* TODO */}
-              <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
-                フォロー
-              </Button>
-            </Flex>
-            <HStack spacing="6">
-              <Box
-                onClick={() => {
-                  commentInput.current?.focus()
-                }}
-              >
-                <CommentIconWithCount
-                  count={data?.post_comments.length as number}
-                  fontSize="24px"
-                />
-              </Box>
-              <Box
-                onClick={async () => {
-                  if (!loginUser) {
-                    alert('いいね機能をご利用いただくにはログインが必要です')
-                    return
-                  }
-                  await handleToggleLike()
-                }}
-              >
-                <LikeButtonWithCount
-                  count={likeData.post_likes.length}
-                  fontSize="24px"
-                  iconSize="27px"
-                  initial={isCurrentUserLiked()}
-                />
-              </Box>
-            </HStack>
-          </Stack>
-          {/* Main */}
-          <Stack direction={{ base: 'column', lg: 'row' }} spacing="14">
-            {/* Post Image */}
-            <Box position="relative">
-              <Center
-                w={['330px', '430px']}
-                h={['520px', '630px']}
-                position="relative"
-                borderRadius="20px"
-              >
-                {post.image ? (
-                  <Image
-                    src={post.image}
-                    alt="ファッション投稿画像"
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                ) : (
-                  <Center bg="gray.50" w="100%" h="100%" borderRadius="inherit">
-                    <Text fontWeight="bold" fontSize="16px" color="gray.600">
-                      No Image
-                    </Text>
-                  </Center>
-                )}
-              </Center>
-              {/* Topic/Brand */}
-              {post.topics.length > 0 && (
-                <Box mt="20px">
-                  <Heading fontSize="18px" color="gray.600" mb="8px">
-                    トピック
+      {!loading && (
+        <Center mb="80px">
+          <Box my={{ base: '', sm: '15px', lg: '30px' }}>
+            {/* Header */}
+            <Stack
+              direction={{ base: 'column', sm: 'row' }}
+              mb="20px"
+              align={['flex-start', 'flex-end']}
+              justifyContent="space-between"
+              p="5"
+              borderRadius="25px"
+            >
+              <Flex align="center">
+                <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
+                <Box ml="10px">
+                  <Heading fontSize="26px" mb="2px" color="gray.700">
+                    {user.name}
                   </Heading>
-                  <Flex maxW="430px" flexWrap="wrap">
-                    {post.topics.map(({ topic }) => {
-                      return (
-                        <Fragment key={topic.id}>
-                          <Link
-                            href={{
-                              pathname: '/topics/[topicId]',
-                              query: { topicId: topic.id },
-                            }}
-                          >
-                            <a>
-                              <Tag
-                                mr="15px"
-                                mb="10px"
-                                p="1.5"
-                                borderRadius="8px"
-                                fontSize="13px"
-                                cursor="pointer"
-                                _hover={{ bg: 'gray.200' }}
-                              >
-                                {topic.name}
-                              </Tag>
-                            </a>
-                          </Link>
-                        </Fragment>
-                      )
-                    })}
-                  </Flex>
-                </Box>
-              )}
-              {post.brands.length > 0 && (
-                <Box mt="20px">
-                  <Heading fontSize="18px" color="gray.600" mb="8px">
-                    ブランド
-                  </Heading>
-                  <Flex maxW="430px" flexWrap="wrap">
-                    {post.brands.map(({ brand }) => {
-                      return (
-                        <Fragment key={brand.id}>
-                          <Link
-                            href={{
-                              pathname: '/brands/[brandId]',
-                              query: { brandId: brand.id },
-                            }}
-                          >
-                            <a>
-                              <Tag
-                                key={brand.id}
-                                mr="15px"
-                                mb="10px"
-                                borderRadius="0"
-                                cursor="pointer"
-                                _hover={{ bg: 'gray.200' }}
-                              >
-                                {brand.name}
-                              </Tag>
-                            </a>
-                          </Link>
-                        </Fragment>
-                      )
-                    })}
-                  </Flex>
-                </Box>
-              )}
-            </Box>
-            <Box>
-              {/* Content */}
-              <Box
-                w={{ base: '95vw', md: '540px' }}
-                p="30px"
-                borderRadius="20px"
-                boxShadow="0px 0px 5px rgba(40,40,40,0.15)"
-                mb="50px"
-              >
-                <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
-                  {post.content}
-                </Text>
-                <HStack mt="70px" justifyContent="space-between">
-                  {isMine && <EditMenu post={post} />}
-                  <Text fontSize="14px" color="gray.400">
-                    {createdAt}
+                  <Text fontSize="16px" color="gray.500">
+                    @{user.display_id}
                   </Text>
-                </HStack>
-              </Box>
-              {/* Comment */}
-              <Box mb="120px">
-                <Heading fontSize="20px" color="gray.700" mb="">
-                  コメント({data?.post_comments.length})
-                </Heading>
-                {loading ? (
-                  <Center mt="30px" h="100vh" w="100vw">
-                    <Spinner />
-                  </Center>
-                ) : (
-                  <Box mt="10px">
-                    <CommentList comments={shapingComments()} />
+                </Box>
+                {/* TODO */}
+                <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
+                  フォロー
+                </Button>
+              </Flex>
+              <HStack spacing="6">
+                <Box
+                  onClick={() => {
+                    commentInput.current?.focus()
+                  }}
+                >
+                  <CommentIconWithCount
+                    count={data?.post_comments.length as number}
+                    fontSize="24px"
+                  />
+                </Box>
+                <Box
+                  onClick={async () => {
+                    if (!loginUser) {
+                      alert('いいね機能をご利用いただくにはログインが必要です')
+                      return
+                    }
+                    await handleToggleLike()
+                  }}
+                >
+                  <LikeButtonWithCount
+                    count={likeData.post_likes.length}
+                    fontSize="24px"
+                    iconSize="27px"
+                    initial={isCurrentUserLiked()}
+                  />
+                </Box>
+              </HStack>
+            </Stack>
+            {/* Main */}
+            <Stack direction={{ base: 'column', lg: 'row' }} spacing="14">
+              {/* Post Image */}
+              <Box position="relative">
+                <Center
+                  w={['330px', '430px']}
+                  h={['520px', '630px']}
+                  position="relative"
+                  borderRadius="20px"
+                >
+                  {post.image ? (
+                    <Image
+                      src={post.image}
+                      alt="ファッション投稿画像"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  ) : (
+                    <Center bg="gray.50" w="100%" h="100%" borderRadius="inherit">
+                      <Text fontWeight="bold" fontSize="16px" color="gray.600">
+                        No Image
+                      </Text>
+                    </Center>
+                  )}
+                </Center>
+                {/* Topic/Brand */}
+                {post.topics.length > 0 && (
+                  <Box mt="20px">
+                    <Heading fontSize="18px" color="gray.600" mb="8px">
+                      トピック
+                    </Heading>
+                    <Flex maxW="430px" flexWrap="wrap">
+                      {post.topics.map(({ topic }) => {
+                        return (
+                          <Fragment key={topic.id}>
+                            <Link
+                              href={{
+                                pathname: '/topics/[topicId]',
+                                query: { topicId: topic.id },
+                              }}
+                            >
+                              <a>
+                                <Tag
+                                  mr="15px"
+                                  mb="10px"
+                                  p="1.5"
+                                  borderRadius="8px"
+                                  fontSize="13px"
+                                  cursor="pointer"
+                                  _hover={{ bg: 'gray.200' }}
+                                >
+                                  {topic.name}
+                                </Tag>
+                              </a>
+                            </Link>
+                          </Fragment>
+                        )
+                      })}
+                    </Flex>
+                  </Box>
+                )}
+                {post.brands.length > 0 && (
+                  <Box mt="20px">
+                    <Heading fontSize="18px" color="gray.600" mb="8px">
+                      ブランド
+                    </Heading>
+                    <Flex maxW="430px" flexWrap="wrap">
+                      {post.brands.map(({ brand }) => {
+                        return (
+                          <Fragment key={brand.id}>
+                            <Link
+                              href={{
+                                pathname: '/brands/[brandId]',
+                                query: { brandId: brand.id },
+                              }}
+                            >
+                              <a>
+                                <Tag
+                                  key={brand.id}
+                                  mr="15px"
+                                  mb="10px"
+                                  borderRadius="0"
+                                  cursor="pointer"
+                                  _hover={{ bg: 'gray.200' }}
+                                >
+                                  {brand.name}
+                                </Tag>
+                              </a>
+                            </Link>
+                          </Fragment>
+                        )
+                      })}
+                    </Flex>
                   </Box>
                 )}
               </Box>
-              {/* setState関数は渡さず、コンポーネント内でのmutationをsubscriptionsで検知する */}
-              <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} />
-            </Box>
-          </Stack>
-        </Box>
-      </Center>
+              <Box>
+                {/* Content */}
+                <Box
+                  w={{ base: '95vw', md: '540px' }}
+                  p="30px"
+                  borderRadius="20px"
+                  boxShadow="0px 0px 5px rgba(40,40,40,0.15)"
+                  mb="50px"
+                >
+                  <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
+                    {post.content}
+                  </Text>
+                  <HStack mt="70px" justifyContent="space-between">
+                    {isMine && <EditMenu post={post} />}
+                    <Text fontSize="14px" color="gray.400">
+                      {createdAt}
+                    </Text>
+                  </HStack>
+                </Box>
+                {/* Comment */}
+                <Box mb="120px">
+                  <Heading fontSize="20px" color="gray.700" mb="">
+                    コメント({data?.post_comments.length})
+                  </Heading>
+                  <Box mt="10px">
+                    <CommentList comments={shapingComments()} />
+                  </Box>
+                </Box>
+                {/* setState関数は渡さず、コンポーネント内でのmutationをsubscriptionsで検知する */}
+                <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} />
+              </Box>
+            </Stack>
+          </Box>
+        </Center>
+      )}
     </LayoutWithHead>
   )
 }

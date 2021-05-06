@@ -16,7 +16,7 @@ const BackgroundCircle: VFC<Props> = (props: Props) => {
       zIndex="-1"
       w="41vw"
       h="41vw"
-      bg="green.50"
+      bg="#FEFFF4"
       borderRadius="50%"
       position="absolute"
       filter="blur(4px)"

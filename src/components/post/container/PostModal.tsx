@@ -69,7 +69,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 
   // FIXME: タグのコンポーネント内のInputに属性を追加したいが現状直接DOMを触りにいくしか方法がない
   const inputElems = document.getElementsByClassName('react-tag-input__input')
-  console.log(inputElems)
   inputElems[0]?.setAttribute('type', 'text')
   inputElems[0]?.setAttribute('list', 'topics-list')
   inputElems[0]?.setAttribute('autocomplete', 'on')
