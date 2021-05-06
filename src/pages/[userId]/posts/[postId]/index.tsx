@@ -124,7 +124,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
         },
       })
     }
-    console.log('fetchLike!')
     await fetchLike()
   }
 

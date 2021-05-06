@@ -38,11 +38,11 @@ const BlogForms: VFC = () => {
         w={{ base: '90vw', sm: '85vw', xl: '65vw' }}
         // bg="gray.100"
       >
-        <Heading color="gray.600" fontSize={['20px', '26px']} mb="20px">
+        <Heading color="gray.600" fontSize={['20px', '26px']} mb="30px">
           ブログを投稿
         </Heading>
         {/* Title area */}
-        <Box mb="20px" w="100%">
+        <Box mb="40px" w="100%">
           <Input
             label="タイトル"
             placeholder="タイトルを入力"
@@ -54,9 +54,11 @@ const BlogForms: VFC = () => {
             w="100%"
           />
         </Box>
-        <Box w={{ base: '100%', xl: '80%' }} px="30px">
+        {/* Main Text area */}
+        <BlogEditor />
+        <Box w={{ base: '100%', xl: '80%' }} mt="40px">
           {/* Gender radio area */}
-          <Flex justify="flex-start" w="100%" mb="20px">
+          <Flex justify="flex-start" w="100%" mb="30px" mt="40px">
             <GenderRadioButton default={'ALL'} setGender={setGender} />
           </Flex>
           {/* Topic/Brand area */}
@@ -67,8 +69,8 @@ const BlogForms: VFC = () => {
           >
             <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
               <Box>
-                <Text color="gray.700">トピックを追加</Text>
-                <Box w={{ base: '80vw', lg: '400px' }}>
+                <Text color="gray.600">トピックを追加</Text>
+                <Box w={{ base: '80vw', lg: '400px', xl: '22vw' }}>
                   <ReactTagInput
                     placeholder="トピックは5つまで"
                     maxTags={5}
@@ -86,8 +88,8 @@ const BlogForms: VFC = () => {
             </Tooltip>
             <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
               <Box>
-                <Text color="gray.700">ブランドを追加</Text>
-                <Box w={{ base: '80vw', lg: '400px' }}>
+                <Text color="gray.600">ブランドを追加</Text>
+                <Box w={{ base: '80vw', lg: '400px', xl: '22vw' }}>
                   <ReactTagInput
                     placeholder="ブランドは5つまで"
                     maxTags={5}
@@ -110,8 +112,6 @@ const BlogForms: VFC = () => {
             </Text>
           </Box>
         </Box>
-        {/* Main Text area */}
-        <BlogEditor />
         {/* Publish Button */}
         <Button
           borderRadius="20px"
