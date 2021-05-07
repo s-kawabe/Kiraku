@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  jsonb: any;
   timestamptz: string;
 };
 
@@ -1293,7 +1294,7 @@ export type Blogs = {
   comments: Array<BlogComments>;
   /** An aggregated array relationship */
   comments_aggregate: BlogCommentsAggregate;
-  content: Scalars['String'];
+  content: Scalars['jsonb'];
   created_at: Scalars['timestamptz'];
   gender: Scalars['String'];
   id: Scalars['Int'];
@@ -1350,6 +1351,12 @@ export type BlogsCommentsAggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<BlogCommentsOrderBy>>;
   where?: Maybe<BlogCommentsBoolExp>;
+};
+
+
+/** columns and relationships of "blogs" */
+export type BlogsContentArgs = {
+  path?: Maybe<Scalars['String']>;
 };
 
 
@@ -1437,6 +1444,11 @@ export type BlogsAggregateOrderBy = {
   variance?: Maybe<BlogsVarianceOrderBy>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type BlogsAppendInput = {
+  content?: Maybe<Scalars['jsonb']>;
+};
+
 /** input type for inserting array relation for remote table "blogs" */
 export type BlogsArrRelInsertInput = {
   data: Array<BlogsInsertInput>;
@@ -1461,7 +1473,7 @@ export type BlogsBoolExp = {
   _or?: Maybe<Array<Maybe<BlogsBoolExp>>>;
   brands?: Maybe<BlogBrandsBoolExp>;
   comments?: Maybe<BlogCommentsBoolExp>;
-  content?: Maybe<StringComparisonExp>;
+  content?: Maybe<JsonbComparisonExp>;
   created_at?: Maybe<TimestamptzComparisonExp>;
   gender?: Maybe<StringComparisonExp>;
   id?: Maybe<IntComparisonExp>;
@@ -1476,10 +1488,27 @@ export type BlogsBoolExp = {
 /** unique or primary key constraints on table "blogs" */
 export enum BlogsConstraint {
   /** unique or primary key constraint */
+  BLOGS_CONTENTS_KEY = 'blogs_contents_key',
+  /** unique or primary key constraint */
   BLOGS_ID_KEY = 'blogs_id_key',
   /** unique or primary key constraint */
   BLOGS_PKEY = 'blogs_pkey'
 }
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type BlogsDeleteAtPathInput = {
+  content?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type BlogsDeleteElemInput = {
+  content?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type BlogsDeleteKeyInput = {
+  content?: Maybe<Scalars['String']>;
+};
 
 /** input type for incrementing integer column in table "blogs" */
 export type BlogsIncInput = {
@@ -1490,7 +1519,7 @@ export type BlogsIncInput = {
 export type BlogsInsertInput = {
   brands?: Maybe<BlogBrandsArrRelInsertInput>;
   comments?: Maybe<BlogCommentsArrRelInsertInput>;
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1505,7 +1534,6 @@ export type BlogsInsertInput = {
 /** aggregate max on columns */
 export type BlogsMaxFields = {
   __typename?: 'blogs_max_fields';
-  content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1516,7 +1544,6 @@ export type BlogsMaxFields = {
 
 /** order by max() on columns of table "blogs" */
 export type BlogsMaxOrderBy = {
-  content?: Maybe<OrderBy>;
   created_at?: Maybe<OrderBy>;
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
@@ -1528,7 +1555,6 @@ export type BlogsMaxOrderBy = {
 /** aggregate min on columns */
 export type BlogsMinFields = {
   __typename?: 'blogs_min_fields';
-  content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1539,7 +1565,6 @@ export type BlogsMinFields = {
 
 /** order by min() on columns of table "blogs" */
 export type BlogsMinOrderBy = {
-  content?: Maybe<OrderBy>;
   created_at?: Maybe<OrderBy>;
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
@@ -1591,6 +1616,11 @@ export type BlogsPkColumnsInput = {
   id: Scalars['Int'];
 };
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type BlogsPrependInput = {
+  content?: Maybe<Scalars['jsonb']>;
+};
+
 /** select columns of table "blogs" */
 export enum BlogsSelectColumn {
   /** column name */
@@ -1611,7 +1641,7 @@ export enum BlogsSelectColumn {
 
 /** input type for updating data in table "blogs" */
 export type BlogsSetInput = {
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -2035,6 +2065,30 @@ export type BrandsVarianceFields = {
 /** order by variance() on columns of table "brands" */
 export type BrandsVarianceOrderBy = {
   id?: Maybe<OrderBy>;
+};
+
+
+/** expression to compare columns of type jsonb. All fields are combined with logical 'AND'. */
+export type JsonbComparisonExp = {
+  /** is the column contained in the given json value */
+  _contained_in?: Maybe<Scalars['jsonb']>;
+  /** does the column contain the given json value at the top level */
+  _contains?: Maybe<Scalars['jsonb']>;
+  _eq?: Maybe<Scalars['jsonb']>;
+  _gt?: Maybe<Scalars['jsonb']>;
+  _gte?: Maybe<Scalars['jsonb']>;
+  /** does the string exist as a top-level key in the column */
+  _has_key?: Maybe<Scalars['String']>;
+  /** do all of these strings exist as top-level keys in the column */
+  _has_keys_all?: Maybe<Array<Scalars['String']>>;
+  /** do any of these strings exist as top-level keys in the column */
+  _has_keys_any?: Maybe<Array<Scalars['String']>>;
+  _in?: Maybe<Array<Scalars['jsonb']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['jsonb']>;
+  _lte?: Maybe<Scalars['jsonb']>;
+  _neq?: Maybe<Scalars['jsonb']>;
+  _nin?: Maybe<Array<Scalars['jsonb']>>;
 };
 
 /** mutation root */
@@ -2679,7 +2733,12 @@ export type MutationRootUpdateBlogTopicsByPkArgs = {
 
 /** mutation root */
 export type MutationRootUpdateBlogsArgs = {
+  _append?: Maybe<BlogsAppendInput>;
+  _delete_at_path?: Maybe<BlogsDeleteAtPathInput>;
+  _delete_elem?: Maybe<BlogsDeleteElemInput>;
+  _delete_key?: Maybe<BlogsDeleteKeyInput>;
   _inc?: Maybe<BlogsIncInput>;
+  _prepend?: Maybe<BlogsPrependInput>;
   _set?: Maybe<BlogsSetInput>;
   where: BlogsBoolExp;
 };
@@ -2687,7 +2746,12 @@ export type MutationRootUpdateBlogsArgs = {
 
 /** mutation root */
 export type MutationRootUpdateBlogsByPkArgs = {
+  _append?: Maybe<BlogsAppendInput>;
+  _delete_at_path?: Maybe<BlogsDeleteAtPathInput>;
+  _delete_elem?: Maybe<BlogsDeleteElemInput>;
+  _delete_key?: Maybe<BlogsDeleteKeyInput>;
   _inc?: Maybe<BlogsIncInput>;
+  _prepend?: Maybe<BlogsPrependInput>;
   _set?: Maybe<BlogsSetInput>;
   pk_columns: BlogsPkColumnsInput;
 };

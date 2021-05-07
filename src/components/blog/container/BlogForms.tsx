@@ -12,23 +12,41 @@ import {
 } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
+import { convertToRaw, EditorState } from 'draft-js'
 import type { VFC } from 'react'
 import { useState } from 'react'
 
 import { BlogEditor } from '@/components/blog/unit'
 import { GenderRadioButton } from '@/components/common/unit'
 import type { Gender } from '@/utils/constants/Common'
+import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
+import { addTagAttribute } from '@/utils/methods/post'
+// 編集の時はblog１件分のデータがpropsに入ってくる
+// type Props = {
+//   blogData?: any
+// }
 
 const BlogForms: VFC = () => {
-  // const [allTopics, setAllTopics] = useState<string[]>([])
-  // const [allBrands, setAllBrands] = useState<string[]>([])
+  const [allTopics, allBrands] = useAllTopicsAndBrands()
 
+  const [title, setTitle] = useState('')
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
   const [gender, setGender] = useState<Gender>('ALL')
+  const [editorState, setEditorState] = useState(() => {
+    return EditorState.createEmpty()
+  })
+
+  addTagAttribute()
+
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value)
+  }
 
   const handleSubmit = () => {
-    console.log(gender, registerTopics, registerBrands)
+    // textareaに入力されたデータをJSON化する
+    const userInputData = convertToRaw(editorState.getCurrentContent())
+    console.log(title, gender, registerTopics, registerBrands, userInputData)
   }
 
   return (
@@ -52,10 +70,14 @@ const BlogForms: VFC = () => {
             color="gray.700"
             fontSize="22px"
             w="100%"
+            value={title}
+            onChange={(e) => {
+              handleChangeTitle(e)
+            }}
           />
         </Box>
         {/* Main Text area */}
-        <BlogEditor />
+        <BlogEditor editorState={editorState} setEditorState={setEditorState} />
         <Box w={{ base: '100%', xl: '80%' }} mt="40px">
           {/* Gender radio area */}
           <Flex justify="flex-start" w="100%" mb="30px" mt="40px">
@@ -67,6 +89,16 @@ const BlogForms: VFC = () => {
             spacing="30"
             justifyContent="space-between"
           >
+            <datalist id="topics-list">
+              {allTopics.map((topic) => {
+                return <option key={topic} value={topic} />
+              })}
+            </datalist>
+            <datalist id="brands-list">
+              {allBrands.map((topic) => {
+                return <option key={topic} value={topic} />
+              })}
+            </datalist>
             <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
               <Box>
                 <Text color="gray.600">トピックを追加</Text>

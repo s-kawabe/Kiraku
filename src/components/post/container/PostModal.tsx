@@ -27,19 +27,21 @@ import { useEffect, useState } from 'react'
 
 import { isShowPostModalVar } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
-import { initializeApollo } from '@/apollo/client'
+// import { initializeApollo } from '@/apollo/client'
 import type {
-  GetAllBrandsQuery,
-  GetAllBrandsQueryVariables,
-  GetAllTopicsQuery,
-  GetAllTopicsQueryVariables,
+  // GetAllBrandsQuery,
+  // GetAllBrandsQueryVariables,
+  // GetAllTopicsQuery,
+  // GetAllTopicsQueryVariables,
   Posts,
 } from '@/apollo/graphql'
-import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
+// import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
+import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
 import {
+  addTagAttribute,
   checkExistTable,
   deletePostImage,
   insertPostToHasura,
@@ -52,12 +54,11 @@ type PostModalProps = {
   postData?: Posts // edit時のみ取得
 }
 const TEXT_LIMIT = 250
-const client = initializeApollo()
+// const client = initializeApollo()
 
 const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const router = useRouter()
-  const [allTopics, setAllTopics] = useState<string[]>([])
-  const [allBrands, setAllBrands] = useState<string[]>([])
+  const [allTopics, allBrands] = useAllTopicsAndBrands([isShowPostModalVar()])
 
   const [disableSubmit, setDisableSubmit] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
@@ -67,14 +68,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [gender, setGender] = useState<Gender>('ALL')
   const [image, setImage] = useState<File | string | null>(null)
 
-  // FIXME: タグのコンポーネント内のInputに属性を追加したいが現状直接DOMを触りにいくしか方法がない
-  const inputElems = document.getElementsByClassName('react-tag-input__input')
-  inputElems[0]?.setAttribute('type', 'text')
-  inputElems[0]?.setAttribute('list', 'topics-list')
-  inputElems[0]?.setAttribute('autocomplete', 'on')
-  inputElems[1]?.setAttribute('type', 'text')
-  inputElems[1]?.setAttribute('list', 'brands-list')
-  inputElems[1]?.setAttribute('autocomplete', 'on')
+  addTagAttribute()
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -158,31 +152,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     }
   }
 
-  // TopicsとBrandsのデータを全件取得してstateに入れておく
-  useEffect(() => {
-    if (isShowPostModalVar()) {
-      ;(async () => {
-        const fetchAllTopics = await client.query<GetAllTopicsQuery, GetAllTopicsQueryVariables>({
-          query: GetAllTopicsDocument,
-        })
-        const fetchAllBrands = await client.query<GetAllBrandsQuery, GetAllBrandsQueryVariables>({
-          query: GetAllBrandsDocument,
-        })
-
-        const allTopicsData = fetchAllTopics.data.topics.map((data) => {
-          return data.name
-        })
-        const allBrandsData = fetchAllBrands.data.brands.map((data) => {
-          return data.name
-        })
-
-        setAllTopics(allTopicsData)
-        setAllBrands(allBrandsData)
-      })()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShowPostModalVar()])
-
   useEffect(() => {
     if (props.postData) {
       setContent(props.postData.content)
@@ -236,7 +205,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   </CircularProgress>
                 </Box>
               </Box>
-              {/* トピックとブランドは編集不可とする */}
               <datalist id="topics-list">
                 {allTopics.map((topic) => {
                   return <option key={topic} value={topic} />

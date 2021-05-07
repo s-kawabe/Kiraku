@@ -287,3 +287,14 @@ export const insertPostToHasura = async ({
     }
   }
 }
+
+// FIXME: タグのコンポーネント内のInputに属性を追加したいが現状直接DOMを触りにいくしか方法がない
+export const addTagAttribute = () => {
+  const inputElems = document.getElementsByClassName('react-tag-input__input')
+  inputElems[0]?.setAttribute('type', 'text')
+  inputElems[0]?.setAttribute('list', 'topics-list')
+  inputElems[0]?.setAttribute('autocomplete', 'on')
+  inputElems[1]?.setAttribute('type', 'text')
+  inputElems[1]?.setAttribute('list', 'brands-list')
+  inputElems[1]?.setAttribute('autocomplete', 'on')
+}
