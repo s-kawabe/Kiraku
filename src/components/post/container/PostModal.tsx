@@ -46,7 +46,7 @@ import {
   deletePostImage,
   insertPostToHasura,
   uploadPostImage,
-} from '@/utils/methods/post'
+} from '@/utils/methods/Post'
 
 type PostModalProps = {
   isOpen: boolean

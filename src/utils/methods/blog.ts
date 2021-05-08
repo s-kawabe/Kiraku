@@ -17,7 +17,7 @@ import {
   InsertBlogOneWithTopicsDocument,
 } from '@/apollo/graphql'
 import { storage } from '@/firebase/firebaseConfig'
-import { compressFile, getRandom16DigitsName, mappingContentToId } from '@/utils/methods/post'
+import { compressFile, getRandom16DigitsName, mappingContentToId } from '@/utils/methods/Post'
 
 type FromSubmitedData = {
   title: string

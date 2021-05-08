@@ -9,7 +9,7 @@ import type { Posts } from '@/apollo/graphql'
 import type { DeletePostOneMutation, DeletePostOneMutationVariables } from '@/apollo/graphql'
 import { DeletePostOneDocument } from '@/apollo/graphql'
 import { PostModal } from '@/components/post/container'
-import { deletePostImage } from '@/utils/methods/post'
+import { deletePostImage } from '@/utils/methods/Post'
 
 type Props = {
   post: Posts

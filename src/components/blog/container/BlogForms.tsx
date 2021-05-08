@@ -21,9 +21,9 @@ import { useState } from 'react'
 import { BlogEditor } from '@/components/blog/unit'
 import { GenderRadioButton } from '@/components/common/unit'
 import type { Gender } from '@/utils/constants/Common'
-import { insertBlogToHasura } from '@/utils/methods/blog.ts'
-import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks.tsx'
-import { addTagAttribute, checkExistTable } from '@/utils/methods/post.ts'
+import { insertBlogToHasura } from '@/utils/methods/Blog'
+import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
+import { addTagAttribute, checkExistTable } from '@/utils/methods/Post'
 // 編集の時はblog１件分のデータがpropsに入ってくる
 // type Props = {
 //   blogData?: any
