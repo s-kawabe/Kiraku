@@ -14,12 +14,14 @@ import {
 import { Button } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
 import { convertToRaw, EditorState } from 'draft-js'
+import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useState } from 'react'
 
 import { BlogEditor } from '@/components/blog/unit'
 import { GenderRadioButton } from '@/components/common/unit'
 import type { Gender } from '@/utils/constants/Common'
+import { insertBlogToHasura } from '@/utils/methods/blog'
 import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
 import { addTagAttribute, checkExistTable } from '@/utils/methods/post'
 // 編集の時はblog１件分のデータがpropsに入ってくる
@@ -30,6 +32,7 @@ import { addTagAttribute, checkExistTable } from '@/utils/methods/post'
 const BlogForms: VFC = () => {
   const [allTopics, allBrands] = useAllTopicsAndBrands()
 
+  const [isLoading, setIsLoading] = useState(false)
   const [title, setTitle] = useState('')
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
@@ -38,6 +41,8 @@ const BlogForms: VFC = () => {
     return EditorState.createEmpty()
   })
 
+  const router = useRouter()
+
   // brandとtopicのinputにautoComplete属性を追加
   addTagAttribute()
 
@@ -45,13 +50,42 @@ const BlogForms: VFC = () => {
     setTitle(e.target.value)
   }
 
+  // const resetState = () => {
+  //   setTitle('')
+  //   setRegisterTopics([])
+  //   setRegisterBrands([])
+  //   setEditorState(EditorState.createEmpty())
+  // }
+
   const handleSubmit = async () => {
+    setIsLoading(true)
     // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
     await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
     await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
     // textareaに入力されたデータをJSON化する
     const userInputData = convertToRaw(editorState.getCurrentContent())
     console.log(title, gender, registerTopics, registerBrands, userInputData)
+
+    const ret = await insertBlogToHasura({
+      title,
+      gender,
+      registerTopics,
+      registerBrands,
+      userInputData,
+    })
+
+    // hasuraのblogsテーブルにINSERTし、そのidを返却してもらって /blogs/[blogId].tsxページへ遷移する
+    setIsLoading(false)
+    const data = ret?.data?.insert_blogs_one
+    if (data) {
+      router.push({
+        pathname: '/[userId]/blogs/[blogId]',
+        query: {
+          userId: data?.user_id.substring(0, 8),
+          blogId: data?.id,
+        },
+      })
+    }
   }
 
   return (
@@ -158,6 +192,7 @@ const BlogForms: VFC = () => {
           position="fixed"
           bottom={['90px', '120px']}
           right={['30px', '60px']}
+          isLoading={isLoading}
         >
           公開
         </Button>
