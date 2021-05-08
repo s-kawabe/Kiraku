@@ -7,7 +7,7 @@ import type { EditorState } from 'draft-js'
 import dynamic from 'next/dynamic'
 import type { Dispatch, SetStateAction, VFC } from 'react'
 
-import { uploadBlogImage } from '@/utils/methods/Blog'
+import { uploadBlogImage } from '@/utils/methods/blog'
 
 type Props = {
   editorState: EditorState

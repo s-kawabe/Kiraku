@@ -64,7 +64,6 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
       <>
         <p>user: {props.blog.user.name} </p>
         <p>blogTitle: {props.blog.title} </p>
-        {/* ブログのcontentを表示してみる */}
         <Box w="80vw" minH="70vh" bg="gray.100" p="20px" borderRadius="15px" css={headingReset}>
           <Editor
             editorState={content}
