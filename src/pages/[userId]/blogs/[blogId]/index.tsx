@@ -1,5 +1,10 @@
 import { gql } from '@apollo/client'
+import { Box } from '@chakra-ui/react'
+import { css } from '@emotion/react'
+import { convertFromRaw, EditorState } from 'draft-js'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+// import { useState } from 'react'
+import dynamic from 'next/dynamic'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -16,13 +21,60 @@ type Props = {
   blog: Blogs
 }
 
+const headingReset = css`
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 8px 0px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 5px 0px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 3px 0px;
+  }
+
+  h4,
+  h5 {
+    font-size: 1rem;
+  }
+`
+
+const Editor = dynamic(
+  async () => {
+    const mod = await import('react-draft-wysiwyg')
+    return mod.Editor
+  },
+  {
+    ssr: false,
+  }
+)
+
 const UserBlogPage: NextPage<Props> = (props: Props) => {
+  const contentState = convertFromRaw(props.blog.content)
+  const content = EditorState.createWithContent(contentState)
   return (
-    <LayoutWithHead title={`${props.blog.user.name}のブログ「${props.blog.title}」`}>
+    <LayoutWithHead title={`${props.blog.user.name}のブログ「${props.blog.title}」`} sideMenu>
       <>
         <p>user: {props.blog.user.name} </p>
         <p>blogTitle: {props.blog.title} </p>
         {/* ブログのcontentを表示してみる */}
+        <Box w="80vw" minH="70vh" bg="gray.100" p="20px" borderRadius="15px" css={headingReset}>
+          <Editor
+            editorState={content}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            readOnly={true}
+            toolbar={{ options: [] }}
+          />
+        </Box>
       </>
     </LayoutWithHead>
   )

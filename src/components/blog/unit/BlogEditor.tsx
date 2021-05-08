@@ -4,8 +4,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Box } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import type { EditorState } from 'draft-js'
+import dynamic from 'next/dynamic'
 import type { Dispatch, SetStateAction, VFC } from 'react'
-import { Editor } from 'react-draft-wysiwyg'
 
 import { uploadBlogImage } from '@/utils/methods/blog'
 
@@ -53,6 +53,16 @@ const uploadImage = async (file: any): Promise<EditorImage> => {
     })
   })
 }
+
+const Editor = dynamic(
+  async () => {
+    const mod = await import('react-draft-wysiwyg')
+    return mod.Editor
+  },
+  {
+    ssr: false,
+  }
+)
 
 const BlogEditor: VFC<Props> = (props: Props) => {
   // eslint-disable-next-line react/destructuring-assignment

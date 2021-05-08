@@ -147,7 +147,7 @@ export const checkExistTable = async ({ key, formInsert, allData }: CheckExistTo
 }
 
 // topicsかbrandsの配列を受け取り、hasura上のidにマッピングして返す
-const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) => {
+export const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) => {
   const client = initializeApollo()
   if (key === 'topics') {
     const result = await client.query<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>({
