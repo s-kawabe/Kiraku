@@ -22,6 +22,7 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
       <>
         <p>user: {props.blog.user.name} </p>
         <p>blogTitle: {props.blog.title} </p>
+        {/* ブログのcontentを表示してみる */}
       </>
     </LayoutWithHead>
   )

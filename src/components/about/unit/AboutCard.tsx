@@ -25,7 +25,7 @@ const AboutCard: VFC<AboutCardProps> = (props: AboutCardProps) => {
       h={['400px', '530px']}
       bg="white"
       borderRadius="25"
-      boxShadow={'0px 0px 20px rgba(60,60,60,0.15)'}
+      boxShadow={'0px 10px 20px rgba(60,60,60,0.1)'}
     >
       <VStack spacing="4">
         <Heading color="gray.600" fontSize={['20px', '24px']}>

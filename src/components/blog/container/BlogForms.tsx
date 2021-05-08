@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client'
 import {
   Box,
   Center,
@@ -20,7 +21,7 @@ import { BlogEditor } from '@/components/blog/unit'
 import { GenderRadioButton } from '@/components/common/unit'
 import type { Gender } from '@/utils/constants/Common'
 import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
-import { addTagAttribute } from '@/utils/methods/post'
+import { addTagAttribute, checkExistTable } from '@/utils/methods/post'
 // 編集の時はblog１件分のデータがpropsに入ってくる
 // type Props = {
 //   blogData?: any
@@ -37,13 +38,17 @@ const BlogForms: VFC = () => {
     return EditorState.createEmpty()
   })
 
+  // brandとtopicのinputにautoComplete属性を追加
   addTagAttribute()
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
+    await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
+    await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
     // textareaに入力されたデータをJSON化する
     const userInputData = convertToRaw(editorState.getCurrentContent())
     console.log(title, gender, registerTopics, registerBrands, userInputData)
@@ -162,3 +167,101 @@ const BlogForms: VFC = () => {
 }
 
 export { BlogForms }
+
+// brand,topicをそれぞれ一つも登録しない場合
+gql`
+  mutation InsertBlogOne($user_id: String!, $title: String!, $content: jsonb!, $gender: String!) {
+    insert_blogs_one(
+      object: { user_id: $user_id, title: $title, content: $content, gender: $gender }
+    ) {
+      id
+      user_id
+      content
+      gender
+      created_at
+    }
+  }
+`
+
+// topicsのみを1つ以上登録する場合
+gql`
+  mutation InsertBlogOneWithTopics(
+    $user_id: String!
+    $title: String!
+    $content: jsonb!
+    $gender: String!
+    $topicsIds: [blog_topics_insert_input!]!
+  ) {
+    insert_blogs_one(
+      object: {
+        user_id: $user_id
+        title: $title
+        content: $content
+        gender: $gender
+        topics: { data: $topicsIds }
+      }
+    ) {
+      id
+      user_id
+      content
+      gender
+      created_at
+    }
+  }
+`
+
+// brandsのみを一つ以上登録する場合
+gql`
+  mutation InsertBlogOneWithBrands(
+    $user_id: String!
+    $title: String!
+    $content: jsonb!
+    $gender: String!
+    $brandsIds: [blog_brands_insert_input!]!
+  ) {
+    insert_blogs_one(
+      object: {
+        user_id: $user_id
+        title: $title
+        content: $content
+        gender: $gender
+        brands: { data: $brandsIds }
+      }
+    ) {
+      id
+      user_id
+      content
+      gender
+      created_at
+    }
+  }
+`
+
+//topicとbrands両方を一つ以上登録する場合
+gql`
+  mutation InsertBlogOneWithTopicsAndBrands(
+    $user_id: String!
+    $title: String!
+    $content: jsonb!
+    $gender: String!
+    $topicsIds: [blog_topics_insert_input!]!
+    $brandsIds: [blog_brands_insert_input!]!
+  ) {
+    insert_blogs_one(
+      object: {
+        user_id: $user_id
+        title: $title
+        content: $content
+        gender: $gender
+        topics: { data: $topicsIds }
+        brands: { data: $brandsIds }
+      }
+    ) {
+      id
+      user_id
+      content
+      gender
+      created_at
+    }
+  }
+`

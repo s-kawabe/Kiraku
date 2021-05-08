@@ -54,16 +54,16 @@ type CheckExistTopics = {
   allData: string[]
 }
 
-// 画像をfirebaseにアップロードする
-export const uploadPostImage = async (file: File) => {
-  const loginUser = loginUserVar()
-  const compressedFile = await imageCompression(file, {
+// 画像の圧縮
+export const compressFile = async (file: File): Promise<File> => {
+  return await imageCompression(file, {
     maxSizeMB: 0.5,
     maxWidthOrHeight: 800,
   })
-  const blob = new Blob([compressedFile], { type: file.type })
+}
 
-  // Generate random 16 digits strings
+// firebase storageに画像を上げる際のfileNameランダム生成
+export const getRandom16DigitsName = () => {
   const S = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   const N = 16
   const fileName = Array.from(crypto.getRandomValues(new Uint32Array(N)))
@@ -72,6 +72,16 @@ export const uploadPostImage = async (file: File) => {
     })
     .join('')
 
+  return fileName
+}
+
+// 画像をfirebaseにアップロードする
+export const uploadPostImage = async (file: File) => {
+  const loginUser = loginUserVar()
+  const compressedFile = await compressFile(file)
+  const blob = new Blob([compressedFile], { type: file.type })
+
+  const fileName = getRandom16DigitsName()
   const uploadRef = storage.ref(`images/post/${loginUser?.id}`).child(fileName)
 
   const image: string = await new Promise((resolve, _) => {
@@ -83,6 +93,7 @@ export const uploadPostImage = async (file: File) => {
         })
       })
       .catch((error) => {
+        alert('画像のアップロードに失敗しました')
         console.log(error)
       })
   })

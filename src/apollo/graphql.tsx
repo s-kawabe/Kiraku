@@ -1488,8 +1488,6 @@ export type BlogsBoolExp = {
 /** unique or primary key constraints on table "blogs" */
 export enum BlogsConstraint {
   /** unique or primary key constraint */
-  BLOGS_CONTENTS_KEY = 'blogs_contents_key',
-  /** unique or primary key constraint */
   BLOGS_ID_KEY = 'blogs_id_key',
   /** unique or primary key constraint */
   BLOGS_PKEY = 'blogs_pkey'
@@ -6948,6 +6946,74 @@ export enum UsersUpdateColumn {
   UPDATED_AT = 'updated_at'
 }
 
+export type InsertBlogOneMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+}>;
+
+
+export type InsertBlogOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertBlogOneWithTopicsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+  topicsIds: Array<BlogTopicsInsertInput> | BlogTopicsInsertInput;
+}>;
+
+
+export type InsertBlogOneWithTopicsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertBlogOneWithBrandsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+  brandsIds: Array<BlogBrandsInsertInput> | BlogBrandsInsertInput;
+}>;
+
+
+export type InsertBlogOneWithBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertBlogOneWithTopicsAndBrandsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+  topicsIds: Array<BlogTopicsInsertInput> | BlogTopicsInsertInput;
+  brandsIds: Array<BlogBrandsInsertInput> | BlogBrandsInsertInput;
+}>;
+
+
+export type InsertBlogOneWithTopicsAndBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
 export type DeletePostOneMutationVariables = Exact<{
   postId: Scalars['Int'];
 }>;
@@ -7176,7 +7242,7 @@ export type GetAllBlogsByOneUserQuery = (
   { __typename?: 'query_root' }
   & { blogs: Array<(
     { __typename?: 'blogs' }
-    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+    & Pick<Blogs, 'id' | 'title' | 'user_id' | 'content' | 'gender' | 'created_at'>
     & { topics: Array<(
       { __typename?: 'blog_topics' }
       & { topic: (
@@ -7425,6 +7491,178 @@ export type CreateUserMutation = (
 );
 
 
+export const InsertBlogOneDocument = gql`
+    mutation InsertBlogOne($user_id: String!, $title: String!, $content: jsonb!, $gender: String!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneMutation, InsertBlogOneMutationVariables>;
+
+/**
+ * __useInsertBlogOneMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneMutation, { data, loading, error }] = useInsertBlogOneMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useInsertBlogOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneMutation, InsertBlogOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneMutation, InsertBlogOneMutationVariables>(InsertBlogOneDocument, options);
+      }
+export type InsertBlogOneMutationHookResult = ReturnType<typeof useInsertBlogOneMutation>;
+export type InsertBlogOneMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneMutation>;
+export type InsertBlogOneMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneMutation, InsertBlogOneMutationVariables>;
+export const InsertBlogOneWithTopicsDocument = gql`
+    mutation InsertBlogOneWithTopics($user_id: String!, $title: String!, $content: jsonb!, $gender: String!, $topicsIds: [blog_topics_insert_input!]!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender, topics: {data: $topicsIds}}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneWithTopicsMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>;
+
+/**
+ * __useInsertBlogOneWithTopicsMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneWithTopicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneWithTopicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneWithTopicsMutation, { data, loading, error }] = useInsertBlogOneWithTopicsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *      topicsIds: // value for 'topicsIds'
+ *   },
+ * });
+ */
+export function useInsertBlogOneWithTopicsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>(InsertBlogOneWithTopicsDocument, options);
+      }
+export type InsertBlogOneWithTopicsMutationHookResult = ReturnType<typeof useInsertBlogOneWithTopicsMutation>;
+export type InsertBlogOneWithTopicsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithTopicsMutation>;
+export type InsertBlogOneWithTopicsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>;
+export const InsertBlogOneWithBrandsDocument = gql`
+    mutation InsertBlogOneWithBrands($user_id: String!, $title: String!, $content: jsonb!, $gender: String!, $brandsIds: [blog_brands_insert_input!]!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender, brands: {data: $brandsIds}}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneWithBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>;
+
+/**
+ * __useInsertBlogOneWithBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneWithBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneWithBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneWithBrandsMutation, { data, loading, error }] = useInsertBlogOneWithBrandsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *      brandsIds: // value for 'brandsIds'
+ *   },
+ * });
+ */
+export function useInsertBlogOneWithBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>(InsertBlogOneWithBrandsDocument, options);
+      }
+export type InsertBlogOneWithBrandsMutationHookResult = ReturnType<typeof useInsertBlogOneWithBrandsMutation>;
+export type InsertBlogOneWithBrandsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithBrandsMutation>;
+export type InsertBlogOneWithBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>;
+export const InsertBlogOneWithTopicsAndBrandsDocument = gql`
+    mutation InsertBlogOneWithTopicsAndBrands($user_id: String!, $title: String!, $content: jsonb!, $gender: String!, $topicsIds: [blog_topics_insert_input!]!, $brandsIds: [blog_brands_insert_input!]!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender, topics: {data: $topicsIds}, brands: {data: $brandsIds}}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneWithTopicsAndBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>;
+
+/**
+ * __useInsertBlogOneWithTopicsAndBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneWithTopicsAndBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneWithTopicsAndBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneWithTopicsAndBrandsMutation, { data, loading, error }] = useInsertBlogOneWithTopicsAndBrandsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *      topicsIds: // value for 'topicsIds'
+ *      brandsIds: // value for 'brandsIds'
+ *   },
+ * });
+ */
+export function useInsertBlogOneWithTopicsAndBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>(InsertBlogOneWithTopicsAndBrandsDocument, options);
+      }
+export type InsertBlogOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertBlogOneWithTopicsAndBrandsMutation>;
+export type InsertBlogOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithTopicsAndBrandsMutation>;
+export type InsertBlogOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>;
 export const DeletePostOneDocument = gql`
     mutation DeletePostOne($postId: Int!) {
   delete_posts_by_pk(id: $postId) {
@@ -8020,6 +8258,7 @@ export const GetAllBlogsByOneUserDocument = gql`
     query GetAllBlogsByOneUser($userId: String!) {
   blogs(where: {user_id: {_eq: $userId}}) {
     id
+    title
     user_id
     content
     gender

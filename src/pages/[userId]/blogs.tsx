@@ -19,6 +19,7 @@ gql`
   query GetAllBlogsByOneUser($userId: String!) {
     blogs(where: { user_id: { _eq: $userId } }) {
       id
+      title
       user_id
       content
       gender

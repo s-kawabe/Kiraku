@@ -68,6 +68,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [gender, setGender] = useState<Gender>('ALL')
   const [image, setImage] = useState<File | string | null>(null)
 
+  // brandとtopicのinputにautoComplete属性を追加
   addTagAttribute()
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -164,8 +165,8 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 
   return (
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
-      <ModalOverlay bg="rgba(30, 30, 30, 0.5)" />
-      <ModalContent bg="gray.100" borderRadius="20px">
+      <ModalOverlay bg="rgba(30, 30, 30, 0.3)" />
+      <ModalContent bg="gray.100" borderRadius="20px" boxShadow="0 25px 50px -12px rgba(0,0,0,0.4)">
         <ModalHeader fontWeight="semibold" fontSize="20px" color="gray.700" py="30px">
           <Center>ポストを{props.postData ? '編集' : '投稿'}</Center>
         </ModalHeader>

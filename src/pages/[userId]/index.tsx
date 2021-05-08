@@ -81,7 +81,7 @@ const UserPostListPage = () => {
                   query: { userId: loginUser?.display_id, blogId: item.id },
                 }}
               >
-                <a>{item.content}</a>
+                <a>{item.title}</a>
               </Link>
             </Box>
           )
