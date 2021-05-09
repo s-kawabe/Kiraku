@@ -130,14 +130,19 @@ const AboutPage = () => {
         </Center>
 
         <Stack
-          px={['20px', '80px', '150px']}
+          px={['50px', '80px', '150px']}
           pb="90px"
           direction={{ base: 'column', lg: 'row' }}
           align="center"
         >
           <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
           <Box maxW="400px">
-            <Text color="gray.600" lineHeight="1.8" fontWeight="semibold">
+            <Text
+              color="gray.600"
+              lineHeight="1.8"
+              fontWeight="semibold"
+              fontSize={['14px', '1em']}
+            >
               ログイン後、右上の投稿ボタンから「ポスト」を選択することでポスト投稿が行えます。
               こちらから画像/テキスト/トピック/ブランド/性別を入力して投稿してみましょう。
               このコンテンツを「ポスト」と呼びます。
@@ -146,14 +151,19 @@ const AboutPage = () => {
         </Stack>
 
         <Stack
-          px={['20px', '80px', '150px']}
+          px={['50px', '80px', '150px']}
           pb="90px"
           direction={{ base: 'column', lg: 'row' }}
           align="center"
           flexDirection={{ base: 'column-reverse', lg: 'row' }}
         >
           <Box maxW="400px">
-            <Text color="gray.600" lineHeight="1.8" fontWeight="semibold">
+            <Text
+              color="gray.600"
+              lineHeight="1.8"
+              fontWeight="semibold"
+              fontSize={['14px', '1em']}
+            >
               ログイン後、右上の投稿ボタンから「ブログ」を選択することでブログ投稿が行えます。
               こちらは長めの文章を記述したい場合に最適です。
               タイトル/本文/性別/トピック/ブランドを入力して投稿してみましょう。
@@ -166,14 +176,19 @@ const AboutPage = () => {
         </Stack>
 
         <Stack
-          px={['20px', '80px', '150px']}
+          px={['50px', '80px', '150px']}
           pb="90px"
           direction={{ base: 'column', lg: 'row' }}
           align="center"
         >
           <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
           <Box maxW="400px">
-            <Text color="gray.600" lineHeight="1.8" fontWeight="semibold">
+            <Text
+              color="gray.600"
+              lineHeight="1.8"
+              fontWeight="semibold"
+              fontSize={['14px', '1em']}
+            >
               投稿したコンテンツにはコメントやいいねがつけられます。
               また、自分のプロフィール画面から自分の投稿したコンテンツ、いいねをしたコンテンツ、
               フォローしている人、フォローされている人、の情報を見ることができます。
