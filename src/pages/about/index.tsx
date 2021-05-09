@@ -97,12 +97,16 @@ const AboutPage = () => {
       </Box>
 
       {/* cards */}
-      <Box bg={['#f6f6f6', 'transparent']}>
+      <Box>
         <VStack w="100%" overflow="hidden">
-          <Heading color="gray.700" my="40px">
+          <Heading color="gray.700" my="60px">
             できること
           </Heading>
-          <Stack direction={['column', 'row']} spacing={['8', '5vw']} mb={['50px', '100px']}>
+          <Stack
+            direction={{ base: 'column', xl: 'row' }}
+            spacing={['8', '5vw']}
+            mb={['50px', '100px']}
+          >
             <AboutCard heading={post.heading} text={post.text} src={post.img} alt={post.heading} />
             <AboutCard heading={blog.heading} text={blog.text} src={blog.img} alt={blog.heading} />
             <AboutCard heading={show.heading} text={show.text} src={show.img} alt={show.heading} />
@@ -118,7 +122,66 @@ const AboutPage = () => {
           </Box>
         </VStack>
       </Box>
-      <Center h="90px" borderY="1px" borderColor="gray.300" bg="white">
+      <VStack bg="linear-gradient(108.15deg, #F4FCDB 0.79%, #FBFFEC 48.73%, #EFFFBB 99.49%)">
+        <Center w="100%">
+          <Heading color="gray.700" my="60px">
+            つかいかた
+          </Heading>
+        </Center>
+
+        <Stack
+          px={['20px', '80px', '150px']}
+          pb="90px"
+          direction={{ base: 'column', lg: 'row' }}
+          align="center"
+        >
+          <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
+          <Box maxW="400px">
+            <Text color="gray.600" lineHeight="1.8" fontWeight="semibold">
+              ログイン後、右上の投稿ボタンから「ポスト」を選択することでポスト投稿が行えます。
+              こちらから画像/テキスト/トピック/ブランド/性別を入力して投稿してみましょう。
+              このコンテンツを「ポスト」と呼びます。
+            </Text>
+          </Box>
+        </Stack>
+
+        <Stack
+          px={['20px', '80px', '150px']}
+          pb="90px"
+          direction={{ base: 'column', lg: 'row' }}
+          align="center"
+          flexDirection={{ base: 'column-reverse', lg: 'row' }}
+        >
+          <Box maxW="400px">
+            <Text color="gray.600" lineHeight="1.8" fontWeight="semibold">
+              ログイン後、右上の投稿ボタンから「ブログ」を選択することでブログ投稿が行えます。
+              こちらは長めの文章を記述したい場合に最適です。
+              タイトル/本文/性別/トピック/ブランドを入力して投稿してみましょう。
+              ブログ本文中には画像も挿入することが可能です。 このコンテンツを「ブログ」と呼びます。
+            </Text>
+          </Box>
+          <Box>
+            <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
+          </Box>
+        </Stack>
+
+        <Stack
+          px={['20px', '80px', '150px']}
+          pb="90px"
+          direction={{ base: 'column', lg: 'row' }}
+          align="center"
+        >
+          <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
+          <Box maxW="400px">
+            <Text color="gray.600" lineHeight="1.8" fontWeight="semibold">
+              投稿したコンテンツにはコメントやいいねがつけられます。
+              また、自分のプロフィール画面から自分の投稿したコンテンツ、いいねをしたコンテンツ、
+              フォローしている人、フォローされている人、の情報を見ることができます。
+            </Text>
+          </Box>
+        </Stack>
+      </VStack>
+      <Center h="90px" borderTop="1px" borderColor="gray.300" bg="white">
         <Heading size="lg" color="gray.700">
           最近の投稿
         </Heading>
@@ -133,7 +196,7 @@ const AboutPage = () => {
             ポスト
           </Text>
           <Box>
-            <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
+            <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={8}>
               <PostCard
                 imageSrc="/fashion.jpeg"
                 text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
@@ -190,7 +253,7 @@ const AboutPage = () => {
             ブログ
           </Text>
           <Box>
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={7}>
+            <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={7}>
               <BlogCard
                 title="おすすめメンズアイテム5選"
                 text={`こんにちは、皆様いかがお過ごしでしょうか

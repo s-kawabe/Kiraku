@@ -3,6 +3,10 @@ import imageCompression from 'browser-image-compression'
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
+  EditPostOneImageNoUpdateMutation,
+  EditPostOneImageNoUpdateMutationVariables,
+  EditPostOneMutation,
+  EditPostOneMutationVariables,
   InsertBrandsMutation,
   InsertBrandsMutationVariables,
   InsertPostOneMutation,
@@ -21,6 +25,8 @@ import type {
   MappingTopicsToIdQueryVariables,
 } from '@/apollo/graphql'
 import {
+  EditPostOneDocument,
+  EditPostOneImageNoUpdateDocument,
   InsertBrandsDocument,
   InsertPostOneDocument,
   InsertPostOneWithBrandsDocument,
@@ -48,16 +54,16 @@ type CheckExistTopics = {
   allData: string[]
 }
 
-// 画像をfirebaseにアップロードする
-export const uploadPostImage = async (file: File) => {
-  const loginUser = loginUserVar()
-  const compressedFile = await imageCompression(file, {
+// 画像の圧縮
+export const compressFile = async (file: File): Promise<File> => {
+  return await imageCompression(file, {
     maxSizeMB: 0.5,
     maxWidthOrHeight: 800,
   })
-  const blob = new Blob([compressedFile], { type: file.type })
+}
 
-  // Generate random 16 digits strings
+// firebase storageに画像を上げる際のfileNameランダム生成
+export const getRandom16DigitsName = () => {
   const S = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   const N = 16
   const fileName = Array.from(crypto.getRandomValues(new Uint32Array(N)))
@@ -66,6 +72,16 @@ export const uploadPostImage = async (file: File) => {
     })
     .join('')
 
+  return fileName
+}
+
+// 画像をfirebaseにアップロードする
+export const uploadPostImage = async (file: File) => {
+  const loginUser = loginUserVar()
+  const compressedFile = await compressFile(file)
+  const blob = new Blob([compressedFile], { type: file.type })
+
+  const fileName = getRandom16DigitsName()
   const uploadRef = storage.ref(`images/post/${loginUser?.id}`).child(fileName)
 
   const image: string = await new Promise((resolve, _) => {
@@ -77,6 +93,7 @@ export const uploadPostImage = async (file: File) => {
         })
       })
       .catch((error) => {
+        alert('画像のアップロードに失敗しました')
         console.log(error)
       })
   })
@@ -130,7 +147,7 @@ export const checkExistTable = async ({ key, formInsert, allData }: CheckExistTo
 }
 
 // topicsかbrandsの配列を受け取り、hasura上のidにマッピングして返す
-const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) => {
+export const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) => {
   const client = initializeApollo()
   if (key === 'topics') {
     const result = await client.query<MappingTopicsToIdQuery, MappingTopicsToIdQueryVariables>({
@@ -157,7 +174,7 @@ const mappingContentToId = async (key: 'topics' | 'brands', contents: string[]) 
 
 // 入力データを元にhasuraのpostsテーブルにINSERTする
 export const insertPostToHasura = async ({
-  id,
+  id, // idがある場合は編集mutation
   content,
   registerTopics,
   registerBrands,
@@ -235,16 +252,60 @@ export const insertPostToHasura = async ({
     })
     // topic,brandをどちらも登録しない
   } else {
-    return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
-      mutation: InsertPostOneDocument,
-      variables: {
-        id: id,
-        user_id: loginUser.id,
-        content: content,
-        image: image,
-        image_id: imageId,
-        gender: gender,
-      },
-    })
+    if (id) {
+      // 投稿編集時
+      if (image && imageId) {
+        // 画像変更あり
+        return await client.mutate<EditPostOneMutation, EditPostOneMutationVariables>({
+          mutation: EditPostOneDocument,
+          variables: {
+            id: id,
+            user_id: loginUser.id,
+            content: content,
+            image: image,
+            image_id: imageId,
+            gender: gender,
+          },
+        })
+      } else {
+        // 画像変更なし
+        return await client.mutate<
+          EditPostOneImageNoUpdateMutation,
+          EditPostOneImageNoUpdateMutationVariables
+        >({
+          mutation: EditPostOneImageNoUpdateDocument,
+          variables: {
+            // 投稿編集時
+            id: id,
+            user_id: loginUser.id,
+            content: content,
+            gender: gender,
+          },
+        })
+      }
+    } else {
+      // 新規投稿時
+      return await client.mutate<InsertPostOneMutation, InsertPostOneMutationVariables>({
+        mutation: InsertPostOneDocument,
+        variables: {
+          user_id: loginUser.id,
+          content: content,
+          image: image,
+          image_id: imageId,
+          gender: gender,
+        },
+      })
+    }
   }
+}
+
+// FIXME: タグのコンポーネント内のInputに属性を追加したいが現状直接DOMを触りにいくしか方法がない
+export const addTagAttribute = () => {
+  const inputElems = document.getElementsByClassName('react-tag-input__input')
+  inputElems[0]?.setAttribute('type', 'text')
+  inputElems[0]?.setAttribute('list', 'topics-list')
+  inputElems[0]?.setAttribute('autocomplete', 'on')
+  inputElems[1]?.setAttribute('type', 'text')
+  inputElems[1]?.setAttribute('list', 'brands-list')
+  inputElems[1]?.setAttribute('autocomplete', 'on')
 }

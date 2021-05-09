@@ -2,6 +2,7 @@ import '@pathofdev/react-tag-input/build/index.css'
 
 import { gql } from '@apollo/client'
 import {
+  Box,
   Button,
   Center,
   CircularProgress,
@@ -14,11 +15,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
+  Text,
   Textarea,
   Tooltip,
   VStack,
 } from '@chakra-ui/react'
-import { Box, Text } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
@@ -26,19 +27,21 @@ import { useEffect, useState } from 'react'
 
 import { isShowPostModalVar } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
-import { initializeApollo } from '@/apollo/client'
+// import { initializeApollo } from '@/apollo/client'
 import type {
-  GetAllBrandsQuery,
-  GetAllBrandsQueryVariables,
-  GetAllTopicsQuery,
-  GetAllTopicsQueryVariables,
+  // GetAllBrandsQuery,
+  // GetAllBrandsQueryVariables,
+  // GetAllTopicsQuery,
+  // GetAllTopicsQueryVariables,
   Posts,
 } from '@/apollo/graphql'
-import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
+// import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
+import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
 import {
+  addTagAttribute,
   checkExistTable,
   deletePostImage,
   insertPostToHasura,
@@ -51,12 +54,11 @@ type PostModalProps = {
   postData?: Posts // edit時のみ取得
 }
 const TEXT_LIMIT = 250
-const client = initializeApollo()
+// const client = initializeApollo()
 
 const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const router = useRouter()
-  const [allTopics, setAllTopics] = useState<string[]>([])
-  const [allBrands, setAllBrands] = useState<string[]>([])
+  const [allTopics, allBrands] = useAllTopicsAndBrands([isShowPostModalVar()])
 
   const [disableSubmit, setDisableSubmit] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
@@ -65,6 +67,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
   const [gender, setGender] = useState<Gender>('ALL')
   const [image, setImage] = useState<File | string | null>(null)
+
+  // brandとtopicのinputにautoComplete属性を追加
+  addTagAttribute()
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value
@@ -134,6 +139,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     setIsLoading(false)
     const data = ret?.data?.insert_posts_one
     if (data) {
+      // 投稿時は投稿したポストの詳細ページへ遷移
       // 編集時はページをリロードして変更を反映させる
       props.postData
         ? router.reload()
@@ -147,33 +153,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
     }
   }
 
-  // TopicsとBrandsのデータを全件取得してstateに入れておく
-  useEffect(() => {
-    if (isShowPostModalVar()) {
-      ;(async () => {
-        const fetchAllTopics = await client.query<GetAllTopicsQuery, GetAllTopicsQueryVariables>({
-          query: GetAllTopicsDocument,
-          fetchPolicy: 'network-only',
-        })
-        const fetchAllBrands = await client.query<GetAllBrandsQuery, GetAllBrandsQueryVariables>({
-          query: GetAllBrandsDocument,
-          fetchPolicy: 'network-only',
-        })
-
-        const allTopicsData = fetchAllTopics.data.topics.map((data) => {
-          return data.name
-        })
-        const allBrandsData = fetchAllBrands.data.brands.map((data) => {
-          return data.name
-        })
-
-        setAllTopics(allTopicsData)
-        setAllBrands(allBrandsData)
-      })()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShowPostModalVar()])
-
   useEffect(() => {
     if (props.postData) {
       setContent(props.postData.content)
@@ -181,21 +160,13 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
         setImage(props.postData.image)
       }
     }
-    const inputElems = document.getElementsByClassName('react-tag-input__input')
-    inputElems[0]?.setAttribute('type', 'text')
-    inputElems[0]?.setAttribute('list', 'topics-list')
-    inputElems[0]?.setAttribute('autocomplete', 'on')
-    inputElems[1]?.setAttribute('type', 'text')
-    inputElems[1]?.setAttribute('list', 'brands-list')
-    inputElems[1]?.setAttribute('autocomplete', 'on')
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Modal isOpen={props.isOpen} onClose={wrapperOnClose} size="6xl" scrollBehavior="outside">
-      <ModalOverlay bg="rgba(30, 30, 30, 0.5)" />
-      <ModalContent bg="gray.100" borderRadius="20px">
+      <ModalOverlay bg="rgba(30, 30, 30, 0.3)" />
+      <ModalContent bg="gray.100" borderRadius="20px" boxShadow="0 25px 50px -12px rgba(0,0,0,0.4)">
         <ModalHeader fontWeight="semibold" fontSize="20px" color="gray.700" py="30px">
           <Center>ポストを{props.postData ? '編集' : '投稿'}</Center>
         </ModalHeader>
@@ -235,7 +206,6 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
                   </CircularProgress>
                 </Box>
               </Box>
-              {/* トピックとブランドは編集不可とする */}
               <datalist id="topics-list">
                 {allTopics.map((topic) => {
                   return <option key={topic} value={topic} />
@@ -310,7 +280,7 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
               <Flex w="100%" justify="flex-end">
                 <Button
                   colorScheme="teal"
-                  mb={3}
+                  mb={[10, 3]}
                   mt={3}
                   onClick={handleSubmit}
                   px="50px"
@@ -330,11 +300,9 @@ const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
 
 export { PostModal }
 
-// 新規投稿時：brand,topicをそれぞれ一つも登録しない場合
-// 編集時：brand,topicをそれぞれ一つも修正しない場合
+// 新規投稿: brand,topicをそれぞれ一つも登録しない場合
 gql`
   mutation InsertPostOne(
-    $id: Int
     $user_id: String!
     $content: String!
     $image: String
@@ -343,16 +311,11 @@ gql`
   ) {
     insert_posts_one(
       object: {
-        id: $id
         user_id: $user_id
         content: $content
         image: $image
         image_id: $image_id
         gender: $gender
-      }
-      on_conflict: {
-        constraint: posts_pkey
-        update_columns: [content, image, image_id, gender, updated_at]
       }
     ) {
       id
@@ -366,7 +329,7 @@ gql`
   }
 `
 
-// topicsのみを1つ以上登録する場合
+// 新規投稿: topicsのみを1つ以上登録する場合
 gql`
   mutation InsertPostOneWithTopics(
     $user_id: String!
@@ -397,7 +360,7 @@ gql`
   }
 `
 
-// brandsのみを一つ以上登録する場合
+// 新規投稿: brandsのみを一つ以上登録する場合
 gql`
   mutation InsertPostOneWithBrands(
     $user_id: String!
@@ -428,7 +391,7 @@ gql`
   }
 `
 
-// topicとbrands両方を一つ以上登録する場合
+// 新規投稿: topicとbrands両方を一つ以上登録する場合
 gql`
   mutation InsertPostOneWithTopicsAndBrands(
     $user_id: String!
@@ -449,6 +412,64 @@ gql`
         topics: { data: $topicsIds }
         brands: { data: $brandsIds }
       }
+    ) {
+      id
+      user_id
+      content
+      image
+      image_id
+      gender
+      created_at
+    }
+  }
+`
+
+// 投稿編集時(画像を編集)
+gql`
+  mutation EditPostOne(
+    $id: Int!
+    $user_id: String!
+    $content: String!
+    $image: String!
+    $image_id: String!
+    $gender: String!
+  ) {
+    insert_posts_one(
+      object: {
+        id: $id
+        user_id: $user_id
+        content: $content
+        image: $image
+        image_id: $image_id
+        gender: $gender
+      }
+      on_conflict: {
+        constraint: posts_pkey
+        update_columns: [content, image, image_id, gender, updated_at]
+      }
+    ) {
+      id
+      user_id
+      content
+      image
+      image_id
+      gender
+      created_at
+    }
+  }
+`
+
+// // 投稿編集時(画像は編集しない)
+gql`
+  mutation EditPostOneImageNoUpdate(
+    $id: Int!
+    $user_id: String!
+    $content: String!
+    $gender: String!
+  ) {
+    insert_posts_one(
+      object: { id: $id, user_id: $user_id, content: $content, gender: $gender }
+      on_conflict: { constraint: posts_pkey, update_columns: [content, gender, updated_at] }
     ) {
       id
       user_id

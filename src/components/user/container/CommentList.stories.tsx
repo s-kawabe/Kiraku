@@ -18,28 +18,28 @@ const Template: Story<CommentListProps> = (args) => {
   )
 }
 
-export const HeaderCommentList = Template.bind({})
-HeaderCommentList.args = {
+export const ExistCommentList = Template.bind({})
+ExistCommentList.args = {
   comments: [
     {
-      userIcon: '/myicon.jpg',
-      userId: 'shin_K_2281',
-      comment: `いいですね〜〜〜〜〜うああああああああああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああああああああああ`,
+      userIcon: './myicon.jpg',
+      userId: 'shin_k_2281',
+      comment: `いいですね`,
     },
     {
-      userIcon: '/myicon.jpg',
+      userIcon: './nouser.svg',
       userId: 'hogepiyo',
-      comment: `いいですねああああああああああああ
-        あああああああああああああああああああああああああああああああああああああああ`,
+      comment: `ありがとう！！！！`,
     },
     {
-      userIcon: '/myicon.jpg',
+      userIcon: './myicon.jpg',
       userId: 'hugahuga',
-      comment: `いいですね〜〜〜〜〜うああああああああああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああああああああああ
-        ああああああああああああああああああああああああああああああああああああああああ`,
+      comment: `Lorem ipsum dolor sit amet consectetur adipisicing elit. A minus beatae odit harum nam fugiat iste itaque quam`,
     },
   ],
+} as CommentListProps
+
+export const NoCommentList = Template.bind({})
+NoCommentList.args = {
+  comments: [],
 } as CommentListProps

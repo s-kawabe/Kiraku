@@ -2,15 +2,17 @@ import { useReactiveVar } from '@apollo/client'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { Box, Center, Flex, IconButton, Spinner, useDisclosure } from '@chakra-ui/react'
 import Head from 'next/head'
+// import { useRouter } from 'next/router'
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
 
 import { sideMenuVar } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
-import { useTop10TopicAndBrandQuery } from '@/apollo/graphql'
+import { initializeApollo } from '@/apollo/client'
+import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '@/apollo/graphql'
+import { Top10TopicAndBrandDocument } from '@/apollo/graphql'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList, SidebarDrawer } from '@/components/layout/container'
-import type { SideMenu } from '@/utils/constants/Common'
+// import type { SideMenu } from '@/utils/constants/Common'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
@@ -20,37 +22,37 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
-  const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
-  const isLargerThan1200 = useIsDesktop('1200px')
+  // const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
+  const isLargerThan1280 = useIsDesktop('1280px')
   const loginUser = useReactiveVar(loginUserVar)
+  const sideMenuContext = useReactiveVar(sideMenuVar)
+  const client = initializeApollo()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { data, loading, error } = useTop10TopicAndBrandQuery()
 
-  useEffect(() => {
-    setSideMenuContext(sideMenuVar())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sideMenuVar()])
-
-  if (error) {
-    console.log(error)
-  }
-  if (data) {
-    sideMenuVar(data)
-  }
+  client
+    .query<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>({
+      query: Top10TopicAndBrandDocument,
+    })
+    .then((data) => {
+      sideMenuVar(data.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = 'https://kiraku.app'
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
 
-  if (loading) {
-    return (
-      <Center mt="30px" h="100vh" w="100vw">
-        <Spinner />
-      </Center>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <Center mt="30px" h="100vh" w="100vw">
+  //       <Spinner />
+  //     </Center>
+  //   )
+  // }
 
   return (
     <>
@@ -75,42 +77,49 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       </Head>
 
       <Header user={loginUser} />
-      {sideMenuContext &&
-        (props.sideMenu ? (
-          <Flex position="relative">
-            {isLargerThan1200 ? (
-              <Box>
+      {props.sideMenu ? (
+        <Flex position="relative">
+          {isLargerThan1280 ? (
+            <Box w="190px">
+              {sideMenuContext ? (
                 <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
-              </Box>
-            ) : (
-              // ボタンを置いて、押したらサイドバー が出るやつ
-              <>
-                <IconButton
-                  aria-label="Aside Open"
-                  icon={<HamburgerIcon />}
-                  onClick={onOpen}
-                  position="fixed"
-                  borderRadius="50%"
-                  w="45px"
-                  h="45px"
-                  zIndex="2"
-                  bottom="60px"
-                  right="60px"
-                  boxShadow="1px 1px 6px rgba(30,30,30,0.3)"
-                />
+              ) : (
+                <Center mt="30px" h="100vh" w="100vw">
+                  <Spinner />
+                </Center>
+              )}
+            </Box>
+          ) : (
+            // ボタンを置いて、押したらサイドバー が出るやつ
+            <>
+              <IconButton
+                aria-label="Aside Open"
+                icon={<HamburgerIcon />}
+                onClick={onOpen}
+                position="fixed"
+                borderRadius="50%"
+                w={['45px', '50px']}
+                h={['45px', '50px']}
+                zIndex="2"
+                bottom={['30px', '60px']}
+                right={['30px', '60px']}
+                boxShadow="1px 1px 10px rgba(30,30,30,0.3)"
+              />
+              {sideMenuContext && (
                 <SidebarDrawer isOpen={isOpen} onClose={onClose}>
                   <AsideContextList
                     topics={sideMenuContext.topics}
                     brands={sideMenuContext.brands}
                   />
                 </SidebarDrawer>
-              </>
-            )}
-            <Box w="100%">{props.children}</Box>
-          </Flex>
-        ) : (
-          props.children
-        ))}
+              )}
+            </>
+          )}
+          <Box w="100%">{props.children}</Box>
+        </Flex>
+      ) : (
+        props.children
+      )}
       <Footer />
     </>
   )

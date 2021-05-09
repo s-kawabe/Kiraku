@@ -20,21 +20,21 @@ const Template: Story<UserIconProps> = (args) => {
 
 export const HeaderUserIcon = Template.bind({})
 HeaderUserIcon.args = {
-  src: '/myicon.jpg',
+  src: './myicon.jpg',
   width: 60,
   height: 60,
 } as UserIconProps
 
 export const HeaderNoUserIcon = Template.bind({})
 HeaderNoUserIcon.args = {
-  src: '/nouser.svg',
+  src: './nouser.svg',
   width: 60,
   height: 60,
 } as UserIconProps
 
 export const UserPageIcon = Template.bind({})
 UserPageIcon.args = {
-  src: '/myicon.jpg',
+  src: './myicon.jpg',
   width: 120,
   height: 120,
 } as UserIconProps

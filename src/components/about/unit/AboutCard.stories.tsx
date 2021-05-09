@@ -24,7 +24,7 @@ export const Post = Template.bind({})
 Post.args = {
   heading: ABOUT_CARD_TEXT.post.heading,
   text: ABOUT_CARD_TEXT.post.text,
-  src: '/post.svg',
+  src: './post.svg',
   alt: 'ファッションを投稿',
 }
 
@@ -32,7 +32,7 @@ export const Blog = Template.bind({})
 Blog.args = {
   heading: ABOUT_CARD_TEXT.blog.heading,
   text: ABOUT_CARD_TEXT.blog.text,
-  src: '/blog.svg',
+  src: './blog.svg',
   alt: 'ブログを書く',
 }
 
@@ -40,6 +40,6 @@ export const Show = Template.bind({})
 Show.args = {
   heading: ABOUT_CARD_TEXT.show.heading,
   text: ABOUT_CARD_TEXT.show.text,
-  src: '/show.svg',
+  src: './show.svg',
   alt: '投稿を見る',
 }

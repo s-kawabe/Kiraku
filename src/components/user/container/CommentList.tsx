@@ -35,7 +35,7 @@ const CommentList: VFC<CommentListProps> = (props: CommentListProps) => {
               <Box display="flex" alignItems="flex-start">
                 <UserIcon src={comment.userIcon ?? '/nouser.svg'} width={46} height={46} />
                 <Box py="10px" px="20px" ml="10px" bg="gray.100" borderRadius="30px">
-                  <Text fontSize="14px" color="gray.700">
+                  <Text fontSize="14px" color="gray.700" whiteSpace="pre-wrap">
                     {comment.comment}
                   </Text>
                 </Box>

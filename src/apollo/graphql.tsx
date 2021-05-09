@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  jsonb: any;
   timestamptz: string;
 };
 
@@ -1293,7 +1294,7 @@ export type Blogs = {
   comments: Array<BlogComments>;
   /** An aggregated array relationship */
   comments_aggregate: BlogCommentsAggregate;
-  content: Scalars['String'];
+  content: Scalars['jsonb'];
   created_at: Scalars['timestamptz'];
   gender: Scalars['String'];
   id: Scalars['Int'];
@@ -1350,6 +1351,12 @@ export type BlogsCommentsAggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<BlogCommentsOrderBy>>;
   where?: Maybe<BlogCommentsBoolExp>;
+};
+
+
+/** columns and relationships of "blogs" */
+export type BlogsContentArgs = {
+  path?: Maybe<Scalars['String']>;
 };
 
 
@@ -1437,6 +1444,11 @@ export type BlogsAggregateOrderBy = {
   variance?: Maybe<BlogsVarianceOrderBy>;
 };
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type BlogsAppendInput = {
+  content?: Maybe<Scalars['jsonb']>;
+};
+
 /** input type for inserting array relation for remote table "blogs" */
 export type BlogsArrRelInsertInput = {
   data: Array<BlogsInsertInput>;
@@ -1461,7 +1473,7 @@ export type BlogsBoolExp = {
   _or?: Maybe<Array<Maybe<BlogsBoolExp>>>;
   brands?: Maybe<BlogBrandsBoolExp>;
   comments?: Maybe<BlogCommentsBoolExp>;
-  content?: Maybe<StringComparisonExp>;
+  content?: Maybe<JsonbComparisonExp>;
   created_at?: Maybe<TimestamptzComparisonExp>;
   gender?: Maybe<StringComparisonExp>;
   id?: Maybe<IntComparisonExp>;
@@ -1481,6 +1493,21 @@ export enum BlogsConstraint {
   BLOGS_PKEY = 'blogs_pkey'
 }
 
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type BlogsDeleteAtPathInput = {
+  content?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type BlogsDeleteElemInput = {
+  content?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type BlogsDeleteKeyInput = {
+  content?: Maybe<Scalars['String']>;
+};
+
 /** input type for incrementing integer column in table "blogs" */
 export type BlogsIncInput = {
   id?: Maybe<Scalars['Int']>;
@@ -1490,7 +1517,7 @@ export type BlogsIncInput = {
 export type BlogsInsertInput = {
   brands?: Maybe<BlogBrandsArrRelInsertInput>;
   comments?: Maybe<BlogCommentsArrRelInsertInput>;
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1505,7 +1532,6 @@ export type BlogsInsertInput = {
 /** aggregate max on columns */
 export type BlogsMaxFields = {
   __typename?: 'blogs_max_fields';
-  content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1516,7 +1542,6 @@ export type BlogsMaxFields = {
 
 /** order by max() on columns of table "blogs" */
 export type BlogsMaxOrderBy = {
-  content?: Maybe<OrderBy>;
   created_at?: Maybe<OrderBy>;
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
@@ -1528,7 +1553,6 @@ export type BlogsMaxOrderBy = {
 /** aggregate min on columns */
 export type BlogsMinFields = {
   __typename?: 'blogs_min_fields';
-  content?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -1539,7 +1563,6 @@ export type BlogsMinFields = {
 
 /** order by min() on columns of table "blogs" */
 export type BlogsMinOrderBy = {
-  content?: Maybe<OrderBy>;
   created_at?: Maybe<OrderBy>;
   gender?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
@@ -1591,6 +1614,11 @@ export type BlogsPkColumnsInput = {
   id: Scalars['Int'];
 };
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type BlogsPrependInput = {
+  content?: Maybe<Scalars['jsonb']>;
+};
+
 /** select columns of table "blogs" */
 export enum BlogsSelectColumn {
   /** column name */
@@ -1611,7 +1639,7 @@ export enum BlogsSelectColumn {
 
 /** input type for updating data in table "blogs" */
 export type BlogsSetInput = {
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   gender?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['Int']>;
@@ -2035,6 +2063,30 @@ export type BrandsVarianceFields = {
 /** order by variance() on columns of table "brands" */
 export type BrandsVarianceOrderBy = {
   id?: Maybe<OrderBy>;
+};
+
+
+/** expression to compare columns of type jsonb. All fields are combined with logical 'AND'. */
+export type JsonbComparisonExp = {
+  /** is the column contained in the given json value */
+  _contained_in?: Maybe<Scalars['jsonb']>;
+  /** does the column contain the given json value at the top level */
+  _contains?: Maybe<Scalars['jsonb']>;
+  _eq?: Maybe<Scalars['jsonb']>;
+  _gt?: Maybe<Scalars['jsonb']>;
+  _gte?: Maybe<Scalars['jsonb']>;
+  /** does the string exist as a top-level key in the column */
+  _has_key?: Maybe<Scalars['String']>;
+  /** do all of these strings exist as top-level keys in the column */
+  _has_keys_all?: Maybe<Array<Scalars['String']>>;
+  /** do any of these strings exist as top-level keys in the column */
+  _has_keys_any?: Maybe<Array<Scalars['String']>>;
+  _in?: Maybe<Array<Scalars['jsonb']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['jsonb']>;
+  _lte?: Maybe<Scalars['jsonb']>;
+  _neq?: Maybe<Scalars['jsonb']>;
+  _nin?: Maybe<Array<Scalars['jsonb']>>;
 };
 
 /** mutation root */
@@ -2679,7 +2731,12 @@ export type MutationRootUpdateBlogTopicsByPkArgs = {
 
 /** mutation root */
 export type MutationRootUpdateBlogsArgs = {
+  _append?: Maybe<BlogsAppendInput>;
+  _delete_at_path?: Maybe<BlogsDeleteAtPathInput>;
+  _delete_elem?: Maybe<BlogsDeleteElemInput>;
+  _delete_key?: Maybe<BlogsDeleteKeyInput>;
   _inc?: Maybe<BlogsIncInput>;
+  _prepend?: Maybe<BlogsPrependInput>;
   _set?: Maybe<BlogsSetInput>;
   where: BlogsBoolExp;
 };
@@ -2687,7 +2744,12 @@ export type MutationRootUpdateBlogsArgs = {
 
 /** mutation root */
 export type MutationRootUpdateBlogsByPkArgs = {
+  _append?: Maybe<BlogsAppendInput>;
+  _delete_at_path?: Maybe<BlogsDeleteAtPathInput>;
+  _delete_elem?: Maybe<BlogsDeleteElemInput>;
+  _delete_key?: Maybe<BlogsDeleteKeyInput>;
   _inc?: Maybe<BlogsIncInput>;
+  _prepend?: Maybe<BlogsPrependInput>;
   _set?: Maybe<BlogsSetInput>;
   pk_columns: BlogsPkColumnsInput;
 };
@@ -6884,6 +6946,74 @@ export enum UsersUpdateColumn {
   UPDATED_AT = 'updated_at'
 }
 
+export type InsertBlogOneMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+}>;
+
+
+export type InsertBlogOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertBlogOneWithTopicsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+  topicsIds: Array<BlogTopicsInsertInput> | BlogTopicsInsertInput;
+}>;
+
+
+export type InsertBlogOneWithTopicsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertBlogOneWithBrandsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+  brandsIds: Array<BlogBrandsInsertInput> | BlogBrandsInsertInput;
+}>;
+
+
+export type InsertBlogOneWithBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type InsertBlogOneWithTopicsAndBrandsMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+  topicsIds: Array<BlogTopicsInsertInput> | BlogTopicsInsertInput;
+  brandsIds: Array<BlogBrandsInsertInput> | BlogBrandsInsertInput;
+}>;
+
+
+export type InsertBlogOneWithTopicsAndBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
 export type DeletePostOneMutationVariables = Exact<{
   postId: Scalars['Int'];
 }>;
@@ -6924,7 +7054,6 @@ export type ReactiveVarGetUserQuery = (
 );
 
 export type InsertPostOneMutationVariables = Exact<{
-  id?: Maybe<Scalars['Int']>;
   user_id: Scalars['String'];
   content: Scalars['String'];
   image?: Maybe<Scalars['String']>;
@@ -6989,6 +7118,40 @@ export type InsertPostOneWithTopicsAndBrandsMutationVariables = Exact<{
 
 
 export type InsertPostOneWithTopicsAndBrandsMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type EditPostOneMutationVariables = Exact<{
+  id: Scalars['Int'];
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  image: Scalars['String'];
+  image_id: Scalars['String'];
+  gender: Scalars['String'];
+}>;
+
+
+export type EditPostOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_posts_one?: Maybe<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
+  )> }
+);
+
+export type EditPostOneImageNoUpdateMutationVariables = Exact<{
+  id: Scalars['Int'];
+  user_id: Scalars['String'];
+  content: Scalars['String'];
+  gender: Scalars['String'];
+}>;
+
+
+export type EditPostOneImageNoUpdateMutation = (
   { __typename?: 'mutation_root' }
   & { insert_posts_one?: Maybe<(
     { __typename?: 'posts' }
@@ -7067,6 +7230,179 @@ export type MappingBrandsToIdQuery = (
   & { brands: Array<(
     { __typename?: 'brands' }
     & { brand_id: Brands['id'] }
+  )> }
+);
+
+export type GetAllBlogsByOneUserQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetAllBlogsByOneUserQuery = (
+  { __typename?: 'query_root' }
+  & { blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'user_id' | 'content' | 'gender' | 'created_at'>
+    & { topics: Array<(
+      { __typename?: 'blog_topics' }
+      & { topic: (
+        { __typename?: 'topics' }
+        & Pick<Topics, 'id' | 'name'>
+      ) }
+    )>, brands: Array<(
+      { __typename?: 'blog_brands' }
+      & { brand: (
+        { __typename?: 'brands' }
+        & Pick<Brands, 'id' | 'name'>
+      ) }
+    )> }
+  )> }
+);
+
+export type GetAllUsersWithBlogsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllUsersWithBlogsQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id'>
+    & { blogs: Array<(
+      { __typename?: 'blogs' }
+      & Pick<Blogs, 'id'>
+    )> }
+  )> }
+);
+
+export type GetOneBlogWithUserQueryVariables = Exact<{
+  blogId: Scalars['Int'];
+}>;
+
+
+export type GetOneBlogWithUserQuery = (
+  { __typename?: 'query_root' }
+  & { blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'name' | 'image'>
+    ), topics: Array<(
+      { __typename?: 'blog_topics' }
+      & { topic: (
+        { __typename?: 'topics' }
+        & Pick<Topics, 'id' | 'name'>
+      ) }
+    )>, brands: Array<(
+      { __typename?: 'blog_brands' }
+      & { brand: (
+        { __typename?: 'brands' }
+        & Pick<Brands, 'id' | 'name'>
+      ) }
+    )> }
+  )> }
+);
+
+export type BlogCommentsSubscriptionVariables = Exact<{
+  blogId: Scalars['Int'];
+}>;
+
+
+export type BlogCommentsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { blog_comments: Array<(
+    { __typename?: 'blog_comments' }
+    & Pick<BlogComments, 'comment'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'display_id' | 'name' | 'image'>
+    ) }
+  )> }
+);
+
+export type AddBlogCommentMutationVariables = Exact<{
+  userId: Scalars['String'];
+  blogId: Scalars['Int'];
+  comment: Scalars['String'];
+}>;
+
+
+export type AddBlogCommentMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blog_comments_one?: Maybe<(
+    { __typename?: 'blog_comments' }
+    & Pick<BlogComments, 'id' | 'comment'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image'>
+    ) }
+  )> }
+);
+
+export type GetBlogLikeCountQueryVariables = Exact<{
+  blogId: Scalars['Int'];
+}>;
+
+
+export type GetBlogLikeCountQuery = (
+  { __typename?: 'query_root' }
+  & { blog_likes: Array<(
+    { __typename?: 'blog_likes' }
+    & Pick<BlogLikes, 'id' | 'blog_id' | 'user_id'>
+  )> }
+);
+
+export type AddBlogLikeMutationVariables = Exact<{
+  userId: Scalars['String'];
+  blogId: Scalars['Int'];
+}>;
+
+
+export type AddBlogLikeMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blog_likes_one?: Maybe<(
+    { __typename?: 'blog_likes' }
+    & Pick<BlogLikes, 'id' | 'user_id' | 'blog_id'>
+  )> }
+);
+
+export type RemoveBlogLikeMutationVariables = Exact<{
+  userId: Scalars['String'];
+  blogId: Scalars['Int'];
+}>;
+
+
+export type RemoveBlogLikeMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_blog_likes?: Maybe<(
+    { __typename?: 'blog_likes_mutation_response' }
+    & Pick<BlogLikesMutationResponse, 'affected_rows'>
+  )> }
+);
+
+export type GetAllPostsByOneUserQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type GetAllPostsByOneUserQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'content' | 'image' | 'image_id' | 'gender' | 'created_at'>
+    & { topics: Array<(
+      { __typename?: 'post_topics' }
+      & { topic: (
+        { __typename?: 'topics' }
+        & Pick<Topics, 'id' | 'name'>
+      ) }
+    )>, brands: Array<(
+      { __typename?: 'post_brands' }
+      & { brand: (
+        { __typename?: 'brands' }
+        & Pick<Brands, 'id' | 'name'>
+      ) }
+    )> }
   )> }
 );
 
@@ -7232,6 +7568,178 @@ export type CreateUserMutation = (
 );
 
 
+export const InsertBlogOneDocument = gql`
+    mutation InsertBlogOne($user_id: String!, $title: String!, $content: jsonb!, $gender: String!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneMutation, InsertBlogOneMutationVariables>;
+
+/**
+ * __useInsertBlogOneMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneMutation, { data, loading, error }] = useInsertBlogOneMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useInsertBlogOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneMutation, InsertBlogOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneMutation, InsertBlogOneMutationVariables>(InsertBlogOneDocument, options);
+      }
+export type InsertBlogOneMutationHookResult = ReturnType<typeof useInsertBlogOneMutation>;
+export type InsertBlogOneMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneMutation>;
+export type InsertBlogOneMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneMutation, InsertBlogOneMutationVariables>;
+export const InsertBlogOneWithTopicsDocument = gql`
+    mutation InsertBlogOneWithTopics($user_id: String!, $title: String!, $content: jsonb!, $gender: String!, $topicsIds: [blog_topics_insert_input!]!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender, topics: {data: $topicsIds}}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneWithTopicsMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>;
+
+/**
+ * __useInsertBlogOneWithTopicsMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneWithTopicsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneWithTopicsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneWithTopicsMutation, { data, loading, error }] = useInsertBlogOneWithTopicsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *      topicsIds: // value for 'topicsIds'
+ *   },
+ * });
+ */
+export function useInsertBlogOneWithTopicsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>(InsertBlogOneWithTopicsDocument, options);
+      }
+export type InsertBlogOneWithTopicsMutationHookResult = ReturnType<typeof useInsertBlogOneWithTopicsMutation>;
+export type InsertBlogOneWithTopicsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithTopicsMutation>;
+export type InsertBlogOneWithTopicsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithTopicsMutation, InsertBlogOneWithTopicsMutationVariables>;
+export const InsertBlogOneWithBrandsDocument = gql`
+    mutation InsertBlogOneWithBrands($user_id: String!, $title: String!, $content: jsonb!, $gender: String!, $brandsIds: [blog_brands_insert_input!]!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender, brands: {data: $brandsIds}}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneWithBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>;
+
+/**
+ * __useInsertBlogOneWithBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneWithBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneWithBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneWithBrandsMutation, { data, loading, error }] = useInsertBlogOneWithBrandsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *      brandsIds: // value for 'brandsIds'
+ *   },
+ * });
+ */
+export function useInsertBlogOneWithBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>(InsertBlogOneWithBrandsDocument, options);
+      }
+export type InsertBlogOneWithBrandsMutationHookResult = ReturnType<typeof useInsertBlogOneWithBrandsMutation>;
+export type InsertBlogOneWithBrandsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithBrandsMutation>;
+export type InsertBlogOneWithBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithBrandsMutation, InsertBlogOneWithBrandsMutationVariables>;
+export const InsertBlogOneWithTopicsAndBrandsDocument = gql`
+    mutation InsertBlogOneWithTopicsAndBrands($user_id: String!, $title: String!, $content: jsonb!, $gender: String!, $topicsIds: [blog_topics_insert_input!]!, $brandsIds: [blog_brands_insert_input!]!) {
+  insert_blogs_one(
+    object: {user_id: $user_id, title: $title, content: $content, gender: $gender, topics: {data: $topicsIds}, brands: {data: $brandsIds}}
+  ) {
+    id
+    user_id
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type InsertBlogOneWithTopicsAndBrandsMutationFn = ApolloReactCommon.MutationFunction<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>;
+
+/**
+ * __useInsertBlogOneWithTopicsAndBrandsMutation__
+ *
+ * To run a mutation, you first call `useInsertBlogOneWithTopicsAndBrandsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBlogOneWithTopicsAndBrandsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBlogOneWithTopicsAndBrandsMutation, { data, loading, error }] = useInsertBlogOneWithTopicsAndBrandsMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *      topicsIds: // value for 'topicsIds'
+ *      brandsIds: // value for 'brandsIds'
+ *   },
+ * });
+ */
+export function useInsertBlogOneWithTopicsAndBrandsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>(InsertBlogOneWithTopicsAndBrandsDocument, options);
+      }
+export type InsertBlogOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertBlogOneWithTopicsAndBrandsMutation>;
+export type InsertBlogOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithTopicsAndBrandsMutation>;
+export type InsertBlogOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>;
 export const DeletePostOneDocument = gql`
     mutation DeletePostOne($postId: Int!) {
   delete_posts_by_pk(id: $postId) {
@@ -7344,10 +7852,9 @@ export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVar
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
 export const InsertPostOneDocument = gql`
-    mutation InsertPostOne($id: Int, $user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!) {
+    mutation InsertPostOne($user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!) {
   insert_posts_one(
-    object: {id: $id, user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
-    on_conflict: {constraint: posts_pkey, update_columns: [content, image, image_id, gender, updated_at]}
+    object: {user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
   ) {
     id
     user_id
@@ -7374,7 +7881,6 @@ export type InsertPostOneMutationFn = ApolloReactCommon.MutationFunction<InsertP
  * @example
  * const [insertPostOneMutation, { data, loading, error }] = useInsertPostOneMutation({
  *   variables: {
- *      id: // value for 'id'
  *      user_id: // value for 'user_id'
  *      content: // value for 'content'
  *      image: // value for 'image'
@@ -7529,6 +8035,98 @@ export function useInsertPostOneWithTopicsAndBrandsMutation(baseOptions?: Apollo
 export type InsertPostOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertPostOneWithTopicsAndBrandsMutation>;
 export type InsertPostOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertPostOneWithTopicsAndBrandsMutation>;
 export type InsertPostOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertPostOneWithTopicsAndBrandsMutation, InsertPostOneWithTopicsAndBrandsMutationVariables>;
+export const EditPostOneDocument = gql`
+    mutation EditPostOne($id: Int!, $user_id: String!, $content: String!, $image: String!, $image_id: String!, $gender: String!) {
+  insert_posts_one(
+    object: {id: $id, user_id: $user_id, content: $content, image: $image, image_id: $image_id, gender: $gender}
+    on_conflict: {constraint: posts_pkey, update_columns: [content, image, image_id, gender, updated_at]}
+  ) {
+    id
+    user_id
+    content
+    image
+    image_id
+    gender
+    created_at
+  }
+}
+    `;
+export type EditPostOneMutationFn = ApolloReactCommon.MutationFunction<EditPostOneMutation, EditPostOneMutationVariables>;
+
+/**
+ * __useEditPostOneMutation__
+ *
+ * To run a mutation, you first call `useEditPostOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPostOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPostOneMutation, { data, loading, error }] = useEditPostOneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      image: // value for 'image'
+ *      image_id: // value for 'image_id'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useEditPostOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostOneMutation, EditPostOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<EditPostOneMutation, EditPostOneMutationVariables>(EditPostOneDocument, options);
+      }
+export type EditPostOneMutationHookResult = ReturnType<typeof useEditPostOneMutation>;
+export type EditPostOneMutationResult = ApolloReactCommon.MutationResult<EditPostOneMutation>;
+export type EditPostOneMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostOneMutation, EditPostOneMutationVariables>;
+export const EditPostOneImageNoUpdateDocument = gql`
+    mutation EditPostOneImageNoUpdate($id: Int!, $user_id: String!, $content: String!, $gender: String!) {
+  insert_posts_one(
+    object: {id: $id, user_id: $user_id, content: $content, gender: $gender}
+    on_conflict: {constraint: posts_pkey, update_columns: [content, gender, updated_at]}
+  ) {
+    id
+    user_id
+    content
+    image
+    image_id
+    gender
+    created_at
+  }
+}
+    `;
+export type EditPostOneImageNoUpdateMutationFn = ApolloReactCommon.MutationFunction<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>;
+
+/**
+ * __useEditPostOneImageNoUpdateMutation__
+ *
+ * To run a mutation, you first call `useEditPostOneImageNoUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPostOneImageNoUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPostOneImageNoUpdateMutation, { data, loading, error }] = useEditPostOneImageNoUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useEditPostOneImageNoUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>(EditPostOneImageNoUpdateDocument, options);
+      }
+export type EditPostOneImageNoUpdateMutationHookResult = ReturnType<typeof useEditPostOneImageNoUpdateMutation>;
+export type EditPostOneImageNoUpdateMutationResult = ApolloReactCommon.MutationResult<EditPostOneImageNoUpdateMutation>;
+export type EditPostOneImageNoUpdateMutationOptions = ApolloReactCommon.BaseMutationOptions<EditPostOneImageNoUpdateMutation, EditPostOneImageNoUpdateMutationVariables>;
 export const GetAllTopicsDocument = gql`
     query GetAllTopics {
   topics {
@@ -7733,6 +8331,393 @@ export function useMappingBrandsToIdLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type MappingBrandsToIdQueryHookResult = ReturnType<typeof useMappingBrandsToIdQuery>;
 export type MappingBrandsToIdLazyQueryHookResult = ReturnType<typeof useMappingBrandsToIdLazyQuery>;
 export type MappingBrandsToIdQueryResult = ApolloReactCommon.QueryResult<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>;
+export const GetAllBlogsByOneUserDocument = gql`
+    query GetAllBlogsByOneUser($userId: String!) {
+  blogs(where: {user_id: {_eq: $userId}}) {
+    id
+    title
+    user_id
+    content
+    gender
+    created_at
+    topics {
+      topic {
+        id
+        name
+      }
+    }
+    brands {
+      brand {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllBlogsByOneUserQuery__
+ *
+ * To run a query within a React component, call `useGetAllBlogsByOneUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllBlogsByOneUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllBlogsByOneUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetAllBlogsByOneUserQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>(GetAllBlogsByOneUserDocument, options);
+      }
+export function useGetAllBlogsByOneUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>(GetAllBlogsByOneUserDocument, options);
+        }
+export type GetAllBlogsByOneUserQueryHookResult = ReturnType<typeof useGetAllBlogsByOneUserQuery>;
+export type GetAllBlogsByOneUserLazyQueryHookResult = ReturnType<typeof useGetAllBlogsByOneUserLazyQuery>;
+export type GetAllBlogsByOneUserQueryResult = ApolloReactCommon.QueryResult<GetAllBlogsByOneUserQuery, GetAllBlogsByOneUserQueryVariables>;
+export const GetAllUsersWithBlogsDocument = gql`
+    query GetAllUsersWithBlogs {
+  users {
+    id
+    display_id
+    blogs {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllUsersWithBlogsQuery__
+ *
+ * To run a query within a React component, call `useGetAllUsersWithBlogsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUsersWithBlogsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUsersWithBlogsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllUsersWithBlogsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAllUsersWithBlogsQuery, GetAllUsersWithBlogsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllUsersWithBlogsQuery, GetAllUsersWithBlogsQueryVariables>(GetAllUsersWithBlogsDocument, options);
+      }
+export function useGetAllUsersWithBlogsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllUsersWithBlogsQuery, GetAllUsersWithBlogsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllUsersWithBlogsQuery, GetAllUsersWithBlogsQueryVariables>(GetAllUsersWithBlogsDocument, options);
+        }
+export type GetAllUsersWithBlogsQueryHookResult = ReturnType<typeof useGetAllUsersWithBlogsQuery>;
+export type GetAllUsersWithBlogsLazyQueryHookResult = ReturnType<typeof useGetAllUsersWithBlogsLazyQuery>;
+export type GetAllUsersWithBlogsQueryResult = ApolloReactCommon.QueryResult<GetAllUsersWithBlogsQuery, GetAllUsersWithBlogsQueryVariables>;
+export const GetOneBlogWithUserDocument = gql`
+    query GetOneBlogWithUser($blogId: Int!) {
+  blogs(where: {id: {_eq: $blogId}}) {
+    id
+    title
+    content
+    gender
+    created_at
+    user {
+      id
+      display_id
+      name
+      image
+    }
+    topics {
+      topic {
+        id
+        name
+      }
+    }
+    brands {
+      brand {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOneBlogWithUserQuery__
+ *
+ * To run a query within a React component, call `useGetOneBlogWithUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneBlogWithUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneBlogWithUserQuery({
+ *   variables: {
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useGetOneBlogWithUserQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOneBlogWithUserQuery, GetOneBlogWithUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOneBlogWithUserQuery, GetOneBlogWithUserQueryVariables>(GetOneBlogWithUserDocument, options);
+      }
+export function useGetOneBlogWithUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOneBlogWithUserQuery, GetOneBlogWithUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOneBlogWithUserQuery, GetOneBlogWithUserQueryVariables>(GetOneBlogWithUserDocument, options);
+        }
+export type GetOneBlogWithUserQueryHookResult = ReturnType<typeof useGetOneBlogWithUserQuery>;
+export type GetOneBlogWithUserLazyQueryHookResult = ReturnType<typeof useGetOneBlogWithUserLazyQuery>;
+export type GetOneBlogWithUserQueryResult = ApolloReactCommon.QueryResult<GetOneBlogWithUserQuery, GetOneBlogWithUserQueryVariables>;
+export const BlogCommentsDocument = gql`
+    subscription BlogComments($blogId: Int!) {
+  blog_comments(where: {blog_id: {_eq: $blogId}}) {
+    comment
+    user {
+      display_id
+      name
+      image
+    }
+  }
+}
+    `;
+
+/**
+ * __useBlogCommentsSubscription__
+ *
+ * To run a query within a React component, call `useBlogCommentsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useBlogCommentsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBlogCommentsSubscription({
+ *   variables: {
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useBlogCommentsSubscription(baseOptions: ApolloReactHooks.SubscriptionHookOptions<BlogCommentsSubscription, BlogCommentsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<BlogCommentsSubscription, BlogCommentsSubscriptionVariables>(BlogCommentsDocument, options);
+      }
+export type BlogCommentsSubscriptionHookResult = ReturnType<typeof useBlogCommentsSubscription>;
+export type BlogCommentsSubscriptionResult = ApolloReactCommon.SubscriptionResult<BlogCommentsSubscription>;
+export const AddBlogCommentDocument = gql`
+    mutation AddBlogComment($userId: String!, $blogId: Int!, $comment: String!) {
+  insert_blog_comments_one(
+    object: {user_id: $userId, blog_id: $blogId, comment: $comment}
+  ) {
+    id
+    comment
+    user {
+      id
+      display_id
+      image
+    }
+  }
+}
+    `;
+export type AddBlogCommentMutationFn = ApolloReactCommon.MutationFunction<AddBlogCommentMutation, AddBlogCommentMutationVariables>;
+
+/**
+ * __useAddBlogCommentMutation__
+ *
+ * To run a mutation, you first call `useAddBlogCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBlogCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBlogCommentMutation, { data, loading, error }] = useAddBlogCommentMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      blogId: // value for 'blogId'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useAddBlogCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddBlogCommentMutation, AddBlogCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddBlogCommentMutation, AddBlogCommentMutationVariables>(AddBlogCommentDocument, options);
+      }
+export type AddBlogCommentMutationHookResult = ReturnType<typeof useAddBlogCommentMutation>;
+export type AddBlogCommentMutationResult = ApolloReactCommon.MutationResult<AddBlogCommentMutation>;
+export type AddBlogCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddBlogCommentMutation, AddBlogCommentMutationVariables>;
+export const GetBlogLikeCountDocument = gql`
+    query GetBlogLikeCount($blogId: Int!) {
+  blog_likes(where: {blog_id: {_eq: $blogId}}) {
+    id
+    blog_id
+    user_id
+  }
+}
+    `;
+
+/**
+ * __useGetBlogLikeCountQuery__
+ *
+ * To run a query within a React component, call `useGetBlogLikeCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBlogLikeCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBlogLikeCountQuery({
+ *   variables: {
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useGetBlogLikeCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>(GetBlogLikeCountDocument, options);
+      }
+export function useGetBlogLikeCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>(GetBlogLikeCountDocument, options);
+        }
+export type GetBlogLikeCountQueryHookResult = ReturnType<typeof useGetBlogLikeCountQuery>;
+export type GetBlogLikeCountLazyQueryHookResult = ReturnType<typeof useGetBlogLikeCountLazyQuery>;
+export type GetBlogLikeCountQueryResult = ApolloReactCommon.QueryResult<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>;
+export const AddBlogLikeDocument = gql`
+    mutation AddBlogLike($userId: String!, $blogId: Int!) {
+  insert_blog_likes_one(object: {user_id: $userId, blog_id: $blogId}) {
+    id
+    user_id
+    blog_id
+  }
+}
+    `;
+export type AddBlogLikeMutationFn = ApolloReactCommon.MutationFunction<AddBlogLikeMutation, AddBlogLikeMutationVariables>;
+
+/**
+ * __useAddBlogLikeMutation__
+ *
+ * To run a mutation, you first call `useAddBlogLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBlogLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBlogLikeMutation, { data, loading, error }] = useAddBlogLikeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useAddBlogLikeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddBlogLikeMutation, AddBlogLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddBlogLikeMutation, AddBlogLikeMutationVariables>(AddBlogLikeDocument, options);
+      }
+export type AddBlogLikeMutationHookResult = ReturnType<typeof useAddBlogLikeMutation>;
+export type AddBlogLikeMutationResult = ApolloReactCommon.MutationResult<AddBlogLikeMutation>;
+export type AddBlogLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<AddBlogLikeMutation, AddBlogLikeMutationVariables>;
+export const RemoveBlogLikeDocument = gql`
+    mutation RemoveBlogLike($userId: String!, $blogId: Int!) {
+  delete_blog_likes(
+    where: {_and: {user_id: {_eq: $userId}, blog_id: {_eq: $blogId}}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type RemoveBlogLikeMutationFn = ApolloReactCommon.MutationFunction<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>;
+
+/**
+ * __useRemoveBlogLikeMutation__
+ *
+ * To run a mutation, you first call `useRemoveBlogLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveBlogLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeBlogLikeMutation, { data, loading, error }] = useRemoveBlogLikeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useRemoveBlogLikeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>(RemoveBlogLikeDocument, options);
+      }
+export type RemoveBlogLikeMutationHookResult = ReturnType<typeof useRemoveBlogLikeMutation>;
+export type RemoveBlogLikeMutationResult = ApolloReactCommon.MutationResult<RemoveBlogLikeMutation>;
+export type RemoveBlogLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>;
+export const GetAllPostsByOneUserDocument = gql`
+    query GetAllPostsByOneUser($userId: String!) {
+  posts(where: {user_id: {_eq: $userId}}) {
+    id
+    user_id
+    content
+    image
+    image_id
+    gender
+    created_at
+    topics {
+      topic {
+        id
+        name
+      }
+    }
+    brands {
+      brand {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllPostsByOneUserQuery__
+ *
+ * To run a query within a React component, call `useGetAllPostsByOneUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPostsByOneUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPostsByOneUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetAllPostsByOneUserQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>(GetAllPostsByOneUserDocument, options);
+      }
+export function useGetAllPostsByOneUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>(GetAllPostsByOneUserDocument, options);
+        }
+export type GetAllPostsByOneUserQueryHookResult = ReturnType<typeof useGetAllPostsByOneUserQuery>;
+export type GetAllPostsByOneUserLazyQueryHookResult = ReturnType<typeof useGetAllPostsByOneUserLazyQuery>;
+export type GetAllPostsByOneUserQueryResult = ApolloReactCommon.QueryResult<GetAllPostsByOneUserQuery, GetAllPostsByOneUserQueryVariables>;
 export const GetAllUsersWithPostsDocument = gql`
     query GetAllUsersWithPosts {
   users {

@@ -1,9 +1,10 @@
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { ApolloProvider, useReactiveVar } from '@apollo/client'
+import { Center, Spinner } from '@chakra-ui/react'
 import { css, Global } from '@emotion/react'
 import reset from 'emotion-reset'
 import type { AppProps } from 'next/app'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { useApollo } from '@/apollo/client'
@@ -23,13 +24,14 @@ const base = css`
 `
 
 const App = (props: AppProps) => {
+  // スケルトンローディングにするならグローバルステートとカスタムフックを用意
+  const [isLoading, setIsLoading] = useState(true)
   const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
   const loginUser = useReactiveVar(loginUserVar)
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log('ユーザログイン')
         // ログイン時はグローバルステートをセットするがログイン後にURLを直接更新するとリセットされるため呼んでおく
         if (loginUser === null) {
           await client
@@ -44,13 +46,17 @@ const App = (props: AppProps) => {
             })
         }
       } else {
-        console.log('ユーザログアウト')
         // logout時: グローバルステートを初期化
         loginUserVar(null)
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    setIsLoading(false)
+  })
 
   return (
     <>
@@ -62,7 +68,13 @@ const App = (props: AppProps) => {
       />
       <ApolloProvider client={client}>
         <ChakraWrapper>
-          <props.Component {...props.pageProps} />
+          {isLoading ? (
+            <Center h="100vh" w="100vw">
+              <Spinner />
+            </Center>
+          ) : (
+            <props.Component {...props.pageProps} />
+          )}
         </ChakraWrapper>
       </ApolloProvider>
     </>

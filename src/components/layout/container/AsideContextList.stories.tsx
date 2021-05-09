@@ -6,23 +6,39 @@ import { AsideContextList } from './AsideContextList'
 
 const brands = [
   {
-    name: 'huga',
+    name: 'CHANEL',
     id: 1,
   },
   {
-    name: 'piyoyo',
+    name: 'LUIS VUITON',
     id: 2,
+  },
+  {
+    name: 'PORTER',
+    id: 3,
+  },
+  {
+    name: 'COACH',
+    id: 4,
   },
 ]
 
 const topics = [
   {
-    name: 'hogehoge',
+    name: '春',
     id: 1,
   },
   {
-    name: 'pya----',
+    name: 'シャツ',
     id: 2,
+  },
+  {
+    name: 'すっきり',
+    id: 3,
+  },
+  {
+    name: 'カジュアル',
+    id: 4,
   },
 ]
 
