@@ -7303,6 +7303,42 @@ export type GetOneBlogWithUserQuery = (
   )> }
 );
 
+export type BlogCommentsSubscriptionVariables = Exact<{
+  blogId: Scalars['Int'];
+}>;
+
+
+export type BlogCommentsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { blog_comments: Array<(
+    { __typename?: 'blog_comments' }
+    & Pick<BlogComments, 'comment'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'display_id' | 'name' | 'image'>
+    ) }
+  )> }
+);
+
+export type AddBlogCommentMutationVariables = Exact<{
+  userId: Scalars['String'];
+  blogId: Scalars['Int'];
+  comment: Scalars['String'];
+}>;
+
+
+export type AddBlogCommentMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blog_comments_one?: Maybe<(
+    { __typename?: 'blog_comments' }
+    & Pick<BlogComments, 'id' | 'comment'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image'>
+    ) }
+  )> }
+);
+
 export type GetAllPostsByOneUserQueryVariables = Exact<{
   userId: Scalars['String'];
 }>;
@@ -8401,6 +8437,84 @@ export function useGetOneBlogWithUserLazyQuery(baseOptions?: ApolloReactHooks.La
 export type GetOneBlogWithUserQueryHookResult = ReturnType<typeof useGetOneBlogWithUserQuery>;
 export type GetOneBlogWithUserLazyQueryHookResult = ReturnType<typeof useGetOneBlogWithUserLazyQuery>;
 export type GetOneBlogWithUserQueryResult = ApolloReactCommon.QueryResult<GetOneBlogWithUserQuery, GetOneBlogWithUserQueryVariables>;
+export const BlogCommentsDocument = gql`
+    subscription BlogComments($blogId: Int!) {
+  blog_comments(where: {blog_id: {_eq: $blogId}}) {
+    comment
+    user {
+      display_id
+      name
+      image
+    }
+  }
+}
+    `;
+
+/**
+ * __useBlogCommentsSubscription__
+ *
+ * To run a query within a React component, call `useBlogCommentsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useBlogCommentsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBlogCommentsSubscription({
+ *   variables: {
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useBlogCommentsSubscription(baseOptions: ApolloReactHooks.SubscriptionHookOptions<BlogCommentsSubscription, BlogCommentsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<BlogCommentsSubscription, BlogCommentsSubscriptionVariables>(BlogCommentsDocument, options);
+      }
+export type BlogCommentsSubscriptionHookResult = ReturnType<typeof useBlogCommentsSubscription>;
+export type BlogCommentsSubscriptionResult = ApolloReactCommon.SubscriptionResult<BlogCommentsSubscription>;
+export const AddBlogCommentDocument = gql`
+    mutation AddBlogComment($userId: String!, $blogId: Int!, $comment: String!) {
+  insert_blog_comments_one(
+    object: {user_id: $userId, blog_id: $blogId, comment: $comment}
+  ) {
+    id
+    comment
+    user {
+      id
+      display_id
+      image
+    }
+  }
+}
+    `;
+export type AddBlogCommentMutationFn = ApolloReactCommon.MutationFunction<AddBlogCommentMutation, AddBlogCommentMutationVariables>;
+
+/**
+ * __useAddBlogCommentMutation__
+ *
+ * To run a mutation, you first call `useAddBlogCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBlogCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBlogCommentMutation, { data, loading, error }] = useAddBlogCommentMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      blogId: // value for 'blogId'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useAddBlogCommentMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddBlogCommentMutation, AddBlogCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddBlogCommentMutation, AddBlogCommentMutationVariables>(AddBlogCommentDocument, options);
+      }
+export type AddBlogCommentMutationHookResult = ReturnType<typeof useAddBlogCommentMutation>;
+export type AddBlogCommentMutationResult = ApolloReactCommon.MutationResult<AddBlogCommentMutation>;
+export type AddBlogCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddBlogCommentMutation, AddBlogCommentMutationVariables>;
 export const GetAllPostsByOneUserDocument = gql`
     query GetAllPostsByOneUser($userId: String!) {
   posts(where: {user_id: {_eq: $userId}}) {

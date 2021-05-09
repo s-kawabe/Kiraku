@@ -33,7 +33,10 @@ import { CommentIconWithCount, EditMenu, LikeButtonWithCount } from '@/component
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
 import { CommentForm, UserIcon } from '@/components/user/unit'
+import { chapeCommentData } from '@/utils/methods/common'
 import { useConvertDateFromHasura } from '@/utils/methods/customeHooks'
+
+import type { BlogComments } from '../../../../apollo/graphql'
 
 type Props = {
   user: Users
@@ -60,8 +63,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
       postId: post.id,
     },
   })
-
-  // TODO:完全な表示になるまでの動きが微妙なので、ローディングを実装したい
 
   const fetchLike = async () => {
     const data = await client.query<GetPostLikeCountQuery, GetPostLikeCountQueryVariables>({
@@ -125,20 +126,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
       })
     }
     await fetchLike()
-  }
-
-  const shapingComments = () => {
-    if (data) {
-      return data?.post_comments.map((comment) => {
-        return {
-          userIcon: comment.user.image,
-          userName: comment.user.name,
-          userId: comment.user.display_id,
-          comment: comment.comment,
-        }
-      })
-    }
-    return []
   }
 
   return (
@@ -320,7 +307,9 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                     コメント({data?.post_comments.length})
                   </Heading>
                   <Box mt="10px">
-                    <CommentList comments={shapingComments()} />
+                    <CommentList
+                      comments={chapeCommentData(data?.post_comments as BlogComments[])}
+                    />
                   </Box>
                 </Box>
                 {/* setState関数は渡さず、コンポーネント内でのmutationをsubscriptionsで検知する */}

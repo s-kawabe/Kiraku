@@ -24,6 +24,7 @@ const base = css`
 `
 
 const App = (props: AppProps) => {
+  // スケルトンローディングにするならグローバルステートとカスタムフックを用意
   const [isLoading, setIsLoading] = useState(true)
   const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
   const loginUser = useReactiveVar(loginUserVar)
@@ -68,7 +69,7 @@ const App = (props: AppProps) => {
       <ApolloProvider client={client}>
         <ChakraWrapper>
           {isLoading ? (
-            <Center mt="30px" h="100vh" w="100vw">
+            <Center h="100vh" w="100vw">
               <Spinner />
             </Center>
           ) : (

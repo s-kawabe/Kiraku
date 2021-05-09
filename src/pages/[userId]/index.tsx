@@ -16,6 +16,8 @@ import type {
 import { GetAllBlogsByOneUserDocument, GetAllPostsByOneUserDocument } from '@/apollo/graphql'
 import { LayoutWithHead } from '@/components/layout/container'
 
+// TODO loginuserではなくパス(display_id)からqueryする
+
 const UserPostListPage = () => {
   const client = initializeApollo()
   const loginUser = useReactiveVar(loginUserVar)

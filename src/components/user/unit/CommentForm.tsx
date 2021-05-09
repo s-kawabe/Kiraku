@@ -5,8 +5,13 @@ import { useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
-import type { AddPostCommentMutation, AddPostCommentMutationVariables } from '@/apollo/graphql'
-import { AddPostCommentDocument } from '@/apollo/graphql'
+import type {
+  AddBlogCommentMutation,
+  AddBlogCommentMutationVariables,
+  AddPostCommentMutation,
+  AddPostCommentMutationVariables,
+} from '@/apollo/graphql'
+import { AddBlogCommentDocument, AddPostCommentDocument } from '@/apollo/graphql'
 import { NormalButton } from '@/components/common/unit'
 
 type Props = {
@@ -40,7 +45,14 @@ const CommentForm: VFC<Props> = (props: Props) => {
       })
       setComment('')
     } else if (props.blogId) {
-      // blogにコメントする時の処理
+      await client.mutate<AddBlogCommentMutation, AddBlogCommentMutationVariables>({
+        mutation: AddBlogCommentDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          blogId: props.blogId,
+          comment: comment,
+        },
+      })
     }
   }
 

@@ -6,7 +6,7 @@ import { convertFromRaw, EditorState } from 'draft-js'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { createRef, Fragment } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { addApolloState, initializeApollo } from '@/apollo/client'
@@ -17,12 +17,18 @@ import type {
   GetOneBlogWithUserQuery,
   GetOneBlogWithUserQueryVariables,
 } from '@/apollo/graphql'
-import { GetAllUsersWithBlogsDocument, GetOneBlogWithUserDocument } from '@/apollo/graphql'
+import {
+  GetAllUsersWithBlogsDocument,
+  GetOneBlogWithUserDocument,
+  useBlogCommentsSubscription,
+} from '@/apollo/graphql'
 import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
-// import { CommentList } from '@/components/user/container'
-// import { CommentForm, UserIcon } from '@/components/user/unit'
-import { UserIcon } from '@/components/user/unit'
+import { CommentList } from '@/components/user/container'
+import { CommentForm, UserIcon } from '@/components/user/unit'
+import { chapeCommentData } from '@/utils/methods/common'
+
+import type { BlogComments } from '../../../../apollo/graphql'
 
 type Props = {
   blog: Blogs
@@ -68,186 +74,201 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
   // DBから取得したJSONをEditorStateに変換
   const contentState = convertFromRaw(props.blog.content)
   const content = EditorState.createWithContent(contentState)
+
   const loginUser = useReactiveVar(loginUserVar)
+  const commentInput = createRef<HTMLTextAreaElement>()
+
+  // 表示しているブログがログイン中のユーザのものかどうか
+  // const isMine = loginUser && loginUser.id === user.id
+
+  const { data, loading } = useBlogCommentsSubscription({
+    variables: {
+      blogId: blog.id,
+    },
+  })
 
   return (
     <LayoutWithHead title={`${user.name}のブログ「${blog.title}」`} sideMenu>
-      <Center mb="80px">
-        <Box my={{ base: '20px', lg: '30px' }}>
-          {/* user info  */}
-          <Flex align="center">
-            <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
-            <Box ml="10px">
-              <Heading fontSize="26px" mb="2px" color="gray.700">
-                {user.name}
-              </Heading>
-              <Text fontSize="16px" color="gray.500">
-                @{user.display_id}
-              </Text>
-            </Box>
-            {/* TODO */}
-            <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
-              フォロー
-            </Button>
-          </Flex>
-          <Stack
-            direction={{ base: 'column', md: 'row' }}
-            mt="20px"
-            mb="0px"
-            align={{ base: 'flex-start', md: 'flex-end' }}
-            justifyContent="space-between"
-            py="5"
-            borderRadius="25px"
-          >
-            <Box
-              px="50px"
-              py="20px"
-              bg="#FFF2C3"
-              borderRadius="10px"
-              boxShadow="0 6px 18px rgba(100,100,100,0.1)"
+      {!loading && (
+        <Center mb="80px">
+          <Box my={{ base: '20px', lg: '30px' }}>
+            {/* user info  */}
+            <Flex align="center">
+              <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
+              <Box ml="10px">
+                <Heading fontSize="26px" mb="2px" color="gray.700">
+                  {user.name}
+                </Heading>
+                <Text fontSize="16px" color="gray.500">
+                  @{user.display_id}
+                </Text>
+              </Box>
+              {/* TODO */}
+              <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
+                フォロー
+              </Button>
+            </Flex>
+            <Stack
+              direction={{ base: 'column', md: 'row' }}
+              mt="20px"
+              mb="0px"
+              align={{ base: 'flex-start', md: 'flex-end' }}
+              justifyContent="space-between"
+              py="5"
+              borderRadius="25px"
             >
-              {/* title */}
-              <Heading fontSize="22px">{blog.title}</Heading>
+              <Box
+                px="50px"
+                py="20px"
+                bg="#FFF2C3"
+                borderRadius="10px"
+                boxShadow="0 6px 18px rgba(100,100,100,0.1)"
+              >
+                {/* title */}
+                <Heading fontSize="22px">{blog.title}</Heading>
+              </Box>
+              <HStack spacing="6">
+                <Box
+                  onClick={() => {
+                    commentInput.current?.focus()
+                  }}
+                >
+                  {/* comment/like icon */}
+                  <CommentIconWithCount
+                    // count={data?.post_comments.length as number}
+                    count={100}
+                    fontSize="24px"
+                  />
+                </Box>
+                <Box
+                  onClick={async () => {
+                    if (!loginUser) {
+                      alert('いいね機能をご利用いただくにはログインが必要です')
+                      return
+                    }
+                    // await handleToggleLike()
+                  }}
+                >
+                  <LikeButtonWithCount
+                    // count={likeData.post_likes.length}
+                    count={100}
+                    fontSize="24px"
+                    iconSize="27px"
+                    // initial={isCurrentUserLiked()}
+                    initial={false}
+                  />
+                </Box>
+              </HStack>
+            </Stack>
+
+            {/* topic/brands tag */}
+            <Flex flexDirection={{ base: 'column', md: 'row' }}>
+              {blog.topics.length > 0 && (
+                <Box mt="20px">
+                  <Heading fontSize="15px" color="gray.600" mb="8px">
+                    トピック
+                  </Heading>
+                  <Flex maxW="500px" flexWrap="wrap">
+                    {blog.topics.map(({ topic }) => {
+                      return (
+                        <Fragment key={topic.id}>
+                          <Link
+                            href={{
+                              pathname: '/topics/[topicId]',
+                              query: { topicId: topic.id },
+                            }}
+                          >
+                            <a>
+                              <Tag
+                                mr="15px"
+                                mb="10px"
+                                p="1.5"
+                                borderRadius="8px"
+                                fontSize="13px"
+                                cursor="pointer"
+                                _hover={{ bg: 'gray.200' }}
+                              >
+                                {topic.name}
+                              </Tag>
+                            </a>
+                          </Link>
+                        </Fragment>
+                      )
+                    })}
+                  </Flex>
+                </Box>
+              )}
+              {blog.brands.length > 0 && (
+                <Box mt="20px" ml={{ base: '', md: '40px' }}>
+                  <Heading fontSize="15px" color="gray.600" mb="8px">
+                    ブランド
+                  </Heading>
+                  <Flex maxW="500px" flexWrap="wrap">
+                    {blog.brands.map(({ brand }) => {
+                      return (
+                        <Fragment key={brand.id}>
+                          <Link
+                            href={{
+                              pathname: '/brands/[brandId]',
+                              query: { brandId: brand.id },
+                            }}
+                          >
+                            <a>
+                              <Tag
+                                key={brand.id}
+                                mr="15px"
+                                mb="10px"
+                                borderRadius="0"
+                                cursor="pointer"
+                                _hover={{ bg: 'gray.200' }}
+                              >
+                                {brand.name}
+                              </Tag>
+                            </a>
+                          </Link>
+                        </Fragment>
+                      )
+                    })}
+                  </Flex>
+                </Box>
+              )}
+            </Flex>
+
+            {/* blog content */}
+            <Box
+              w={['90vw', '70vw']}
+              minH="40vh"
+              p={['0px', '20px']}
+              my="50px"
+              borderRadius="15px"
+              css={headingReset}
+              // boxShadow="0 6px 18px rgba(100,100,100,0.1)"
+            >
+              <Editor
+                editorState={content}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                readOnly={true}
+                toolbar={{ options: [] }}
+              />
             </Box>
-            <HStack spacing="6">
-              <Box
-                onClick={() => {
-                  // commentInput.current?.focus()
-                  alert('コメントにfocus')
-                }}
-              >
-                {/* comment/like icon */}
-                <CommentIconWithCount
-                  // count={data?.post_comments.length as number}
-                  count={100}
-                  fontSize="24px"
-                />
-              </Box>
-              <Box
-                onClick={async () => {
-                  if (!loginUser) {
-                    alert('いいね機能をご利用いただくにはログインが必要です')
-                    return
-                  }
-                  // await handleToggleLike()
-                }}
-              >
-                <LikeButtonWithCount
-                  // count={likeData.post_likes.length}
-                  count={100}
-                  fontSize="24px"
-                  iconSize="27px"
-                  // initial={isCurrentUserLiked()}
-                  initial={false}
-                />
-              </Box>
-            </HStack>
-          </Stack>
-
-          {/* topic/brands tag */}
-          <Flex flexDirection={{ base: 'column', md: 'row' }}>
-            {blog.topics.length > 0 && (
-              <Box mt="20px">
-                <Heading fontSize="15px" color="gray.600" mb="8px">
-                  トピック
+            <Box maxW="800px">
+              {/* comment list */}
+              <Box mb="80px">
+                <Heading fontSize="20px" color="gray.700" mb="">
+                  コメント({data?.blog_comments.length})
                 </Heading>
-                <Flex maxW="500px" flexWrap="wrap">
-                  {blog.topics.map(({ topic }) => {
-                    return (
-                      <Fragment key={topic.id}>
-                        <Link
-                          href={{
-                            pathname: '/topics/[topicId]',
-                            query: { topicId: topic.id },
-                          }}
-                        >
-                          <a>
-                            <Tag
-                              mr="15px"
-                              mb="10px"
-                              p="1.5"
-                              borderRadius="8px"
-                              fontSize="13px"
-                              cursor="pointer"
-                              _hover={{ bg: 'gray.200' }}
-                            >
-                              {topic.name}
-                            </Tag>
-                          </a>
-                        </Link>
-                      </Fragment>
-                    )
-                  })}
-                </Flex>
+                <Box mt="10px">
+                  <CommentList comments={chapeCommentData(data?.blog_comments as BlogComments[])} />
+                </Box>
               </Box>
-            )}
-            {blog.brands.length > 0 && (
-              <Box mt="20px" ml={{ base: '', md: '40px' }}>
-                <Heading fontSize="15px" color="gray.600" mb="8px">
-                  ブランド
-                </Heading>
-                <Flex maxW="500px" flexWrap="wrap">
-                  {blog.brands.map(({ brand }) => {
-                    return (
-                      <Fragment key={brand.id}>
-                        <Link
-                          href={{
-                            pathname: '/brands/[brandId]',
-                            query: { brandId: brand.id },
-                          }}
-                        >
-                          <a>
-                            <Tag
-                              key={brand.id}
-                              mr="15px"
-                              mb="10px"
-                              borderRadius="0"
-                              cursor="pointer"
-                              _hover={{ bg: 'gray.200' }}
-                            >
-                              {brand.name}
-                            </Tag>
-                          </a>
-                        </Link>
-                      </Fragment>
-                    )
-                  })}
-                </Flex>
-              </Box>
-            )}
-          </Flex>
-
-          {/* blog content */}
-          <Box
-            w={['90vw', '70vw']}
-            minH="70vh"
-            p={['0px', '20px']}
-            mt="40px"
-            borderRadius="15px"
-            css={headingReset}
-            // boxShadow="0 6px 18px rgba(100,100,100,0.1)"
-          >
-            <Editor
-              editorState={content}
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="wrapperClassName"
-              editorClassName="editorClassName"
-              readOnly={true}
-              toolbar={{ options: [] }}
-            />
+              {/* comment input */}
+              <CommentForm userId={user.id} commentInput={commentInput} blogId={blog.id} />
+            </Box>
           </Box>
-
-          {/* comment list */}
-          <Box mb="120px">
-            <Heading fontSize="20px" color="gray.700" mb="">
-              {/* コメント({data?.post_comments.length}) */}
-            </Heading>
-            <Box mt="10px">{/* <CommentList comments={shapingComments()} /> */}</Box>
-          </Box>
-          {/* comment input */}
-          {/* <CommentForm userId={user.id} commentInput={commentInput} postId={post.id} /> */}
-        </Box>
-      </Center>
+        </Center>
+      )}
     </LayoutWithHead>
   )
 }
@@ -335,6 +356,33 @@ gql`
           id
           name
         }
+      }
+    }
+  }
+`
+
+gql`
+  subscription BlogComments($blogId: Int!) {
+    blog_comments(where: { blog_id: { _eq: $blogId } }) {
+      comment
+      user {
+        display_id
+        name
+        image
+      }
+    }
+  }
+`
+
+gql`
+  mutation AddBlogComment($userId: String!, $blogId: Int!, $comment: String!) {
+    insert_blog_comments_one(object: { user_id: $userId, blog_id: $blogId, comment: $comment }) {
+      id
+      comment
+      user {
+        id
+        display_id
+        image
       }
     }
   }
