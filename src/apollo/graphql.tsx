@@ -7339,6 +7339,47 @@ export type AddBlogCommentMutation = (
   )> }
 );
 
+export type GetBlogLikeCountQueryVariables = Exact<{
+  blogId: Scalars['Int'];
+}>;
+
+
+export type GetBlogLikeCountQuery = (
+  { __typename?: 'query_root' }
+  & { blog_likes: Array<(
+    { __typename?: 'blog_likes' }
+    & Pick<BlogLikes, 'id' | 'blog_id' | 'user_id'>
+  )> }
+);
+
+export type AddBlogLikeMutationVariables = Exact<{
+  userId: Scalars['String'];
+  blogId: Scalars['Int'];
+}>;
+
+
+export type AddBlogLikeMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blog_likes_one?: Maybe<(
+    { __typename?: 'blog_likes' }
+    & Pick<BlogLikes, 'id' | 'user_id' | 'blog_id'>
+  )> }
+);
+
+export type RemoveBlogLikeMutationVariables = Exact<{
+  userId: Scalars['String'];
+  blogId: Scalars['Int'];
+}>;
+
+
+export type RemoveBlogLikeMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_blog_likes?: Maybe<(
+    { __typename?: 'blog_likes_mutation_response' }
+    & Pick<BlogLikesMutationResponse, 'affected_rows'>
+  )> }
+);
+
 export type GetAllPostsByOneUserQueryVariables = Exact<{
   userId: Scalars['String'];
 }>;
@@ -8515,6 +8556,115 @@ export function useAddBlogCommentMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type AddBlogCommentMutationHookResult = ReturnType<typeof useAddBlogCommentMutation>;
 export type AddBlogCommentMutationResult = ApolloReactCommon.MutationResult<AddBlogCommentMutation>;
 export type AddBlogCommentMutationOptions = ApolloReactCommon.BaseMutationOptions<AddBlogCommentMutation, AddBlogCommentMutationVariables>;
+export const GetBlogLikeCountDocument = gql`
+    query GetBlogLikeCount($blogId: Int!) {
+  blog_likes(where: {blog_id: {_eq: $blogId}}) {
+    id
+    blog_id
+    user_id
+  }
+}
+    `;
+
+/**
+ * __useGetBlogLikeCountQuery__
+ *
+ * To run a query within a React component, call `useGetBlogLikeCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBlogLikeCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBlogLikeCountQuery({
+ *   variables: {
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useGetBlogLikeCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>(GetBlogLikeCountDocument, options);
+      }
+export function useGetBlogLikeCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>(GetBlogLikeCountDocument, options);
+        }
+export type GetBlogLikeCountQueryHookResult = ReturnType<typeof useGetBlogLikeCountQuery>;
+export type GetBlogLikeCountLazyQueryHookResult = ReturnType<typeof useGetBlogLikeCountLazyQuery>;
+export type GetBlogLikeCountQueryResult = ApolloReactCommon.QueryResult<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>;
+export const AddBlogLikeDocument = gql`
+    mutation AddBlogLike($userId: String!, $blogId: Int!) {
+  insert_blog_likes_one(object: {user_id: $userId, blog_id: $blogId}) {
+    id
+    user_id
+    blog_id
+  }
+}
+    `;
+export type AddBlogLikeMutationFn = ApolloReactCommon.MutationFunction<AddBlogLikeMutation, AddBlogLikeMutationVariables>;
+
+/**
+ * __useAddBlogLikeMutation__
+ *
+ * To run a mutation, you first call `useAddBlogLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBlogLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBlogLikeMutation, { data, loading, error }] = useAddBlogLikeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useAddBlogLikeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddBlogLikeMutation, AddBlogLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddBlogLikeMutation, AddBlogLikeMutationVariables>(AddBlogLikeDocument, options);
+      }
+export type AddBlogLikeMutationHookResult = ReturnType<typeof useAddBlogLikeMutation>;
+export type AddBlogLikeMutationResult = ApolloReactCommon.MutationResult<AddBlogLikeMutation>;
+export type AddBlogLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<AddBlogLikeMutation, AddBlogLikeMutationVariables>;
+export const RemoveBlogLikeDocument = gql`
+    mutation RemoveBlogLike($userId: String!, $blogId: Int!) {
+  delete_blog_likes(
+    where: {_and: {user_id: {_eq: $userId}, blog_id: {_eq: $blogId}}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type RemoveBlogLikeMutationFn = ApolloReactCommon.MutationFunction<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>;
+
+/**
+ * __useRemoveBlogLikeMutation__
+ *
+ * To run a mutation, you first call `useRemoveBlogLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveBlogLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeBlogLikeMutation, { data, loading, error }] = useRemoveBlogLikeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      blogId: // value for 'blogId'
+ *   },
+ * });
+ */
+export function useRemoveBlogLikeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>(RemoveBlogLikeDocument, options);
+      }
+export type RemoveBlogLikeMutationHookResult = ReturnType<typeof useRemoveBlogLikeMutation>;
+export type RemoveBlogLikeMutationResult = ApolloReactCommon.MutationResult<RemoveBlogLikeMutation>;
+export type RemoveBlogLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>;
 export const GetAllPostsByOneUserDocument = gql`
     query GetAllPostsByOneUser($userId: String!) {
   posts(where: {user_id: {_eq: $userId}}) {

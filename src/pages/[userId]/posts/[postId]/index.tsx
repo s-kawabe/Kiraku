@@ -1,5 +1,16 @@
 import { gql, useReactiveVar } from '@apollo/client'
-import { Box, Button, Center, Flex, Heading, HStack, Stack, Tag, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  HStack,
+  Spinner,
+  Stack,
+  Tag,
+  Text,
+} from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -49,10 +60,11 @@ const initialLikeData = {
 const UserPostPage: NextPage<Props> = (props: Props) => {
   const [user, setUser] = useState<Users>(props.user)
   const [post, setPost] = useState<Posts>(props.user.posts[0])
+  const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialLikeData)
+
   const createdAt = useConvertDateFromHasura(post.created_at)
   const loginUser = useReactiveVar(loginUserVar)
   const client = initializeApollo()
-  const [likeData, setLikeData] = useState<GetPostLikeCountQuery>(initialLikeData)
   const commentInput = createRef<HTMLTextAreaElement>()
 
   // 表示している投稿がログイン中のユーザのものかどうか
@@ -81,30 +93,6 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
     })
   }
 
-  useEffect(() => {
-    ;(async () => {
-      // 投稿編集後は最新情報が反映されない為、投稿者本人の場合のみクライアントで投稿を再fetch
-      if (isMine) {
-        const { data } = await client.query<
-          GetOneUserWithPostQuery,
-          GetOneUserWithPostQueryVariables
-        >({
-          query: GetOneUserWithPostDocument,
-          variables: {
-            userId: user.display_id,
-            postId: post.id,
-          },
-          fetchPolicy: 'network-only',
-        })
-
-        setUser(data.users[0] as Users)
-        setPost(data.users[0].posts[0] as Posts)
-      }
-      await fetchLike()
-    })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginUser])
-
   const handleToggleLike = async () => {
     if (isCurrentUserLiked()) {
       // insert mutation
@@ -128,9 +116,38 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
     await fetchLike()
   }
 
+  useEffect(() => {
+    ;(async () => {
+      // 投稿編集後は最新情報が反映されない為、投稿者本人の場合のみクライアントで投稿を再fetch
+      if (isMine) {
+        const { data } = await client.query<
+          GetOneUserWithPostQuery,
+          GetOneUserWithPostQueryVariables
+        >({
+          query: GetOneUserWithPostDocument,
+          variables: {
+            userId: user.display_id,
+            postId: post.id,
+          },
+          fetchPolicy: 'network-only',
+        })
+
+        setUser(data.users[0] as Users)
+        setPost(data.users[0].posts[0] as Posts)
+      }
+      // いいね情報の取得は毎回行う
+      await fetchLike()
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loginUser])
+
   return (
     <LayoutWithHead title={`${props.user.name}のポスト「${props.user.posts[0].content}」`} sideMenu>
-      {!loading && (
+      {loading ? (
+        <Center h="100vh" w="100vw">
+          <Spinner />
+        </Center>
+      ) : (
         <Center mb="80px">
           <Box my={{ base: '', sm: '15px', lg: '30px' }}>
             {/* Header */}

@@ -28,7 +28,7 @@ const CommentList: VFC<CommentListProps> = (props: CommentListProps) => {
       {props.comments.length !== 0 ? (
         props.comments.map((comment) => {
           return (
-            <div key={comment.userId}>
+            <div key={comment.comment}>
               <Text fontSize="13px" color="gray.500" mb="1">
                 {comment.userName ?? `@${comment.userId}`}
               </Text>

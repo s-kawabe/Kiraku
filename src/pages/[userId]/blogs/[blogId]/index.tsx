@@ -1,25 +1,47 @@
 import { gql } from '@apollo/client'
 import { useReactiveVar } from '@apollo/client'
-import { Box, Button, Center, Flex, Heading, HStack, Stack, Tag, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  HStack,
+  Spinner,
+  Stack,
+  Tag,
+  Text,
+} from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import { convertFromRaw, EditorState } from 'draft-js'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { createRef, Fragment } from 'react'
+import { createRef, Fragment, useEffect, useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
+  AddBlogLikeMutation,
+  AddBlogLikeMutationVariables,
+  BlogComments,
   Blogs,
   GetAllUsersWithBlogsQuery,
   GetAllUsersWithBlogsQueryVariables,
+  GetBlogLikeCountQuery,
+  GetBlogLikeCountQueryVariables,
   GetOneBlogWithUserQuery,
   GetOneBlogWithUserQueryVariables,
+  RemoveBlogLikeMutation,
+  RemoveBlogLikeMutationVariables,
+  Users,
 } from '@/apollo/graphql'
 import {
+  AddBlogLikeDocument,
   GetAllUsersWithBlogsDocument,
+  GetBlogLikeCountDocument,
   GetOneBlogWithUserDocument,
+  RemoveBlogLikeDocument,
   useBlogCommentsSubscription,
 } from '@/apollo/graphql'
 import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
@@ -27,11 +49,14 @@ import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
 import { CommentForm, UserIcon } from '@/components/user/unit'
 import { chapeCommentData } from '@/utils/methods/common'
-
-import type { BlogComments } from '../../../../apollo/graphql'
+import { useConvertDateFromHasura } from '@/utils/methods/customeHooks'
 
 type Props = {
   blog: Blogs
+}
+
+const initialLikeData = {
+  blog_likes: [],
 }
 
 const headingReset = css`
@@ -70,16 +95,22 @@ const Editor = dynamic(
 )
 
 const UserBlogPage: NextPage<Props> = (props: Props) => {
-  const [blog, user] = [props.blog, props.blog.user]
-  // DBから取得したJSONをEditorStateに変換
-  const contentState = convertFromRaw(props.blog.content)
-  const content = EditorState.createWithContent(contentState)
+  const [user, setUser] = useState<Users>(props.blog.user)
+  const [blog, setBlog] = useState<Blogs>(props.blog)
+  const [likeData, setLikeData] = useState<GetBlogLikeCountQuery>(initialLikeData)
 
   const loginUser = useReactiveVar(loginUserVar)
   const commentInput = createRef<HTMLTextAreaElement>()
+  const createdAt = useConvertDateFromHasura(blog.created_at)
+  const client = initializeApollo()
 
+  // DBから取得したJSONをEditorStateに変換
+  const contentState = convertFromRaw(props.blog.content)
+  const content = EditorState.createWithContent(contentState)
   // 表示しているブログがログイン中のユーザのものかどうか
-  // const isMine = loginUser && loginUser.id === user.id
+  const isMine = loginUser && loginUser.id === user.id
+
+  console.log(likeData)
 
   const { data, loading } = useBlogCommentsSubscription({
     variables: {
@@ -87,9 +118,77 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
     },
   })
 
+  const fetchLike = async () => {
+    const data = await client.query<GetBlogLikeCountQuery, GetBlogLikeCountQueryVariables>({
+      query: GetBlogLikeCountDocument,
+      variables: {
+        blogId: blog.id,
+      },
+      fetchPolicy: 'network-only',
+    })
+    setLikeData(data.data)
+  }
+
+  const isCurrentUserLiked = () => {
+    return likeData.blog_likes.some((item) => {
+      return item.user_id === loginUser?.id
+    })
+  }
+
+  const handleToggleLike = async () => {
+    if (isCurrentUserLiked()) {
+      // insert mutation
+      await client.mutate<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>({
+        mutation: RemoveBlogLikeDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          blogId: blog.id,
+        },
+      })
+    } else {
+      // delete mutation
+      await client.mutate<AddBlogLikeMutation, AddBlogLikeMutationVariables>({
+        mutation: AddBlogLikeDocument,
+        variables: {
+          userId: loginUser?.id as string,
+          blogId: blog.id,
+        },
+      })
+    }
+    await fetchLike()
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      // 投稿編集後は最新情報が反映されない為、投稿者本人の場合のみクライアントで投稿を再fetch
+      if (isMine) {
+        const { data } = await client.query<
+          GetOneBlogWithUserQuery,
+          GetOneBlogWithUserQueryVariables
+        >({
+          query: GetOneBlogWithUserDocument,
+          variables: {
+            blogId: blog.id,
+          },
+          fetchPolicy: 'network-only',
+        })
+
+        setUser(data.blogs[0].user as Users)
+        setBlog(data.blogs[0] as Blogs)
+      }
+      // いいね情報の取得は毎回行う
+      await fetchLike()
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loginUser])
+
   return (
     <LayoutWithHead title={`${user.name}のブログ「${blog.title}」`} sideMenu>
-      {!loading && (
+      {loading ? (
+        <Center h="100vh" w="100vw">
+          <Spinner />
+        </Center>
+      ) : (
         <Center mb="80px">
           <Box my={{ base: '20px', lg: '30px' }}>
             {/* user info  */}
@@ -117,16 +216,26 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
               py="5"
               borderRadius="25px"
             >
-              <Box
-                px="50px"
-                py="20px"
-                bg="#FFF2C3"
-                borderRadius="10px"
-                boxShadow="0 6px 18px rgba(100,100,100,0.1)"
+              <Flex
+                flexDirection={{ base: 'column', lg: 'row' }}
+                alignItems={{ base: 'flex-start', lg: 'flex-end' }}
               >
-                {/* title */}
-                <Heading fontSize="22px">{blog.title}</Heading>
-              </Box>
+                <Box
+                  px="50px"
+                  py="20px"
+                  mr="20px"
+                  bg="#FFF2C3"
+                  borderRadius="10px"
+                  boxShadow="0 6px 18px rgba(100,100,100,0.1)"
+                >
+                  {/* title */}
+                  <Heading fontSize="22px">{blog.title}</Heading>
+                </Box>
+                <Text fontSize="16px" color="gray.400" mt={{ base: '10px', lg: '0' }}>
+                  {createdAt}
+                </Text>
+              </Flex>
+
               <HStack spacing="6">
                 <Box
                   onClick={() => {
@@ -135,8 +244,7 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
                 >
                   {/* comment/like icon */}
                   <CommentIconWithCount
-                    // count={data?.post_comments.length as number}
-                    count={100}
+                    count={data?.blog_comments.length as number}
                     fontSize="24px"
                   />
                 </Box>
@@ -146,16 +254,14 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
                       alert('いいね機能をご利用いただくにはログインが必要です')
                       return
                     }
-                    // await handleToggleLike()
+                    await handleToggleLike()
                   }}
                 >
                   <LikeButtonWithCount
-                    // count={likeData.post_likes.length}
-                    count={100}
+                    count={likeData.blog_likes.length}
                     fontSize="24px"
                     iconSize="27px"
-                    // initial={isCurrentUserLiked()}
-                    initial={false}
+                    initial={isCurrentUserLiked()}
                   />
                 </Box>
               </HStack>
@@ -384,6 +490,34 @@ gql`
         display_id
         image
       }
+    }
+  }
+`
+
+gql`
+  query GetBlogLikeCount($blogId: Int!) {
+    blog_likes(where: { blog_id: { _eq: $blogId } }) {
+      id
+      blog_id
+      user_id
+    }
+  }
+`
+
+gql`
+  mutation AddBlogLike($userId: String!, $blogId: Int!) {
+    insert_blog_likes_one(object: { user_id: $userId, blog_id: $blogId }) {
+      id
+      user_id
+      blog_id
+    }
+  }
+`
+
+gql`
+  mutation RemoveBlogLike($userId: String!, $blogId: Int!) {
+    delete_blog_likes(where: { _and: { user_id: { _eq: $userId }, blog_id: { _eq: $blogId } } }) {
+      affected_rows
     }
   }
 `
