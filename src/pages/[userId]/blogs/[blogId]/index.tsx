@@ -88,8 +88,6 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
   // 表示しているブログがログイン中のユーザのものかどうか
   const isMine = loginUser && loginUser.id === user.id
 
-  console.log(likeData)
-
   const { data, loading } = useBlogCommentsSubscription({
     variables: {
       blogId: blog.id,

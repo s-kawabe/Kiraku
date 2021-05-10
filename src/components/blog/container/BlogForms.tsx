@@ -13,49 +13,49 @@ import {
 } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
-import { convertToRaw, EditorState } from 'draft-js'
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
 import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 import { useState } from 'react'
 
+import type { Blogs } from '@/apollo/graphql'
 import { BlogEditor } from '@/components/blog/unit'
 import { GenderRadioButton } from '@/components/common/unit'
 import type { Gender } from '@/utils/constants/Common'
 import { insertBlogToHasura } from '@/utils/methods/blog'
 import { useAllTopicsAndBrands } from '@/utils/methods/customeHooks'
 import { addTagAttribute, checkExistTable } from '@/utils/methods/Post'
-// 編集の時はblog１件分のデータがpropsに入ってくる
-// type Props = {
-//   blogData?: any
-// }
 
-const BlogForms: VFC = () => {
+// 編集の時はblog１件分のデータがpropsに入ってくる
+type Props = {
+  blogData?: Blogs
+}
+
+const BlogForms: VFC<Props> = (props: Props) => {
+  const isNew = props.blogData === undefined
+  const router = useRouter()
   const [allTopics, allBrands] = useAllTopicsAndBrands()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState(props.blogData?.title ?? '')
   const [registerTopics, setRegisterTopics] = useState<string[]>([])
   const [registerBrands, setRegisterBrands] = useState<string[]>([])
-  const [gender, setGender] = useState<Gender>('ALL')
+  const [gender, setGender] = useState<Gender>((props.blogData?.gender as Gender) ?? 'ALL')
   const [editorState, setEditorState] = useState(() => {
-    return EditorState.createEmpty()
+    if (props.blogData) {
+      const contentState = convertFromRaw(props.blogData.content)
+      return EditorState.createWithContent(contentState)
+    } else {
+      return EditorState.createEmpty()
+    }
   })
 
-  const router = useRouter()
-
   // brandとtopicのinputにautoComplete属性を追加
-  addTagAttribute()
+  isNew && addTagAttribute()
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }
-
-  // const resetState = () => {
-  //   setTitle('')
-  //   setRegisterTopics([])
-  //   setRegisterBrands([])
-  //   setEditorState(EditorState.createEmpty())
-  // }
 
   const handleSubmit = async () => {
     setIsLoading(true)
@@ -64,7 +64,6 @@ const BlogForms: VFC = () => {
     await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
     // textareaに入力されたデータをJSON化する
     const userInputData = convertToRaw(editorState.getCurrentContent())
-    console.log(title, gender, registerTopics, registerBrands, userInputData)
 
     const ret = await insertBlogToHasura({
       title,
@@ -96,7 +95,7 @@ const BlogForms: VFC = () => {
         // bg="gray.100"
       >
         <Heading color="gray.600" fontSize={['20px', '26px']} mb="30px">
-          ブログを投稿
+          ブログを{isNew ? '投稿' : '編集'}
         </Heading>
         {/* Title area */}
         <Box mb="40px" w="100%">
@@ -123,65 +122,69 @@ const BlogForms: VFC = () => {
             <GenderRadioButton default={'ALL'} setGender={setGender} />
           </Flex>
           {/* Topic/Brand area */}
-          <Stack
-            direction={{ base: 'column', lg: 'row' }}
-            spacing="30"
-            justifyContent="space-between"
-          >
-            <datalist id="topics-list">
-              {allTopics.map((topic) => {
-                return <option key={topic} value={topic} />
-              })}
-            </datalist>
-            <datalist id="brands-list">
-              {allBrands.map((topic) => {
-                return <option key={topic} value={topic} />
-              })}
-            </datalist>
-            <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
-              <Box>
-                <Text color="gray.600">トピックを追加</Text>
-                <Box w={{ base: '80vw', lg: '400px', xl: '22vw' }}>
-                  <ReactTagInput
-                    placeholder="トピックは5つまで"
-                    maxTags={5}
-                    tags={registerTopics}
-                    removeOnBackspace={true}
-                    onChange={(newTopic: any) => {
-                      return setRegisterTopics(newTopic)
-                    }}
-                    validator={(value) => {
-                      return !registerTopics.includes(value)
-                    }}
-                  />
-                </Box>
+          {isNew && (
+            <>
+              <Stack
+                direction={{ base: 'column', lg: 'row' }}
+                spacing="30"
+                justifyContent="space-between"
+              >
+                <datalist id="topics-list">
+                  {allTopics.map((topic) => {
+                    return <option key={topic} value={topic} />
+                  })}
+                </datalist>
+                <datalist id="brands-list">
+                  {allBrands.map((topic) => {
+                    return <option key={topic} value={topic} />
+                  })}
+                </datalist>
+                <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                  <Box>
+                    <Text color="gray.600">トピックを追加</Text>
+                    <Box w={{ base: '80vw', lg: '400px', xl: '22vw' }}>
+                      <ReactTagInput
+                        placeholder="トピックは5つまで"
+                        maxTags={5}
+                        tags={registerTopics}
+                        removeOnBackspace={true}
+                        onChange={(newTopic: any) => {
+                          return setRegisterTopics(newTopic)
+                        }}
+                        validator={(value) => {
+                          return !registerTopics.includes(value)
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Tooltip>
+                <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
+                  <Box>
+                    <Text color="gray.600">ブランドを追加</Text>
+                    <Box w={{ base: '80vw', lg: '400px', xl: '22vw' }}>
+                      <ReactTagInput
+                        placeholder="ブランドは5つまで"
+                        maxTags={5}
+                        tags={registerBrands}
+                        removeOnBackspace={true}
+                        onChange={(newBrand) => {
+                          return setRegisterBrands(newBrand)
+                        }}
+                        validator={(value) => {
+                          return !registerBrands.includes(value)
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Tooltip>
+              </Stack>
+              <Box mb="30px" w="100%">
+                <Text color="red.300" fontSize="13px">
+                  ※トピックとブランドは後から変更できません
+                </Text>
               </Box>
-            </Tooltip>
-            <Tooltip label="テキストを入力後Enterで登録" bg="gray.600" fontSize="12px">
-              <Box>
-                <Text color="gray.600">ブランドを追加</Text>
-                <Box w={{ base: '80vw', lg: '400px', xl: '22vw' }}>
-                  <ReactTagInput
-                    placeholder="ブランドは5つまで"
-                    maxTags={5}
-                    tags={registerBrands}
-                    removeOnBackspace={true}
-                    onChange={(newBrand) => {
-                      return setRegisterBrands(newBrand)
-                    }}
-                    validator={(value) => {
-                      return !registerBrands.includes(value)
-                    }}
-                  />
-                </Box>
-              </Box>
-            </Tooltip>
-          </Stack>
-          <Box mb="30px" w="100%">
-            <Text color="red.300" fontSize="13px">
-              ※トピックとブランドは後から変更できません
-            </Text>
-          </Box>
+            </>
+          )}
         </Box>
         {/* Publish Button */}
         <Button
