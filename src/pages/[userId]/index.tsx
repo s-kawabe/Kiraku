@@ -7,12 +7,11 @@ import { useEffect, useState } from 'react'
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
-  Blogs,
   GetOneUserAllBlogQuery,
   GetOneUserAllBlogQueryVariables,
   GetOneUserAllPostQuery,
   GetOneUserAllPostQueryVariables,
-  Posts,
+  Users,
 } from '@/apollo/graphql'
 import { GetOneUserAllBlogDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
 import { LayoutWithHead } from '@/components/layout/container'
@@ -23,8 +22,8 @@ const UserPostListPage = () => {
   const router = useRouter()
   const client = initializeApollo()
   const loginUser = useReactiveVar(loginUserVar)
-  const [post, setPost] = useState<Posts[]>([])
-  const [blog, setBlog] = useState<Blogs[]>([])
+  const [user1, setUser1] = useState<Users[]>([])
+  const [user2, setUser2] = useState<Users[]>([])
 
   const { userId } = router.query
 
@@ -51,8 +50,8 @@ const UserPostListPage = () => {
           },
         })
 
-        setPost(postData.data.users[0].posts as Posts[])
-        setBlog(blogData.data.users[0].blogs as Blogs[])
+        setUser1(postData.data.users as Users[])
+        setUser2(blogData.data.users as Users[])
       }
     })()
   })
@@ -62,13 +61,13 @@ const UserPostListPage = () => {
     <LayoutWithHead title="○○のポスト一覧" sideMenu>
       <Box m="30px">
         <Heading>ポスト</Heading>
-        {post.map((item) => {
+        {user1[0]?.posts.map((item) => {
           return (
             <Box my="5px" key={item.id}>
               <Link
                 href={{
                   pathname: '/[userId]/posts/[postId]',
-                  query: { userId: loginUser?.display_id, postId: item.id },
+                  query: { userId: user1[0].display_id, postId: item.id },
                 }}
               >
                 <a>{item.content}</a>
@@ -78,13 +77,13 @@ const UserPostListPage = () => {
         })}
 
         <Heading>ブログ</Heading>
-        {blog.map((item) => {
+        {user2[0]?.blogs.map((item) => {
           return (
             <Box my="5px" key={item.id}>
               <Link
                 href={{
                   pathname: '/[userId]/blogs/[blogId]',
-                  query: { userId: loginUser?.display_id, blogId: item.id },
+                  query: { userId: user2[0].display_id, blogId: item.id },
                 }}
               >
                 <a>{item.title}</a>
@@ -111,6 +110,7 @@ gql`
       image
       created_at
       posts {
+        id
         content
         image
         gender

@@ -26,6 +26,7 @@ gql`
       image
       created_at
       blogs {
+        id
         title
         content
         gender

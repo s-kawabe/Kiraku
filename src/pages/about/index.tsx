@@ -135,7 +135,7 @@ const AboutPage = () => {
           direction={{ base: 'column', lg: 'row' }}
           align="center"
         >
-          <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
+          <NextImage src="/macbook1.png" alt="macbookのモック" width={500} height={330} />
           <Box maxW="400px">
             <Text
               color="gray.600"
@@ -171,7 +171,7 @@ const AboutPage = () => {
             </Text>
           </Box>
           <Box>
-            <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
+            <NextImage src="/macbook2.png" alt="macbookのモック" width={500} height={330} />
           </Box>
         </Stack>
 

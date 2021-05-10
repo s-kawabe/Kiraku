@@ -7262,7 +7262,7 @@ export type GetOneUserAllBlogQuery = (
     & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
     & { blogs: Array<(
       { __typename?: 'blogs' }
-      & Pick<Blogs, 'title' | 'content' | 'gender' | 'updated_at'>
+      & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'updated_at'>
     )> }
   )> }
 );
@@ -7400,7 +7400,7 @@ export type GetOneUserAllPostQuery = (
     & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
     & { posts: Array<(
       { __typename?: 'posts' }
-      & Pick<Posts, 'content' | 'image' | 'gender' | 'updated_at'>
+      & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'updated_at'>
     )> }
   )> }
 );
@@ -8386,6 +8386,7 @@ export const GetOneUserAllBlogDocument = gql`
     image
     created_at
     blogs {
+      id
       title
       content
       gender
@@ -8715,6 +8716,7 @@ export const GetOneUserAllPostDocument = gql`
     image
     created_at
     posts {
+      id
       content
       image
       gender
