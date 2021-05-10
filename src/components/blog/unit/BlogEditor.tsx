@@ -2,6 +2,7 @@ import 'draft-js/dist/Draft.css'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 import { Box } from '@chakra-ui/react'
+import { css } from '@emotion/react'
 import type { EditorState } from 'draft-js'
 import dynamic from 'next/dynamic'
 import type { Dispatch, SetStateAction, VFC } from 'react'
@@ -19,6 +20,24 @@ type EditorImage = {
     link: string
   }
 }
+
+const toolbarCss = css`
+  .rdw-editor-toolbar,
+  .toolbar {
+    padding: 8px 8px 0;
+    border-radius: 15px;
+    display: flex;
+    justify-content: flex-start;
+    background: #fff2c3;
+    z-index: 4;
+    flex-wrap: wrap;
+    font-size: 15px;
+    margin-bottom: 5px;
+    user-select: none;
+    position: sticky;
+    top: 30px;
+  }
+`
 
 const uploadImage = async (file: any): Promise<EditorImage> => {
   const imageUrl = await uploadBlogImage(file)
@@ -61,11 +80,11 @@ const BlogEditor: VFC<Props> = (props: Props) => {
       lineHeight="1.8"
       color="gray.700"
       pb="250px"
-      css={headingReset}
+      css={[toolbarCss, headingReset]}
     >
       <Editor
         editorState={editorState}
-        // toolbarClassName="toolbarClassName"
+        toolbarClassName="toolbar"
         // wrapperClassName="wrapperClassName"
         // editorClassName="editorClassName"
         onEditorStateChange={onEditorStateChange}
