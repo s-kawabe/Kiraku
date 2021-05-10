@@ -15,6 +15,7 @@ import {
   Tag,
   Text,
 } from '@chakra-ui/react'
+import { css } from '@emotion/react'
 import { convertFromRaw, EditorState } from 'draft-js'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
@@ -71,6 +72,15 @@ const Editor = dynamic(
     ssr: false,
   }
 )
+
+const hiddenToolBar = css`
+  & .toolbarClassName {
+    visibility: hidden !important;
+  }
+  & .rdw-editor-toolbar {
+    display: none !important;
+  }
+`
 
 const UserBlogPage: NextPage<Props> = (props: Props) => {
   const [user, setUser] = useState<Users>(props.blog.user)
@@ -327,7 +337,7 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
               mx="auto"
               lineHeight="1.8"
               borderRadius="15px"
-              css={headingReset}
+              css={[hiddenToolBar, headingReset]}
               color="gray.700"
               shadow="md"
               fontSize={['18px', '20px']}

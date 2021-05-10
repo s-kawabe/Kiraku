@@ -119,7 +119,7 @@ const BlogForms: VFC<Props> = (props: Props) => {
         </Box>
         {/* Main Text area */}
         <BlogEditor editorState={editorState} setEditorState={setEditorState} />
-        <Box w={{ base: '100%', xl: '80%' }} mt="40px">
+        <Box w={{ base: '100%', xl: isNew ? '80%' : '100%' }} mt="40px">
           {/* Gender radio area */}
           <Flex justify="flex-start" w="100%" mb="30px" mt="40px">
             <GenderRadioButton default={'ALL'} setGender={setGender} />
@@ -200,7 +200,7 @@ const BlogForms: VFC<Props> = (props: Props) => {
           right={['30px', '60px']}
           isLoading={isLoading}
         >
-          公開
+          {isNew ? '公開' : '編集'}
         </Button>
       </VStack>
     </Center>
