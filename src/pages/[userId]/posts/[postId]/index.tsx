@@ -175,6 +175,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 </Button>
               </Flex>
               <HStack spacing="6">
+                {isMine && <EditMenu post={post} />}
                 <Box
                   onClick={() => {
                     commentInput.current?.focus()
@@ -311,8 +312,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   <Text fontSize="18px" color="gray.700" whiteSpace="pre-wrap">
                     {post.content}
                   </Text>
-                  <HStack mt="70px" justifyContent="space-between">
-                    {isMine && <EditMenu post={post} />}
+                  <HStack mt="70px" justifyContent="flex-end">
                     <Text fontSize="14px" color="gray.400">
                       {createdAt}
                     </Text>

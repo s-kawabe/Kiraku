@@ -1,3 +1,6 @@
+import 'draft-js/dist/Draft.css'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+
 import { gql } from '@apollo/client'
 import { useReactiveVar } from '@apollo/client'
 import {
@@ -44,10 +47,11 @@ import {
   RemoveBlogLikeDocument,
   useBlogCommentsSubscription,
 } from '@/apollo/graphql'
-import { CommentIconWithCount, LikeButtonWithCount } from '@/components/common/container'
+import { CommentIconWithCount, EditMenu, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
 import { CommentForm, UserIcon } from '@/components/user/unit'
+import { headingReset } from '@/utils/constants/Common'
 import { chapeCommentData } from '@/utils/methods/common'
 import { useConvertDateFromHasura } from '@/utils/methods/customeHooks'
 
@@ -59,31 +63,6 @@ const initialLikeData = {
   blog_likes: [],
 }
 
-const headingReset = css`
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    padding: 8px 0px;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 5px 0px;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 3px 0px;
-  }
-
-  h4,
-  h5 {
-    font-size: 1rem;
-  }
-`
-
 const Editor = dynamic(
   async () => {
     const mod = await import('react-draft-wysiwyg')
@@ -93,6 +72,15 @@ const Editor = dynamic(
     ssr: false,
   }
 )
+
+const hiddenToolBar = css`
+  & .toolbarClassName {
+    visibility: hidden !important;
+  }
+  & .rdw-editor-toolbar {
+    display: none !important;
+  }
+`
 
 const UserBlogPage: NextPage<Props> = (props: Props) => {
   const [user, setUser] = useState<Users>(props.blog.user)
@@ -109,8 +97,6 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
   const content = EditorState.createWithContent(contentState)
   // 表示しているブログがログイン中のユーザのものかどうか
   const isMine = loginUser && loginUser.id === user.id
-
-  console.log(likeData)
 
   const { data, loading } = useBlogCommentsSubscription({
     variables: {
@@ -190,7 +176,7 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
         </Center>
       ) : (
         <Center mb="80px">
-          <Box my={{ base: '20px', lg: '30px' }}>
+          <Box my={{ base: '20px', lg: '30px' }} mx="auto" maxW="95vw">
             {/* user info  */}
             <Flex align="center">
               <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
@@ -237,6 +223,8 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
               </Flex>
 
               <HStack spacing="6">
+                {isMine && <EditMenu blog={blog} />}
+
                 <Box
                   onClick={() => {
                     commentInput.current?.focus()
@@ -344,11 +332,15 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
             <Box
               w={['90vw', '70vw']}
               minH="40vh"
-              p={['0px', '20px']}
+              p={['0px', '40px']}
               my="50px"
+              mx="auto"
+              lineHeight="1.8"
               borderRadius="15px"
-              css={headingReset}
-              // boxShadow="0 6px 18px rgba(100,100,100,0.1)"
+              css={[hiddenToolBar, headingReset]}
+              color="gray.700"
+              shadow="md"
+              fontSize={['18px', '20px']}
             >
               <Editor
                 editorState={content}

@@ -7014,6 +7014,23 @@ export type InsertBlogOneWithTopicsAndBrandsMutation = (
   )> }
 );
 
+export type EditBlogOneMutationVariables = Exact<{
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  user_id: Scalars['String'];
+  content: Scalars['jsonb'];
+  gender: Scalars['String'];
+}>;
+
+
+export type EditBlogOneMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_blogs_one?: Maybe<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'user_id' | 'title' | 'content' | 'gender' | 'created_at'>
+  )> }
+);
+
 export type DeletePostOneMutationVariables = Exact<{
   postId: Scalars['Int'];
 }>;
@@ -7740,6 +7757,51 @@ export function useInsertBlogOneWithTopicsAndBrandsMutation(baseOptions?: Apollo
 export type InsertBlogOneWithTopicsAndBrandsMutationHookResult = ReturnType<typeof useInsertBlogOneWithTopicsAndBrandsMutation>;
 export type InsertBlogOneWithTopicsAndBrandsMutationResult = ApolloReactCommon.MutationResult<InsertBlogOneWithTopicsAndBrandsMutation>;
 export type InsertBlogOneWithTopicsAndBrandsMutationOptions = ApolloReactCommon.BaseMutationOptions<InsertBlogOneWithTopicsAndBrandsMutation, InsertBlogOneWithTopicsAndBrandsMutationVariables>;
+export const EditBlogOneDocument = gql`
+    mutation EditBlogOne($id: Int!, $title: String!, $user_id: String!, $content: jsonb!, $gender: String!) {
+  insert_blogs_one(
+    object: {id: $id, title: $title, user_id: $user_id, content: $content, gender: $gender}
+    on_conflict: {constraint: blogs_pkey, update_columns: [title, content, gender, updated_at]}
+  ) {
+    id
+    user_id
+    title
+    content
+    gender
+    created_at
+  }
+}
+    `;
+export type EditBlogOneMutationFn = ApolloReactCommon.MutationFunction<EditBlogOneMutation, EditBlogOneMutationVariables>;
+
+/**
+ * __useEditBlogOneMutation__
+ *
+ * To run a mutation, you first call `useEditBlogOneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditBlogOneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editBlogOneMutation, { data, loading, error }] = useEditBlogOneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      title: // value for 'title'
+ *      user_id: // value for 'user_id'
+ *      content: // value for 'content'
+ *      gender: // value for 'gender'
+ *   },
+ * });
+ */
+export function useEditBlogOneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditBlogOneMutation, EditBlogOneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<EditBlogOneMutation, EditBlogOneMutationVariables>(EditBlogOneDocument, options);
+      }
+export type EditBlogOneMutationHookResult = ReturnType<typeof useEditBlogOneMutation>;
+export type EditBlogOneMutationResult = ApolloReactCommon.MutationResult<EditBlogOneMutation>;
+export type EditBlogOneMutationOptions = ApolloReactCommon.BaseMutationOptions<EditBlogOneMutation, EditBlogOneMutationVariables>;
 export const DeletePostOneDocument = gql`
     mutation DeletePostOne($postId: Int!) {
   delete_posts_by_pk(id: $postId) {
