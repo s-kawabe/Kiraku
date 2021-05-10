@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
@@ -71,20 +70,3 @@ export const getStaticPaths: GetStaticPaths<{ userId: string; blogId: string }> 
     fallback: 'blocking',
   }
 }
-
-// ブログ編集用
-gql`
-  mutation EditPostOne($id: Int!, $user_id: String!, $content: jsonb!, $gender: String!) {
-    insert_blogs_one(
-      object: { id: $id, user_id: $user_id, content: $content, gender: $gender }
-      on_conflict: { constraint: blogs_pkey, update_columns: [content, gender, updated_at] }
-    ) {
-      id
-      user_id
-      title
-      content
-      gender
-      created_at
-    }
-  }
-`

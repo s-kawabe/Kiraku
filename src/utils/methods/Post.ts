@@ -250,7 +250,7 @@ export const insertPostToHasura = async ({
         brandsIds: registerBrandsIds,
       },
     })
-    // topic,brandをどちらも登録しない
+    // topic,brandをどちらも登録しない ※編集時はこちらに入る
   } else {
     if (id) {
       // 投稿編集時

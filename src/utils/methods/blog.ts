@@ -1,6 +1,8 @@
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
+  EditBlogOneMutation,
+  EditBlogOneMutationVariables,
   InsertBlogOneMutation,
   InsertBlogOneMutationVariables,
   InsertBlogOneWithBrandsMutation,
@@ -11,6 +13,7 @@ import type {
   InsertBlogOneWithTopicsMutationVariables,
 } from '@/apollo/graphql'
 import {
+  EditBlogOneDocument,
   InsertBlogOneDocument,
   InsertBlogOneWithBrandsDocument,
   InsertBlogOneWithTopicsAndBrandsDocument,
@@ -20,6 +23,7 @@ import { storage } from '@/firebase/firebaseConfig'
 import { compressFile, getRandom16DigitsName, mappingContentToId } from '@/utils/methods/Post'
 
 type FromSubmitedData = {
+  id?: number
   title: string
   userInputData: any
   registerTopics: string[]
@@ -52,6 +56,7 @@ export const uploadBlogImage = async (file: File) => {
 }
 
 export const insertBlogToHasura = async ({
+  id,
   title,
   userInputData,
   registerTopics,
@@ -123,16 +128,31 @@ export const insertBlogToHasura = async ({
         brandsIds: registerBrandsIds,
       },
     })
-    // topic,brandをどちらも登録しない
+    // topic,brandをどちらも登録しない ※編集時はこちらに入る
   } else {
-    return await client.mutate<InsertBlogOneMutation, InsertBlogOneMutationVariables>({
-      mutation: InsertBlogOneDocument,
-      variables: {
-        title: title,
-        user_id: loginUser.id,
-        content: userInputData,
-        gender: gender,
-      },
-    })
+    if (id) {
+      // 引数のidがあれば編集
+      return await client.mutate<EditBlogOneMutation, EditBlogOneMutationVariables>({
+        mutation: EditBlogOneDocument,
+        variables: {
+          id: id,
+          title: title,
+          user_id: loginUser.id,
+          content: userInputData,
+          gender: gender,
+        },
+      })
+    } else {
+      // なければ新規投稿
+      return await client.mutate<InsertBlogOneMutation, InsertBlogOneMutationVariables>({
+        mutation: InsertBlogOneDocument,
+        variables: {
+          title: title,
+          user_id: loginUser.id,
+          content: userInputData,
+          gender: gender,
+        },
+      })
+    }
   }
 }

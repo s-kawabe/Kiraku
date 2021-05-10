@@ -59,13 +59,17 @@ const BlogForms: VFC<Props> = (props: Props) => {
 
   const handleSubmit = async () => {
     setIsLoading(true)
-    // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
-    await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
-    await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
+    if (isNew) {
+      // ユーザが入力したbrandとtopicの中にDB未登録の物があれば登録する
+      await checkExistTable({ key: 'topics', formInsert: registerTopics, allData: allTopics })
+      await checkExistTable({ key: 'brands', formInsert: registerBrands, allData: allBrands })
+    }
     // textareaに入力されたデータをJSON化する
     const userInputData = convertToRaw(editorState.getCurrentContent())
 
+    // hasuraのblogsテーブルにINSERTし、そのidを返却してもらって /blogs/[blogId].tsxページへ遷移する
     const ret = await insertBlogToHasura({
+      id: props.blogData?.id,
       title,
       gender,
       registerTopics,
@@ -73,7 +77,6 @@ const BlogForms: VFC<Props> = (props: Props) => {
       userInputData,
     })
 
-    // hasuraのblogsテーブルにINSERTし、そのidを返却してもらって /blogs/[blogId].tsxページへ遷移する
     setIsLoading(false)
     const data = ret?.data?.insert_blogs_one
     if (data) {
@@ -297,6 +300,29 @@ gql`
     ) {
       id
       user_id
+      content
+      gender
+      created_at
+    }
+  }
+`
+
+// ブログ編集用
+gql`
+  mutation EditBlogOne(
+    $id: Int!
+    $title: String!
+    $user_id: String!
+    $content: jsonb!
+    $gender: String!
+  ) {
+    insert_blogs_one(
+      object: { id: $id, title: $title, user_id: $user_id, content: $content, gender: $gender }
+      on_conflict: { constraint: blogs_pkey, update_columns: [title, content, gender, updated_at] }
+    ) {
+      id
+      user_id
+      title
       content
       gender
       created_at
