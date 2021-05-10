@@ -92,7 +92,7 @@ const BlogForms: VFC = () => {
     <Center mt="40px" mb="80px">
       <VStack
         my={{ base: '', sm: '25px', lg: '40px' }}
-        w={{ base: '90vw', sm: '85vw', xl: '65vw' }}
+        w={{ base: '90vw', sm: '88vw', xl: '70vw' }}
         // bg="gray.100"
       >
         <Heading color="gray.600" fontSize={['20px', '26px']} mb="30px">
