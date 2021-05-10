@@ -1,54 +1,58 @@
 import { gql, useReactiveVar } from '@apollo/client'
 import { Box, Heading } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
   Blogs,
-  GetAllBlogsByOneUserQuery,
-  GetAllBlogsByOneUserQueryVariables,
-  GetAllPostsByOneUserQuery,
-  GetAllPostsByOneUserQueryVariables,
+  GetOneUserAllBlogQuery,
+  GetOneUserAllBlogQueryVariables,
+  GetOneUserAllPostQuery,
+  GetOneUserAllPostQueryVariables,
   Posts,
 } from '@/apollo/graphql'
-import { GetAllBlogsByOneUserDocument, GetAllPostsByOneUserDocument } from '@/apollo/graphql'
+import { GetOneUserAllBlogDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
 import { LayoutWithHead } from '@/components/layout/container'
 
 // TODO loginuserではなくパス(display_id)からqueryする
 
 const UserPostListPage = () => {
+  const router = useRouter()
   const client = initializeApollo()
   const loginUser = useReactiveVar(loginUserVar)
   const [post, setPost] = useState<Posts[]>([])
   const [blog, setBlog] = useState<Blogs[]>([])
 
+  const { userId } = router.query
+
   useEffect(() => {
     ;(async () => {
       if (loginUser) {
         const postData = await client.query<
-          GetAllPostsByOneUserQuery,
-          GetAllPostsByOneUserQueryVariables
+          GetOneUserAllPostQuery,
+          GetOneUserAllPostQueryVariables
         >({
-          query: GetAllPostsByOneUserDocument,
+          query: GetOneUserAllPostDocument,
           variables: {
-            userId: loginUser.id,
+            display_id: userId as string,
           },
         })
 
         const blogData = await client.query<
-          GetAllBlogsByOneUserQuery,
-          GetAllBlogsByOneUserQueryVariables
+          GetOneUserAllBlogQuery,
+          GetOneUserAllBlogQueryVariables
         >({
-          query: GetAllBlogsByOneUserDocument,
+          query: GetOneUserAllBlogDocument,
           variables: {
-            userId: loginUser.id,
+            display_id: userId as string,
           },
         })
 
-        setPost(postData.data.posts as Posts[])
-        setBlog(blogData.data.blogs as Blogs[])
+        setPost(postData.data.users[0].posts as Posts[])
+        setBlog(blogData.data.users[0].blogs as Blogs[])
       }
     })()
   })
@@ -97,26 +101,20 @@ const UserPostListPage = () => {
 export default UserPostListPage
 
 gql`
-  query GetAllPostsByOneUser($userId: String!) {
-    posts(where: { user_id: { _eq: $userId } }) {
+  query GetOneUserAllPost($display_id: String!) {
+    users(where: { display_id: { _eq: $display_id } }) {
       id
-      user_id
-      content
-      image
-      image_id
+      display_id
+      name
+      profile
       gender
+      image
       created_at
-      topics {
-        topic {
-          id
-          name
-        }
-      }
-      brands {
-        brand {
-          id
-          name
-        }
+      posts {
+        content
+        image
+        gender
+        updated_at
       }
     }
   }
