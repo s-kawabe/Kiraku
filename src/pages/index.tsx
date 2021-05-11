@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
-import { Center, SimpleGrid } from '@chakra-ui/react'
+import { Center, Heading, HStack, SimpleGrid } from '@chakra-ui/react'
+import Link from 'next/link'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '@/apollo/graphql'
@@ -14,7 +15,37 @@ const Home = () => {
 
   return (
     <LayoutWithHead sideMenu>
-      <Center maxW="70vw" m={['10px', '30px']}>
+      <Center m={['10px', '30px']}>
+        <HStack spacing="7" color="gray.600">
+          <Link href="/">
+            <a>
+              <Heading size="md" color="#8C5A30" pb="5px" borderBottom="2px">
+                おすすめ
+              </Heading>
+            </a>
+          </Link>
+          <Link href="/feed">
+            <a>
+              <Heading size="md" pb="5px">
+                タイムライン
+              </Heading>
+            </a>
+          </Link>
+          <Link href="/posts">
+            <a>
+              <Heading size="md" pb="5px">
+                ポスト一覧
+              </Heading>
+            </a>
+          </Link>
+          <Link href="/blogs">
+            <a>
+              <Heading size="md" pb="5px">
+                ブログ一覧
+              </Heading>
+            </a>
+          </Link>
+        </HStack>
         <SimpleGrid columns={[1, 2]} spacingX={3} spacingY={5}></SimpleGrid>
       </Center>
       <br />
