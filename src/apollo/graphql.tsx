@@ -7535,6 +7535,52 @@ export type PostCommentSubscriptionSubscription = (
   )> }
 );
 
+export type GetRecentPostQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecentPostQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'image' | 'gender' | 'content' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'post_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_comments_aggregate_fields' }
+        & Pick<PostCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )>, blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'blog_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_comments_aggregate_fields' }
+        & Pick<BlogCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )> }
+);
+
 export type Top10TopicAndBrandQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9045,6 +9091,83 @@ export function usePostCommentSubscriptionSubscription(baseOptions: ApolloReactH
       }
 export type PostCommentSubscriptionSubscriptionHookResult = ReturnType<typeof usePostCommentSubscriptionSubscription>;
 export type PostCommentSubscriptionSubscriptionResult = ApolloReactCommon.SubscriptionResult<PostCommentSubscriptionSubscription>;
+export const GetRecentPostDocument = gql`
+    query GetRecentPost {
+  posts(limit: 10, order_by: {id: asc}) {
+    id
+    image
+    gender
+    content
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+  blogs(limit: 9, order_by: {id: asc}) {
+    id
+    title
+    content
+    gender
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRecentPostQuery__
+ *
+ * To run a query within a React component, call `useGetRecentPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecentPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecentPostQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetRecentPostQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecentPostQuery, GetRecentPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetRecentPostQuery, GetRecentPostQueryVariables>(GetRecentPostDocument, options);
+      }
+export function useGetRecentPostLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecentPostQuery, GetRecentPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetRecentPostQuery, GetRecentPostQueryVariables>(GetRecentPostDocument, options);
+        }
+export type GetRecentPostQueryHookResult = ReturnType<typeof useGetRecentPostQuery>;
+export type GetRecentPostLazyQueryHookResult = ReturnType<typeof useGetRecentPostLazyQuery>;
+export type GetRecentPostQueryResult = ApolloReactCommon.QueryResult<GetRecentPostQuery, GetRecentPostQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {

@@ -20,6 +20,7 @@ import {
   InsertBlogOneWithTopicsDocument,
 } from '@/apollo/graphql'
 import { storage } from '@/firebase/firebaseConfig'
+import type { BlogContentJson } from '@/utils/constants/Blog'
 import { compressFile, getRandom16DigitsName, mappingContentToId } from '@/utils/methods/Post'
 
 type FromSubmitedData = {
@@ -155,4 +156,22 @@ export const insertBlogToHasura = async ({
       })
     }
   }
+}
+
+// DBから取得したcontent(JSON)をstringに変換する(画像とスタイル情報は無視する)
+export const convertBlogContentToString = (content: BlogContentJson): string => {
+  const strings = content.blocks.map((item) => {
+    return item.text
+  })
+  const noEmptyStrings = strings.filter((item) => {
+    return item.length !== 0 && item !== 'LCR'
+  })
+  return noEmptyStrings.join('\n')
+}
+
+export const getTopImage = (content: BlogContentJson): string | undefined => {
+  const imageUrls = Object.values(content.entityMap)
+  if (imageUrls.length === 0) return
+
+  return imageUrls[0].data.src
 }

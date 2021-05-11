@@ -1,11 +1,18 @@
+import { gql } from '@apollo/client'
 import { Box, Center, Heading, Icon, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
 import { css } from '@emotion/react'
+import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Fragment } from 'react'
 import { AiOutlineIdcard } from 'react-icons/ai'
 import { HiOutlineNewspaper } from 'react-icons/hi'
 import { IoIosArrowForward } from 'react-icons/io'
 
+import { addApolloState, initializeApollo } from '@/apollo/client'
+import type { GetRecentPostQuery } from '@/apollo/graphql'
+import type { GetRecentPostQueryVariables } from '@/apollo/graphql'
+import { GetRecentPostDocument } from '@/apollo/graphql'
 import { AboutCard, BackgroundCircle } from '@/components/about/unit'
 import { BlogCard } from '@/components/blog/container'
 import { IconButton, NextImage } from '@/components/common/unit'
@@ -13,12 +20,19 @@ import { LayoutWithHead } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 import { auth } from '@/firebase/firebaseConfig'
 import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
+import { convertBlogContentToString, getTopImage } from '@/utils/methods/blog'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
-const AboutPage = () => {
+type Props = {
+  posts: GetRecentPostQuery['posts']
+  blogs: GetRecentPostQuery['blogs']
+}
+
+const AboutPage: NextPage<Props> = (props: Props) => {
   const router = useRouter()
-  const isPC = useIsDesktop()
+  const isPC = useIsDesktop('1280px')
   const { post, blog, show } = ABOUT_CARD_TEXT
+  console.log(props)
 
   const isClient = () => {
     return typeof window !== 'undefined'
@@ -98,7 +112,15 @@ const AboutPage = () => {
 
       {/* cards */}
       <Box>
-        <VStack w="100%" overflow="hidden">
+        <VStack
+          w="100%"
+          overflow="hidden"
+          bg={{
+            base:
+              'linear-gradient(103.21deg, #FEFFEE 0%, rgba(254, 255, 252, 0.53125) 46.98%, #F9FFDF 100.23%);',
+            xl: 'transparent',
+          }}
+        >
           <Heading color="gray.700" my="60px">
             できること
           </Heading>
@@ -212,48 +234,22 @@ const AboutPage = () => {
           </Text>
           <Box>
             <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={8}>
-              <PostCard
-                imageSrc="/fashion.jpeg"
-                text="この前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンなこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-                userIcon="/myicon.jpg"
-                userName="shintaro"
-                userId="shin_k_2281"
-              />
-              <PostCard
-                imageSrc="/fashion.jpeg"
-                text="モダンな雰囲気でとてもお気に入りです"
-                userIcon="/myicon.jpg"
-                userName="shintaro"
-                userId="shin_k_2281"
-              />
-              <PostCard
-                imageSrc="/fashion.jpeg"
-                text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-                userIcon="/myicon.jpg"
-                userName="shintaro"
-                userId="shin_k_2281"
-              />
-              <PostCard
-                imageSrc="/fashion.jpeg"
-                text="この前買った腕時計！！ モダンな雰囲気でとてもお気 モダンな雰囲気でとてもお気に入りです"
-                userIcon="/myicon.jpg"
-                userName="shintaro"
-                userId="shin_k_2281"
-              />
-              <PostCard
-                imageSrc="/fashion.jpeg"
-                text="この前買った腕時計！！雰囲気でとてもお気に入りです"
-                userIcon="/myicon.jpg"
-                userName="shintaro"
-                userId="shin_k_2281"
-              />
-              <PostCard
-                imageSrc="/fashion.jpeg"
-                text="この前買った腕時計！！ モダンな雰囲気でとてお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-                userIcon="/myicon.jpg"
-                userName="shintaro"
-                userId="shin_k_2281"
-              />
+              {props.posts.map((post) => {
+                return (
+                  <Fragment key={post.id}>
+                    <PostCard
+                      imageSrc={post.image}
+                      postId={post.id}
+                      text={post.content}
+                      userIcon={post.user.image ?? '/nouser.svg'}
+                      userName={post.user.name as string}
+                      userId={post.user.display_id}
+                      commentCount={post.comments_aggregate.aggregate?.count as number}
+                      likeCount={post.likes_aggregate.aggregate?.count as number}
+                    />
+                  </Fragment>
+                )
+              })}
             </SimpleGrid>
           </Box>
         </VStack>
@@ -269,72 +265,23 @@ const AboutPage = () => {
           </Text>
           <Box>
             <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={7}>
-              <BlogCard
-                title="おすすめメンズアイテム5選"
-                text={`こんにちは、皆様いかがお過ごしでしょうか
-              今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-                userIcon="/myicon.jpg"
-                userName="taro"
-                userId="kusowarota"
-              />
-              <BlogCard
-                title="おすすめメンズアイテム5選"
-                text={`こんにちは、皆様いかがお過ごしでしょうか
-              今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-                userIcon="/myicon.jpg"
-                userName="taro"
-                userId="kusowarota"
-              />
-              <BlogCard
-                title="おすすめメンズアイテム5選"
-                text={`こんにちは、皆様いかがお過ごしでしょうか
-              今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-                userIcon="/myicon.jpg"
-                userName="taro"
-                userId="kusowarota"
-              />
-              <BlogCard
-                title="おすすめメンズアイテム5選"
-                text={`こんにちは、皆様いかがお過ごしでしょうか
-              今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-                userIcon="/myicon.jpg"
-                userName="taro"
-                userId="kusowarota"
-              />
-              <BlogCard
-                title="おすすめメンズアイテム5選"
-                text={`こんにちは、皆様いかがお過ごしでしょうか
-              今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-                userIcon="/myicon.jpg"
-                userName="taro"
-                userId="kusowarota"
-              />
-              <BlogCard
-                title="おすすめメンズアイテム5選"
-                text={`こんにちは、皆様いかがお過ごしでしょうか
-              今回は春に先駆けて周りと差別化できるトレンドのメンズ小物3選をご紹介します
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
-              まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`}
-                userIcon="/myicon.jpg"
-                userName="taro"
-                userId="kusowarota"
-              />
+              {props.blogs.map((blog) => {
+                return (
+                  <Fragment key={blog.id}>
+                    <BlogCard
+                      title={blog.title}
+                      text={convertBlogContentToString(blog.content)}
+                      blogId={blog.id}
+                      userIcon={blog.user.image ?? '/nouser.svg'}
+                      userName={blog.user.name as string}
+                      userId={blog.user.display_id}
+                      commentCount={blog.comments_aggregate.aggregate?.count as number}
+                      likeCount={blog.likes_aggregate.aggregate?.count as number}
+                      topImage={getTopImage(blog.content)}
+                    />
+                  </Fragment>
+                )
+              })}
             </SimpleGrid>
           </Box>
         </VStack>
@@ -362,3 +309,64 @@ const AboutPage = () => {
 
 // eslint-disable-next-line import/no-default-export
 export default AboutPage
+
+// 一番最近投稿されたpostとblogを数件取得する (limit post10 blog9)
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const client = initializeApollo()
+  const { data } = await client.query<GetRecentPostQuery, GetRecentPostQueryVariables>({
+    query: GetRecentPostDocument,
+  })
+
+  return addApolloState(client, { props: { posts: data.posts, blogs: data.blogs }, revalidate: 60 })
+}
+
+gql`
+  query GetRecentPost {
+    posts(limit: 10, order_by: { id: asc }) {
+      id
+      image
+      gender
+      content
+      created_at
+      user {
+        id
+        display_id
+        image
+        name
+      }
+      comments_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+    }
+    blogs(limit: 9, order_by: { id: asc }) {
+      id
+      title
+      content
+      gender
+      created_at
+      user {
+        id
+        display_id
+        image
+        name
+      }
+      comments_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+    }
+  }
+`

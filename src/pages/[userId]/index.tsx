@@ -1,10 +1,9 @@
-import { gql, useReactiveVar } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { Box, Heading } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { loginUserVar } from '@/apollo/cache'
 import { initializeApollo } from '@/apollo/client'
 import type {
   GetOneUserAllBlogQuery,
@@ -21,7 +20,7 @@ import { LayoutWithHead } from '@/components/layout/container'
 const UserPostListPage = () => {
   const router = useRouter()
   const client = initializeApollo()
-  const loginUser = useReactiveVar(loginUserVar)
+
   const [user1, setUser1] = useState<Users[]>([])
   const [user2, setUser2] = useState<Users[]>([])
 
@@ -29,30 +28,22 @@ const UserPostListPage = () => {
 
   useEffect(() => {
     ;(async () => {
-      if (loginUser) {
-        const postData = await client.query<
-          GetOneUserAllPostQuery,
-          GetOneUserAllPostQueryVariables
-        >({
-          query: GetOneUserAllPostDocument,
-          variables: {
-            display_id: userId as string,
-          },
-        })
+      const postData = await client.query<GetOneUserAllPostQuery, GetOneUserAllPostQueryVariables>({
+        query: GetOneUserAllPostDocument,
+        variables: {
+          display_id: userId as string,
+        },
+      })
 
-        const blogData = await client.query<
-          GetOneUserAllBlogQuery,
-          GetOneUserAllBlogQueryVariables
-        >({
-          query: GetOneUserAllBlogDocument,
-          variables: {
-            display_id: userId as string,
-          },
-        })
+      const blogData = await client.query<GetOneUserAllBlogQuery, GetOneUserAllBlogQueryVariables>({
+        query: GetOneUserAllBlogDocument,
+        variables: {
+          display_id: userId as string,
+        },
+      })
 
-        setUser1(postData.data.users as Users[])
-        setUser2(blogData.data.users as Users[])
-      }
+      setUser1(postData.data.users as Users[])
+      setUser2(blogData.data.users as Users[])
     })()
   })
 

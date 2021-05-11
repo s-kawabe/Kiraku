@@ -7,7 +7,7 @@ import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '
 import { Top10TopicAndBrandDocument } from '@/apollo/graphql'
 // import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
-import { PostCard } from '@/components/post/container'
+// import { PostCard } from '@/components/post/container'
 
 const Home = () => {
   // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示?
@@ -16,64 +16,7 @@ const Home = () => {
   return (
     <LayoutWithHead sideMenu>
       <Center maxW="70vw" m={['10px', '30px']}>
-        <SimpleGrid columns={[1, 2]} spacingX={3} spacingY={5}>
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-        </SimpleGrid>
+        <SimpleGrid columns={[1, 2]} spacingX={3} spacingY={5}></SimpleGrid>
       </Center>
       <br />
       <br />

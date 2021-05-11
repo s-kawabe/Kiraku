@@ -15,6 +15,7 @@ export type LikeButtonWithCountProps = {
   fontSize?: string
   iconSize?: string
   initial: boolean
+  noAnimation?: boolean
 }
 
 const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWithCountProps) => {
@@ -22,7 +23,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
   const loginUser = useReactiveVar(loginUserVar)
   const controls = useAnimation()
   const toggleLike = () => {
-    if (!loginUser) {
+    if (!loginUser || props.noAnimation) {
       return
     }
     setIsLike((prev) => {
@@ -31,7 +32,7 @@ const LikeButtonWithCount: VFC<LikeButtonWithCountProps> = (props: LikeButtonWit
   }
 
   useEffect(() => {
-    if (isLike) {
+    if (isLike && !props.noAnimation) {
       controls.start({
         scale: [0.9, 1.1, 1.2, 1.2, 1],
         color: ['#FFF5F5', '#FED7D7', '#FEB2B2', '#FC8181', '#F56565'],
