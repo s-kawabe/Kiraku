@@ -1,4 +1,3 @@
-// import { useReactiveVar } from '@apollo/client'
 import { gql } from '@apollo/client'
 import { Center, SimpleGrid } from '@chakra-ui/react'
 

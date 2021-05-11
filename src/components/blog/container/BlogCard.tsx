@@ -88,9 +88,9 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
         }}
       >
         <HStack spacing={8} ml="auto" mr="10px" mt="5px" bg="white" px="8px" borderRadius="5px">
-          <CommentIconWithCount count={100} fontSize="14px" />
+          <CommentIconWithCount count={props.commentCount} fontSize="14px" />
           <LikeButtonWithCount
-            count={200}
+            count={props.likeCount}
             fontSize="14px"
             iconSize="17px"
             initial={false}
