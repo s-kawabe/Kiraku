@@ -362,7 +362,7 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
       notFound: true,
     }
   }
-  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 60 })
+  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 300 })
 }
 
 // pathの作成にはuserのidではなくdisplay_idを使用

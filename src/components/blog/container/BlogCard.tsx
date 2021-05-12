@@ -87,7 +87,7 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
           toBlogDetailPage(e)
         }}
       >
-        <HStack spacing={8} ml="auto" mr="10px" mt="5px" bg="white" px="8px" borderRadius="5px">
+        <HStack spacing={8} ml="auto" mr="5px" mt="5px" bg="gray.100" px="20px" borderRadius="12px">
           <CommentIconWithCount count={props.commentCount} fontSize="14px" />
           <LikeButtonWithCount
             count={props.likeCount}
@@ -105,7 +105,7 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
         </Text>
       </Center>
       {/* content */}
-      <Box h="110px" pt="4px" pl="4px" borderRadius="16px" overflow="hidden" bg="whiteAlpha.800">
+      <Box h="110px" pt="4px" pl="4px" borderRadius="7px" overflow="hidden" bg="whiteAlpha.800">
         <Text fontSize="12px" color="gray.600" whiteSpace="pre-wrap">
           {props.text}
         </Text>

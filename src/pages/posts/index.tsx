@@ -25,14 +25,14 @@ const TopPostsPage = () => {
           <Link href="/posts">
             <a>
               <Heading size="md" pb="5px" color="#8C5A30" borderBottom="2px">
-                ポスト一覧
+                ポスト
               </Heading>
             </a>
           </Link>
           <Link href="/blogs">
             <a>
               <Heading size="md" pb="5px">
-                ブログ一覧
+                ブログ
               </Heading>
             </a>
           </Link>

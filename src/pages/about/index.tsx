@@ -317,7 +317,10 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     query: GetRecentPostDocument,
   })
 
-  return addApolloState(client, { props: { posts: data.posts, blogs: data.blogs }, revalidate: 60 })
+  return addApolloState(client, {
+    props: { posts: data.posts, blogs: data.blogs },
+    revalidate: 3600,
+  })
 }
 
 gql`

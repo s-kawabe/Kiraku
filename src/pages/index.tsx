@@ -10,9 +10,6 @@ import { LayoutWithHead } from '@/components/layout/container'
 // import { PostCard } from '@/components/post/container'
 
 const Home = () => {
-  // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示?
-  // todo できればログアウト時aboutにリダイレクトしたいがお試しユーザの挙動が難しい
-
   return (
     <LayoutWithHead sideMenu>
       <Center m={['10px', '30px']}>
@@ -34,14 +31,14 @@ const Home = () => {
           <Link href="/posts">
             <a>
               <Heading size="md" pb="5px">
-                ポスト一覧
+                ポスト
               </Heading>
             </a>
           </Link>
           <Link href="/blogs">
             <a>
               <Heading size="md" pb="5px">
-                ブログ一覧
+                ブログ
               </Heading>
             </a>
           </Link>
@@ -83,3 +80,6 @@ gql`
     }
   }
 `
+
+// 直近でよく使われているタグのポスト
+//
