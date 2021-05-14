@@ -8,6 +8,7 @@ import { NextImage } from '@/components/common/unit/NextImage'
 import { UserIcon } from '@/components/user/unit'
 
 export type PostCardProps = {
+  isSmall?: boolean
   imageSrc?: string | null
   postId: number
   text: string
@@ -44,7 +45,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
 
   return (
     <HStack
-      w="min(95vw, 600px)"
+      w={props.isSmall ? 'min(95vw, 500px)' : 'min(95vw, 600px)'}
       bg="white"
       p="5px"
       borderRadius="8px"
@@ -68,7 +69,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
         )}
       </Center>
       <Box
-        w="min(55vw, 400px)"
+        w={props.isSmall ? 'min(55vw, 300px)' : 'min(55vw, 400px)'}
         h="100%"
         py="10px"
         px="15px"

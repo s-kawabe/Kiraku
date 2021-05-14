@@ -1,4 +1,4 @@
-import { Center, Heading, HStack, SimpleGrid } from '@chakra-ui/react'
+import { Box, Heading, HStack, SimpleGrid } from '@chakra-ui/react'
 import Link from 'next/link'
 
 import { LayoutWithHead } from '@/components/layout/container'
@@ -6,8 +6,8 @@ import { LayoutWithHead } from '@/components/layout/container'
 const TopUserFeedPage = () => {
   return (
     <LayoutWithHead title="○○のタイムライン" sideMenu>
-      <Center m={['10px', '30px']}>
-        <HStack spacing="7" color="gray.600">
+      <Box m={['10px', '30px']}>
+        <HStack spacing="7" color="gray.600" mb="40px">
           <Link href="/">
             <a>
               <Heading size="md" pb="5px">
@@ -38,10 +38,12 @@ const TopUserFeedPage = () => {
           </Link>
         </HStack>
         <SimpleGrid columns={[1, 2]}></SimpleGrid>
-      </Center>
+      </Box>
     </LayoutWithHead>
   )
 }
 
 // eslint-disable-next-line import/no-default-export
 export default TopUserFeedPage
+
+// フォローしているユーザが投稿したポストとブログの新着順
