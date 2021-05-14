@@ -1,16 +1,5 @@
 import { gql } from '@apollo/client'
-import {
-  Box,
-  Center,
-  Flex,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  // Textarea,
-  Tooltip,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, Input, Stack, Text, Tooltip, VStack } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 import ReactTagInput from '@pathofdev/react-tag-input'
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js'
@@ -199,6 +188,7 @@ const BlogForms: VFC<Props> = (props: Props) => {
           bottom={['90px', '120px']}
           right={['30px', '60px']}
           isLoading={isLoading}
+          zIndex="5"
         >
           {isNew ? '公開' : '編集'}
         </Button>

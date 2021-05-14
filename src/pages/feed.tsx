@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 import { LayoutWithHead } from '@/components/layout/container'
 
-const TopPostsPage = () => {
+const TopUserFeedPage = () => {
   return (
-    <LayoutWithHead title="最近のポスト一覧" sideMenu>
+    <LayoutWithHead title="○○のタイムライン" sideMenu>
       <Box m={['10px', '30px']}>
         <HStack spacing="7" color="gray.600" mb="40px">
           <Link href="/">
@@ -17,14 +17,14 @@ const TopPostsPage = () => {
           </Link>
           <Link href="/feed">
             <a>
-              <Heading size="md" pb="5px">
+              <Heading size="md" pb="5px" color="#8C5A30" borderBottom="2px">
                 タイムライン
               </Heading>
             </a>
           </Link>
           <Link href="/posts">
             <a>
-              <Heading size="md" pb="5px" color="#8C5A30" borderBottom="2px">
+              <Heading size="md" pb="5px">
                 ポスト
               </Heading>
             </a>
@@ -44,6 +44,6 @@ const TopPostsPage = () => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default TopPostsPage
+export default TopUserFeedPage
 
-// 全ユーザのポスト全件(or一定期間まで)の新着順
+// フォローしているユーザが投稿したポストとブログの新着順

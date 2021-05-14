@@ -46,14 +46,6 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
 
-  // if (loading) {
-  //   return (
-  //     <Center mt="30px" h="100vh" w="100vw">
-  //       <Spinner />
-  //     </Center>
-  //   )
-  // }
-
   return (
     <>
       <Head>
@@ -90,7 +82,6 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
               )}
             </Box>
           ) : (
-            // ボタンを置いて、押したらサイドバー が出るやつ
             <>
               <IconButton
                 aria-label="Aside Open"

@@ -16,25 +16,21 @@ const UserBlogListPage = () => {
 export default UserBlogListPage
 
 gql`
-  query GetAllBlogsByOneUser($userId: String!) {
-    blogs(where: { user_id: { _eq: $userId } }) {
+  query GetOneUserAllBlog($display_id: String!) {
+    users(where: { display_id: { _eq: $display_id } }) {
       id
-      title
-      user_id
-      content
+      display_id
+      name
+      profile
       gender
+      image
       created_at
-      topics {
-        topic {
-          id
-          name
-        }
-      }
-      brands {
-        brand {
-          id
-          name
-        }
+      blogs {
+        id
+        title
+        content
+        gender
+        updated_at
       }
     }
   }

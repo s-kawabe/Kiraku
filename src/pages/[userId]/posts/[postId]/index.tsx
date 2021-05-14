@@ -223,7 +223,12 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                     />
                   ) : (
                     <Center bg="gray.50" w="100%" h="100%" borderRadius="inherit">
-                      <Text fontWeight="bold" fontSize="16px" color="gray.600">
+                      <Text
+                        fontWeight="bold"
+                        fontSize="16px"
+                        color="gray.600"
+                        transform="rotate(-28deg)"
+                      >
                         No Image
                       </Text>
                     </Center>
@@ -357,7 +362,7 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; postId: str
       notFound: true,
     }
   }
-  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 60 })
+  return addApolloState(client, { props: { user: data.users[0] }, revalidate: 300 })
 }
 
 // pathの作成にはuserのidではなくdisplay_idを使用

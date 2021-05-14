@@ -26,7 +26,10 @@ DefaultBlogCard.args = {
   まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
   まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....
   まず第３位は〜〜〜〜.... まず第３位は〜〜〜〜....`,
+  blogId: 20,
   userIcon: './myicon.jpg',
   userName: 'shintaro',
   userId: 'shin_k_2281',
+  commentCount: 3,
+  likeCount: 10,
 }

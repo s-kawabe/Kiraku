@@ -1,88 +1,97 @@
-// import { useReactiveVar } from '@apollo/client'
 import { gql } from '@apollo/client'
-import { Center, SimpleGrid } from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, HStack, SimpleGrid, Text } from '@chakra-ui/react'
+import Link from 'next/link'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '@/apollo/graphql'
 import { Top10TopicAndBrandDocument } from '@/apollo/graphql'
 // import { BlogCard } from '@/components/blog/container/BlogCard'
 import { LayoutWithHead } from '@/components/layout/container'
-import { PostCard } from '@/components/post/container'
+// import { PostCard } from '@/components/post/container'
 
 const Home = () => {
-  // レンダリング時、グローバルステートにメッセージキューがあればトーストで表示?
-  // todo できればログアウト時aboutにリダイレクトしたいがお試しユーザの挙動が難しい
-
   return (
     <LayoutWithHead sideMenu>
-      <Center maxW="70vw" m={['10px', '30px']}>
-        <SimpleGrid columns={[1, 2]} spacingX={3} spacingY={5}>
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-          <PostCard
-            imageSrc="/fashion.jpeg"
-            text="この前買った腕時計！！ モ モダンな雰囲気でとてもお気に入りですこの前買った腕時計！！ モダンな雰囲気でとてもお気に入りです"
-            userIcon="/myicon.jpg"
-            userName="shintaro"
-            userId="shin_k_2281"
-          />
-        </SimpleGrid>
+      <Center>
+        <Box my={['10px', '30px']} mx={['10px', '40px']} flexDir="column">
+          <HStack spacing="7" color="gray.600" mb="40px">
+            <Link href="/">
+              <a>
+                <Heading size="md" color="#8C5A30" pb="5px" borderBottom="2px">
+                  おすすめ
+                </Heading>
+              </a>
+            </Link>
+            <Link href="/feed">
+              <a>
+                <Heading size="md" pb="5px">
+                  タイムライン
+                </Heading>
+              </a>
+            </Link>
+            <Link href="/posts">
+              <a>
+                <Heading size="md" pb="5px">
+                  ポスト
+                </Heading>
+              </a>
+            </Link>
+            <Link href="/blogs">
+              <a>
+                <Heading size="md" pb="5px">
+                  ブログ
+                </Heading>
+              </a>
+            </Link>
+          </HStack>
+          <Box mb="100px">
+            <Text fontSize="28px" color="gray.800" fontWeight="bold" textAlign="left" mb="25px">
+              ポスト
+            </Text>
+            <Flex>
+              <SimpleGrid columns={[1, 1, 1, 1, 2]} spacingX={6} spacingY={6}>
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="500px" h="250px" borderRadius="15px" />
+              </SimpleGrid>
+            </Flex>
+          </Box>
+          <Box>
+            <Text fontSize="28px" color="gray.800" fontWeight="bold" textAlign="left" mb="25px">
+              ブログ
+            </Text>
+            <Flex>
+              <SimpleGrid columns={[1, 2, 3]} spacingX={8} spacingY={8}>
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+                <Box bg="gray.400" w="350px" h="250px" borderRadius="15px" />
+              </SimpleGrid>
+            </Flex>
+          </Box>
+        </Box>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </Center>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </LayoutWithHead>
   )
 }
@@ -110,3 +119,9 @@ gql`
     }
   }
 `
+
+// 直近でよく使われているトピックが付けられているポストとブログ
+
+// 直近でよく使われているブランドが付けられているポストとブログ
+
+// 直近でいいねが多い順のポストとブログ

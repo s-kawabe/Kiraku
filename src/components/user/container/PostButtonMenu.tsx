@@ -12,7 +12,7 @@ const PostButtonMenu: VFC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <MenuList borderRadius="18px" boxShadow="1px 1px 8px rgba(50,50,50,0.15)">
+      <MenuList borderRadius="18px" boxShadow="1px 1px 8px rgba(50,50,50,0.15)" zIndex="5">
         <MenuItem
           borderRadius="4px"
           my="5px"

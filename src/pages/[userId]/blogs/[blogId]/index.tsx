@@ -387,7 +387,7 @@ export const getStaticProps: GetStaticProps<Props, { userId: string; blogId: str
       notFound: true,
     }
   }
-  return addApolloState(client, { props: { blog: data.blogs[0] }, revalidate: 60 })
+  return addApolloState(client, { props: { blog: data.blogs[0] }, revalidate: 300 })
 }
 
 // pathの作成にはuserのidではなくdisplay_idを使用

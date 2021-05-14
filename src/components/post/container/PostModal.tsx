@@ -27,15 +27,7 @@ import { useEffect, useState } from 'react'
 
 import { isShowPostModalVar } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
-// import { initializeApollo } from '@/apollo/client'
-import type {
-  // GetAllBrandsQuery,
-  // GetAllBrandsQueryVariables,
-  // GetAllTopicsQuery,
-  // GetAllTopicsQueryVariables,
-  Posts,
-} from '@/apollo/graphql'
-// import { GetAllBrandsDocument, GetAllTopicsDocument } from '@/apollo/graphql'
+import type { Posts } from '@/apollo/graphql'
 import { GenderRadioButton } from '@/components/common/unit'
 import { ImageArea } from '@/components/post/unit'
 import type { Gender } from '@/utils/constants/Common'
@@ -51,10 +43,9 @@ import {
 type PostModalProps = {
   isOpen: boolean
   onClose: () => void
-  postData?: Posts // edit時のみ取得
+  postData?: Posts
 }
 const TEXT_LIMIT = 250
-// const client = initializeApollo()
 
 const PostModal: VFC<PostModalProps> = (props: PostModalProps) => {
   const router = useRouter()
