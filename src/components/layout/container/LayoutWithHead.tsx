@@ -1,8 +1,16 @@
 import { useReactiveVar } from '@apollo/client'
-import { HamburgerIcon } from '@chakra-ui/icons'
-import { Box, Center, Flex, IconButton, Spinner, useDisclosure } from '@chakra-ui/react'
+import { AddIcon, HamburgerIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Center,
+  Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  Spinner,
+  useDisclosure,
+} from '@chakra-ui/react'
 import Head from 'next/head'
-// import { useRouter } from 'next/router'
 import type { FC } from 'react'
 
 import { sideMenuVar } from '@/apollo/cache'
@@ -12,13 +20,14 @@ import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '
 import { Top10TopicAndBrandDocument } from '@/apollo/graphql'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList, SidebarDrawer } from '@/components/layout/container'
-// import type { SideMenu } from '@/utils/constants/Common'
+import { PostButtonMenu } from '@/components/user/container'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
   children: React.ReactNode
   title?: string
   sideMenu?: boolean
+  hiddenPostButton?: boolean
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
@@ -83,6 +92,25 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
             </Box>
           ) : (
             <>
+              {props.hiddenPostButton ?? (
+                <Menu>
+                  <IconButton
+                    as={MenuButton}
+                    aria-label="Post Menu Open"
+                    icon={<AddIcon />}
+                    position="fixed"
+                    borderRadius="50%"
+                    bg="green.200"
+                    w={['45px', '50px']}
+                    h={['45px', '50px']}
+                    zIndex="2"
+                    bottom={['90px', '120px']}
+                    right={['30px', '60px']}
+                    boxShadow="1px 1px 10px rgba(30,30,30,0.3)"
+                  />
+                  <PostButtonMenu />
+                </Menu>
+              )}
               <IconButton
                 aria-label="Aside Open"
                 icon={<HamburgerIcon />}

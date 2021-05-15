@@ -5,7 +5,7 @@ import { LayoutWithHead } from '@/components/layout/container'
 
 const NewBlogPage: NextPage = () => {
   return (
-    <LayoutWithHead title="ブログ新規投稿" sideMenu>
+    <LayoutWithHead title="ブログ新規投稿" hiddenPostButton={true} sideMenu>
       <BlogForms />
     </LayoutWithHead>
   )
