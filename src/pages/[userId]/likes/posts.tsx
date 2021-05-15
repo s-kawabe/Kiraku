@@ -1,8 +1,10 @@
 import { LayoutWithHead } from '@/components/layout/container'
+import { Profile } from '@/components/user/container'
 
 const UserLikePostsPage = () => {
   return (
-    <LayoutWithHead title="○○のいいねしたポスト">
+    <LayoutWithHead title="○○のいいねしたポスト" sideMenu>
+      <Profile />
       <>
         <p>this is /userId/likes/posts page </p>
       </>

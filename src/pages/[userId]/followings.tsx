@@ -1,8 +1,10 @@
 import { LayoutWithHead } from '@/components/layout/container'
+import { Profile } from '@/components/user/container'
 
 const UserFollowingsPage = () => {
   return (
-    <LayoutWithHead title="○○のフォロー一覧">
+    <LayoutWithHead title="○○のフォロー一覧" sideMenu>
+      <Profile />
       <>
         <p>this is /userId/followings page </p>
       </>

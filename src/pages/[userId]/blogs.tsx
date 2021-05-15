@@ -1,10 +1,12 @@
 import { gql } from '@apollo/client'
 
 import { LayoutWithHead } from '@/components/layout/container'
+import { Profile } from '@/components/user/container'
 
 const UserBlogListPage = () => {
   return (
-    <LayoutWithHead title="○○のブログ一覧">
+    <LayoutWithHead title="○○のブログ一覧" sideMenu>
+      <Profile />
       <>
         <p>this is /userId/blogs page, </p>
       </>

@@ -14,6 +14,7 @@ import type {
 } from '@/apollo/graphql'
 import { GetOneUserAllBlogDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
 import { LayoutWithHead } from '@/components/layout/container'
+import { Profile } from '@/components/user/container'
 
 // TODO loginuserではなくパス(display_id)からqueryする
 
@@ -47,9 +48,9 @@ const UserPostListPage = () => {
     })()
   })
 
-  // ※ここはポスト投稿一覧 あとでブログは/[userId]/blogs ページに表示させる
   return (
     <LayoutWithHead title="○○のポスト一覧" sideMenu>
+      <Profile />
       <Box m="30px">
         <Heading>ポスト</Heading>
         {user1[0]?.posts.map((item) => {

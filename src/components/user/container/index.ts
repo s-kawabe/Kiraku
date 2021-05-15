@@ -1,4 +1,5 @@
 export { CommentList } from './CommentList'
 export { NortificationMenu } from './NortificationMenu'
 export { PostButtonMenu } from './PostButtonMenu'
+export { Profile } from './Profile'
 export { UserIconMenu } from './UserIconMenu'
