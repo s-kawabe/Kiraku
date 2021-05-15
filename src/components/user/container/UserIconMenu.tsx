@@ -83,13 +83,7 @@ const UserIconMenu: VFC<UserIconMenuProps> = (props: UserIconMenuProps) => {
         </Text>
       </MenuItem>
       <MenuDivider p={0} m={0} color="gray.300" />
-      <MenuItem
-        borderRadius="4px"
-        my="5px"
-        onClick={() => {
-          alert('カラーモード変更！') //TODO
-        }}
-      >
+      <MenuItem borderRadius="4px" my="5px">
         <Box>
           <Text color="gray.800" fontSize="13px" mb="1">
             カラーモードを変更

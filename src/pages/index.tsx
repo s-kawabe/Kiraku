@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client'
-import { Box, Center, Flex, Heading, HStack, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/react'
 import type { GetStaticProps, NextPage } from 'next'
-import Link from 'next/link'
 import { Fragment } from 'react'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
@@ -19,11 +18,10 @@ import {
   Top10TopicAndBrandDocument,
 } from '@/apollo/graphql'
 import { BlogCard } from '@/components/blog/container/BlogCard'
-import { LayoutWithHead } from '@/components/layout/container'
+import { LayoutWithHead, TabNavigation } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 import { convertBlogContentToString, getTopImage } from '@/utils/methods/blog'
 import { getOneMonthBeforeDate } from '@/utils/methods/common'
-import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type Props = {
   recommendPost: GetRecommendTopicPostQuery['topics']
@@ -32,37 +30,9 @@ type Props = {
 }
 
 const Home: NextPage<Props> = (props: Props) => {
-  const isPC = useIsDesktop('550px')
   return (
     <LayoutWithHead sideMenu>
-      <Center bg="orange.50" borderRadius="100px" mt="20px" pt="3px" mx={['0px', '10px', '20px']}>
-        <Box py={['10px', '20px']} px={['10px', '40px']} flexDir="column">
-          <HStack spacing="7" color="gray.600" mb="10px">
-            <Link href="/">
-              <a>
-                <Heading fontSize={isPC ? '20px' : '15px'} color="#8C5A30" borderBottom="2px">
-                  おすすめ
-                </Heading>
-              </a>
-            </Link>
-            <Link href="/feed">
-              <a>
-                <Heading fontSize={isPC ? '20px' : '15px'}>タイムライン</Heading>
-              </a>
-            </Link>
-            <Link href="/posts">
-              <a>
-                <Heading fontSize={isPC ? '20px' : '15px'}>ポスト</Heading>
-              </a>
-            </Link>
-            <Link href="/blogs">
-              <a>
-                <Heading fontSize={isPC ? '20px' : '15px'}>ブログ</Heading>
-              </a>
-            </Link>
-          </HStack>
-        </Box>
-      </Center>
+      <TabNavigation now="recommend" />
       <Center bg="white" pt="10px">
         <Box py="10px" px={['10px', '40px']} flexDir="column">
           {/* main */}
