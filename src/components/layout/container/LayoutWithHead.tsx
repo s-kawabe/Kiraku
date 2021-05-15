@@ -72,7 +72,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
       {props.sideMenu ? (
         <Flex position="relative">
           {isLargerThan1280 ? (
-            <Box w="190px">
+            <Box w="190px" borderRight="1px" borderColor="gray.100">
               {sideMenuContext ? (
                 <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
               ) : (
