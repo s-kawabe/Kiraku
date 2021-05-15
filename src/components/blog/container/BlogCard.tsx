@@ -52,6 +52,7 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
       border="0.8px solid"
       borderColor="gray.100"
       cursor="pointer"
+      overflow="hidden"
       bgImage={`url(${props.topImage})`}
       onClick={(e) => {
         toBlogDetailPage(e)
@@ -108,7 +109,7 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
         </Text>
       </Center>
       {/* content */}
-      <Box h="110px" pt="4px" pl="4px" borderRadius="7px" overflow="hidden" bg="whiteAlpha.800">
+      <Box h="110px" pt="4px" pl="4px" borderRadius="7px" bg="whiteAlpha.800">
         <Text fontSize="12px" color="gray.600" whiteSpace="pre-wrap">
           {props.text}
         </Text>

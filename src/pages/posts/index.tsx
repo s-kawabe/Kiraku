@@ -78,7 +78,7 @@ const TopPostsPage = () => {
             })}
           </SimpleGrid>
         </Flex>
-        <Button mt="40px" onClick={handleMoreLoad}>
+        <Button my="40px" onClick={handleMoreLoad}>
           もっと見る
         </Button>
       </Center>

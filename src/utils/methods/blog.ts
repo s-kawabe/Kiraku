@@ -173,5 +173,11 @@ export const getTopImage = (content: BlogContentJson): string | undefined => {
   const imageUrls = Object.values(content.entityMap)
   if (imageUrls.length === 0) return
 
-  return imageUrls[0].data.src
+  for (const item of imageUrls) {
+    if (item.type === 'IMAGE') {
+      return item.data.src
+    }
+  }
+
+  return
 }
