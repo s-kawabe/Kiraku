@@ -1,9 +1,22 @@
+import { Box, Center, Icon, Text } from '@chakra-ui/react'
+import { HiOutlineNewspaper } from 'react-icons/hi'
+
 import { LayoutWithHead, TabNavigation } from '@/components/layout/container'
 
 const TopBlogsPage = () => {
   return (
-    <LayoutWithHead title="最近のブログ一覧" sideMenu>
+    <LayoutWithHead title="ブログ一覧" sideMenu>
       <TabNavigation now="blog" />
+      <Center pt="60px">
+        <Box>
+          <Text fontSize="26px" color="gray.700" fontWeight="semibold">
+            <Center>
+              <Icon as={HiOutlineNewspaper} fontSize="40px" />
+            </Center>
+            ブログ
+          </Text>
+        </Box>
+      </Center>
     </LayoutWithHead>
   )
 }

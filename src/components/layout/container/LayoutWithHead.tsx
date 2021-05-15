@@ -11,6 +11,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import type { FC } from 'react'
 
 import { sideMenuVar } from '@/apollo/cache'
@@ -36,6 +37,8 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
   const loginUser = useReactiveVar(loginUserVar)
   const sideMenuContext = useReactiveVar(sideMenuVar)
   const client = initializeApollo()
+  const router = useRouter()
+  const path = router.pathname
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -51,7 +54,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
     })
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
-  const ogUrl = 'https://kiraku.app'
+  const ogUrl = `https://kiraku.app/${path}`
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
 

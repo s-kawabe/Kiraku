@@ -1,9 +1,22 @@
+import { Box, Center, Icon, Text } from '@chakra-ui/react'
+import { AiOutlineIdcard } from 'react-icons/ai'
+
 import { LayoutWithHead, TabNavigation } from '@/components/layout/container'
 
 const TopPostsPage = () => {
   return (
-    <LayoutWithHead title="最近のポスト一覧" sideMenu>
+    <LayoutWithHead title="ポスト一覧" sideMenu>
       <TabNavigation now="post" />
+      <Center pt="60px">
+        <Box>
+          <Text fontSize="26px" color="gray.700" fontWeight="semibold">
+            <Center>
+              <Icon as={AiOutlineIdcard} fontSize="40px" />
+            </Center>
+            ポスト
+          </Text>
+        </Box>
+      </Center>
     </LayoutWithHead>
   )
 }
