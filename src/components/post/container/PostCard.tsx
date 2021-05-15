@@ -48,11 +48,16 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
       w={props.isSmall ? 'min(95vw, 500px)' : 'min(95vw, 600px)'}
       bg="white"
       p="5px"
+      border="1px"
+      borderColor="gray.100"
       borderRadius="8px"
-      boxShadow="0px 0px 6px rgba(40, 40, 40, 0.15)"
+      boxShadow="0px 0px 6px -3px rgba(40, 40, 40, 0.15)"
       cursor="pointer"
       transition="all 0.3s"
-      _hover={{ transform: 'translateY(-3px)', boxShadow: '0px 2px 15px rgba(60, 60, 60, 0.15)' }}
+      _hover={{
+        transform: 'translateY(-3px)',
+        boxShadow: '0px 3px 12px -3px rgba(60, 60, 60, 0.15)',
+      }}
       onClick={(e) => {
         toPostDetailPage(e)
       }}

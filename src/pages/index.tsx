@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client'
 import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/react'
 import type { GetStaticProps, NextPage } from 'next'
+import Link from 'next/link'
 import { Fragment } from 'react'
+import { IoIosArrowForward } from 'react-icons/io'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -18,6 +20,7 @@ import {
   Top10TopicAndBrandDocument,
 } from '@/apollo/graphql'
 import { BlogCard } from '@/components/blog/container/BlogCard'
+import { IconButton } from '@/components/common/unit'
 import { LayoutWithHead, TabNavigation } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 import { convertBlogContentToString, getTopImage } from '@/utils/methods/blog'
@@ -47,20 +50,31 @@ const Home: NextPage<Props> = (props: Props) => {
               >
                 人気のトピック
               </Text>
-              <Text
-                fontSize={['15px', '17px']}
-                color="gray.800"
-                fontWeight="bold"
-                textAlign="left"
-                mb="25px"
-                py="8px"
-                px="20px"
-                borderRadius="18px"
-                bg="#FFF2C3"
-                display="inline"
+              <Link
+                href={{
+                  pathname: '/topics/[topicId]',
+                  query: { topicId: props.recommendPost[0].id },
+                }}
               >
-                #{props.recommendPost[0].name}
-              </Text>
+                <a>
+                  <Text
+                    fontSize={['15px', '17px']}
+                    color="gray.800"
+                    fontWeight="bold"
+                    textAlign="left"
+                    mb="25px"
+                    py="8px"
+                    px="20px"
+                    borderRadius="18px"
+                    bg="#FFF2C3"
+                    display="inline"
+                    transition="all 0.2s"
+                    _hover={{ bg: '#FEE899' }}
+                  >
+                    #{props.recommendPost[0].name}
+                  </Text>
+                </a>
+              </Link>
               <Flex mt="25px">
                 <SimpleGrid columns={[1, 1, 1, 1, 2]} spacingX={6} spacingY={6}>
                   {props.recommendPost[0].post_topics.map(({ post }) => {
@@ -84,20 +98,31 @@ const Home: NextPage<Props> = (props: Props) => {
               </Flex>
             </Box>
             <Box mb="60px">
-              <Text
-                fontSize={['15px', '17px']}
-                color="gray.800"
-                fontWeight="bold"
-                textAlign="left"
-                mb="25px"
-                py="8px"
-                px="20px"
-                borderRadius="18px"
-                bg="#FFF2C3"
-                display="inline"
+              <Link
+                href={{
+                  pathname: '/topics/[topicId]',
+                  query: { topicId: props.recommendPost[1].id },
+                }}
               >
-                #{props.recommendPost[1].name}
-              </Text>
+                <a>
+                  <Text
+                    fontSize={['15px', '17px']}
+                    color="gray.800"
+                    fontWeight="bold"
+                    textAlign="left"
+                    mb="25px"
+                    py="8px"
+                    px="20px"
+                    borderRadius="18px"
+                    bg="#FFF2C3"
+                    display="inline"
+                    transition="all 0.2s"
+                    _hover={{ bg: '#FEE899' }}
+                  >
+                    #{props.recommendPost[1].name}
+                  </Text>
+                </a>
+              </Link>
               <Flex mt="25px">
                 <SimpleGrid columns={[1, 1, 1, 1, 2]} spacingX={6} spacingY={6}>
                   {props.recommendPost[1].post_topics.map(({ post }) => {
@@ -123,9 +148,9 @@ const Home: NextPage<Props> = (props: Props) => {
           </Box>
         </Box>
       </Center>
-      <Center bg="gray.50" pt="40px">
-        <Box py="10px" px={['10px', '40px']} flexDir="column">
-          <Box mb="100px">
+      <Center bg="gray.50" pt="40px" pb="60px" flexDir="column">
+        <Box py="10px" px={['10px', '40px']} mb="20px" flexDir="column">
+          <Box>
             <Text
               fontSize={['20px', '26px']}
               color="gray.800"
@@ -158,10 +183,24 @@ const Home: NextPage<Props> = (props: Props) => {
             </Flex>
           </Box>
         </Box>
+        <Link href="/posts">
+          <a>
+            <IconButton
+              text="ポストをもっと見る"
+              fontWeight="semibold"
+              bg="white"
+              border="1px"
+              borderColor="green.300"
+              color="green.300"
+              icon={IoIosArrowForward}
+              iconPosition="right"
+            />
+          </a>
+        </Link>
       </Center>
-      <Center bg="gray.50" pt="40px">
-        <Box py="10px" px={['10px', '40px']} flexDir="column">
-          <Box mb="100px">
+      <Center bg="gray.50" pt="40px" pb="60px" flexDir="column">
+        <Box py="10px" px={['10px', '40px']} mb="20px" flexDir="column">
+          <Box>
             <Text
               fontSize={['20px', '26px']}
               color="gray.800"
@@ -194,6 +233,20 @@ const Home: NextPage<Props> = (props: Props) => {
             </Flex>
           </Box>
         </Box>
+        <Link href="/blogs">
+          <a>
+            <IconButton
+              text="ブログをもっと見る"
+              fontWeight="semibold"
+              bg="white"
+              border="1px"
+              borderColor="green.300"
+              color="green.300"
+              icon={IoIosArrowForward}
+              iconPosition="right"
+            />
+          </a>
+        </Link>
       </Center>
     </LayoutWithHead>
   )
