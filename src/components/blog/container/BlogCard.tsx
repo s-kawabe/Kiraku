@@ -50,12 +50,15 @@ const BlogCard: VFC<BlogCardProps> = (props: BlogCardProps) => {
       bg="white"
       borderRadius="8px"
       border="0.8px solid"
-      borderColor="gray.300"
+      borderColor="gray.100"
       cursor="pointer"
       bgImage={`url(${props.topImage})`}
       onClick={(e) => {
         toBlogDetailPage(e)
       }}
+      transition="all 0.2s"
+      boxShadow="0 3px 6px -2px rgb(0 10 60 / 20%)"
+      _hover={{ boxShadow: '0 3px 10px 0px rgb(0 10 60 / 10%)' }}
     >
       {/* user */}
       <HStack
