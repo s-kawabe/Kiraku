@@ -190,8 +190,8 @@ const Home: NextPage<Props> = (props: Props) => {
               fontWeight="semibold"
               bg="white"
               border="1px"
-              borderColor="blue.300"
-              color="blue.300"
+              borderColor="green.300"
+              color="green.300"
               icon={IoIosArrowForward}
               iconPosition="right"
             />
@@ -240,8 +240,8 @@ const Home: NextPage<Props> = (props: Props) => {
               fontWeight="semibold"
               bg="white"
               border="1px"
-              borderColor="blue.300"
-              color="blue.300"
+              borderColor="green.300"
+              color="green.300"
               icon={IoIosArrowForward}
               iconPosition="right"
             />

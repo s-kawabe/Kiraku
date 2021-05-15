@@ -9,23 +9,25 @@ import { GetAllPostDocument, useGetAllPostQuery } from '@/apollo/graphql'
 import { LayoutWithHead, TabNavigation } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 
+const LIMIT_OFFSET = 10
+
 const TopPostsPage = () => {
-  const [offset, setOffset] = useState(10)
+  const [offset, setOffset] = useState(LIMIT_OFFSET)
   const [posts, setPosts] = useState<GetAllPostQuery['posts']>([])
   const { data, fetchMore } = useGetAllPostQuery({
     variables: {
-      limit: 10,
+      limit: LIMIT_OFFSET,
       offset: 0,
     },
   })
 
   const handleMoreLoad = async () => {
     setOffset((prev) => {
-      return prev + 10
+      return prev + LIMIT_OFFSET
     })
     const addData = await fetchMore({
       variables: {
-        limit: 10,
+        limit: LIMIT_OFFSET,
         offset: offset,
       },
     })
@@ -92,7 +94,7 @@ export const getStaticProps = async () => {
   await client.query<GetAllPostQuery, GetAllPostQueryVariables>({
     query: GetAllPostDocument,
     variables: {
-      limit: 10,
+      limit: LIMIT_OFFSET,
       offset: 0,
     },
   })
