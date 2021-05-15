@@ -28,6 +28,7 @@ const DarkmodeToggle: VFC = () => {
         colorScheme="gray"
         onChange={() => {
           handleChange(isDark)
+          alert('申し訳ありません🙇‍♂️ カラーモード変更機能は実装中です。') //TODO
         }}
         isChecked={isDark}
         css={toggle}

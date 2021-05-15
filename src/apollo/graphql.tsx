@@ -7595,6 +7595,88 @@ export type Top10TopicAndBrandQuery = (
   )> }
 );
 
+export type GetRecommendTopicPostQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecommendTopicPostQuery = (
+  { __typename?: 'query_root' }
+  & { topics: Array<(
+    { __typename?: 'topics' }
+    & Pick<Topics, 'name' | 'id'>
+    & { post_topics: Array<(
+      { __typename?: 'post_topics' }
+      & { post: (
+        { __typename?: 'posts' }
+        & Pick<Posts, 'id' | 'image' | 'gender' | 'content' | 'created_at'>
+        & { user: (
+          { __typename?: 'users' }
+          & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+        ), comments_aggregate: (
+          { __typename?: 'post_comments_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'post_comments_aggregate_fields' }
+            & Pick<PostCommentsAggregateFields, 'count'>
+          )> }
+        ), likes_aggregate: (
+          { __typename?: 'post_likes_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'post_likes_aggregate_fields' }
+            & Pick<PostLikesAggregateFields, 'count'>
+          )> }
+        ) }
+      ) }
+    )> }
+  )> }
+);
+
+export type GetRecentFamousPostAndBlogQueryVariables = Exact<{
+  from: Scalars['timestamptz'];
+}>;
+
+
+export type GetRecentFamousPostAndBlogQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'image' | 'gender' | 'content' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'post_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_comments_aggregate_fields' }
+        & Pick<PostCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )>, blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'blog_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_comments_aggregate_fields' }
+        & Pick<BlogCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )> }
+);
+
 export type CreateUserMutationVariables = Exact<{
   id: Scalars['String'];
   display_id: Scalars['String'];
@@ -9170,11 +9252,11 @@ export type GetRecentPostLazyQueryHookResult = ReturnType<typeof useGetRecentPos
 export type GetRecentPostQueryResult = ApolloReactCommon.QueryResult<GetRecentPostQuery, GetRecentPostQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
-  topics(limit: 10, order_by: {post_topics_aggregate: {count: desc}}) {
+  topics(limit: 20, order_by: {post_topics_aggregate: {count: desc}}) {
     name
     id
   }
-  brands(limit: 10, order_by: {post_brands_aggregate: {count: desc}}) {
+  brands(limit: 20, order_by: {post_brands_aggregate: {count: desc}}) {
     name
     id
   }
@@ -9207,6 +9289,152 @@ export function useTop10TopicAndBrandLazyQuery(baseOptions?: ApolloReactHooks.La
 export type Top10TopicAndBrandQueryHookResult = ReturnType<typeof useTop10TopicAndBrandQuery>;
 export type Top10TopicAndBrandLazyQueryHookResult = ReturnType<typeof useTop10TopicAndBrandLazyQuery>;
 export type Top10TopicAndBrandQueryResult = ApolloReactCommon.QueryResult<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>;
+export const GetRecommendTopicPostDocument = gql`
+    query GetRecommendTopicPost {
+  topics(limit: 2, order_by: {post_topics_aggregate: {count: desc}}) {
+    name
+    id
+    post_topics(limit: 4) {
+      post {
+        id
+        image
+        gender
+        content
+        created_at
+        user {
+          id
+          display_id
+          image
+          name
+        }
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRecommendTopicPostQuery__
+ *
+ * To run a query within a React component, call `useGetRecommendTopicPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecommendTopicPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecommendTopicPostQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetRecommendTopicPostQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetRecommendTopicPostQuery, GetRecommendTopicPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetRecommendTopicPostQuery, GetRecommendTopicPostQueryVariables>(GetRecommendTopicPostDocument, options);
+      }
+export function useGetRecommendTopicPostLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecommendTopicPostQuery, GetRecommendTopicPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetRecommendTopicPostQuery, GetRecommendTopicPostQueryVariables>(GetRecommendTopicPostDocument, options);
+        }
+export type GetRecommendTopicPostQueryHookResult = ReturnType<typeof useGetRecommendTopicPostQuery>;
+export type GetRecommendTopicPostLazyQueryHookResult = ReturnType<typeof useGetRecommendTopicPostLazyQuery>;
+export type GetRecommendTopicPostQueryResult = ApolloReactCommon.QueryResult<GetRecommendTopicPostQuery, GetRecommendTopicPostQueryVariables>;
+export const GetRecentFamousPostAndBlogDocument = gql`
+    query GetRecentFamousPostAndBlog($from: timestamptz!) {
+  posts(
+    limit: 10
+    order_by: {likes_aggregate: {max: {id: asc}}}
+    where: {created_at: {_gte: $from}}
+  ) {
+    id
+    image
+    gender
+    content
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+  blogs(
+    limit: 9
+    order_by: {likes_aggregate: {max: {id: asc}}}
+    where: {created_at: {_gte: $from}}
+  ) {
+    id
+    title
+    content
+    gender
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRecentFamousPostAndBlogQuery__
+ *
+ * To run a query within a React component, call `useGetRecentFamousPostAndBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecentFamousPostAndBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRecentFamousPostAndBlogQuery({
+ *   variables: {
+ *      from: // value for 'from'
+ *   },
+ * });
+ */
+export function useGetRecentFamousPostAndBlogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetRecentFamousPostAndBlogQuery, GetRecentFamousPostAndBlogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetRecentFamousPostAndBlogQuery, GetRecentFamousPostAndBlogQueryVariables>(GetRecentFamousPostAndBlogDocument, options);
+      }
+export function useGetRecentFamousPostAndBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetRecentFamousPostAndBlogQuery, GetRecentFamousPostAndBlogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetRecentFamousPostAndBlogQuery, GetRecentFamousPostAndBlogQueryVariables>(GetRecentFamousPostAndBlogDocument, options);
+        }
+export type GetRecentFamousPostAndBlogQueryHookResult = ReturnType<typeof useGetRecentFamousPostAndBlogQuery>;
+export type GetRecentFamousPostAndBlogLazyQueryHookResult = ReturnType<typeof useGetRecentFamousPostAndBlogLazyQuery>;
+export type GetRecentFamousPostAndBlogQueryResult = ApolloReactCommon.QueryResult<GetRecentFamousPostAndBlogQuery, GetRecentFamousPostAndBlogQueryVariables>;
 export const CreateUserDocument = gql`
     mutation createUser($id: String!, $display_id: String!, $email: String!, $name: String!, $image: String) {
   insert_users_one(
