@@ -5,6 +5,7 @@ import type { VFC } from 'react'
 import { loginUserVar } from '@/apollo/cache'
 import type { Users } from '@/apollo/graphql'
 import { UserIcon } from '@/components/user/unit'
+import { useConvertDayFromHasura } from '@/utils/methods/customeHooks'
 
 type Props = {
   user: Users
@@ -13,12 +14,13 @@ type Props = {
 const Profile: VFC<Props> = (props: Props) => {
   const loginUser = useReactiveVar(loginUserVar)
   const isMine = loginUser && loginUser.display_id === props.user.display_id
+  const createdAt = useConvertDayFromHasura(props.user.created_at)
   return (
     <Center
       pt="60px"
       px="140px"
       h="350px"
-      bg="gray.100"
+      bg="white"
       alignItems="flex-start"
       justifyContent="space-around"
     >
@@ -38,8 +40,8 @@ const Profile: VFC<Props> = (props: Props) => {
           </Text>
           <Text fontSize="16px" color="gray.500" mb="16px">
             @{props.user.display_id} &nbsp; {props.user.gender} &nbsp;
-            {props.user.created_at.substring(0, 10)}
-            から利用
+            {createdAt}
+            に登録
           </Text>
           <Box w="520px" h="170px">
             <Text color="gray.700" fontSize="15px">
@@ -60,13 +62,7 @@ const Profile: VFC<Props> = (props: Props) => {
         </Box>
       </Stack>
       {isMine && (
-        <Button
-          fontSize="12px"
-          color="gray.600"
-          fontWeight="normal"
-          boxShadow="md"
-          colorScheme="whiteAlpha"
-        >
+        <Button fontSize="12px" color="gray.600" fontWeight="normal" boxShadow="md">
           プロフィール編集
         </Button>
       )}

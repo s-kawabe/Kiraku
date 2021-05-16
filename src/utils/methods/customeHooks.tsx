@@ -39,6 +39,19 @@ export const useConvertDateFromHasura = (date: string): string => {
   }, [date])
 }
 
+// hasura上に保存されている日時を整形して返す
+export const useConvertDayFromHasura = (date: string): string => {
+  return useMemo(() => {
+    const yearN = Number(date.substring(0, 4))
+    const monthN = Number(date.substring(5, 7))
+    const dayN = Number(date.substring(8, 10))
+
+    const createdAt = new Date(yearN, monthN, dayN)
+    const [year, month, day] = [createdAt.getFullYear(), createdAt.getMonth(), createdAt.getDay()]
+    return `${year}年${month}月${day}日`
+  }, [date])
+}
+
 // brandとtopicのInputに入力候補をサジェストする為にHasuraからbrandとtopicデータを全件取得する
 export const useAllTopicsAndBrands = (deps: any[] = []) => {
   const [allTopics, setAllTopics] = useState<string[]>([])

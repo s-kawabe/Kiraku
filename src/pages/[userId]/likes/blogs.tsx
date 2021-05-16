@@ -1,10 +1,11 @@
+import { gql } from '@apollo/client'
+
 import { LayoutWithHead } from '@/components/layout/container'
-import { Profile } from '@/components/user/container'
+// import { Profile, ProfileTab } from '@/components/user/container'
 
 const UserLikeBlogsPage = () => {
   return (
     <LayoutWithHead title="○○のいいねしたブログ" sideMenu>
-      <Profile />
       <>
         <p>this is /userId/likes/blogs page </p>
       </>
@@ -14,3 +15,26 @@ const UserLikeBlogsPage = () => {
 
 // eslint-disable-next-line import/no-default-export
 export default UserLikeBlogsPage
+
+gql`
+  query GetOneUserLikeBlogs($display_id: String!) {
+    users(where: { display_id: { _eq: $display_id } }) {
+      id
+      display_id
+      name
+      profile
+      gender
+      image
+      created_at
+      blog_likes {
+        blog {
+          id
+          title
+          content
+          gender
+          updated_at
+        }
+      }
+    }
+  }
+`
