@@ -21,7 +21,6 @@ const Profile: VFC<Props> = (props: Props) => {
       bg="gray.100"
       alignItems="flex-start"
       justifyContent="space-around"
-      boxShadow="inner"
     >
       <Stack direction="row" spacing="8">
         <VStack spacing="5">
