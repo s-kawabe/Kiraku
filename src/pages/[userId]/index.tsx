@@ -8,6 +8,7 @@ import type {
   GetAllUsersQueryVariables,
   GetOneUserAllPostQuery,
   GetOneUserAllPostQueryVariables,
+  Users,
 } from '@/apollo/graphql'
 import { GetAllUsersDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
 import { LayoutWithHead } from '@/components/layout/container'
@@ -22,7 +23,7 @@ const UserPostListPage: NextPage<Props> = (props: Props) => {
 
   return (
     <LayoutWithHead title="○○のポスト一覧" sideMenu>
-      <Profile />
+      <Profile user={user as Users} />
       <ProfileTab default={0} userDisplayId={user.display_id} />
       <Box m="30px">ポスト一覧</Box>
     </LayoutWithHead>

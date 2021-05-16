@@ -81,7 +81,7 @@ const ProfileTab: VFC<Props> = (props: Props) => {
   }, [loading])
 
   return (
-    <Center w="100%" h="80px" bg="gray.100">
+    <Center w="100%" h="80px" bg="gray.50" borderY="1px" borderColor="gray.200">
       {loading ? (
         <Spinner />
       ) : (
