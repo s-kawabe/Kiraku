@@ -1,91 +1,65 @@
 import { gql } from '@apollo/client'
-import { Box, Heading } from '@chakra-ui/react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { Box } from '@chakra-ui/react'
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
-import { initializeApollo } from '@/apollo/client'
+import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
-  GetOneUserAllBlogQuery,
-  GetOneUserAllBlogQueryVariables,
+  GetAllUsersQuery,
+  GetAllUsersQueryVariables,
   GetOneUserAllPostQuery,
   GetOneUserAllPostQueryVariables,
-  Users,
 } from '@/apollo/graphql'
-import { GetOneUserAllBlogDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
+import { GetAllUsersDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
 import { LayoutWithHead } from '@/components/layout/container'
-import { Profile } from '@/components/user/container'
+import { Profile, ProfileTab } from '@/components/user/container'
 
-// TODO loginuserではなくパス(display_id)からqueryする
+type Props = {
+  user: GetOneUserAllPostQuery['users']
+}
 
-const UserPostListPage = () => {
-  const router = useRouter()
-  const client = initializeApollo()
-
-  const [user1, setUser1] = useState<Users[]>([])
-  const [user2, setUser2] = useState<Users[]>([])
-
-  const { userId } = router.query
-
-  useEffect(() => {
-    ;(async () => {
-      const postData = await client.query<GetOneUserAllPostQuery, GetOneUserAllPostQueryVariables>({
-        query: GetOneUserAllPostDocument,
-        variables: {
-          display_id: userId as string,
-        },
-      })
-
-      const blogData = await client.query<GetOneUserAllBlogQuery, GetOneUserAllBlogQueryVariables>({
-        query: GetOneUserAllBlogDocument,
-        variables: {
-          display_id: userId as string,
-        },
-      })
-
-      setUser1(postData.data.users as Users[])
-      setUser2(blogData.data.users as Users[])
-    })()
-  })
+const UserPostListPage: NextPage<Props> = (props: Props) => {
+  const user = props.user[0]
 
   return (
     <LayoutWithHead title="○○のポスト一覧" sideMenu>
       <Profile />
-      <Box m="30px">
-        <Heading>ポスト</Heading>
-        {user1[0]?.posts.map((item) => {
-          return (
-            <Box my="5px" key={item.id}>
-              <Link
-                href={{
-                  pathname: '/[userId]/posts/[postId]',
-                  query: { userId: user1[0].display_id, postId: item.id },
-                }}
-              >
-                <a>{item.content}</a>
-              </Link>
-            </Box>
-          )
-        })}
-
-        <Heading>ブログ</Heading>
-        {user2[0]?.blogs.map((item) => {
-          return (
-            <Box my="5px" key={item.id}>
-              <Link
-                href={{
-                  pathname: '/[userId]/blogs/[blogId]',
-                  query: { userId: user2[0].display_id, blogId: item.id },
-                }}
-              >
-                <a>{item.title}</a>
-              </Link>
-            </Box>
-          )
-        })}
-      </Box>
+      <ProfileTab default={0} userDisplayId={user.display_id} />
+      <Box m="30px">ポスト一覧</Box>
     </LayoutWithHead>
   )
+}
+
+export const getStaticProps: GetStaticProps<Props, { userId: string }> = async ({ params }) => {
+  const client = initializeApollo()
+  const userId = params?.userId ?? ''
+  const { data } = await client.query<GetOneUserAllPostQuery, GetOneUserAllPostQueryVariables>({
+    query: GetOneUserAllPostDocument,
+    variables: {
+      display_id: userId,
+    },
+  })
+  if (data.users.length === 0) {
+    return {
+      notFound: true,
+    }
+  }
+  return addApolloState(client, { props: { user: data.users }, revalidate: 300 })
+}
+
+export const getStaticPaths: GetStaticPaths<{ userId: string }> = async () => {
+  const client = initializeApollo()
+  const { data } = await client.query<GetAllUsersQuery, GetAllUsersQueryVariables>({
+    query: GetAllUsersDocument,
+  })
+
+  const paths = data.users.map((user) => {
+    return { params: { userId: user.display_id } }
+  })
+
+  return {
+    paths,
+    fallback: 'blocking',
+  }
 }
 
 // eslint-disable-next-line import/no-default-export
@@ -108,6 +82,15 @@ gql`
         gender
         updated_at
       }
+    }
+  }
+`
+
+gql`
+  query GetAllUsers {
+    users {
+      id
+      display_id
     }
   }
 `

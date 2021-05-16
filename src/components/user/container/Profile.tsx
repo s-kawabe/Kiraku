@@ -1,8 +1,12 @@
-import { Box } from '@chakra-ui/react'
+import { Center, Text } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
 const Profile: VFC = () => {
-  return <Box w="100%" h="500px" bg="gray.200"></Box>
+  return (
+    <Center w="100%" h="350px" bg="gray.50" zIndex="-1" position="relative">
+      <Text>プロフィール</Text>
+    </Center>
+  )
 }
 
 export { Profile }
