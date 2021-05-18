@@ -29,7 +29,7 @@ const UserFollowingsPage: NextPage<Props> = (props: Props) => {
     <LayoutWithHead title={`${user.name}のフォロー一覧`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={4} userDisplayId={user.display_id} />
-      <Center m="30px" flexDir="column">
+      <Center my="30px" flexDir="column">
         {user.relation_user_from.length === 0 ? (
           <>
             <Text my="20px" color="gray.400" fontWeight="bold">

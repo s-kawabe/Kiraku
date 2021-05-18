@@ -28,7 +28,7 @@ const UserBlogListPage: NextPage<Props> = (props: Props) => {
     <LayoutWithHead title={`${user.name}の投稿したブログ一覧`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={1} userDisplayId={user.display_id} />
-      <Center m="30px" flexDir="column">
+      <Center my="30px" flexDir="column">
         {user.blogs.length === 0 ? (
           <>
             <Text my="20px" color="gray.400" fontWeight="bold">

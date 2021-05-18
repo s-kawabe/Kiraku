@@ -5,6 +5,7 @@ import type { VFC } from 'react'
 import { useEffect, useState } from 'react'
 
 import { useGetUserInfomationQuery } from '@/apollo/graphql'
+import { useIsDesktop } from '@/utils/methods/customeHooks'
 
 type UserInfo = {
   post: number
@@ -32,6 +33,7 @@ const initialUserInfo = {
 const ProfileTab: VFC<Props> = (props: Props) => {
   const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo)
   const router = useRouter()
+  const isPC = useIsDesktop('680px')
 
   const query = { userId: props.userDisplayId }
   const transitions = {
@@ -81,11 +83,25 @@ const ProfileTab: VFC<Props> = (props: Props) => {
   }, [loading])
 
   return (
-    <Center w="100%" h="80px" bg="gray.50" borderY="1px" borderColor="gray.200">
+    <Center
+      h="80px"
+      bg="gray.50"
+      borderY="1px"
+      borderColor="gray.200"
+      overflowX="auto"
+      pl={isPC ? '' : '10px'}
+      justifyContent={isPC ? 'center' : 'flex-start'}
+    >
       {loading ? (
         <Spinner />
       ) : (
-        <Tabs variant="soft-rounded" colorScheme="green" defaultIndex={props.default} size="sm">
+        <Tabs
+          variant="soft-rounded"
+          colorScheme="green"
+          defaultIndex={props.default}
+          size="sm"
+          minW="680px"
+        >
           <TabList>
             <Box>
               <Center fontSize="14px" mb="3px" color="gray.600">

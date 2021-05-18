@@ -28,7 +28,7 @@ const UserLikeBlogsPage: NextPage<Props> = (props: Props) => {
     <LayoutWithHead title={`${user.name}のいいねしたブログ一覧`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={3} userDisplayId={user.display_id} />
-      <Center m="30px" flexDir="column">
+      <Center my="30px" flexDir="column">
         {user.blog_likes.length === 0 ? (
           <>
             <Text my="20px" color="gray.400" fontWeight="bold">

@@ -28,7 +28,7 @@ const UserPostListPage: NextPage<Props> = (props: Props) => {
     <LayoutWithHead title={`${user.name}のマイページ`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={0} userDisplayId={user.display_id} />
-      <Center m="30px" flexDir="column">
+      <Center my="30px" flexDir="column">
         {user.posts.length === 0 ? (
           <>
             <Text my="20px" color="gray.400" fontWeight="bold">
@@ -99,7 +99,6 @@ export const getStaticPaths: GetStaticPaths<{ userId: string }> = async () => {
   }
 }
 
-// eslint-disable-next-line import/no-default-export
 export default UserPostListPage
 
 gql`
