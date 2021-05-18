@@ -176,7 +176,7 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
         </Center>
       ) : (
         <Center mb="80px">
-          <Box my={{ base: '20px', lg: '30px' }} mx="auto" maxW="95vw">
+          <Box my={{ base: '20px', lg: '50px' }} mx="auto" maxW="95vw">
             {/* user info  */}
             <Flex align="center">
               <UserIcon src={user.image ?? '/nouser.svg'} width={65} height={65} />
