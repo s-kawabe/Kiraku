@@ -1,6 +1,8 @@
 import { gql } from '@apollo/client'
-import { Box } from '@chakra-ui/react'
+import { Box, Center, Flex, HStack, SimpleGrid, Text } from '@chakra-ui/react'
+import { css } from '@emotion/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -11,8 +13,10 @@ import type {
   Users,
 } from '@/apollo/graphql'
 import { GetAllUsersDocument, GetOneUserFollowersDocument } from '@/apollo/graphql'
+import { NextImage } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
 import { Profile, ProfileTab } from '@/components/user/container'
+import { UserIcon } from '@/components/user/unit'
 
 type Props = {
   user: GetOneUserFollowersQuery['users']
@@ -20,11 +24,62 @@ type Props = {
 
 const UserFollowesPage: NextPage<Props> = (props: Props) => {
   const user = props.user[0]
+  const router = useRouter()
   return (
     <LayoutWithHead title={`${user.name}のフォロワー一覧`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={5} userDisplayId={user.display_id} />
-      <Box m="30px">フォロワー一覧</Box>
+      <Center m="30px" flexDir="column">
+        {user.relation_user_to.length === 0 ? (
+          <>
+            <Text my="20px" color="gray.400" fontWeight="bold">
+              まだフォロワーはいません。
+            </Text>
+            <Box filter="grayscale(55%)">
+              <NextImage src={'/show.svg'} alt={'投稿なし'} width={375} height={350} />
+            </Box>
+          </>
+        ) : (
+          <Flex>
+            <SimpleGrid columns={[1, 1, 1, 2, 2]} spacingX={7} spacingY={7}>
+              {user.relation_user_to.map(({ follow: user }) => {
+                return (
+                  <>
+                    <HStack
+                      background="gray.100"
+                      pr="30px"
+                      borderRadius="full"
+                      css={css`
+                        &:hover img {
+                          opacity: 0.8;
+                        }
+                      `}
+                      onClick={() => {
+                        router.push({
+                          pathname: '/[userId]',
+                          query: {
+                            userId: user.display_id,
+                          },
+                        })
+                      }}
+                    >
+                      <UserIcon src={user.image ?? '/nouser.svg'} width={70} height={70} />
+                      <Box>
+                        <Text fontSize={['12px', '15px']} color="black">
+                          {user.name}
+                        </Text>
+                        <Text fontSize="12px" color="gray.500">
+                          @{user.display_id}
+                        </Text>
+                      </Box>
+                    </HStack>
+                  </>
+                )
+              })}
+            </SimpleGrid>
+          </Flex>
+        )}
+      </Center>
     </LayoutWithHead>
   )
 }

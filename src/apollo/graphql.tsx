@@ -7312,6 +7312,19 @@ export type GetOneUserAllBlogQuery = (
     & { blogs: Array<(
       { __typename?: 'blogs' }
       & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'updated_at'>
+      & { comments_aggregate: (
+        { __typename?: 'blog_comments_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'blog_comments_aggregate_fields' }
+          & Pick<BlogCommentsAggregateFields, 'count'>
+        )> }
+      ), likes_aggregate: (
+        { __typename?: 'blog_likes_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'blog_likes_aggregate_fields' }
+          & Pick<BlogLikesAggregateFields, 'count'>
+        )> }
+      ) }
     )> }
   )> }
 );
@@ -7490,6 +7503,19 @@ export type GetOneUserAllPostQuery = (
     & { posts: Array<(
       { __typename?: 'posts' }
       & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'updated_at'>
+      & { comments_aggregate: (
+        { __typename?: 'post_comments_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'post_comments_aggregate_fields' }
+          & Pick<PostCommentsAggregateFields, 'count'>
+        )> }
+      ), likes_aggregate: (
+        { __typename?: 'post_likes_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'post_likes_aggregate_fields' }
+          & Pick<PostLikesAggregateFields, 'count'>
+        )> }
+      ) }
     )> }
   )> }
 );
@@ -7520,6 +7546,22 @@ export type GetOneUserLikeBlogsQuery = (
       & { blog: (
         { __typename?: 'blogs' }
         & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'updated_at'>
+        & { user: (
+          { __typename?: 'users' }
+          & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+        ), comments_aggregate: (
+          { __typename?: 'blog_comments_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'blog_comments_aggregate_fields' }
+            & Pick<BlogCommentsAggregateFields, 'count'>
+          )> }
+        ), likes_aggregate: (
+          { __typename?: 'blog_likes_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'blog_likes_aggregate_fields' }
+            & Pick<BlogLikesAggregateFields, 'count'>
+          )> }
+        ) }
       ) }
     )> }
   )> }
@@ -7540,6 +7582,22 @@ export type GetOneUserLikePostsQuery = (
       & { post: (
         { __typename?: 'posts' }
         & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'updated_at'>
+        & { user: (
+          { __typename?: 'users' }
+          & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+        ), comments_aggregate: (
+          { __typename?: 'post_comments_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'post_comments_aggregate_fields' }
+            & Pick<PostCommentsAggregateFields, 'count'>
+          )> }
+        ), likes_aggregate: (
+          { __typename?: 'post_likes_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'post_likes_aggregate_fields' }
+            & Pick<PostLikesAggregateFields, 'count'>
+          )> }
+        ) }
       ) }
     )> }
   )> }
@@ -8783,6 +8841,16 @@ export const GetOneUserAllBlogDocument = gql`
       content
       gender
       updated_at
+      comments_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
     }
   }
 }
@@ -9213,6 +9281,16 @@ export const GetOneUserAllPostDocument = gql`
       image
       gender
       updated_at
+      comments_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
     }
   }
 }
@@ -9297,6 +9375,22 @@ export const GetOneUserLikeBlogsDocument = gql`
         content
         gender
         updated_at
+        user {
+          id
+          display_id
+          image
+          name
+        }
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
       }
     }
   }
@@ -9347,6 +9441,22 @@ export const GetOneUserLikePostsDocument = gql`
         image
         gender
         updated_at
+        user {
+          id
+          display_id
+          image
+          name
+        }
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
       }
     }
   }

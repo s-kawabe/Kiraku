@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
-import { Box } from '@chakra-ui/react'
+import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { Fragment } from 'react'
 
 import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
@@ -11,7 +12,9 @@ import type {
   Users,
 } from '@/apollo/graphql'
 import { GetAllUsersDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
+import { NextImage } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
+import { PostCard } from '@/components/post/container'
 import { Profile, ProfileTab } from '@/components/user/container'
 
 type Props = {
@@ -25,7 +28,40 @@ const UserPostListPage: NextPage<Props> = (props: Props) => {
     <LayoutWithHead title={`${user.name}のマイページ`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={0} userDisplayId={user.display_id} />
-      <Box m="30px">ポスト一覧</Box>
+      <Center m="30px" flexDir="column">
+        {user.posts.length === 0 ? (
+          <>
+            <Text my="20px" color="gray.400" fontWeight="bold">
+              まだ投稿はありません。
+            </Text>
+            <Box filter="grayscale(55%)">
+              <NextImage src={'/show.svg'} alt={'投稿なし'} width={375} height={350} />
+            </Box>
+          </>
+        ) : (
+          <Flex>
+            <SimpleGrid columns={[1, 1, 1, 1, 2]} spacingX={6} spacingY={6}>
+              {user.posts.map((post) => {
+                return (
+                  <Fragment key={post.id}>
+                    <PostCard
+                      imageSrc={post.image}
+                      postId={post.id}
+                      text={post.content}
+                      userIcon={user.image ?? '/nouser.svg'}
+                      userName={user.name as string}
+                      userId={user.display_id}
+                      commentCount={post.comments_aggregate.aggregate?.count as number}
+                      likeCount={post.likes_aggregate.aggregate?.count as number}
+                      isSmall={true}
+                    />
+                  </Fragment>
+                )
+              })}
+            </SimpleGrid>
+          </Flex>
+        )}
+      </Center>
     </LayoutWithHead>
   )
 }
@@ -82,6 +118,16 @@ gql`
         image
         gender
         updated_at
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
       }
     }
   }

@@ -28,7 +28,7 @@ const Profile: VFC<Props> = (props: Props) => {
         <VStack spacing="5">
           <UserIcon src={props.user?.image ?? '/nouser.svg'} width={120} height={120} />
           {/* TODO */}
-          {!isMine && (
+          {loginUser && !isMine && (
             <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
               フォロー
             </Button>
