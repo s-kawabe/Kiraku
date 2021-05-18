@@ -102,7 +102,7 @@ const ProfileTab: VFC<Props> = (props: Props) => {
               </Center>
               <Center>
                 <Tab onClick={transitions.toLikePost}>ポスト {userInfo.likePost}</Tab>
-                <Tab onClick={transitions.toLikePost}>ブログ {userInfo.likeBlog}</Tab>
+                <Tab onClick={transitions.toLikeBlog}>ブログ {userInfo.likeBlog}</Tab>
               </Center>
             </Box>
             <Flex alignItems="center">

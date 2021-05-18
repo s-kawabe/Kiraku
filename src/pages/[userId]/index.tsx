@@ -22,7 +22,7 @@ const UserPostListPage: NextPage<Props> = (props: Props) => {
   const user = props.user[0]
 
   return (
-    <LayoutWithHead title="○○のポスト一覧" sideMenu>
+    <LayoutWithHead title={`${user.name}のマイページ`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={0} userDisplayId={user.display_id} />
       <Box m="30px">ポスト一覧</Box>

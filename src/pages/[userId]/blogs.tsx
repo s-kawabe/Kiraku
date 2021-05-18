@@ -21,7 +21,7 @@ type Props = {
 const UserBlogListPage: NextPage<Props> = (props: Props) => {
   const user = props.user[0]
   return (
-    <LayoutWithHead title="○○のブログ一覧" sideMenu>
+    <LayoutWithHead title={`${user.name}の投稿したブログ一覧`} sideMenu>
       <Profile user={user as Users} />
       <ProfileTab default={1} userDisplayId={user.display_id} />
       <Box m="30px">ブログ一覧</Box>
