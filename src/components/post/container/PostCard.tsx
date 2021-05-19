@@ -45,7 +45,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
 
   return (
     <HStack
-      w={props.isSmall ? 'min(95vw, 500px)' : 'min(95vw, 600px)'}
+      w={props.isSmall ? 'min(95vw, 550px)' : 'min(95vw, 600px)'}
       bg="white"
       p="5px"
       border="1px"
@@ -74,7 +74,7 @@ const PostCard: VFC<PostCardProps> = (props: PostCardProps) => {
         )}
       </Center>
       <Box
-        w={props.isSmall ? 'min(55vw, 300px)' : 'min(55vw, 400px)'}
+        w={props.isSmall ? 'min(55vw, 350px)' : 'min(55vw, 400px)'}
         h="100%"
         py="10px"
         px="15px"

@@ -58,4 +58,5 @@ module.exports = {
       },
     ],
   },
+  overrides: [{ files: ['src/pages/**/*.tsx'], rules: { 'import/no-default-export': 'off' } }],
 }

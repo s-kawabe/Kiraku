@@ -85,8 +85,6 @@ const BlogEditor: VFC<Props> = (props: Props) => {
       <Editor
         editorState={editorState}
         toolbarClassName="toolbar"
-        // wrapperClassName="wrapperClassName"
-        // editorClassName="editorClassName"
         onEditorStateChange={onEditorStateChange}
         placeholder="本文を入力"
         toolbar={{

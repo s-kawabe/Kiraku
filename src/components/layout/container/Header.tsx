@@ -27,8 +27,9 @@ const Header: VFC<HeaderProps> = (props: HeaderProps) => {
       bg="gray.50"
       w="100%"
       h={['120px', '80px']}
-      zIndex="100"
+      zIndex="10"
       boxShadow="0 0 5px rgba(0,0,0,0.2)"
+      position="relative"
     >
       <Flex justifyContent="space-between" h={{ base: '70px', sm: '80px' }}>
         <HStack spacing="3" h={{ base: '70px', sm: '80px' }}>
