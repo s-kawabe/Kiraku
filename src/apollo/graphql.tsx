@@ -7250,45 +7250,6 @@ export type MappingBrandsToIdQuery = (
   )> }
 );
 
-export type IsFollowUserQueryVariables = Exact<{
-  fromUserId: Scalars['String'];
-  toUserId: Scalars['String'];
-}>;
-
-
-export type IsFollowUserQuery = (
-  { __typename?: 'query_root' }
-  & { relationships: Array<(
-    { __typename?: 'relationships' }
-    & Pick<Relationships, 'id' | 'user_id' | 'follow_id'>
-  )> }
-);
-
-export type AddFollowMutationVariables = Exact<{
-  fromUserId: Scalars['String'];
-  toUserId: Scalars['String'];
-}>;
-
-
-export type AddFollowMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_relationships_one?: Maybe<(
-    { __typename?: 'relationships' }
-    & Pick<Relationships, 'id' | 'user_id' | 'follow_id'>
-  )> }
-);
-
-export type RemoveFollowMutationVariables = Exact<{
-  fromUserId: Scalars['String'];
-  toUserId: Scalars['String'];
-}>;
-
-
-export type RemoveFollowMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_relationships?: Maybe<(
-    { __typename?: 'relationships_mutation_response' }
-    & Pick<RelationshipsMutationResponse, 'affected_rows'>
 export type GetUserInfomationQueryVariables = Exact<{
   display_id: Scalars['String'];
 }>;
@@ -7335,6 +7296,48 @@ export type GetUserInfomationQuery = (
         & Pick<RelationshipsAggregateFields, 'count'>
       )> }
     ) }
+  )> }
+);
+
+export type IsFollowUserQueryVariables = Exact<{
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+}>;
+
+
+export type IsFollowUserQuery = (
+  { __typename?: 'query_root' }
+  & { relationships: Array<(
+    { __typename?: 'relationships' }
+    & Pick<Relationships, 'id' | 'user_id' | 'follow_id'>
+  )> }
+);
+
+export type AddFollowMutationVariables = Exact<{
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+}>;
+
+
+export type AddFollowMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_relationships_one?: Maybe<(
+    { __typename?: 'relationships' }
+    & Pick<Relationships, 'id' | 'user_id' | 'follow_id'>
+  )> }
+);
+
+export type RemoveFollowMutationVariables = Exact<{
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+}>;
+
+
+export type RemoveFollowMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_relationships?: Maybe<(
+    { __typename?: 'relationships_mutation_response' }
+    & Pick<RelationshipsMutationResponse, 'affected_rows'>
   )> }
 );
 
@@ -8800,12 +8803,6 @@ export function useMappingBrandsToIdLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type MappingBrandsToIdQueryHookResult = ReturnType<typeof useMappingBrandsToIdQuery>;
 export type MappingBrandsToIdLazyQueryHookResult = ReturnType<typeof useMappingBrandsToIdLazyQuery>;
 export type MappingBrandsToIdQueryResult = ApolloReactCommon.QueryResult<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>;
-export const IsFollowUserDocument = gql`
-    query IsFollowUser($fromUserId: String!, $toUserId: String!) {
-  relationships(where: {user_id: {_eq: $fromUserId}, follow_id: {_eq: $toUserId}}) {
-    id
-    user_id
-    follow_id
 export const GetUserInfomationDocument = gql`
     query GetUserInfomation($display_id: String!) {
   users(where: {display_id: {_eq: $display_id}}) {
@@ -8844,14 +8841,47 @@ export const GetUserInfomationDocument = gql`
     `;
 
 /**
- * __useIsFollowUserQuery__
- *
- * To run a query within a React component, call `useIsFollowUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useIsFollowUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * __useGetUserInfomationQuery__
  *
  * To run a query within a React component, call `useGetUserInfomationQuery` and pass it any options that fit your needs.
  * When your component renders, `useGetUserInfomationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserInfomationQuery({
+ *   variables: {
+ *      display_id: // value for 'display_id'
+ *   },
+ * });
+ */
+export function useGetUserInfomationQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetUserInfomationQuery, GetUserInfomationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetUserInfomationQuery, GetUserInfomationQueryVariables>(GetUserInfomationDocument, options);
+      }
+export function useGetUserInfomationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserInfomationQuery, GetUserInfomationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetUserInfomationQuery, GetUserInfomationQueryVariables>(GetUserInfomationDocument, options);
+        }
+export type GetUserInfomationQueryHookResult = ReturnType<typeof useGetUserInfomationQuery>;
+export type GetUserInfomationLazyQueryHookResult = ReturnType<typeof useGetUserInfomationLazyQuery>;
+export type GetUserInfomationQueryResult = ApolloReactCommon.QueryResult<GetUserInfomationQuery, GetUserInfomationQueryVariables>;
+export const IsFollowUserDocument = gql`
+    query IsFollowUser($fromUserId: String!, $toUserId: String!) {
+  relationships(where: {user_id: {_eq: $fromUserId}, follow_id: {_eq: $toUserId}}) {
+    id
+    user_id
+    follow_id
+  }
+}
+    `;
+
+/**
+ * __useIsFollowUserQuery__
+ *
+ * To run a query within a React component, call `useIsFollowUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsFollowUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -8947,23 +8977,6 @@ export function useRemoveFollowMutation(baseOptions?: ApolloReactHooks.MutationH
 export type RemoveFollowMutationHookResult = ReturnType<typeof useRemoveFollowMutation>;
 export type RemoveFollowMutationResult = ApolloReactCommon.MutationResult<RemoveFollowMutation>;
 export type RemoveFollowMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveFollowMutation, RemoveFollowMutationVariables>;
- * const { data, loading, error } = useGetUserInfomationQuery({
- *   variables: {
- *      display_id: // value for 'display_id'
- *   },
- * });
- */
-export function useGetUserInfomationQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetUserInfomationQuery, GetUserInfomationQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<GetUserInfomationQuery, GetUserInfomationQueryVariables>(GetUserInfomationDocument, options);
-      }
-export function useGetUserInfomationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserInfomationQuery, GetUserInfomationQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<GetUserInfomationQuery, GetUserInfomationQueryVariables>(GetUserInfomationDocument, options);
-        }
-export type GetUserInfomationQueryHookResult = ReturnType<typeof useGetUserInfomationQuery>;
-export type GetUserInfomationLazyQueryHookResult = ReturnType<typeof useGetUserInfomationLazyQuery>;
-export type GetUserInfomationQueryResult = ApolloReactCommon.QueryResult<GetUserInfomationQuery, GetUserInfomationQueryVariables>;
 export const GetOneUserAllBlogDocument = gql`
     query GetOneUserAllBlog($display_id: String!) {
   users(where: {display_id: {_eq: $display_id}}) {
