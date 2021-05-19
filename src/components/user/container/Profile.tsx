@@ -4,7 +4,7 @@ import type { VFC } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
 import type { Users } from '@/apollo/graphql'
-import { UserIcon } from '@/components/user/unit'
+import { FollowButton, UserIcon } from '@/components/user/unit'
 import { useConvertDayFromHasura } from '@/utils/methods/customeHooks'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
 
@@ -35,9 +35,7 @@ const Profile: VFC<Props> = (props: Props) => {
             />
             {/* TODO */}
             {loginUser && !isMine && (
-              <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
-                フォロー
-              </Button>
+              <FollowButton fromUserId={loginUser.id} toUserId={props.user.id} />
             )}
           </VStack>
           <Box>
