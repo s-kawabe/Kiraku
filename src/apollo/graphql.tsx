@@ -7250,6 +7250,48 @@ export type MappingBrandsToIdQuery = (
   )> }
 );
 
+export type IsFollowUserQueryVariables = Exact<{
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+}>;
+
+
+export type IsFollowUserQuery = (
+  { __typename?: 'query_root' }
+  & { relationships: Array<(
+    { __typename?: 'relationships' }
+    & Pick<Relationships, 'id' | 'user_id' | 'follow_id'>
+  )> }
+);
+
+export type AddFollowMutationVariables = Exact<{
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+}>;
+
+
+export type AddFollowMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_relationships_one?: Maybe<(
+    { __typename?: 'relationships' }
+    & Pick<Relationships, 'id' | 'user_id' | 'follow_id'>
+  )> }
+);
+
+export type RemoveFollowMutationVariables = Exact<{
+  fromUserId: Scalars['String'];
+  toUserId: Scalars['String'];
+}>;
+
+
+export type RemoveFollowMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_relationships?: Maybe<(
+    { __typename?: 'relationships_mutation_response' }
+    & Pick<RelationshipsMutationResponse, 'affected_rows'>
+  )> }
+);
+
 export type GetOneUserAllBlogQueryVariables = Exact<{
   display_id: Scalars['String'];
 }>;
@@ -8563,6 +8605,116 @@ export function useMappingBrandsToIdLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type MappingBrandsToIdQueryHookResult = ReturnType<typeof useMappingBrandsToIdQuery>;
 export type MappingBrandsToIdLazyQueryHookResult = ReturnType<typeof useMappingBrandsToIdLazyQuery>;
 export type MappingBrandsToIdQueryResult = ApolloReactCommon.QueryResult<MappingBrandsToIdQuery, MappingBrandsToIdQueryVariables>;
+export const IsFollowUserDocument = gql`
+    query IsFollowUser($fromUserId: String!, $toUserId: String!) {
+  relationships(where: {user_id: {_eq: $fromUserId}, follow_id: {_eq: $toUserId}}) {
+    id
+    user_id
+    follow_id
+  }
+}
+    `;
+
+/**
+ * __useIsFollowUserQuery__
+ *
+ * To run a query within a React component, call `useIsFollowUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsFollowUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsFollowUserQuery({
+ *   variables: {
+ *      fromUserId: // value for 'fromUserId'
+ *      toUserId: // value for 'toUserId'
+ *   },
+ * });
+ */
+export function useIsFollowUserQuery(baseOptions: ApolloReactHooks.QueryHookOptions<IsFollowUserQuery, IsFollowUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<IsFollowUserQuery, IsFollowUserQueryVariables>(IsFollowUserDocument, options);
+      }
+export function useIsFollowUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<IsFollowUserQuery, IsFollowUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<IsFollowUserQuery, IsFollowUserQueryVariables>(IsFollowUserDocument, options);
+        }
+export type IsFollowUserQueryHookResult = ReturnType<typeof useIsFollowUserQuery>;
+export type IsFollowUserLazyQueryHookResult = ReturnType<typeof useIsFollowUserLazyQuery>;
+export type IsFollowUserQueryResult = ApolloReactCommon.QueryResult<IsFollowUserQuery, IsFollowUserQueryVariables>;
+export const AddFollowDocument = gql`
+    mutation AddFollow($fromUserId: String!, $toUserId: String!) {
+  insert_relationships_one(object: {user_id: $fromUserId, follow_id: $toUserId}) {
+    id
+    user_id
+    follow_id
+  }
+}
+    `;
+export type AddFollowMutationFn = ApolloReactCommon.MutationFunction<AddFollowMutation, AddFollowMutationVariables>;
+
+/**
+ * __useAddFollowMutation__
+ *
+ * To run a mutation, you first call `useAddFollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddFollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addFollowMutation, { data, loading, error }] = useAddFollowMutation({
+ *   variables: {
+ *      fromUserId: // value for 'fromUserId'
+ *      toUserId: // value for 'toUserId'
+ *   },
+ * });
+ */
+export function useAddFollowMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddFollowMutation, AddFollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<AddFollowMutation, AddFollowMutationVariables>(AddFollowDocument, options);
+      }
+export type AddFollowMutationHookResult = ReturnType<typeof useAddFollowMutation>;
+export type AddFollowMutationResult = ApolloReactCommon.MutationResult<AddFollowMutation>;
+export type AddFollowMutationOptions = ApolloReactCommon.BaseMutationOptions<AddFollowMutation, AddFollowMutationVariables>;
+export const RemoveFollowDocument = gql`
+    mutation RemoveFollow($fromUserId: String!, $toUserId: String!) {
+  delete_relationships(
+    where: {user_id: {_eq: $fromUserId}, follow_id: {_eq: $toUserId}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type RemoveFollowMutationFn = ApolloReactCommon.MutationFunction<RemoveFollowMutation, RemoveFollowMutationVariables>;
+
+/**
+ * __useRemoveFollowMutation__
+ *
+ * To run a mutation, you first call `useRemoveFollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveFollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFollowMutation, { data, loading, error }] = useRemoveFollowMutation({
+ *   variables: {
+ *      fromUserId: // value for 'fromUserId'
+ *      toUserId: // value for 'toUserId'
+ *   },
+ * });
+ */
+export function useRemoveFollowMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RemoveFollowMutation, RemoveFollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<RemoveFollowMutation, RemoveFollowMutationVariables>(RemoveFollowDocument, options);
+      }
+export type RemoveFollowMutationHookResult = ReturnType<typeof useRemoveFollowMutation>;
+export type RemoveFollowMutationResult = ApolloReactCommon.MutationResult<RemoveFollowMutation>;
+export type RemoveFollowMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveFollowMutation, RemoveFollowMutationVariables>;
 export const GetOneUserAllBlogDocument = gql`
     query GetOneUserAllBlog($display_id: String!) {
   users(where: {display_id: {_eq: $display_id}}) {

@@ -1,16 +1,5 @@
 import { gql, useReactiveVar } from '@apollo/client'
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  HStack,
-  Spinner,
-  Stack,
-  Tag,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, HStack, Spinner, Stack, Tag, Text } from '@chakra-ui/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,6 +10,7 @@ import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
   AddPostLikeMutation,
   AddPostLikeMutationVariables,
+  BlogComments,
   GetAllUsersWithPostsQuery,
   GetAllUsersWithPostsQueryVariables,
   GetOneUserWithPostQuery,
@@ -43,11 +33,9 @@ import {
 import { CommentIconWithCount, EditMenu, LikeButtonWithCount } from '@/components/common/container'
 import { LayoutWithHead } from '@/components/layout/container'
 import { CommentList } from '@/components/user/container'
-import { CommentForm, UserIcon } from '@/components/user/unit'
+import { CommentForm, FollowButton, UserIcon } from '@/components/user/unit'
 import { chapeCommentData } from '@/utils/methods/common'
 import { useConvertDateFromHasura } from '@/utils/methods/customeHooks'
-
-import type { BlogComments } from '../../../../apollo/graphql'
 
 type Props = {
   user: Users
@@ -169,10 +157,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                     @{user.display_id}
                   </Text>
                 </Box>
-                {/* TODO */}
-                <Button colorScheme="blue" variant="outline" size="sm" ml="30px">
-                  フォロー
-                </Button>
+                {loginUser && <FollowButton fromUserId={loginUser.id} toUserId={user.id} />}
               </Flex>
               <HStack spacing="6">
                 {isMine && <EditMenu post={post} />}

@@ -3,21 +3,10 @@ import { Text } from '@chakra-ui/react'
 import { MenuDivider, MenuItem, MenuList } from '@chakra-ui/react'
 import type { VFC } from 'react'
 
-// import type { LoginUser } from '@/apollo/cache'
-// todo: もらったuserのidで通知テーブルから取得する
-// type NortificationMenuProps = {
-//   user: LoginUser
-// }
-
 const items: JSX.Element[] = [
+  // eslint-disable-next-line jsx-a11y/accessible-emoji
   <Text color="gray.800" fontSize="13px" my="2">
-    @neko さんにフォローされました
-  </Text>,
-  <Text color="gray.800" fontSize="13px" my="2">
-    @hogehoge さんにフォローされました
-  </Text>,
-  <Text color="gray.800" fontSize="13px" my="2">
-    @innu さんにフォローされました
+    申し訳ありません🙇‍♂️ 通知機能は現在開発中です。
   </Text>,
 ]
 
