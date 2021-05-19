@@ -7289,6 +7289,52 @@ export type RemoveFollowMutation = (
   & { delete_relationships?: Maybe<(
     { __typename?: 'relationships_mutation_response' }
     & Pick<RelationshipsMutationResponse, 'affected_rows'>
+export type GetUserInfomationQueryVariables = Exact<{
+  display_id: Scalars['String'];
+}>;
+
+
+export type GetUserInfomationQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & { posts_aggregate: (
+      { __typename?: 'posts_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'posts_aggregate_fields' }
+        & Pick<PostsAggregateFields, 'count'>
+      )> }
+    ), blogs_aggregate: (
+      { __typename?: 'blogs_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blogs_aggregate_fields' }
+        & Pick<BlogsAggregateFields, 'count'>
+      )> }
+    ), post_likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ), blog_likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ), relation_user_from_aggregate: (
+      { __typename?: 'relationships_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'relationships_aggregate_fields' }
+        & Pick<RelationshipsAggregateFields, 'count'>
+      )> }
+    ), relation_user_to_aggregate: (
+      { __typename?: 'relationships_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'relationships_aggregate_fields' }
+        & Pick<RelationshipsAggregateFields, 'count'>
+      )> }
+    ) }
   )> }
 );
 
@@ -7305,6 +7351,19 @@ export type GetOneUserAllBlogQuery = (
     & { blogs: Array<(
       { __typename?: 'blogs' }
       & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'updated_at'>
+      & { comments_aggregate: (
+        { __typename?: 'blog_comments_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'blog_comments_aggregate_fields' }
+          & Pick<BlogCommentsAggregateFields, 'count'>
+        )> }
+      ), likes_aggregate: (
+        { __typename?: 'blog_likes_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'blog_likes_aggregate_fields' }
+          & Pick<BlogLikesAggregateFields, 'count'>
+        )> }
+      ) }
     )> }
   )> }
 );
@@ -7430,6 +7489,46 @@ export type RemoveBlogLikeMutation = (
   )> }
 );
 
+export type GetOneUserFollowersQueryVariables = Exact<{
+  display_id: Scalars['String'];
+}>;
+
+
+export type GetOneUserFollowersQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
+    & { relation_user_to: Array<(
+      { __typename?: 'relationships' }
+      & { follow: (
+        { __typename?: 'users' }
+        & Pick<Users, 'id' | 'display_id' | 'name' | 'image' | 'created_at'>
+      ) }
+    )> }
+  )> }
+);
+
+export type GetOneUserFollowingsQueryVariables = Exact<{
+  display_id: Scalars['String'];
+}>;
+
+
+export type GetOneUserFollowingsQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
+    & { relation_user_from: Array<(
+      { __typename?: 'relationships' }
+      & { user: (
+        { __typename?: 'users' }
+        & Pick<Users, 'id' | 'display_id' | 'name' | 'image' | 'created_at'>
+      ) }
+    )> }
+  )> }
+);
+
 export type GetOneUserAllPostQueryVariables = Exact<{
   display_id: Scalars['String'];
 }>;
@@ -7443,6 +7542,102 @@ export type GetOneUserAllPostQuery = (
     & { posts: Array<(
       { __typename?: 'posts' }
       & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'updated_at'>
+      & { comments_aggregate: (
+        { __typename?: 'post_comments_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'post_comments_aggregate_fields' }
+          & Pick<PostCommentsAggregateFields, 'count'>
+        )> }
+      ), likes_aggregate: (
+        { __typename?: 'post_likes_aggregate' }
+        & { aggregate?: Maybe<(
+          { __typename?: 'post_likes_aggregate_fields' }
+          & Pick<PostLikesAggregateFields, 'count'>
+        )> }
+      ) }
+    )> }
+  )> }
+);
+
+export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllUsersQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id'>
+  )> }
+);
+
+export type GetOneUserLikeBlogsQueryVariables = Exact<{
+  display_id: Scalars['String'];
+}>;
+
+
+export type GetOneUserLikeBlogsQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
+    & { blog_likes: Array<(
+      { __typename?: 'blog_likes' }
+      & { blog: (
+        { __typename?: 'blogs' }
+        & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'updated_at'>
+        & { user: (
+          { __typename?: 'users' }
+          & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+        ), comments_aggregate: (
+          { __typename?: 'blog_comments_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'blog_comments_aggregate_fields' }
+            & Pick<BlogCommentsAggregateFields, 'count'>
+          )> }
+        ), likes_aggregate: (
+          { __typename?: 'blog_likes_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'blog_likes_aggregate_fields' }
+            & Pick<BlogLikesAggregateFields, 'count'>
+          )> }
+        ) }
+      ) }
+    )> }
+  )> }
+);
+
+export type GetOneUserLikePostsQueryVariables = Exact<{
+  display_id: Scalars['String'];
+}>;
+
+
+export type GetOneUserLikePostsQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
+    & { post_likes: Array<(
+      { __typename?: 'post_likes' }
+      & { post: (
+        { __typename?: 'posts' }
+        & Pick<Posts, 'id' | 'content' | 'image' | 'gender' | 'updated_at'>
+        & { user: (
+          { __typename?: 'users' }
+          & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+        ), comments_aggregate: (
+          { __typename?: 'post_comments_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'post_comments_aggregate_fields' }
+            & Pick<PostCommentsAggregateFields, 'count'>
+          )> }
+        ), likes_aggregate: (
+          { __typename?: 'post_likes_aggregate' }
+          & { aggregate?: Maybe<(
+            { __typename?: 'post_likes_aggregate_fields' }
+            & Pick<PostLikesAggregateFields, 'count'>
+          )> }
+        ) }
+      ) }
     )> }
   )> }
 );
@@ -8611,6 +8806,39 @@ export const IsFollowUserDocument = gql`
     id
     user_id
     follow_id
+export const GetUserInfomationDocument = gql`
+    query GetUserInfomation($display_id: String!) {
+  users(where: {display_id: {_eq: $display_id}}) {
+    posts_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    blogs_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    post_likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    blog_likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    relation_user_from_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    relation_user_to_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
   }
 }
     `;
@@ -8620,6 +8848,10 @@ export const IsFollowUserDocument = gql`
  *
  * To run a query within a React component, call `useIsFollowUserQuery` and pass it any options that fit your needs.
  * When your component renders, `useIsFollowUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * __useGetUserInfomationQuery__
+ *
+ * To run a query within a React component, call `useGetUserInfomationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserInfomationQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
@@ -8715,6 +8947,23 @@ export function useRemoveFollowMutation(baseOptions?: ApolloReactHooks.MutationH
 export type RemoveFollowMutationHookResult = ReturnType<typeof useRemoveFollowMutation>;
 export type RemoveFollowMutationResult = ApolloReactCommon.MutationResult<RemoveFollowMutation>;
 export type RemoveFollowMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveFollowMutation, RemoveFollowMutationVariables>;
+ * const { data, loading, error } = useGetUserInfomationQuery({
+ *   variables: {
+ *      display_id: // value for 'display_id'
+ *   },
+ * });
+ */
+export function useGetUserInfomationQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetUserInfomationQuery, GetUserInfomationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetUserInfomationQuery, GetUserInfomationQueryVariables>(GetUserInfomationDocument, options);
+      }
+export function useGetUserInfomationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserInfomationQuery, GetUserInfomationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetUserInfomationQuery, GetUserInfomationQueryVariables>(GetUserInfomationDocument, options);
+        }
+export type GetUserInfomationQueryHookResult = ReturnType<typeof useGetUserInfomationQuery>;
+export type GetUserInfomationLazyQueryHookResult = ReturnType<typeof useGetUserInfomationLazyQuery>;
+export type GetUserInfomationQueryResult = ApolloReactCommon.QueryResult<GetUserInfomationQuery, GetUserInfomationQueryVariables>;
 export const GetOneUserAllBlogDocument = gql`
     query GetOneUserAllBlog($display_id: String!) {
   users(where: {display_id: {_eq: $display_id}}) {
@@ -8731,6 +8980,16 @@ export const GetOneUserAllBlogDocument = gql`
       content
       gender
       updated_at
+      comments_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
     }
   }
 }
@@ -9045,6 +9304,106 @@ export function useRemoveBlogLikeMutation(baseOptions?: ApolloReactHooks.Mutatio
 export type RemoveBlogLikeMutationHookResult = ReturnType<typeof useRemoveBlogLikeMutation>;
 export type RemoveBlogLikeMutationResult = ApolloReactCommon.MutationResult<RemoveBlogLikeMutation>;
 export type RemoveBlogLikeMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveBlogLikeMutation, RemoveBlogLikeMutationVariables>;
+export const GetOneUserFollowersDocument = gql`
+    query GetOneUserFollowers($display_id: String!) {
+  users(where: {display_id: {_eq: $display_id}}) {
+    id
+    display_id
+    name
+    profile
+    gender
+    image
+    created_at
+    relation_user_to {
+      follow {
+        id
+        display_id
+        name
+        image
+        created_at
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOneUserFollowersQuery__
+ *
+ * To run a query within a React component, call `useGetOneUserFollowersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneUserFollowersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneUserFollowersQuery({
+ *   variables: {
+ *      display_id: // value for 'display_id'
+ *   },
+ * });
+ */
+export function useGetOneUserFollowersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOneUserFollowersQuery, GetOneUserFollowersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOneUserFollowersQuery, GetOneUserFollowersQueryVariables>(GetOneUserFollowersDocument, options);
+      }
+export function useGetOneUserFollowersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOneUserFollowersQuery, GetOneUserFollowersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOneUserFollowersQuery, GetOneUserFollowersQueryVariables>(GetOneUserFollowersDocument, options);
+        }
+export type GetOneUserFollowersQueryHookResult = ReturnType<typeof useGetOneUserFollowersQuery>;
+export type GetOneUserFollowersLazyQueryHookResult = ReturnType<typeof useGetOneUserFollowersLazyQuery>;
+export type GetOneUserFollowersQueryResult = ApolloReactCommon.QueryResult<GetOneUserFollowersQuery, GetOneUserFollowersQueryVariables>;
+export const GetOneUserFollowingsDocument = gql`
+    query GetOneUserFollowings($display_id: String!) {
+  users(where: {display_id: {_eq: $display_id}}) {
+    id
+    display_id
+    name
+    profile
+    gender
+    image
+    created_at
+    relation_user_from {
+      user {
+        id
+        display_id
+        name
+        image
+        created_at
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOneUserFollowingsQuery__
+ *
+ * To run a query within a React component, call `useGetOneUserFollowingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneUserFollowingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneUserFollowingsQuery({
+ *   variables: {
+ *      display_id: // value for 'display_id'
+ *   },
+ * });
+ */
+export function useGetOneUserFollowingsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOneUserFollowingsQuery, GetOneUserFollowingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOneUserFollowingsQuery, GetOneUserFollowingsQueryVariables>(GetOneUserFollowingsDocument, options);
+      }
+export function useGetOneUserFollowingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOneUserFollowingsQuery, GetOneUserFollowingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOneUserFollowingsQuery, GetOneUserFollowingsQueryVariables>(GetOneUserFollowingsDocument, options);
+        }
+export type GetOneUserFollowingsQueryHookResult = ReturnType<typeof useGetOneUserFollowingsQuery>;
+export type GetOneUserFollowingsLazyQueryHookResult = ReturnType<typeof useGetOneUserFollowingsLazyQuery>;
+export type GetOneUserFollowingsQueryResult = ApolloReactCommon.QueryResult<GetOneUserFollowingsQuery, GetOneUserFollowingsQueryVariables>;
 export const GetOneUserAllPostDocument = gql`
     query GetOneUserAllPost($display_id: String!) {
   users(where: {display_id: {_eq: $display_id}}) {
@@ -9061,6 +9420,16 @@ export const GetOneUserAllPostDocument = gql`
       image
       gender
       updated_at
+      comments_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      likes_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
     }
   }
 }
@@ -9093,6 +9462,173 @@ export function useGetOneUserAllPostLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type GetOneUserAllPostQueryHookResult = ReturnType<typeof useGetOneUserAllPostQuery>;
 export type GetOneUserAllPostLazyQueryHookResult = ReturnType<typeof useGetOneUserAllPostLazyQuery>;
 export type GetOneUserAllPostQueryResult = ApolloReactCommon.QueryResult<GetOneUserAllPostQuery, GetOneUserAllPostQueryVariables>;
+export const GetAllUsersDocument = gql`
+    query GetAllUsers {
+  users {
+    id
+    display_id
+  }
+}
+    `;
+
+/**
+ * __useGetAllUsersQuery__
+ *
+ * To run a query within a React component, call `useGetAllUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllUsersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(GetAllUsersDocument, options);
+      }
+export function useGetAllUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAllUsersQuery, GetAllUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetAllUsersQuery, GetAllUsersQueryVariables>(GetAllUsersDocument, options);
+        }
+export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>;
+export type GetAllUsersLazyQueryHookResult = ReturnType<typeof useGetAllUsersLazyQuery>;
+export type GetAllUsersQueryResult = ApolloReactCommon.QueryResult<GetAllUsersQuery, GetAllUsersQueryVariables>;
+export const GetOneUserLikeBlogsDocument = gql`
+    query GetOneUserLikeBlogs($display_id: String!) {
+  users(where: {display_id: {_eq: $display_id}}) {
+    id
+    display_id
+    name
+    profile
+    gender
+    image
+    created_at
+    blog_likes {
+      blog {
+        id
+        title
+        content
+        gender
+        updated_at
+        user {
+          id
+          display_id
+          image
+          name
+        }
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOneUserLikeBlogsQuery__
+ *
+ * To run a query within a React component, call `useGetOneUserLikeBlogsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneUserLikeBlogsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneUserLikeBlogsQuery({
+ *   variables: {
+ *      display_id: // value for 'display_id'
+ *   },
+ * });
+ */
+export function useGetOneUserLikeBlogsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOneUserLikeBlogsQuery, GetOneUserLikeBlogsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOneUserLikeBlogsQuery, GetOneUserLikeBlogsQueryVariables>(GetOneUserLikeBlogsDocument, options);
+      }
+export function useGetOneUserLikeBlogsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOneUserLikeBlogsQuery, GetOneUserLikeBlogsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOneUserLikeBlogsQuery, GetOneUserLikeBlogsQueryVariables>(GetOneUserLikeBlogsDocument, options);
+        }
+export type GetOneUserLikeBlogsQueryHookResult = ReturnType<typeof useGetOneUserLikeBlogsQuery>;
+export type GetOneUserLikeBlogsLazyQueryHookResult = ReturnType<typeof useGetOneUserLikeBlogsLazyQuery>;
+export type GetOneUserLikeBlogsQueryResult = ApolloReactCommon.QueryResult<GetOneUserLikeBlogsQuery, GetOneUserLikeBlogsQueryVariables>;
+export const GetOneUserLikePostsDocument = gql`
+    query GetOneUserLikePosts($display_id: String!) {
+  users(where: {display_id: {_eq: $display_id}}) {
+    id
+    display_id
+    name
+    profile
+    gender
+    image
+    created_at
+    post_likes {
+      post {
+        id
+        content
+        image
+        gender
+        updated_at
+        user {
+          id
+          display_id
+          image
+          name
+        }
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOneUserLikePostsQuery__
+ *
+ * To run a query within a React component, call `useGetOneUserLikePostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneUserLikePostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneUserLikePostsQuery({
+ *   variables: {
+ *      display_id: // value for 'display_id'
+ *   },
+ * });
+ */
+export function useGetOneUserLikePostsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetOneUserLikePostsQuery, GetOneUserLikePostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetOneUserLikePostsQuery, GetOneUserLikePostsQueryVariables>(GetOneUserLikePostsDocument, options);
+      }
+export function useGetOneUserLikePostsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOneUserLikePostsQuery, GetOneUserLikePostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetOneUserLikePostsQuery, GetOneUserLikePostsQueryVariables>(GetOneUserLikePostsDocument, options);
+        }
+export type GetOneUserLikePostsQueryHookResult = ReturnType<typeof useGetOneUserLikePostsQuery>;
+export type GetOneUserLikePostsLazyQueryHookResult = ReturnType<typeof useGetOneUserLikePostsLazyQuery>;
+export type GetOneUserLikePostsQueryResult = ApolloReactCommon.QueryResult<GetOneUserLikePostsQuery, GetOneUserLikePostsQueryVariables>;
 export const GetAllUsersWithPostsDocument = gql`
     query GetAllUsersWithPosts {
   users {

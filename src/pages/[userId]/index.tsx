@@ -1,93 +1,104 @@
 import { gql } from '@apollo/client'
-import { Box, Heading } from '@chakra-ui/react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/react'
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { Fragment } from 'react'
 
-import { initializeApollo } from '@/apollo/client'
+import { addApolloState, initializeApollo } from '@/apollo/client'
 import type {
-  GetOneUserAllBlogQuery,
-  GetOneUserAllBlogQueryVariables,
+  GetAllUsersQuery,
+  GetAllUsersQueryVariables,
   GetOneUserAllPostQuery,
   GetOneUserAllPostQueryVariables,
   Users,
 } from '@/apollo/graphql'
-import { GetOneUserAllBlogDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
+import { GetAllUsersDocument, GetOneUserAllPostDocument } from '@/apollo/graphql'
+import { NextImage } from '@/components/common/unit'
 import { LayoutWithHead } from '@/components/layout/container'
+import { PostCard } from '@/components/post/container'
+import { Profile, ProfileTab } from '@/components/user/container'
 
-// TODO loginuserではなくパス(display_id)からqueryする
+type Props = {
+  user: GetOneUserAllPostQuery['users']
+}
 
-const UserPostListPage = () => {
-  const router = useRouter()
-  const client = initializeApollo()
+const UserPostListPage: NextPage<Props> = (props: Props) => {
+  const user = props.user[0]
 
-  const [user1, setUser1] = useState<Users[]>([])
-  const [user2, setUser2] = useState<Users[]>([])
-
-  const { userId } = router.query
-
-  useEffect(() => {
-    ;(async () => {
-      const postData = await client.query<GetOneUserAllPostQuery, GetOneUserAllPostQueryVariables>({
-        query: GetOneUserAllPostDocument,
-        variables: {
-          display_id: userId as string,
-        },
-      })
-
-      const blogData = await client.query<GetOneUserAllBlogQuery, GetOneUserAllBlogQueryVariables>({
-        query: GetOneUserAllBlogDocument,
-        variables: {
-          display_id: userId as string,
-        },
-      })
-
-      setUser1(postData.data.users as Users[])
-      setUser2(blogData.data.users as Users[])
-    })()
-  })
-
-  // ※ここはポスト投稿一覧 あとでブログは/[userId]/blogs ページに表示させる
   return (
-    <LayoutWithHead title="○○のポスト一覧" sideMenu>
-      <Box m="30px">
-        <Heading>ポスト</Heading>
-        {user1[0]?.posts.map((item) => {
-          return (
-            <Box my="5px" key={item.id}>
-              <Link
-                href={{
-                  pathname: '/[userId]/posts/[postId]',
-                  query: { userId: user1[0].display_id, postId: item.id },
-                }}
-              >
-                <a>{item.content}</a>
-              </Link>
+    <LayoutWithHead title={`${user.name}のマイページ`} sideMenu>
+      <Profile user={user as Users} />
+      <ProfileTab default={0} userDisplayId={user.display_id} />
+      <Center my="30px" flexDir="column">
+        {user.posts.length === 0 ? (
+          <>
+            <Text my="20px" color="gray.400" fontWeight="bold">
+              まだ投稿はありません。
+            </Text>
+            <Box filter="grayscale(55%)">
+              <NextImage src={'/show.svg'} alt={'投稿なし'} width={375} height={350} />
             </Box>
-          )
-        })}
-
-        <Heading>ブログ</Heading>
-        {user2[0]?.blogs.map((item) => {
-          return (
-            <Box my="5px" key={item.id}>
-              <Link
-                href={{
-                  pathname: '/[userId]/blogs/[blogId]',
-                  query: { userId: user2[0].display_id, blogId: item.id },
-                }}
-              >
-                <a>{item.title}</a>
-              </Link>
-            </Box>
-          )
-        })}
-      </Box>
+          </>
+        ) : (
+          <Flex>
+            <SimpleGrid columns={[1, 1, 1, 1, 2]} spacingX={6} spacingY={6}>
+              {user.posts.map((post) => {
+                return (
+                  <Fragment key={post.id}>
+                    <PostCard
+                      imageSrc={post.image}
+                      postId={post.id}
+                      text={post.content}
+                      userIcon={user.image ?? '/nouser.svg'}
+                      userName={user.name as string}
+                      userId={user.display_id}
+                      commentCount={post.comments_aggregate.aggregate?.count as number}
+                      likeCount={post.likes_aggregate.aggregate?.count as number}
+                      isSmall={true}
+                    />
+                  </Fragment>
+                )
+              })}
+            </SimpleGrid>
+          </Flex>
+        )}
+      </Center>
     </LayoutWithHead>
   )
 }
 
-// eslint-disable-next-line import/no-default-export
+export const getStaticProps: GetStaticProps<Props, { userId: string }> = async ({ params }) => {
+  const client = initializeApollo()
+  const userId = params?.userId ?? ''
+  const { data } = await client.query<GetOneUserAllPostQuery, GetOneUserAllPostQueryVariables>({
+    query: GetOneUserAllPostDocument,
+    variables: {
+      display_id: userId,
+    },
+  })
+  if (data.users.length === 0) {
+    return {
+      notFound: true,
+    }
+  }
+  return addApolloState(client, { props: { user: data.users }, revalidate: 300 })
+}
+
+export const getStaticPaths: GetStaticPaths<{ userId: string }> = async () => {
+  const client = initializeApollo()
+  const { data } = await client.query<GetAllUsersQuery, GetAllUsersQueryVariables>({
+    query: GetAllUsersDocument,
+  })
+
+  const paths = data.users.map((user) => {
+    return { params: { userId: user.display_id } }
+  })
+
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
+
 export default UserPostListPage
 
 gql`
@@ -106,7 +117,26 @@ gql`
         image
         gender
         updated_at
+        comments_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+        likes_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
       }
+    }
+  }
+`
+
+gql`
+  query GetAllUsers {
+    users {
+      id
+      display_id
     }
   }
 `
