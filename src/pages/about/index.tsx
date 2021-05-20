@@ -203,7 +203,7 @@ const AboutPage: NextPage<Props> = (props: Props) => {
           direction={{ base: 'column', lg: 'row' }}
           align="center"
         >
-          <NextImage src="/macbook.png" alt="macbookのモック" width={500} height={330} />
+          <NextImage src="/macbook3.png" alt="macbookのモック" width={500} height={330} />
           <Box maxW="400px">
             <Text
               color="gray.600"

@@ -1,4 +1,6 @@
-# [kiraku](https://kiraku.app/about)
+![image](https://user-images.githubusercontent.com/65433193/118914582-77a46f80-b966-11eb-89e9-8ccecd2d2d52.png)
+
+<h2 align="center"><a href="https://kiraku.app/about">Kiraku</a></h2>
 
 **(※現在開発中)**
 
