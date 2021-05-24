@@ -26,6 +26,7 @@ const ImageArea: VFC<ImageAreaProps> = (props: ImageAreaProps) => {
           type="file"
           display="none"
           id="photo"
+          accept="image/*"
           onChange={(e) => {
             handleChangeFile(e)
           }}

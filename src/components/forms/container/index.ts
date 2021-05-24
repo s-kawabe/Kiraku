@@ -1,3 +1,3 @@
 export { LoginForm } from './LoginForm'
-export { PasswordChangeForm } from './PasswordChangeForm'
+export { ProfileCangeForm } from './ProfileCangeForm'
 export { SignupForm } from './SignupForm'

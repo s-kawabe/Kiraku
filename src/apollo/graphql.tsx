@@ -7070,6 +7070,24 @@ export type ReactiveVarGetUserQuery = (
   )> }
 );
 
+export type UpdateUserProfileMutationVariables = Exact<{
+  id: Scalars['String'];
+  name: Scalars['String'];
+  displayId: Scalars['String'];
+  profile?: Maybe<Scalars['String']>;
+  gender: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateUserProfileMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_users_one?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'name' | 'display_id' | 'profile' | 'gender' | 'image'>
+  )> }
+);
+
 export type InsertPostOneMutationVariables = Exact<{
   user_id: Scalars['String'];
   content: Scalars['String'];
@@ -8323,6 +8341,52 @@ export function useReactiveVarGetUserLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ReactiveVarGetUserQueryHookResult = ReturnType<typeof useReactiveVarGetUserQuery>;
 export type ReactiveVarGetUserLazyQueryHookResult = ReturnType<typeof useReactiveVarGetUserLazyQuery>;
 export type ReactiveVarGetUserQueryResult = ApolloReactCommon.QueryResult<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>;
+export const UpdateUserProfileDocument = gql`
+    mutation UpdateUserProfile($id: String!, $name: String!, $displayId: String!, $profile: String, $gender: String!, $image: String) {
+  insert_users_one(
+    object: {id: $id, name: $name, display_id: $displayId, profile: $profile, gender: $gender, image: $image}
+    on_conflict: {constraint: users_pkey, update_columns: [name, display_id, profile, gender, updated_at, image]}
+  ) {
+    id
+    name
+    display_id
+    profile
+    gender
+    image
+  }
+}
+    `;
+export type UpdateUserProfileMutationFn = ApolloReactCommon.MutationFunction<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
+
+/**
+ * __useUpdateUserProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserProfileMutation, { data, loading, error }] = useUpdateUserProfileMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      displayId: // value for 'displayId'
+ *      profile: // value for 'profile'
+ *      gender: // value for 'gender'
+ *      image: // value for 'image'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>(UpdateUserProfileDocument, options);
+      }
+export type UpdateUserProfileMutationHookResult = ReturnType<typeof useUpdateUserProfileMutation>;
+export type UpdateUserProfileMutationResult = ApolloReactCommon.MutationResult<UpdateUserProfileMutation>;
+export type UpdateUserProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
 export const InsertPostOneDocument = gql`
     mutation InsertPostOne($user_id: String!, $content: String!, $image: String, $image_id: String, $gender: String!) {
   insert_posts_one(

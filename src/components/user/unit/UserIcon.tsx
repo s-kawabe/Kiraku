@@ -4,7 +4,7 @@ import type { VFC } from 'react'
 import { NextImage } from '@/components/common/unit/NextImage'
 
 export type UserIconProps = {
-  src: string
+  src?: string | null
   width: number
   height: number
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void
@@ -19,7 +19,12 @@ const UserIcon: VFC<UserIconProps> = (props: UserIconProps) => {
       onClick={props.onClick}
       cursor="pointer"
     >
-      <NextImage src={props.src} alt="ユーザアイコン" width={props.width} height={props.height} />
+      <NextImage
+        src={props.src ?? '/nouser.svg'}
+        alt="ユーザアイコン"
+        width={props.width}
+        height={props.height}
+      />
     </Circle>
   )
 }

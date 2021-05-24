@@ -1,5 +1,6 @@
 import { useReactiveVar } from '@apollo/client'
 import { Alert, AlertIcon, Box, Button, Center, Stack, Text, VStack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import type { VFC } from 'react'
 
 import { loginUserVar } from '@/apollo/cache'
@@ -13,10 +14,14 @@ type Props = {
 }
 
 const Profile: VFC<Props> = (props: Props) => {
+  const router = useRouter()
   const loginUser = useReactiveVar(loginUserVar)
   const isPC = useIsDesktop('840px')
   const isMine = loginUser && loginUser.display_id === props.user.display_id
   const createdAt = useConvertDayFromHasura(props.user.created_at)
+
+  // useEffect 編集直後を考慮して自分自身のページならCSRする
+
   return (
     <Center
       pt={['40px', '60px']}
@@ -73,6 +78,9 @@ const Profile: VFC<Props> = (props: Props) => {
               fontWeight="normal"
               boxShadow="md"
               w="126px"
+              onClick={() => {
+                router.push('/account/profile')
+              }}
             >
               プロフィール編集
             </Button>
