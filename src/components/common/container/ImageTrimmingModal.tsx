@@ -22,6 +22,7 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   setImage: Dispatch<SetStateAction<string | null>>
+  setBlobImage: Dispatch<SetStateAction<Blob | null>>
 }
 
 const initialCrop: ReactCrop.Crop = {
@@ -35,6 +36,7 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
   const [image, setImage] = useState<HTMLImageElement | null>(null)
   const [crop, setCrop] = useState(initialCrop)
   const [croppedImageUrl, setCroppedImageUrl] = useState('')
+  const [blobedImage, setBlobedImage] = useState<Blob | null>(null)
 
   const resetState = () => {
     setSrc(null)
@@ -49,7 +51,6 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      console.log('start onSelectFile', e.target.files[0])
       const reader = new FileReader()
       reader.addEventListener('load', () => {
         if (typeof reader.result === 'string') setSrc(reader.result)
@@ -59,29 +60,22 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
   }
 
   const onImageLoaded = (image: HTMLImageElement) => {
-    console.log('start onImageLoaded', image)
     setImage(image)
   }
 
-  const onCropComplete = (crop: ReactCrop.Crop) => {
-    console.log('start onCropComplete', crop)
-    makeClientCrop()
-  }
-
   const onCropChange = (crop: ReactCrop.Crop) => {
-    console.log('start onCropChange', crop)
     setCrop(crop)
   }
 
   const makeClientCrop = async () => {
-    const croppedImageUrl = await getCroppedImg()
-    if (croppedImageUrl) {
-      console.log('set croppedImageUrl', croppedImageUrl)
-      setCroppedImageUrl(croppedImageUrl)
+    const ret = await getCroppedImg()
+    if (ret) {
+      setCroppedImageUrl(ret.fileUrl)
+      setBlobedImage(ret.blob)
     }
   }
 
-  const getCroppedImg = (): Promise<string> | undefined => {
+  const getCroppedImg = (): Promise<{ fileUrl: string; blob: Blob }> | undefined => {
     if (
       crop.height !== undefined &&
       crop.width !== undefined &&
@@ -118,7 +112,7 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
               return
             }
             const fileUrl = window.URL.createObjectURL(blob)
-            resolve(fileUrl)
+            resolve({ fileUrl, blob })
           }, 'image/jpeg')
         })
       }
@@ -128,6 +122,7 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
   const onDone = () => {
     // croppedUrlをsetImageしてモーダルを閉じる
     props.setImage(croppedImageUrl)
+    props.setBlobImage(blobedImage)
     wrapperOnClose()
   }
 
@@ -165,7 +160,7 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
                 crop={crop}
                 ruleOfThirds
                 onImageLoaded={onImageLoaded}
-                onComplete={onCropComplete}
+                onComplete={makeClientCrop}
                 onChange={onCropChange}
               />
             ) : (
