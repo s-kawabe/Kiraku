@@ -7,7 +7,7 @@ const UserProfileEditPage = () => {
   return (
     <LayoutWithHead title="プロフィール変更">
       <>
-        <Center h={['800px', 'calc(100vh - 150px)']} bg="#EDEDED">
+        <Center py="50px" bg="#EDEDED">
           <VStack>
             <Heading color="gray.700" size="md" mb="30px">
               アカウント設定
