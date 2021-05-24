@@ -1,4 +1,3 @@
-
 ![Videotogif (1)](https://user-images.githubusercontent.com/65433193/118928788-a7f80800-b97e-11eb-958e-e40e1098af2f.gif)
 
 <br/>
@@ -28,8 +27,8 @@
   <a href="https://jestjs.io/ja/"><img src="https://user-images.githubusercontent.com/65433193/118944023-265ca600-b98f-11eb-83d8-5635a4f69b9a.png" height="60px;" /></a>
 </p>
 
-
 ## URL
+
 [App URL](https://kiraku.app/about)
 
 [Storybook URL](s-kawabe.github.io/Kiraku)
@@ -38,15 +37,14 @@
 
 <br/>
 
-## Technologies
+## Concept
 
+<br/>
+
+## Technologies
 
 <br/>
 
 ## Functions
-<br/>
 
-## Efforts
 <br/>
-
-## Ingenuities
