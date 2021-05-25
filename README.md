@@ -136,6 +136,10 @@ GraphQLのSubscriptionsを用いて実装。
 ④ ワイヤーフレーム、デザインカンプを作成(Figmaで作成、今回はデザインカンプのみ)<br />
 ⑤ 作ったUIモデルやワイヤーから必要なデータを考えER図を作成(draw.ioを使用)<br />
 
+### ER図
+![ERのコピー](https://user-images.githubusercontent.com/65433193/119488716-d1a59a80-bd95-11eb-9e31-3c20d9d04850.jpg)
+
+
 ### 苦労した点、悩んだ点
 - 全ページフルレスポンシブ対応
 - オブジェクト指向UIを意識したデザイン
