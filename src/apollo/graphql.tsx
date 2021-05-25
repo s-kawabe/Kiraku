@@ -6754,6 +6754,8 @@ export enum UsersConstraint {
   /** unique or primary key constraint */
   USERS_DISPLAY_ID_ID_KEY = 'users_display_id_id_key',
   /** unique or primary key constraint */
+  USERS_DISPLAY_ID_KEY = 'users_display_id_key',
+  /** unique or primary key constraint */
   USERS_PKEY = 'users_pkey'
 }
 
@@ -7866,6 +7868,25 @@ export type GetAllBlogQuery = (
         & Pick<BlogLikesAggregateFields, 'count'>
       )> }
     ) }
+  )> }
+);
+
+export type GetFollowUserContentsQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetFollowUserContentsQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'image' | 'gender' | 'content' | 'created_at'>
+  )>, blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+  )>, users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
   )> }
 );
 
@@ -10131,6 +10152,62 @@ export function useGetAllBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type GetAllBlogQueryHookResult = ReturnType<typeof useGetAllBlogQuery>;
 export type GetAllBlogLazyQueryHookResult = ReturnType<typeof useGetAllBlogLazyQuery>;
 export type GetAllBlogQueryResult = ApolloReactCommon.QueryResult<GetAllBlogQuery, GetAllBlogQueryVariables>;
+export const GetFollowUserContentsDocument = gql`
+    query GetFollowUserContents($id: String!) {
+  posts(where: {user: {relation_user_to: {user_id: {_eq: $id}}}}) {
+    id
+    user_id
+    image
+    gender
+    content
+    created_at
+  }
+  blogs(where: {user: {relation_user_to: {user_id: {_eq: $id}}}}) {
+    id
+    title
+    content
+    gender
+    created_at
+  }
+  users(where: {relation_user_to: {user_id: {_eq: $id}}}) {
+    id
+    display_id
+    name
+    profile
+    gender
+    image
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetFollowUserContentsQuery__
+ *
+ * To run a query within a React component, call `useGetFollowUserContentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFollowUserContentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFollowUserContentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetFollowUserContentsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetFollowUserContentsQuery, GetFollowUserContentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetFollowUserContentsQuery, GetFollowUserContentsQueryVariables>(GetFollowUserContentsDocument, options);
+      }
+export function useGetFollowUserContentsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetFollowUserContentsQuery, GetFollowUserContentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetFollowUserContentsQuery, GetFollowUserContentsQueryVariables>(GetFollowUserContentsDocument, options);
+        }
+export type GetFollowUserContentsQueryHookResult = ReturnType<typeof useGetFollowUserContentsQuery>;
+export type GetFollowUserContentsLazyQueryHookResult = ReturnType<typeof useGetFollowUserContentsLazyQuery>;
+export type GetFollowUserContentsQueryResult = ApolloReactCommon.QueryResult<GetFollowUserContentsQuery, GetFollowUserContentsQueryVariables>;
 export const Top10TopicAndBrandDocument = gql`
     query Top10TopicAndBrand {
   topics(limit: 20, order_by: {post_topics_aggregate: {count: desc}}) {
