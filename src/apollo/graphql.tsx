@@ -7881,9 +7881,41 @@ export type GetFollowUserContentsQuery = (
   & { posts: Array<(
     { __typename?: 'posts' }
     & Pick<Posts, 'id' | 'user_id' | 'image' | 'gender' | 'content' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'post_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_comments_aggregate_fields' }
+        & Pick<PostCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ) }
   )>, blogs: Array<(
     { __typename?: 'blogs' }
     & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'blog_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_comments_aggregate_fields' }
+        & Pick<BlogCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ) }
   )>, users: Array<(
     { __typename?: 'users' }
     & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
@@ -10161,6 +10193,22 @@ export const GetFollowUserContentsDocument = gql`
     gender
     content
     created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
   }
   blogs(where: {user: {relation_user_to: {user_id: {_eq: $id}}}}) {
     id
@@ -10168,6 +10216,22 @@ export const GetFollowUserContentsDocument = gql`
     content
     gender
     created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
   }
   users(where: {relation_user_to: {user_id: {_eq: $id}}}) {
     id
