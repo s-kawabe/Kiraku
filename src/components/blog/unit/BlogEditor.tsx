@@ -76,7 +76,7 @@ const BlogEditor: VFC<Props> = (props: Props) => {
       boxShadow="0 6px 18px rgba(100,100,100,0.1)"
       p="30px"
       borderRadius="10px"
-      fontSize={['18px', '20px']}
+      fontSize={['16px', '16px', '18px', '20px']}
       lineHeight="1.8"
       color="gray.700"
       pb="250px"
