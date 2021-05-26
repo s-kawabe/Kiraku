@@ -316,9 +316,9 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
 
             {/* blog content */}
             <Box
-              w={['90vw', '70vw']}
+              w={['90vw', '90vw', '90vw', '80vw', '70vw']}
               minH="40vh"
-              p={['0px', '40px']}
+              p={['10px', '20px', '40px']}
               my="50px"
               mx="auto"
               lineHeight="1.8"
@@ -326,7 +326,7 @@ const UserBlogPage: NextPage<Props> = (props: Props) => {
               css={[hiddenToolBar, headingReset]}
               color="gray.700"
               shadow="md"
-              fontSize={['18px', '20px']}
+              fontSize={['15px', '16px', '18px', '20px']}
             >
               <Editor
                 editorState={content}

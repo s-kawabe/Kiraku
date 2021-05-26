@@ -107,8 +107,8 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
                     w={['45px', '50px']}
                     h={['45px', '50px']}
                     zIndex="2"
-                    bottom={['90px', '120px']}
-                    right={['30px', '60px']}
+                    bottom={['30px', '60px']}
+                    right={['90px', '120px']}
                     boxShadow="1px 1px 10px rgba(30,30,30,0.3)"
                   />
                   <PostButtonMenu />
