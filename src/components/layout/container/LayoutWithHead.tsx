@@ -2,6 +2,7 @@ import { useReactiveVar } from '@apollo/client'
 import { AddIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { Box, Flex, IconButton, Menu, MenuButton, useDisclosure } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import type { FC } from 'react'
 
 import { sideMenuVar } from '@/apollo/cache'
@@ -22,13 +23,14 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
   const isLargerThan1280 = useIsDesktop('1280px')
   const loginUser = useReactiveVar(loginUserVar)
   const sideMenuContext = useReactiveVar(sideMenuVar)
+  const router = useRouter()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
-  const ogUrl = 'https://kiraku.app'
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
+  const ogUrl = `https://${process.env.VERCEL_URL ?? 'localhost:3000'}`
 
   return (
     <>
@@ -40,17 +42,17 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta name="robots" content="follow, index" />
         <meta name="description" content={description} />
-        <meta property="og:url" content={ogUrl} />
+        <meta property="og:url" content={`${ogUrl}${router.asPath}`} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Kiraku" />
         <meta property="og:description" content={description} />
         <meta property="og:title" content={pageTitle} />
-        <meta property="og:image" content={`${ogUrl}/og.png`} />
+        <meta property="og:image" content={'${ogUrl}/og.jpg'} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@shin_k_2281" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${ogUrl}/og.png`} />
+        <meta name="twitter:image" content={`${ogUrl}/og.jpg`} />
       </Head>
 
       <Header user={loginUser} />
