@@ -1,8 +1,29 @@
 import { gql } from '@apollo/client'
+import { Center, VStack } from '@chakra-ui/react'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
+
+import { IconHeading } from '@/components/common/unit'
+import { LayoutWithHead } from '@/components/layout/container'
 
 const SearchPage: NextPage = () => {
-  return <div>this is search result page</div>
+  const router = useRouter()
+  const { word } = router.query
+
+  return (
+    <LayoutWithHead title={`「${word}」の検索結果`} sideMenu>
+      <Center pt="10px" my="40px">
+        <VStack spacing="10">
+          <IconHeading
+            type="search"
+            text={`${word as string}の検索結果`}
+            color="gray.500"
+            size="lg"
+          />
+        </VStack>
+      </Center>
+    </LayoutWithHead>
+  )
 }
 
 export default SearchPage
