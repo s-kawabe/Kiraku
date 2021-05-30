@@ -29,7 +29,7 @@ const base = css`
 `
 
 const App = (props: AppProps) => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(typeof window !== undefined ? true : false)
   const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
   const loginUser = useReactiveVar(loginUserVar)
 
