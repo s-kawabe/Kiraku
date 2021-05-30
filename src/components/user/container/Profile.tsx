@@ -54,7 +54,9 @@ const Profile: VFC<Props> = (props: Props) => {
             </Text>
             <Box h="170px">
               <Text color="gray.700" fontSize="15px">
-                {props.user.profile ?? (
+                {props.user.profile ? (
+                  <Text whiteSpace="pre-wrap">{props.user.profile}</Text>
+                ) : (
                   <Alert
                     status="info"
                     fontSize="14px"
