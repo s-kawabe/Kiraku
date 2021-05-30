@@ -6,15 +6,10 @@ import reset from 'emotion-reset'
 import type { AppProps } from 'next/app'
 import { useEffect, useState } from 'react'
 
-import { loginUserVar, sideMenuVar } from '@/apollo/cache'
+import { loginUserVar } from '@/apollo/cache'
 import { useApollo } from '@/apollo/client'
-import type {
-  ReactiveVarGetUserQuery,
-  ReactiveVarGetUserQueryVariables,
-  Top10TopicAndBrandQuery,
-  Top10TopicAndBrandQueryVariables,
-} from '@/apollo/graphql'
-import { ReactiveVarGetUserDocument, Top10TopicAndBrandDocument } from '@/apollo/graphql'
+import type { ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables } from '@/apollo/graphql'
+import { ReactiveVarGetUserDocument } from '@/apollo/graphql'
 import { ChakraWrapper } from '@/chakra/ChakraWrapper'
 import { auth } from '@/firebase/firebaseConfig'
 
@@ -55,26 +50,27 @@ const App = (props: AppProps) => {
       }
     })
 
-    const sideMenuContext = sideMenuVar()
-    if (!sideMenuContext) {
-      client
-        .query<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>({
-          query: Top10TopicAndBrandDocument,
-        })
-        .then((data) => {
-          sideMenuVar(data.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
+    // サイドバーに表示する人気のトピックスとブランド取得
+    // client
+    //   .query<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>({
+    //     query: Top10TopicAndBrandDocument,
+    //   })
+    //   .then((data) => {
+    //     sideMenuVar(data.data)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    setIsLoading(false)
-  })
+    if (props.pageProps) {
+      setIsLoading(false)
+    }
+  }, [props.pageProps])
 
   return (
     <>

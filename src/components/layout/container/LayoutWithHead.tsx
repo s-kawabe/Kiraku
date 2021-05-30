@@ -1,15 +1,6 @@
 import { useReactiveVar } from '@apollo/client'
 import { AddIcon, HamburgerIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Center,
-  Flex,
-  IconButton,
-  Menu,
-  MenuButton,
-  Spinner,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Box, Flex, IconButton, Menu, MenuButton, useDisclosure } from '@chakra-ui/react'
 import Head from 'next/head'
 import type { FC } from 'react'
 
@@ -67,12 +58,8 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
         <Flex position="relative">
           {isLargerThan1280 ? (
             <Box borderRight="1px" borderColor="gray.100">
-              {sideMenuContext ? (
+              {sideMenuContext && (
                 <AsideContextList topics={sideMenuContext.topics} brands={sideMenuContext.brands} />
-              ) : (
-                <Center mt="30px" h="100vh" w="100vw">
-                  <Spinner />
-                </Center>
               )}
             </Box>
           ) : (
