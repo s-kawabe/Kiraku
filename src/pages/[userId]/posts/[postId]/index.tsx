@@ -197,6 +197,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   w={['330px', '430px']}
                   h={['520px', '630px']}
                   position="relative"
+                  mx="10px"
                   borderRadius="20px"
                 >
                   {post.image ? (
@@ -221,7 +222,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 </Center>
                 {/* Topic/Brand */}
                 {post.topics.length > 0 && (
-                  <Box mt="20px">
+                  <Box mt="20px" mx="10px">
                     <Heading fontSize="18px" color="gray.600" mb="8px">
                       トピック
                     </Heading>
@@ -256,7 +257,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                   </Box>
                 )}
                 {post.brands.length > 0 && (
-                  <Box mt="20px">
+                  <Box mt="20px" mx="10px">
                     <Heading fontSize="18px" color="gray.600" mb="8px">
                       ブランド
                     </Heading>
@@ -310,7 +311,7 @@ const UserPostPage: NextPage<Props> = (props: Props) => {
                 </Box>
                 {/* Comment */}
                 <Box mb="120px">
-                  <Heading fontSize="20px" color="gray.700" mb="">
+                  <Heading fontSize="20px" color="gray.700" mx="10px">
                     コメント({data?.post_comments.length})
                   </Heading>
                   <Box mt="10px">
