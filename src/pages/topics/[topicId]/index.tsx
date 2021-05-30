@@ -43,7 +43,7 @@ type Props = {
   topics: GetTopicOneQuery['topics_by_pk']
 }
 
-const LIMIT_OFFSET = 1
+const LIMIT_OFFSET = 12
 
 const TopicPage: NextPage<Props> = (props: Props) => {
   const [postOffset, setPostOffset] = useState(LIMIT_OFFSET)
@@ -64,8 +64,6 @@ const TopicPage: NextPage<Props> = (props: Props) => {
       offset: 0,
     },
   })
-
-  console.log({ postOffset, blogOffset })
 
   // ポストの追加fetch
   const handleMoreLoadPost = async () => {
@@ -116,7 +114,6 @@ const TopicPage: NextPage<Props> = (props: Props) => {
       setPostOffset(LIMIT_OFFSET)
       setBlogOffset(LIMIT_OFFSET)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postData, blogData])
 
   return (
@@ -254,7 +251,7 @@ export const getStaticProps: GetStaticProps<{ topicId: string }> = async ({ para
       notFound: true,
     }
   }
-  return addApolloState(client, { props: { topics: data.topics_by_pk }, revalidate: 300 })
+  return addApolloState(client, { props: { topics: data.topics_by_pk }, revalidate: 30 })
 }
 
 export const getStaticPaths: GetStaticPaths<{ topicId: string }> = async () => {

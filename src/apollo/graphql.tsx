@@ -7871,19 +7871,29 @@ export type GetAllBlogQuery = (
   )> }
 );
 
-export type GetBrandWithPostAndBlogQueryVariables = Exact<{
+export type GetBrandOneQueryVariables = Exact<{
+  brandId: Scalars['Int'];
+}>;
+
+
+export type GetBrandOneQuery = (
+  { __typename?: 'query_root' }
+  & { brands_by_pk?: Maybe<(
+    { __typename?: 'brands' }
+    & Pick<Brands, 'id' | 'name'>
+  )> }
+);
+
+export type GetBrandWithPostQueryVariables = Exact<{
   brandId: Scalars['Int'];
   limit: Scalars['Int'];
   offset: Scalars['Int'];
 }>;
 
 
-export type GetBrandWithPostAndBlogQuery = (
+export type GetBrandWithPostQuery = (
   { __typename?: 'query_root' }
-  & { brands_by_pk?: Maybe<(
-    { __typename?: 'brands' }
-    & Pick<Brands, 'id' | 'name'>
-  )>, posts: Array<(
+  & { posts: Array<(
     { __typename?: 'posts' }
     & Pick<Posts, 'id' | 'image' | 'gender' | 'content' | 'created_at'>
     & { user: (
@@ -7902,7 +7912,25 @@ export type GetBrandWithPostAndBlogQuery = (
         & Pick<PostLikesAggregateFields, 'count'>
       )> }
     ) }
-  )>, blogs: Array<(
+  )>, posts_aggregate: (
+    { __typename?: 'posts_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'posts_aggregate_fields' }
+      & Pick<PostsAggregateFields, 'count'>
+    )> }
+  ) }
+);
+
+export type GetBrandWithBlogQueryVariables = Exact<{
+  brandId: Scalars['Int'];
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type GetBrandWithBlogQuery = (
+  { __typename?: 'query_root' }
+  & { blogs: Array<(
     { __typename?: 'blogs' }
     & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
     & { user: (
@@ -7921,7 +7949,13 @@ export type GetBrandWithPostAndBlogQuery = (
         & Pick<BlogLikesAggregateFields, 'count'>
       )> }
     ) }
-  )> }
+  )>, blogs_aggregate: (
+    { __typename?: 'blogs_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'blogs_aggregate_fields' }
+      & Pick<BlogsAggregateFields, 'count'>
+    )> }
+  ) }
 );
 
 export type GetFollowUserContentsQueryVariables = Exact<{
@@ -10377,12 +10411,44 @@ export function useGetAllBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type GetAllBlogQueryHookResult = ReturnType<typeof useGetAllBlogQuery>;
 export type GetAllBlogLazyQueryHookResult = ReturnType<typeof useGetAllBlogLazyQuery>;
 export type GetAllBlogQueryResult = ApolloReactCommon.QueryResult<GetAllBlogQuery, GetAllBlogQueryVariables>;
-export const GetBrandWithPostAndBlogDocument = gql`
-    query GetBrandWithPostAndBlog($brandId: Int!, $limit: Int!, $offset: Int!) {
+export const GetBrandOneDocument = gql`
+    query GetBrandOne($brandId: Int!) {
   brands_by_pk(id: $brandId) {
     id
     name
   }
+}
+    `;
+
+/**
+ * __useGetBrandOneQuery__
+ *
+ * To run a query within a React component, call `useGetBrandOneQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBrandOneQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBrandOneQuery({
+ *   variables: {
+ *      brandId: // value for 'brandId'
+ *   },
+ * });
+ */
+export function useGetBrandOneQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBrandOneQuery, GetBrandOneQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetBrandOneQuery, GetBrandOneQueryVariables>(GetBrandOneDocument, options);
+      }
+export function useGetBrandOneLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBrandOneQuery, GetBrandOneQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetBrandOneQuery, GetBrandOneQueryVariables>(GetBrandOneDocument, options);
+        }
+export type GetBrandOneQueryHookResult = ReturnType<typeof useGetBrandOneQuery>;
+export type GetBrandOneLazyQueryHookResult = ReturnType<typeof useGetBrandOneLazyQuery>;
+export type GetBrandOneQueryResult = ApolloReactCommon.QueryResult<GetBrandOneQuery, GetBrandOneQueryVariables>;
+export const GetBrandWithPostDocument = gql`
+    query GetBrandWithPost($brandId: Int!, $limit: Int!, $offset: Int!) {
   posts(
     where: {brands: {brand_id: {_eq: $brandId}}}
     limit: $limit
@@ -10410,6 +10476,45 @@ export const GetBrandWithPostAndBlogDocument = gql`
       }
     }
   }
+  posts_aggregate(where: {brands: {brand_id: {_eq: $brandId}}}) {
+    aggregate {
+      count(columns: id)
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBrandWithPostQuery__
+ *
+ * To run a query within a React component, call `useGetBrandWithPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBrandWithPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBrandWithPostQuery({
+ *   variables: {
+ *      brandId: // value for 'brandId'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetBrandWithPostQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBrandWithPostQuery, GetBrandWithPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetBrandWithPostQuery, GetBrandWithPostQueryVariables>(GetBrandWithPostDocument, options);
+      }
+export function useGetBrandWithPostLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBrandWithPostQuery, GetBrandWithPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetBrandWithPostQuery, GetBrandWithPostQueryVariables>(GetBrandWithPostDocument, options);
+        }
+export type GetBrandWithPostQueryHookResult = ReturnType<typeof useGetBrandWithPostQuery>;
+export type GetBrandWithPostLazyQueryHookResult = ReturnType<typeof useGetBrandWithPostLazyQuery>;
+export type GetBrandWithPostQueryResult = ApolloReactCommon.QueryResult<GetBrandWithPostQuery, GetBrandWithPostQueryVariables>;
+export const GetBrandWithBlogDocument = gql`
+    query GetBrandWithBlog($brandId: Int!, $limit: Int!, $offset: Int!) {
   blogs(
     where: {brands: {brand_id: {_eq: $brandId}}}
     limit: $limit
@@ -10437,20 +10542,25 @@ export const GetBrandWithPostAndBlogDocument = gql`
       }
     }
   }
+  blogs_aggregate(where: {brands: {brand_id: {_eq: $brandId}}}) {
+    aggregate {
+      count(columns: id)
+    }
+  }
 }
     `;
 
 /**
- * __useGetBrandWithPostAndBlogQuery__
+ * __useGetBrandWithBlogQuery__
  *
- * To run a query within a React component, call `useGetBrandWithPostAndBlogQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetBrandWithPostAndBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetBrandWithBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBrandWithBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetBrandWithPostAndBlogQuery({
+ * const { data, loading, error } = useGetBrandWithBlogQuery({
  *   variables: {
  *      brandId: // value for 'brandId'
  *      limit: // value for 'limit'
@@ -10458,17 +10568,17 @@ export const GetBrandWithPostAndBlogDocument = gql`
  *   },
  * });
  */
-export function useGetBrandWithPostAndBlogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>) {
+export function useGetBrandWithBlogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBrandWithBlogQuery, GetBrandWithBlogQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>(GetBrandWithPostAndBlogDocument, options);
+        return ApolloReactHooks.useQuery<GetBrandWithBlogQuery, GetBrandWithBlogQueryVariables>(GetBrandWithBlogDocument, options);
       }
-export function useGetBrandWithPostAndBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>) {
+export function useGetBrandWithBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBrandWithBlogQuery, GetBrandWithBlogQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>(GetBrandWithPostAndBlogDocument, options);
+          return ApolloReactHooks.useLazyQuery<GetBrandWithBlogQuery, GetBrandWithBlogQueryVariables>(GetBrandWithBlogDocument, options);
         }
-export type GetBrandWithPostAndBlogQueryHookResult = ReturnType<typeof useGetBrandWithPostAndBlogQuery>;
-export type GetBrandWithPostAndBlogLazyQueryHookResult = ReturnType<typeof useGetBrandWithPostAndBlogLazyQuery>;
-export type GetBrandWithPostAndBlogQueryResult = ApolloReactCommon.QueryResult<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>;
+export type GetBrandWithBlogQueryHookResult = ReturnType<typeof useGetBrandWithBlogQuery>;
+export type GetBrandWithBlogLazyQueryHookResult = ReturnType<typeof useGetBrandWithBlogLazyQuery>;
+export type GetBrandWithBlogQueryResult = ApolloReactCommon.QueryResult<GetBrandWithBlogQuery, GetBrandWithBlogQueryVariables>;
 export const GetFollowUserContentsDocument = gql`
     query GetFollowUserContents($id: String!) {
   posts(where: {user: {relation_user_to: {user_id: {_eq: $id}}}}) {
