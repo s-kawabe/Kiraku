@@ -477,6 +477,7 @@ gql`
 gql`
   query GetAllTopics {
     topics {
+      id
       name
     }
   }
@@ -486,6 +487,7 @@ gql`
 gql`
   query GetAllBrands {
     brands {
+      id
       name
     }
   }

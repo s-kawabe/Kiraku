@@ -24,7 +24,6 @@ const base = css`
 `
 
 const App = (props: AppProps) => {
-  // スケルトンローディングにするならグローバルステートとカスタムフックを用意
   const [isLoading, setIsLoading] = useState(true)
   const client: ApolloClient<NormalizedCacheObject> = useApollo(props.pageProps)
   const loginUser = useReactiveVar(loginUserVar)

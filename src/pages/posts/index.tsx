@@ -9,7 +9,7 @@ import { GetAllPostDocument, useGetAllPostQuery } from '@/apollo/graphql'
 import { LayoutWithHead, TabNavigation } from '@/components/layout/container'
 import { PostCard } from '@/components/post/container'
 
-const LIMIT_OFFSET = 10
+const LIMIT_OFFSET = 1
 
 const TopPostsPage = () => {
   const [offset, setOffset] = useState(LIMIT_OFFSET)

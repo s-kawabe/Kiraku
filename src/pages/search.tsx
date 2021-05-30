@@ -1,31 +1,26 @@
 import { gql } from '@apollo/client'
-import { useRouter } from 'next/router'
+import type { NextPage } from 'next'
 
-import { LayoutWithHead } from '@/components/layout/container'
-
-const BrandPage = () => {
-  const router = useRouter()
-  const { brandId } = router.query
-  return (
-    <LayoutWithHead title="■■ - ブランド">
-      <>
-        <p>this is /brands/brandId page brandId:{brandId}</p>
-      </>
-    </LayoutWithHead>
-  )
+const SearchPage: NextPage = () => {
+  return <div>this is search result page</div>
 }
 
-// eslint-disable-next-line import/no-default-export
-export default BrandPage
+export default SearchPage
 
 gql`
-  query GetBrandWithPostAndBlog($brandId: Int!, $limit: Int!, $offset: Int!) {
-    brands_by_pk(id: $brandId) {
+  query GetSearchResult($word: String!) {
+    users(where: { name: { _ilike: $word } }) {
       id
+      display_id
       name
+      profile
+      gender
+      image
+      created_at
     }
-    posts(where: { brands: { brand_id: { _eq: $brandId } } }, limit: $limit, offset: $offset) {
+    posts(where: { content: { _ilike: $word } }) {
       id
+      user_id
       image
       gender
       content
@@ -47,7 +42,7 @@ gql`
         }
       }
     }
-    blogs(where: { brands: { brand_id: { _eq: $brandId } } }, limit: $limit, offset: $offset) {
+    blogs(where: { title: { _like: $word } }) {
       id
       title
       content

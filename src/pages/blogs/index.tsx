@@ -87,7 +87,6 @@ const TopBlogsPage = () => {
   )
 }
 
-// eslint-disable-next-line import/no-default-export
 export default TopBlogsPage
 
 export const getStaticProps = async () => {

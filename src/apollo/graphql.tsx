@@ -7203,7 +7203,7 @@ export type GetAllTopicsQuery = (
   { __typename?: 'query_root' }
   & { topics: Array<(
     { __typename?: 'topics' }
-    & Pick<Topics, 'name'>
+    & Pick<Topics, 'id' | 'name'>
   )> }
 );
 
@@ -7214,7 +7214,7 @@ export type GetAllBrandsQuery = (
   { __typename?: 'query_root' }
   & { brands: Array<(
     { __typename?: 'brands' }
-    & Pick<Brands, 'name'>
+    & Pick<Brands, 'id' | 'name'>
   )> }
 );
 
@@ -7871,6 +7871,59 @@ export type GetAllBlogQuery = (
   )> }
 );
 
+export type GetBrandWithPostAndBlogQueryVariables = Exact<{
+  brandId: Scalars['Int'];
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type GetBrandWithPostAndBlogQuery = (
+  { __typename?: 'query_root' }
+  & { brands_by_pk?: Maybe<(
+    { __typename?: 'brands' }
+    & Pick<Brands, 'id' | 'name'>
+  )>, posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'image' | 'gender' | 'content' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'post_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_comments_aggregate_fields' }
+        & Pick<PostCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )>, blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'blog_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_comments_aggregate_fields' }
+        & Pick<BlogCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )> }
+);
+
 export type GetFollowUserContentsQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -8046,6 +8099,144 @@ export type GetAllPostQuery = (
       )> }
     ) }
   )> }
+);
+
+export type GetSearchResultQueryVariables = Exact<{
+  word: Scalars['String'];
+}>;
+
+
+export type GetSearchResultQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'display_id' | 'name' | 'profile' | 'gender' | 'image' | 'created_at'>
+  )>, posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'user_id' | 'image' | 'gender' | 'content' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'post_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_comments_aggregate_fields' }
+        & Pick<PostCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )>, blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'blog_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_comments_aggregate_fields' }
+        & Pick<BlogCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )> }
+);
+
+export type GetTopicOneQueryVariables = Exact<{
+  topicId: Scalars['Int'];
+}>;
+
+
+export type GetTopicOneQuery = (
+  { __typename?: 'query_root' }
+  & { topics_by_pk?: Maybe<(
+    { __typename?: 'topics' }
+    & Pick<Topics, 'id' | 'name'>
+  )> }
+);
+
+export type GetTopicWithPostQueryVariables = Exact<{
+  topicId: Scalars['Int'];
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type GetTopicWithPostQuery = (
+  { __typename?: 'query_root' }
+  & { posts: Array<(
+    { __typename?: 'posts' }
+    & Pick<Posts, 'id' | 'image' | 'gender' | 'content' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'post_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_comments_aggregate_fields' }
+        & Pick<PostCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'post_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'post_likes_aggregate_fields' }
+        & Pick<PostLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )>, posts_aggregate: (
+    { __typename?: 'posts_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'posts_aggregate_fields' }
+      & Pick<PostsAggregateFields, 'count'>
+    )> }
+  ) }
+);
+
+export type GetTopicWithBlogQueryVariables = Exact<{
+  topicId: Scalars['Int'];
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type GetTopicWithBlogQuery = (
+  { __typename?: 'query_root' }
+  & { blogs: Array<(
+    { __typename?: 'blogs' }
+    & Pick<Blogs, 'id' | 'title' | 'content' | 'gender' | 'created_at'>
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'display_id' | 'image' | 'name'>
+    ), comments_aggregate: (
+      { __typename?: 'blog_comments_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_comments_aggregate_fields' }
+        & Pick<BlogCommentsAggregateFields, 'count'>
+      )> }
+    ), likes_aggregate: (
+      { __typename?: 'blog_likes_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'blog_likes_aggregate_fields' }
+        & Pick<BlogLikesAggregateFields, 'count'>
+      )> }
+    ) }
+  )>, blogs_aggregate: (
+    { __typename?: 'blogs_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'blogs_aggregate_fields' }
+      & Pick<BlogsAggregateFields, 'count'>
+    )> }
+  ) }
 );
 
 export type CreateUserMutationVariables = Exact<{
@@ -8719,6 +8910,7 @@ export type EditPostOneImageNoUpdateMutationOptions = ApolloReactCommon.BaseMuta
 export const GetAllTopicsDocument = gql`
     query GetAllTopics {
   topics {
+    id
     name
   }
 }
@@ -8753,6 +8945,7 @@ export type GetAllTopicsQueryResult = ApolloReactCommon.QueryResult<GetAllTopics
 export const GetAllBrandsDocument = gql`
     query GetAllBrands {
   brands {
+    id
     name
   }
 }
@@ -10184,6 +10377,98 @@ export function useGetAllBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type GetAllBlogQueryHookResult = ReturnType<typeof useGetAllBlogQuery>;
 export type GetAllBlogLazyQueryHookResult = ReturnType<typeof useGetAllBlogLazyQuery>;
 export type GetAllBlogQueryResult = ApolloReactCommon.QueryResult<GetAllBlogQuery, GetAllBlogQueryVariables>;
+export const GetBrandWithPostAndBlogDocument = gql`
+    query GetBrandWithPostAndBlog($brandId: Int!, $limit: Int!, $offset: Int!) {
+  brands_by_pk(id: $brandId) {
+    id
+    name
+  }
+  posts(
+    where: {brands: {brand_id: {_eq: $brandId}}}
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    image
+    gender
+    content
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+  blogs(
+    where: {brands: {brand_id: {_eq: $brandId}}}
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    title
+    content
+    gender
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBrandWithPostAndBlogQuery__
+ *
+ * To run a query within a React component, call `useGetBrandWithPostAndBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBrandWithPostAndBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBrandWithPostAndBlogQuery({
+ *   variables: {
+ *      brandId: // value for 'brandId'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetBrandWithPostAndBlogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>(GetBrandWithPostAndBlogDocument, options);
+      }
+export function useGetBrandWithPostAndBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>(GetBrandWithPostAndBlogDocument, options);
+        }
+export type GetBrandWithPostAndBlogQueryHookResult = ReturnType<typeof useGetBrandWithPostAndBlogQuery>;
+export type GetBrandWithPostAndBlogLazyQueryHookResult = ReturnType<typeof useGetBrandWithPostAndBlogLazyQuery>;
+export type GetBrandWithPostAndBlogQueryResult = ApolloReactCommon.QueryResult<GetBrandWithPostAndBlogQuery, GetBrandWithPostAndBlogQueryVariables>;
 export const GetFollowUserContentsDocument = gql`
     query GetFollowUserContents($id: String!) {
   posts(where: {user: {relation_user_to: {user_id: {_eq: $id}}}}) {
@@ -10513,6 +10798,262 @@ export function useGetAllPostLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type GetAllPostQueryHookResult = ReturnType<typeof useGetAllPostQuery>;
 export type GetAllPostLazyQueryHookResult = ReturnType<typeof useGetAllPostLazyQuery>;
 export type GetAllPostQueryResult = ApolloReactCommon.QueryResult<GetAllPostQuery, GetAllPostQueryVariables>;
+export const GetSearchResultDocument = gql`
+    query GetSearchResult($word: String!) {
+  users(where: {name: {_ilike: $word}}) {
+    id
+    display_id
+    name
+    profile
+    gender
+    image
+    created_at
+  }
+  posts(where: {content: {_ilike: $word}}) {
+    id
+    user_id
+    image
+    gender
+    content
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+  blogs(where: {title: {_like: $word}}) {
+    id
+    title
+    content
+    gender
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSearchResultQuery__
+ *
+ * To run a query within a React component, call `useGetSearchResultQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSearchResultQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSearchResultQuery({
+ *   variables: {
+ *      word: // value for 'word'
+ *   },
+ * });
+ */
+export function useGetSearchResultQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetSearchResultQuery, GetSearchResultQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetSearchResultQuery, GetSearchResultQueryVariables>(GetSearchResultDocument, options);
+      }
+export function useGetSearchResultLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSearchResultQuery, GetSearchResultQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetSearchResultQuery, GetSearchResultQueryVariables>(GetSearchResultDocument, options);
+        }
+export type GetSearchResultQueryHookResult = ReturnType<typeof useGetSearchResultQuery>;
+export type GetSearchResultLazyQueryHookResult = ReturnType<typeof useGetSearchResultLazyQuery>;
+export type GetSearchResultQueryResult = ApolloReactCommon.QueryResult<GetSearchResultQuery, GetSearchResultQueryVariables>;
+export const GetTopicOneDocument = gql`
+    query GetTopicOne($topicId: Int!) {
+  topics_by_pk(id: $topicId) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetTopicOneQuery__
+ *
+ * To run a query within a React component, call `useGetTopicOneQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTopicOneQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTopicOneQuery({
+ *   variables: {
+ *      topicId: // value for 'topicId'
+ *   },
+ * });
+ */
+export function useGetTopicOneQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetTopicOneQuery, GetTopicOneQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetTopicOneQuery, GetTopicOneQueryVariables>(GetTopicOneDocument, options);
+      }
+export function useGetTopicOneLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTopicOneQuery, GetTopicOneQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetTopicOneQuery, GetTopicOneQueryVariables>(GetTopicOneDocument, options);
+        }
+export type GetTopicOneQueryHookResult = ReturnType<typeof useGetTopicOneQuery>;
+export type GetTopicOneLazyQueryHookResult = ReturnType<typeof useGetTopicOneLazyQuery>;
+export type GetTopicOneQueryResult = ApolloReactCommon.QueryResult<GetTopicOneQuery, GetTopicOneQueryVariables>;
+export const GetTopicWithPostDocument = gql`
+    query GetTopicWithPost($topicId: Int!, $limit: Int!, $offset: Int!) {
+  posts(
+    where: {topics: {topic_id: {_eq: $topicId}}}
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    image
+    gender
+    content
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+  posts_aggregate(where: {topics: {topic_id: {_eq: $topicId}}}) {
+    aggregate {
+      count(columns: id)
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTopicWithPostQuery__
+ *
+ * To run a query within a React component, call `useGetTopicWithPostQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTopicWithPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTopicWithPostQuery({
+ *   variables: {
+ *      topicId: // value for 'topicId'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetTopicWithPostQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetTopicWithPostQuery, GetTopicWithPostQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetTopicWithPostQuery, GetTopicWithPostQueryVariables>(GetTopicWithPostDocument, options);
+      }
+export function useGetTopicWithPostLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTopicWithPostQuery, GetTopicWithPostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetTopicWithPostQuery, GetTopicWithPostQueryVariables>(GetTopicWithPostDocument, options);
+        }
+export type GetTopicWithPostQueryHookResult = ReturnType<typeof useGetTopicWithPostQuery>;
+export type GetTopicWithPostLazyQueryHookResult = ReturnType<typeof useGetTopicWithPostLazyQuery>;
+export type GetTopicWithPostQueryResult = ApolloReactCommon.QueryResult<GetTopicWithPostQuery, GetTopicWithPostQueryVariables>;
+export const GetTopicWithBlogDocument = gql`
+    query GetTopicWithBlog($topicId: Int!, $limit: Int!, $offset: Int!) {
+  blogs(
+    where: {topics: {topic_id: {_eq: $topicId}}}
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    title
+    content
+    gender
+    created_at
+    user {
+      id
+      display_id
+      image
+      name
+    }
+    comments_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count(columns: id)
+      }
+    }
+  }
+  blogs_aggregate(where: {topics: {topic_id: {_eq: $topicId}}}) {
+    aggregate {
+      count(columns: id)
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTopicWithBlogQuery__
+ *
+ * To run a query within a React component, call `useGetTopicWithBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTopicWithBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTopicWithBlogQuery({
+ *   variables: {
+ *      topicId: // value for 'topicId'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetTopicWithBlogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<GetTopicWithBlogQuery, GetTopicWithBlogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<GetTopicWithBlogQuery, GetTopicWithBlogQueryVariables>(GetTopicWithBlogDocument, options);
+      }
+export function useGetTopicWithBlogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTopicWithBlogQuery, GetTopicWithBlogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<GetTopicWithBlogQuery, GetTopicWithBlogQueryVariables>(GetTopicWithBlogDocument, options);
+        }
+export type GetTopicWithBlogQueryHookResult = ReturnType<typeof useGetTopicWithBlogQuery>;
+export type GetTopicWithBlogLazyQueryHookResult = ReturnType<typeof useGetTopicWithBlogLazyQuery>;
+export type GetTopicWithBlogQueryResult = ApolloReactCommon.QueryResult<GetTopicWithBlogQuery, GetTopicWithBlogQueryVariables>;
 export const CreateUserDocument = gql`
     mutation createUser($id: String!, $display_id: String!, $email: String!, $name: String!, $image: String) {
   insert_users_one(
