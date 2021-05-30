@@ -15,9 +15,6 @@ import type { FC } from 'react'
 
 import { sideMenuVar } from '@/apollo/cache'
 import { loginUserVar } from '@/apollo/cache'
-import { initializeApollo } from '@/apollo/client'
-import type { Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables } from '@/apollo/graphql'
-import { Top10TopicAndBrandDocument } from '@/apollo/graphql'
 import { Footer, Header } from '@/components/layout/container'
 import { AsideContextList, SidebarDrawer } from '@/components/layout/container'
 import { PostButtonMenu } from '@/components/user/container'
@@ -31,24 +28,11 @@ type Props = {
 }
 
 const LayoutWithHead: FC<Props> = (props: Props) => {
-  // const [sideMenuContext, setSideMenuContext] = useState<SideMenu>(null)
   const isLargerThan1280 = useIsDesktop('1280px')
   const loginUser = useReactiveVar(loginUserVar)
   const sideMenuContext = useReactiveVar(sideMenuVar)
-  const client = initializeApollo()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  client
-    .query<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>({
-      query: Top10TopicAndBrandDocument,
-    })
-    .then((data) => {
-      sideMenuVar(data.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
   const ogUrl = `https://kiraku.app`
