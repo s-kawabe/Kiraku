@@ -22,7 +22,7 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   setImage: Dispatch<SetStateAction<string | null>>
-  setBlobImage: Dispatch<SetStateAction<Blob | null>>
+  setUploadImage: Dispatch<SetStateAction<Blob | string | null>>
 }
 
 const initialCrop: ReactCrop.Crop = {
@@ -122,7 +122,7 @@ const ImageTrimmingModal: VFC<Props> = (props: Props) => {
   const onDone = () => {
     // croppedUrlをsetImageしてモーダルを閉じる
     props.setImage(croppedImageUrl)
-    props.setBlobImage(blobedImage)
+    props.setUploadImage(blobedImage)
     wrapperOnClose()
   }
 
