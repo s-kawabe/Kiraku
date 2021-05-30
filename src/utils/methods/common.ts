@@ -15,9 +15,11 @@ export const chapeCommentData = (data: BlogComments[] | undefined) => {
 }
 
 export const getOneMonthBeforeDate = () => {
-  const today = new Date()
-  const year = today.getFullYear()
-  const oneBeforeMonth = today.getMonth()
-  const date = today.getDate()
+  const dateData = new Date()
+  dateData.setDate(dateData.getDate() - 30)
+
+  const year = dateData.getFullYear()
+  const oneBeforeMonth = dateData.getMonth() + 1
+  const date = dateData.getDate()
   return `${year}-${oneBeforeMonth}-${date}`
 }

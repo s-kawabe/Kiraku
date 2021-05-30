@@ -254,6 +254,7 @@ const Home: NextPage<Props> = (props: Props) => {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const client = initializeApollo()
+  console.log(getOneMonthBeforeDate())
   // 人気のtopicとbrand上位２０件を取得
   await client.query<Top10TopicAndBrandQuery, Top10TopicAndBrandQueryVariables>({
     query: Top10TopicAndBrandDocument,
