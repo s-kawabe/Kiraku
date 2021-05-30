@@ -50,7 +50,7 @@ const profileChangeSchema = yup.object().shape({
 
 const ProfileCangeForm: VFC = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null)
-  const [blobImage, setBlobImage] = useState<Blob | null>(null)
+  const [uploadImage, setUploadImage] = useState<Blob | string | null>(null)
   const [isIdDuplicateError, setIsIdDuplicateError] = useState(false)
   const [gender, setGender] = useState<Gender>('ALL')
   const loginUser = useReactiveVar(loginUserVar)
@@ -68,13 +68,15 @@ const ProfileCangeForm: VFC = () => {
 
   const onSubmit = async (data: FormType) => {
     let url = null
-    if (blobImage) {
-      url = await uploadProfileImage(blobImage)
+    if (uploadImage && typeof uploadImage === 'string') {
+      url = uploadImage
+    } else if (uploadImage && typeof uploadImage !== 'string') {
+      url = await uploadProfileImage(uploadImage)
     }
 
     try {
       if (loginUser) {
-        console.log({ name: data.name, id: data.id, profile: data.profile, blobImage, gender })
+        console.log({ name: data.name, id: data.id, profile: data.profile, uploadImage, gender })
         await client.mutate<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>({
           mutation: UpdateUserProfileDocument,
           variables: {
@@ -97,6 +99,7 @@ const ProfileCangeForm: VFC = () => {
   useEffect(() => {
     if (loginUser) {
       setGender((loginUser.gender ?? 'ALL') as Gender)
+      setUploadImage(loginUser.image ?? null)
       setValue('name', loginUser.name)
       setValue('id', loginUser.display_id)
       setValue('profile', loginUser.profile)
@@ -141,7 +144,7 @@ const ProfileCangeForm: VFC = () => {
             isOpen={isOpen}
             onClose={onClose}
             setImage={setPreviewImage}
-            setBlobImage={setBlobImage}
+            setUploadImage={setUploadImage}
           />
 
           <VStack spacing="8" w="100%" alignItems="flex-start">
