@@ -98,11 +98,13 @@ const App = (props: AppProps) => {
             <meta content="width=device-width, initial-scale=1" name="viewport" />
             <meta name="robots" content="follow, index" />
             <meta name="description" content={description} />
+            <meta property="og:title" content={'Kiraku | "着"楽にファッション。'} />
             <meta property="og:url" content={ogUrl} />
             <meta property="og:type" content="website" />
             <meta property="og:site_name" content="Kiraku" />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={`${ogUrl}/og.png`} />
+            <meta name="twitter:title" content={'Kiraku | "着"楽にファッション。'} />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@shin_k_2281" />
             <meta name="twitter:description" content={description} />

@@ -31,8 +31,6 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
     <>
       <Head>
         <title>{pageTitle}</title>
-        <meta name="twitter:title" content={pageTitle} />
-        <meta property="og:title" content={pageTitle} />
       </Head>
 
       <Header user={loginUser} />
