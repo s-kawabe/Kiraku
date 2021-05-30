@@ -65,8 +65,6 @@ const BrandPage: NextPage<Props> = (props: Props) => {
     },
   })
 
-  console.log({ postData, blogData })
-
   // ポストの追加fetch
   const handleMoreLoadPost = async () => {
     setPostOffset((p) => {

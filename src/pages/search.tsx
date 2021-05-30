@@ -38,8 +38,6 @@ const SearchPage: NextPage = () => {
     },
   })
 
-  console.log(data)
-
   // queryパラメータが存在しない場合トップに戻す
   useEffect(() => {
     if (word == undefined) {

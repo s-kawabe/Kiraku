@@ -35,7 +35,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const pageTitle = props.title ? `${props.title} | Kiraku` : 'Kiraku | "着"楽にファッション。'
-  const ogUrl = `https://kiraku.app`
+  const ogUrl = 'https://kiraku.app'
   const description =
     'ファッション共有SNS「Kiraku」では、お気に入りのファッションアイテムやコーディネートを誰でも気楽に投稿できます。もっと楽しみたい方は、ファッションに関するブログも書くことができます。'
 

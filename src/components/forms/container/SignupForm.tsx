@@ -73,7 +73,6 @@ const SignupForm: VFC = () => {
             name: data.username,
           })
           // グローバルステートにユーザ情報格納
-          console.log('API response:', resdata.data)
           loginUserVar(resdata.data.body.data.insert_users_one)
           router.push('/')
         }

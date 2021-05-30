@@ -48,7 +48,6 @@ const usersLoginAction = async (credential: firebase.auth.UserCredential) => {
   if (user) {
     // Google/Twitterによる初回ログインの場合はsignup処理
     if (credential.additionalUserInfo?.isNewUser) {
-      console.log('GoogleかTwitterで初回ログイン')
       const resdata = await axios.post<SignupReturn>(SIGNUP_API, {
         id: user.uid,
         email: user.email,
@@ -57,7 +56,6 @@ const usersLoginAction = async (credential: firebase.auth.UserCredential) => {
       })
       loginUserVar(resdata.data.body.data.insert_users_one)
     } else {
-      console.log('初回ログインじゃない')
       const resdata = await client.query<ReactiveVarGetUserQuery, ReactiveVarGetUserQueryVariables>(
         {
           query: ReactiveVarGetUserDocument,

@@ -32,7 +32,6 @@ const AboutPage: NextPage<Props> = (props: Props) => {
   const router = useRouter()
   const isPC = useIsDesktop('1280px')
   const { post, blog, show } = ABOUT_CARD_TEXT
-  console.log(props)
 
   const isClient = () => {
     return typeof window !== 'undefined'
@@ -308,7 +307,6 @@ const AboutPage: NextPage<Props> = (props: Props) => {
   )
 }
 
-// eslint-disable-next-line import/no-default-export
 export default AboutPage
 
 // 一番最近投稿されたpostとblogを数件取得する (limit post10 blog9)

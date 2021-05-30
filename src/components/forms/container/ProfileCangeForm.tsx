@@ -76,7 +76,6 @@ const ProfileCangeForm: VFC = () => {
 
     try {
       if (loginUser) {
-        console.log({ name: data.name, id: data.id, profile: data.profile, uploadImage, gender })
         await client.mutate<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>({
           mutation: UpdateUserProfileDocument,
           variables: {

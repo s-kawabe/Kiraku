@@ -66,7 +66,6 @@ const ProfileTab: VFC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (!loading) {
-      console.log(data)
       const user = data?.users[0]
       if (user) {
         setUserInfo({

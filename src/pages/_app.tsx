@@ -63,7 +63,6 @@ const App = (props: AppProps) => {
         })
         .then((data) => {
           sideMenuVar(data.data)
-          console.log('setting sideMenuVar')
         })
         .catch((error) => {
           console.log(error)
