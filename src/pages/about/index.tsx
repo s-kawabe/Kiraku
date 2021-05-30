@@ -265,7 +265,6 @@ const AboutPage: NextPage<Props> = (props: Props) => {
           <Box>
             <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={7}>
               {props.blogs.map((blog) => {
-                console.log(blog.content)
                 return (
                   <Fragment key={blog.id}>
                     <BlogCard

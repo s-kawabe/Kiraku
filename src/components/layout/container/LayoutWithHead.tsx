@@ -43,6 +43,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
     <>
       <Head>
         <title>{pageTitle}</title>
+        <link href="/favicon.ico" rel="icon" />
         <meta charSet="utf-8" />
         <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
