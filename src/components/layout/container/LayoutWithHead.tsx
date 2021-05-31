@@ -44,7 +44,7 @@ const LayoutWithHead: FC<Props> = (props: Props) => {
             </Box>
           ) : (
             <>
-              {props.hiddenPostButton ?? (
+              {!props.hiddenPostButton && loginUser && (
                 <Menu>
                   <IconButton
                     as={MenuButton}
