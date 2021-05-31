@@ -17,7 +17,7 @@
 
 [GitHub](https://github.com/s-kawabe/Kiraku)
 
-[Storybook](s-kawabe.github.io/Kiraku)
+[Storybook](https://s-kawabe.github.io/Kiraku/)
 
 [Figma 設計図(UIモデル/画面遷移図/ER図)](https://www.figma.com/file/PYtxmgifElAhVAohiSVXdP/Blueprint?node-id=2:1)
 
