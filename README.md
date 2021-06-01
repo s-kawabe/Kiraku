@@ -163,6 +163,10 @@ GraphQLのSubscriptionsを用いて実装。
 - 非同期処理
 - 設計のやり方
 
+### 今後の改善点
+以下にまとめています。
+https://github.com/s-kawabe/Kiraku/issues/65#issue-907892241
+
 
 
 
