@@ -14,6 +14,8 @@
 ## URL
 
 [App](https://kiraku.app/about)
+- こちらのページよりテストログインが可能です。
+- ファッション投稿サイトとありますが、テストログインアカウントではファッションに限らず自由に機能をお試しください。
 
 [GitHub](https://github.com/s-kawabe/Kiraku)
 
