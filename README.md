@@ -63,11 +63,12 @@
 |  Testing  |  Jest/React Testing Library |
 
 ### その他ライブラリ等
+- husky(pre commit時のコードlint)
+- graphql-codegen(Hasuraエンドポイントからの自動型生成)
 - react-hook-form,yup(フォームバリデーション)
 - draft-js,react-draft-wysiwyg(WYSIWYGエディタ実装)
 - browser-image-compression(画像圧縮)
 - react-image-crop(画像トリミング)
-- husky(pre commit時のコードlint)
 - framer-motion(CSSアニメーション)
 - react-tag-input(タグUI実装)
 
