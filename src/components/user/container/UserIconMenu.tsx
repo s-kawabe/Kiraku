@@ -69,7 +69,7 @@ const UserIconMenu: VFC<UserIconMenuProps> = (props: UserIconMenuProps) => {
         borderRadius="4px"
         my="5px"
         onClick={() => {
-          router.push(`/${props.user?.display_id}/account/edit`)
+          router.push(`/account/profile`)
         }}
       >
         <Text color="gray.800" fontSize="13px">
