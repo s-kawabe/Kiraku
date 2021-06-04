@@ -75,7 +75,7 @@ const App = (props: AppProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // DOMがレンダリングされたらloading状態を解除
   useEffect(() => {
     if (props.pageProps) {
       setIsLoading(false)
