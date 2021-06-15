@@ -2,6 +2,7 @@ import { gql } from '@apollo/client'
 import { Box, Center, Heading, Icon, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import type { GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
@@ -22,6 +23,7 @@ import { auth } from '@/firebase/firebaseConfig'
 import { ABOUT_CARD_TEXT } from '@/utils/constants/AboutCardText'
 import { convertBlogContentToString, getTopImage } from '@/utils/methods/blog'
 import { useIsDesktop } from '@/utils/methods/customeHooks'
+import hero from '~/public/hero.jpg'
 
 type Props = {
   posts: GetRecentPostQuery['posts']
@@ -106,7 +108,15 @@ const AboutPage: NextPage<Props> = (props: Props) => {
             </Link>
           </Box>
         </Box>
-        <NextImage src="/foo.jpg" alt="ヒーロー画像" imageType="hero" />
+        <Image
+          src={hero}
+          alt={'ヒーロー画像'}
+          layout="fill"
+          priority={true}
+          objectFit="cover"
+          objectPosition="55% 30%"
+          placeholder="blur"
+        />
       </Box>
 
       {/* cards */}
